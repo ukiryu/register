@@ -46,7 +46,7 @@ search_paths:
     - "/opt/bin/gs"
     - "/opt/ghostscript/bin/gs"
     # Version-specific paths (common in distros)
-    - "/usr/bin/gs-*
+    - "/usr/bin/gs-*"
   windows:
     # Program Files (64-bit)
     - "C:/Program Files/gs/gs*/bin/gswin64c.exe"
