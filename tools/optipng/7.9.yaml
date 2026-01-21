@@ -1,0 +1,236 @@
+---
+# optipng tool profile for Ukiryu
+# OptiPNG for PNG optimization
+
+name: optipng
+display_name: PNG Image Optimizer
+homepage: https://optipng.sourceforge.net/
+version: "7.9"
+
+aliases:
+  - opt
+  - opng
+
+version_detection:
+  command: "-version"
+  pattern: "OptiPNG version (\\d+\\.\\d+)"
+
+search_paths:
+  macos:
+    - "/opt/homebrew/bin/optipng"
+    - "/usr/local/bin/optipng"
+  linux:
+    - "/usr/bin/optipng"
+    - "/usr/local/bin/optipng"
+
+timeout: 120
+
+profiles:
+  # optipng on Unix (macOS, Linux)
+  - name: unix
+    display_name: OptiPNG on Unix
+    platforms:
+      - macos
+      - linux
+    shells:
+      - bash
+      - zsh
+      - fish
+      - sh
+    version: ">= 7.0"
+    option_style: single_dash_space
+
+    commands:
+      # Optimize command - optimize PNG files
+      optimize:
+        description: "Optimize PNG files to reduce size without losing information"
+        usage: "optipng [options] files"
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            position: last
+            description: "PNG or image files to optimize"
+
+        options:
+          # Optimization level
+          - name: level
+            type: integer
+            cli: "-o"
+            format: single_dash_space
+            range: [0, 7]
+            description: "Optimization level (0=min, 7=max, default varies)"
+
+          # Output file
+          - name: output
+            type: file
+            cli: "-out"
+            format: single_dash_space
+            description: "Write output to file (requires single input)"
+
+          # Output directory
+          - name: dir
+            type: file
+            cli: "-dir"
+            format: single_dash_space
+            description: "Write output files to directory"
+
+          # Filters
+          - name: filters
+            type: string
+            cli: "-f"
+            format: single_dash_space
+            description: "PNG delta filters (e.g., '0-5', '0,3,5')"
+
+          # Interlace type
+          - name: interlace
+            type: integer
+            cli: "-i"
+            format: single_dash_space
+            range: [0, 1]
+            description: "Interlace type (0=non-interlaced, 1=Adam7)"
+
+          # Zlib compression levels
+          - name: zc_levels
+            type: string
+            cli: "-zc"
+            format: single_dash_space
+            description: "Zlib compression levels (e.g., '6-9')"
+
+          # Zlib memory levels
+          - name: zm_levels
+            type: string
+            cli: "-zm"
+            format: single_dash_space
+            description: "Zlib memory levels (e.g., '8-9')"
+
+          # Zlib compression strategies
+          - name: zs_strategies
+            type: string
+            cli: "-zs"
+            format: single_dash_space
+            description: "Zlib compression strategies (e.g., '0-3')"
+
+          # Zlib window size
+          - name: zw_size
+            type: string
+            cli: "-zw"
+            format: single_dash_space
+            description: "Zlib window size (e.g., '32k', '16k', '256')"
+
+        flags:
+          # Help
+          - name: help
+            cli: "-h"
+            description: "Show help"
+            default: false
+
+          # Keep backup
+          - name: backup
+            cli: "-keep"
+            description: "Keep backup of modified files"
+            default: false
+
+          # Clobber (overwrite)
+          - name: clobber
+            cli: "-clobber"
+            description: "Overwrite existing output and backup files"
+            default: false
+
+          # Fix mode (error recovery)
+          - name: fix
+            cli: "-fix"
+            description: "Enable error recovery"
+            default: false
+
+          # Force output
+          - name: force
+            cli: "-force"
+            description: "Force writing of new output file"
+            default: false
+
+          # Preserve attributes
+          - name: preserve
+            cli: "-preserve"
+            description: "Preserve file attributes"
+            default: false
+
+          # Quiet mode
+          - name: quiet
+            cli: "-quiet"
+            description: "Run in quiet mode"
+            default: false
+
+          # Silent mode
+          - name: silent
+            cli: "-silent"
+            description: "Run in silent mode"
+            default: false
+
+          # Simulate mode
+          - name: simulate
+            cli: "-simulate"
+            description: "Run in simulation mode (no output files)"
+            default: false
+
+          # Verbose mode
+          - name: verbose
+            cli: "-verbose"
+            description: "Run in verbose mode"
+            default: false
+
+          # Version
+          - name: version
+            cli: "-version"
+            description: "Show version info"
+            default: false
+
+          # Full report
+          - name: full
+            cli: "-full"
+            description: "Produce full report on IDAT"
+            default: false
+
+          # No bit depth reduction
+          - name: nb
+            cli: "-nb"
+            description: "Do not apply bit depth reduction"
+            default: false
+
+          # No color type reduction
+          - name: nc
+            cli: "-nc"
+            description: "Do not apply color type reduction"
+            default: false
+
+          # No palette reduction
+          - name: np
+            cli: "-np"
+            description: "Do not apply palette reduction"
+            default: false
+
+          # No lossless reduction (all)
+          - name: nx
+            cli: "-nx"
+            description: "Do not apply any lossless reduction"
+            default: false
+
+          # No IDAT recoding
+          - name: nz
+            cli: "-nz"
+            description: "Do not recode IDAT datastreams"
+            default: false
+
+          # Strip metadata
+          - name: strip
+            cli: "-strip"
+            description: "Strip metadata objects (e.g., 'all')"
+            default: false
+
+          # Snip (extract single image)
+          - name: snip
+            cli: "-snip"
+            description: "Cut one image from multi-image files"
+            default: false

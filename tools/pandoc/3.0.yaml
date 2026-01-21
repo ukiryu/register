@@ -1,0 +1,321 @@
+---
+# Pandoc tool profile for Ukiryu
+# Pandoc universal document converter
+
+name: pandoc
+display_name: Pandoc Universal Document Converter
+homepage: https://pandoc.org/
+version: "3.0"
+
+aliases:
+  - pandoc
+  - pdc
+
+version_detection:
+  command: "--version"
+  pattern: "pandoc (\\d+\\.\\d+)"
+  modern_threshold: "2.0"
+
+search_paths:
+  macos:
+    - "/opt/homebrew/bin/pandoc"
+    - "/usr/local/bin/pandoc"
+  linux:
+    - "/usr/bin/pandoc"
+    - "/usr/local/bin/pandoc"
+  windows:
+    - "C:/Program Files/Pandoc/pandoc.exe"
+    - "C:/Users/*/AppData/Local/Pandoc/pandoc.exe"
+
+timeout: 300
+
+profiles:
+  # Pandoc on Unix (macOS, Linux)
+  - name: unix
+    display_name: Pandoc on Unix
+    platforms:
+      - macos
+      - linux
+    shells:
+      - bash
+      - zsh
+      - fish
+      - sh
+    version: ">= 2.0"
+    option_style: double_dash_equals
+
+    commands:
+      # Convert command - convert between document formats
+      convert:
+        description: "Convert between document formats"
+        usage: "pandoc [options] [input-file]"
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            position: last
+            description: "Input file(s)"
+
+        options:
+          # Input format
+          - name: from
+            type: string
+            cli: "--from="
+            description: "Input format (e.g., 'markdown', 'html', 'docx')"
+
+          # Output format
+          - name: to
+            type: string
+            cli: "--to="
+            description: "Output format (e.g., 'html', 'pdf', 'docx')"
+
+          # Output file
+          - name: output
+            type: file
+            cli: "--output="
+            description: "Output file"
+
+          # Standalone document
+          - name: standalone
+            type: boolean
+            cli: "--standalone="
+            description: "Produce output with appropriate header and footer"
+
+          # Template file
+          - name: template
+            type: file
+            cli: "--template="
+            description: "Template file to use"
+
+          # Metadata
+          - name: metadata
+            type: array
+            of: string
+            cli: "--metadata="
+            description: "Metadata key=value"
+
+          # Variable
+          - name: variable
+            type: array
+            of: string
+            cli: "--variable="
+            description: "Set variable key=value"
+
+          # CSS files
+          - name: css
+            type: array
+            of: file
+            cli: "--css="
+            description: "Link to CSS stylesheet"
+
+          # Include in header
+          - name: include_in_header
+            type: array
+            of: file
+            cli: "--include-in-header="
+            description: "Include contents of file in header"
+
+          # Include before body
+          - name: include_before_body
+            type: array
+            of: file
+            cli: "--include-before-body="
+            description: "Include contents of file before body"
+
+          # Include after body
+          - name: include_after_body
+            type: array
+            of: file
+            cli: "--include-after-body="
+            description: "Include contents of file after body"
+
+          # Table of contents
+          - name: toc
+            type: boolean
+            cli: "--toc="
+            description: "Generate table of contents"
+
+          # TOC depth
+          - name: toc_depth
+            type: integer
+            cli: "--toc-depth="
+            range: [1, 10]
+            description: "Number of levels in TOC"
+
+          # Highlight style
+          - name: highlight_style
+            type: string
+            cli: "--highlight-style="
+            description: "Syntax highlighting style"
+
+          # Number sections
+          - name: number_sections
+            type: boolean
+            cli: "--number-sections="
+            description: "Number sections"
+
+          # Shift heading level
+          - name: shift_heading_level
+            type: integer
+            cli: "--shift-heading-level-by="
+            description: "Shift heading levels by this amount"
+
+          # Indent
+          - name: indent
+            type: boolean
+            cli: "--indent="
+            description: "Indent code blocks"
+
+          # Wrap text at column
+          - name: wrap
+            type: integer
+            cli: "--wrap="
+            description: "Wrap text at column (0=no wrap, none=never)"
+
+          # Columns
+          - name: columns
+            type: integer
+            cli: "--columns="
+            description: "Number of columns for text wrapping"
+
+          # PDF engine
+          - name: pdf_engine
+            type: string
+            cli: "--pdf-engine="
+            description: "PDF engine (e.g., 'xelatex', 'pdflatex', 'lualatex')"
+
+          # Bibliography
+          - name: bibliography
+            type: file
+            cli: "--bibliography="
+            description: "Bibliography file"
+
+          # CSL style
+          - name: csl
+            type: file
+            cli: "--csl="
+            description: "CSL style file"
+
+          # Resource path
+          - name: resource_path
+            type: file
+            cli: "--resource-path="
+            description: "Path to search for images/resources"
+
+          # Extract media
+          - name: extract_media
+            type: file
+            cli: "--extract-media="
+            description: "Directory to extract media to"
+
+          # Self-contained
+          - name: self_contained
+            type: boolean
+            cli: "--self-contained="
+            description: "Include CSS/JS in output HTML"
+
+        flags:
+          # Verbose
+          - name: verbose
+            cli: "--verbose"
+            description: "Verbose output"
+            default: false
+
+          # Quiet
+          - name: quiet
+            cli: "--quiet"
+            description: "Suppress warning messages"
+            default: false
+
+          # Fail if warnings
+          - name: fail_if_warnings
+            cli: "--fail-if-warnings"
+            description: "Exit with error if warnings"
+            default: false
+
+          # Help
+          - name: help
+            cli: "--help"
+            description: "Show help message"
+            default: false
+
+          # Version
+          - name: version
+            cli: "--version"
+            description: "Show version"
+            default: false
+
+          # Smart quotes
+          - name: smart
+            cli: "--smart"
+            description: "Use smart quotes"
+            default: false
+
+          # No smart quotes
+          - name: no_smart
+            cli: "--no-smart"
+            description: "Don't use smart quotes"
+            default: false
+
+          # Default image extension
+          - name: default_image_extension
+            cli: "--default-image-extension="
+            description: "Default image extension"
+
+          # Email obfuscation
+          - name: email_obfuscation
+            cli: "--email-obfuscation="
+            description: "Email obfuscation method"
+
+          # Identifier prefix
+          - name: id_prefix
+            cli: "--id-prefix="
+            description: "Prefix for section IDs"
+
+          # Title prefix
+          - name: title_prefix
+            cli: "--title-prefix="
+            description: "Prefix for title"
+
+          # Slide level
+          - name: slide_level
+            cli: "--slide-level="
+            description: "Header level for slides"
+
+          # Abbreviations
+          - name: abbreviations
+            cli: "--abbreviations="
+            description: "File of abbreviations"
+
+          # ASCII
+          - name: ascii
+            cli: "--ascii"
+            description: "Use ASCII-only output"
+            default: false
+
+          # Trace
+          - name: trace
+            cli: "--trace"
+            description: "Enable tracing"
+            default: false
+
+  # Pandoc on Windows
+  - name: windows_powershell
+    display_name: Pandoc on Windows (PowerShell)
+    platforms:
+      - windows
+    shells:
+      - powershell
+    version: ">= 2.0"
+    inherits: unix
+
+  - name: windows_cmd
+    display_name: Pandoc on Windows (cmd)
+    platforms:
+      - windows
+    shells:
+      - cmd
+    version: ">= 2.0"
+    inherits: unix

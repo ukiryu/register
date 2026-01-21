@@ -1,0 +1,241 @@
+---
+# Inkscape tool profile for Ukiryu
+# Modern Inkscape (1.0+) on Unix platforms
+
+name: inkscape
+display_name: Inkscape Vector Graphics Editor
+homepage: https://inkscape.org/
+version: "1.0"
+
+aliases:
+  - inkscapecom
+  - ink
+
+version_detection:
+  command: "--version"
+  pattern: "Inkscape (\\d+\\.\\d+)"
+  modern_threshold: "1.0"
+
+search_paths:
+  macos:
+    - "/Applications/Inkscape.app/Contents/MacOS/inkscape"
+  # Unix (Linux): rely on PATH only
+  # Windows: will be in a separate profile
+
+timeout: 90
+
+profiles:
+  # Modern Inkscape (1.0+) on Unix (macOS, Linux) with Bash/Zsh/Fish/Sh
+  - name: modern_unix
+    display_name: Modern Inkscape on Unix
+    platforms:
+      - macos
+      - linux
+    shells:
+      - bash
+      - zsh
+      - fish
+      - sh
+    version: ">= 1.0"
+    option_style: double_dash_equals
+
+    commands:
+      # Export command - convert between formats
+      export:
+        description: "Export document to different format"
+        usage: "inkscape [OPTIONS] input1.svg [input2.svg ...]"
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            position: last
+            min: 1
+            description: "Input file(s)"
+
+        options:
+          # Output file
+          - name: output
+            type: file
+            cli: "--export-filename="
+            format: double_dash_equals
+            description: "Output filename"
+            required: true
+
+          # Export format
+          - name: format
+            type: symbol
+            cli: "--export-type="
+            format: double_dash_equals
+            values:
+              - svg
+              - png
+              - ps
+              - eps
+              - pdf
+              - emf
+              - wmf
+              - xaml
+            description: "Output format"
+
+          # Multiple export types (comma-separated)
+          - name: export_types
+            type: array
+            of: symbol
+            cli: "--export-type="
+            separator: ","
+            values:
+              - svg
+              - png
+              - ps
+              - eps
+              - pdf
+              - emf
+              - wmf
+              - xaml
+            description: "Multiple export formats"
+
+          # DPI for bitmap export
+          - name: dpi
+            type: integer
+            cli: "-d"
+            format: single_dash_space
+            separator: " "
+            range: [1, 10000]
+            description: "Resolution for bitmaps (default: 96)"
+
+          # Width
+          - name: width
+            type: integer
+            cli: "--export-width="
+            description: "Bitmap width in pixels"
+
+          # Height
+          - name: height
+            type: integer
+            cli: "--export-height="
+            description: "Bitmap height in pixels"
+
+          # Export area
+          - name: area
+            type: string
+            cli: "--export-area="
+            description: "Export area (x0:y0:x1:y1)"
+
+          # Export page
+          - name: export_page
+            type: string
+            cli: "--export-page="
+            description: "Page number to export"
+
+          # Background color
+          - name: background
+            type: string
+            cli: "--export-background="
+            description: "Background color"
+
+          # Background opacity
+          - name: background_opacity
+            type: float
+            cli: "--export-background-opacity="
+            range: [0.0, 1.0]
+            description: "Background opacity (0.0 to 1.0)"
+
+          # Object IDs to export (semicolon-separated)
+          - name: export_ids
+            type: array
+            of: string
+            cli: "--export-id="
+            separator: ";"
+            description: "Object IDs to export"
+
+        flags:
+          # Plain SVG export
+          - name: plain
+            cli: "--export-plain-svg"
+            cli_short: "-l"
+            description: "Remove Inkscape-specific attributes"
+            default: false
+
+          # Export area = page
+          - name: area_page
+            cli: "--export-area-page"
+            cli_short: "-C"
+            description: "Export area is page"
+            default: false
+
+          # Export area = drawing
+          - name: area_drawing
+            cli: "--export-area-drawing"
+            cli_short: "-D"
+            description: "Export area is drawing"
+            default: false
+
+          # Text to path
+          - name: text_to_path
+            cli: "--export-text-to-path"
+            cli_short: "-T"
+            description: "Convert text to paths"
+            default: false
+
+          # Ignore filters
+          - name: ignore_filters
+            cli: "--export-ignore-filters"
+            description: "Render without filters"
+            default: false
+
+          # Vacuum defs
+          - name: vacuum_defs
+            cli: "--vacuum-defs"
+            description: "Remove unused definitions"
+            default: false
+
+        env_vars:
+          # Disable display on Unix for headless operation
+          - name: DISPLAY
+            value: ""
+            platforms:
+              - macos
+              - linux
+            description: "Disable display for headless operation"
+
+      # Query command - get document dimensions
+      query:
+        description: "Query document dimensions"
+        usage: "inkscape --query-width/--query-height input.svg"
+
+        arguments:
+          - name: input
+            type: file
+            required: true
+            position: 1
+            description: "Input file"
+
+        flags:
+          - name: width
+            cli: "--query-width"
+            cli_short: "-W"
+            description: "Query width"
+            default: false
+
+          - name: height
+            cli: "--query-height"
+            cli_short: "-H"
+            description: "Query height"
+            default: false
+
+          - name: x
+            cli: "--query-x"
+            cli_short: "-X"
+            description: "Query X coordinate"
+            default: false
+
+          - name: y
+            cli: "--query-y"
+            cli_short: "-Y"
+            description: "Query Y coordinate"
+            default: false
+
+        parse_output:
+          type: hash
+          pattern: "key:\\s*value"

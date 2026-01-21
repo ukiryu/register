@@ -1,0 +1,122 @@
+---
+# Ghostscript tool profile for Ukiryu
+# Ghostscript 9.5 (legacy) on Unix platforms
+
+name: ghostscript
+display_name: Ghostscript Interpreter
+homepage: https://www.ghostscript.com/
+version: "9.5"
+
+aliases:
+  - gs
+  - gswin64c
+  - gswin32c
+
+version_detection:
+  command: "--version"
+  pattern: "(\\d+\\.\\d+)"
+
+search_paths:
+  windows:
+    - "C:/Program Files/gs/*/bin/gswin64c.exe"
+    - "C:/Program Files (x86)/gs/*/bin/gswin32c.exe"
+
+timeout: 120
+
+profiles:
+  # Ghostscript on Unix (macOS, Linux) with Bash/Zsh/Fish/Sh
+  - name: unix
+    display_name: Ghostscript on Unix
+    platforms:
+      - macos
+      - linux
+    shells:
+      - bash
+      - zsh
+      - fish
+      - sh
+    version: ">= 9.0, < 10.0"
+
+    commands:
+      # Convert command - convert PS/EPS to PDF or other formats
+      convert:
+        description: "Convert PostScript to PDF or other formats"
+        usage: "gs [OPTIONS] input.ps"
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            position: last
+            min: 1
+            description: "Input file(s)"
+
+        options:
+          # Device (output format)
+          - name: device
+            type: symbol
+            cli: "-sDEVICE="
+            values:
+              - pdfwrite
+              - eps2write
+              - png16m
+              - png256
+              - pnggray
+              - jpeg
+            description: "Output device"
+
+          # Output file
+          - name: output
+            type: file
+            cli: "-sOutputFile="
+            description: "Output file"
+
+          # Resolution (single or XxY)
+          - name: resolution
+            type: array
+            of: integer
+            size: [1, 2]
+            cli: "-r"
+            format: single_dash_space
+            separator: "x"
+            description: "Resolution (e.g., 300 or 300x600)"
+
+          # Library paths
+          - name: lib_paths
+            type: array
+            of: file
+            cli: "-I"
+            format: single_dash_space
+            separator: " "
+            description: "Library search paths"
+
+        flags:
+          # Safer mode
+          - name: safer
+            cli: "-dSAFER"
+            description: "Run in safer mode"
+            default: true
+
+          # Quiet mode
+          - name: quiet
+            cli: "-q"
+            description: "Suppress informational messages"
+            default: false
+
+          # Batch mode
+          - name: batch
+            cli: "-dBATCH"
+            description: "Run in batch mode"
+            default: true
+
+          # No pause
+          - name: nopause
+            cli: "-dNOPAUSE"
+            description: "Don't pause per page"
+            default: true
+
+          # EPS crop
+          - name: eps_crop
+            cli: "-dEPSCrop"
+            description: "Automatically crop EPS bounding box"
+            default: false

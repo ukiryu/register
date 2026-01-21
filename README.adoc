@@ -1,0 +1,97 @@
+= Ukiryu Tool Registry
+
+Collection of YAML tool profiles for https://github.com/ukiryu/ukiryu[Ukiryu]
+platform-adaptive command execution framework.
+
+image:https://img.shields.io/badge/version-0.1.0-blue[Version]
+
+== Purpose
+
+The Ukiryu Tool Registry contains declarative YAML profiles that define how to
+execute various command-line tools across different platforms, shells, and
+versions.
+
+Each tool profile includes:
+
+* Command definitions with arguments and options
+* Platform-specific configurations (macOS, Linux, Windows)
+* Shell-specific command formatting (bash, zsh, PowerShell, etc.)
+* Version detection and compatibility handling
+
+== Tool Profiles
+
+=== Supported Tools
+
+* https://github.com/ukiryu/register/tree/main/tools/imagemagick[ImageMagick] - Image conversion and processing
+* https://github.com/ukiryu/register/tree/main/tools/ghostscript[Ghostscript] - PostScript and PDF interpreter
+* https://github.com/ukiryu/register/tree/main/tools/ffmpeg[FFmpeg] - Video/audio processing
+* https://github.com/ukiryu/register/tree/main/tools/pandoc[Pandoc] - Document conversion
+* https://github.com/ukiryu/register/tree/main/tools/jpegoptim[jpegoptim] - JPEG optimization
+* https://github.com/ukiryu/register/tree/main/tools/optipng[optipng] - PNG optimization
+* https://github.com/ukiryu/register/tree/main/tools/inkscape[Inkscape] - SVG vector graphics
+
+== Directory Structure
+
+----
+register/
+└── tools/
+    ├── imagemagick/
+    │   └── 7.1.yaml
+    ├── ghostscript/
+    │   ├── 9.5.yaml
+    │   └── 10.0.yaml
+    └── ...
+----
+
+== Profile Schema
+
+Tool profiles follow the schema defined in https://github.com/ukiryu/schema[Ukiryu Schema].
+
+Key fields:
+
+`name`:: Tool identifier (e.g., "imagemagick")
+`display_name`:: Human-readable name
+`version`:: Default version
+`aliases`:: Alternative names for finding the tool
+`version_detection`:: How to detect installed version
+`search_paths`:: Platform-specific executable locations
+`profiles`:: Array of platform/shell-specific configurations
+`commands`:: Command definitions with arguments, options, and flags
+
+== Adding a New Tool
+
+To add a new tool profile:
+
+. Check the tool's man page for command syntax
+. Create a new YAML file in `tools/<tool-name>/<version>.yaml`
+. Follow the schema defined in Ukiryu Schema
+. Test the profile with real commands
+. Submit a pull request
+
+== Usage
+
+Tools are loaded automatically by Ukiryu:
+
+[source,ruby]
+----
+require 'ukiryu'
+
+Ukiryu::Registry.default_registry_path = 'path/to/register'
+
+tool = Ukiryu::Tool.get(:imagemagick)
+result = tool.execute(:convert, {
+  inputs: ['input.png'],
+  output: 'output.jpg',
+  resize: '50x50'
+})
+----
+
+
+== License
+
+The content is available as open source under the terms of the Ribose BSD
+2-Clause License.
+
+== Copyright
+
+Copyright Ribose.

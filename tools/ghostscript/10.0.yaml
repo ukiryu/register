@@ -1,0 +1,126 @@
+---
+# Ghostscript tool profile for Ukiryu
+# Ghostscript PostScript and PDF interpreter
+
+name: ghostscript
+display_name: Ghostscript PS/PDF Interpreter
+homepage: https://www.ghostscript.com/
+version: "10.0"
+
+aliases:
+  - gs
+  - ghostscript
+
+version_detection:
+  command: "--version"
+  pattern: "(\\d+\\.\\d+)"
+  modern_threshold: "9.0"
+
+search_paths:
+  macos:
+    - "/opt/homebrew/bin/gs"
+    - "/usr/local/bin/gs"
+  linux:
+    - "/usr/bin/gs"
+    - "/usr/local/bin/gs"
+
+timeout: 120
+
+profiles:
+  - name: unix
+    display_name: Ghostscript on Unix
+    platforms:
+      - macos
+      - linux
+    shells:
+      - bash
+      - zsh
+      - fish
+      - sh
+    version: ">= 9.0"
+    option_style: single_dash
+
+    commands:
+      convert:
+        description: "Convert PostScript or PDF to other formats"
+        usage: "gs [options] input-file"
+        subcommand: null
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            position: last
+            description: "Input file(s) to process"
+
+        options:
+          - name: device
+            type: string
+            cli: "-sDEVICE="
+            description: "Output device (e.g., png16m, jpeg, pdfwrite)"
+
+          - name: output
+            type: file
+            cli: "-sOutputFile="
+            description: "Output file path"
+
+          - name: resolution
+            type: string
+            cli: "-r"
+            description: "Resolution (e.g., 150, 300, or 600x600)"
+
+          - name: first_page
+            type: integer
+            cli: "-dFirstPage"
+            description: "First page to process"
+
+          - name: last_page
+            type: integer
+            cli: "-dLastPage"
+            description: "Last page to process"
+
+          - name: pdf_settings
+            type: string
+            cli: "-dPDFSETTINGS="
+            values: [screen, ebook, printer, prepress, default]
+            description: "PDF preset settings"
+
+          - name: quality
+            type: integer
+            cli: "-dJPEGQ="
+            range: [1, 100]
+            description: "JPEG quality (1-100)"
+
+          - name: text_alpha
+            type: integer
+            cli: "-dTextAlphaBits"
+            range: [1, 4]
+            description: "Text anti-aliasing (1=no AA, 4=best)"
+
+          - name: graphics_alpha
+            type: integer
+            cli: "-dGraphicsAlphaBits"
+            range: [1, 4]
+            description: "Graphics anti-aliasing"
+
+        flags:
+          - name: quiet
+            cli: "-q"
+            description: "Quiet mode"
+            default: false
+
+          - name: batch
+            cli: "-dBATCH"
+            description: "Batch mode"
+            default: true
+
+          - name: no_pause
+            cli: "-dNOPAUSE"
+            description: "No pause"
+            default: true
+
+          - name: no_screen
+            cli: "-dNOSAFER"
+            description: "No safety features"
+            default: true
