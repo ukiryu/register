@@ -17,7 +17,42 @@ version_detection:
 
 search_paths:
   macos:
+    # Application bundle
     - "/Applications/Inkscape.app/Contents/MacOS/inkscape"
+    # Homebrew (Apple Silicon) - legacy version
+    - "/opt/homebrew/bin/inkscape"
+    # Homebrew (Intel) - legacy version
+    - "/usr/local/bin/inkscape"
+    # MacPorts
+    - "/opt/local/bin/inkscape"
+    # Rudix
+    - "/usr/local/opt/inkscape/bin/inkscape"
+  linux:
+    # Standard system paths
+    - "/usr/bin/inkscape"
+    - "/usr/local/bin/inkscape"
+    # Snap (legacy versions)
+    - "/snap/bin/inkscape"
+    # Flatpak
+    - "/var/lib/flatpak/exports/bin/org.inkscape.Inkscape"
+    # AppImage
+    - "/opt/inkscape.AppImage"
+    - "/usr/local/bin/inkscape.AppImage"
+    # Common third-party locations
+    - "/opt/bin/inkscape"
+  windows:
+    # Program Files (64-bit)
+    - "C:/Program Files/Inkscape/bin/inkscape.exe"
+    - "C:/Program Files/Inkscape/inkscape.exe"
+    # Program Files (32-bit)
+    - "C:/Program Files (x86)/Inkscape/bin/inkscape.exe"
+    - "C:/Program Files (x86)/Inkscape/inkscape.exe"
+    # Scoop
+    - "%USERPROFILE%/scoop/apps/inkscape/current/inkscape.exe"
+    - "~/scoop/apps/inkscape/current/inkscape.exe"
+    # User-local installation
+    - "%LOCALAPPDATA%/Inkscape/bin/inkscape.exe"
+    - "~/AppData/Local/Inkscape/bin/inkscape.exe"
 
 timeout: 90
 

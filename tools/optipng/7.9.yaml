@@ -17,11 +17,43 @@ version_detection:
 
 search_paths:
   macos:
+    # Homebrew (Apple Silicon)
     - "/opt/homebrew/bin/optipng"
+    # Homebrew (Intel)
     - "/usr/local/bin/optipng"
+    # MacPorts
+    - "/opt/local/bin/optipng"
+    # Rudix
+    - "/usr/local/opt/optipng/bin/optipng"
+    # Common third-party
+    - "/opt/bin/optipng"
   linux:
+    # Standard system paths
     - "/usr/bin/optipng"
     - "/usr/local/bin/optipng"
+    # Snap
+    - "/snap/bin/optipng"
+    # Common third-party locations
+    - "/opt/bin/optipng"
+    # Source builds
+    - "/usr/local/optipng/bin/optipng"
+  windows:
+    # Official Windows builds
+    - "C:/Program Files/OptiPNG/optipng.exe"
+    - "C:/Program Files (x86)/OptiPNG/optipng.exe"
+    # Static builds
+    - "C:/optipng/optipng.exe"
+    - "C:/Media/optipng/optipng.exe"
+    # Scoop
+    - "%USERPROFILE%/scoop/apps/optipng/current/optipng.exe"
+    - "~/scoop/apps/optipng/current/optipng.exe"
+    # Chocolatey
+    - "C:/ProgramData/chocolatey/lib/optipng/tools/optipng.exe"
+    # Common locations
+    - "C:/Tools/optipng/optipng.exe"
+    # User-local installation
+    - "%LOCALAPPDATA%/Programs/OptiPNG/optipng.exe"
+    - "~/AppData/Local/Programs/OptiPNG/optipng.exe"
 
 timeout: 120
 

@@ -19,11 +19,49 @@ version_detection:
 
 search_paths:
   macos:
+    # Homebrew (Apple Silicon)
     - "/opt/homebrew/bin/magick"
+    # Homebrew (Intel)
     - "/usr/local/bin/magick"
+    # MacPorts
+    - "/opt/local/bin/magick"
+    # Rudix
+    - "/usr/local/opt/imagemagick/bin/magick"
+    # Common third-party
+    - "/opt/bin/magick"
+    # Legacy convert command (for compatibility)
+    - "/opt/homebrew/bin/convert"
+    - "/usr/local/bin/convert"
+    - "/opt/local/bin/convert"
   linux:
+    # Standard system paths
     - "/usr/bin/magick"
     - "/usr/local/bin/magick"
+    # Snap
+    - "/snap/bin/imagemagick"
+    # Flatpak
+    - "/var/lib/flatpak/exports/bin/org.imagemagick.ImageMagick"
+    # Common third-party locations
+    - "/opt/bin/magick"
+    - "/opt/imagemagick/bin/magick"
+    # Legacy convert command
+    - "/usr/bin/convert"
+    - "/usr/local/bin/convert"
+  windows:
+    # Program Files (64-bit)
+    - "C:/Program Files/ImageMagick-*/magick.exe"
+    - "C:/Program Files/ImageMagick-*/convert.exe"
+    # Program Files (32-bit)
+    - "C:/Program Files (x86)/ImageMagick-*/magick.exe"
+    - "C:/Program Files (x86)/ImageMagick-*/convert.exe"
+    # Scoop
+    - "%USERPROFILE%/scoop/apps/imagemagick/current/magick.exe"
+    - "~/scoop/apps/imagemagick/current/magick.exe"
+    # Chocolatey
+    - "C:/ProgramData/chocolatey/lib/imagemagick/tools/magick.exe"
+    # User-local installation
+    - "%LOCALAPPDATA%/Programs/ImageMagick-*/magick.exe"
+    - "~/AppData/Local/Programs/ImageMagick-*/magick.exe"
 
 timeout: 300
 

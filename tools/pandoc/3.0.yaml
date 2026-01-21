@@ -18,14 +18,47 @@ version_detection:
 
 search_paths:
   macos:
+    # Homebrew (Apple Silicon)
     - "/opt/homebrew/bin/pandoc"
+    # Homebrew (Intel)
     - "/usr/local/bin/pandoc"
+    # MacPorts
+    - "/opt/local/bin/pandoc"
+    # Rudix
+    - "/usr/local/opt/pandoc/bin/pandoc"
+    # Common third-party
+    - "/opt/bin/pandoc"
   linux:
+    # Standard system paths
     - "/usr/bin/pandoc"
     - "/usr/local/bin/pandoc"
+    # Snap
+    - "/snap/bin/pandoc"
+    # Flatpak
+    - "/var/lib/flatpak/exports/bin/org.pandoc.Pandoc"
+    # Common third-party locations
+    - "/opt/bin/pandoc"
+    # Official binary from pandoc.org
+    - "/opt/pandoc/bin/pandoc"
+    - "/usr/local/pandoc/bin/pandoc"
   windows:
+    # Program Files (64-bit)
     - "C:/Program Files/Pandoc/pandoc.exe"
-    - "C:/Users/*/AppData/Local/Pandoc/pandoc.exe"
+    - "C:/Program Files/Pandoc/pandoc"
+    # Program Files (32-bit)
+    - "C:/Program Files (x86)/Pandoc/pandoc.exe"
+    - "C:/Program Files (x86)/Pandoc/pandoc"
+    # Scoop
+    - "%USERPROFILE%/scoop/apps/pandoc/current/pandoc.exe"
+    - "~/scoop/apps/pandoc/current/pandoc.exe"
+    # Chocolatey
+    - "C:/ProgramData/chocolatey/lib/pandoc/tools/pandoc.exe"
+    - "C:/ProgramData/chocolatey/lib/pandoc/tools/pandoc/pandoc.exe"
+    # User-local installation (official installer)
+    - "%LOCALAPPDATA%/Pandoc/pandoc.exe"
+    - "%APPDATA%/Pandoc/pandoc.exe"
+    - "~/AppData/Local/Pandoc/pandoc.exe"
+    - "~/AppData/Roaming/Pandoc/pandoc.exe"
 
 timeout: 300
 

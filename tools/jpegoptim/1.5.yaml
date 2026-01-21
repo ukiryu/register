@@ -16,11 +16,38 @@ version_detection:
 
 search_paths:
   macos:
+    # Homebrew (Apple Silicon)
     - "/opt/homebrew/bin/jpegoptim"
+    # Homebrew (Intel)
     - "/usr/local/bin/jpegoptim"
+    # MacPorts
+    - "/opt/local/bin/jpegoptim"
+    # Rudix
+    - "/usr/local/opt/jpegoptim/bin/jpegoptim"
+    # Common third-party
+    - "/opt/bin/jpegoptim"
   linux:
+    # Standard system paths
     - "/usr/bin/jpegoptim"
     - "/usr/local/bin/jpegoptim"
+    # Snap
+    - "/snap/bin/jpegoptim"
+    # Common third-party locations
+    - "/opt/bin/jpegoptim"
+    # Source builds often go here
+    - "/usr/local/jpegoptim/bin/jpegoptim"
+  windows:
+    # Static builds (uncommon but possible)
+    - "C:/jpegoptim/jpegoptim.exe"
+    - "C:/Media/jpegoptim/jpegoptim.exe"
+    # Scoop
+    - "%USERPROFILE%/scoop/apps/jpegoptim/current/jpegoptim.exe"
+    - "~/scoop/apps/jpegoptim/current/jpegoptim.exe"
+    # Common locations
+    - "C:/Tools/jpegoptim/jpegoptim.exe"
+    # User-local installation
+    - "%LOCALAPPDATA%/Programs/jpegoptim/jpegoptim.exe"
+    - "~/AppData/Local/Programs/jpegoptim/jpegoptim.exe"
 
 timeout: 60
 

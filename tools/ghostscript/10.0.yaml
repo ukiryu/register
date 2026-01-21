@@ -18,11 +18,53 @@ version_detection:
 
 search_paths:
   macos:
+    # Homebrew (Apple Silicon)
     - "/opt/homebrew/bin/gs"
+    - "/opt/homebrew/bin/gsc"
+    # Homebrew (Intel)
     - "/usr/local/bin/gs"
+    - "/usr/local/bin/gsc"
+    # MacPorts
+    - "/opt/local/bin/gs"
+    - "/opt/local/bin/gsc"
+    # Rudix
+    - "/usr/local/opt/ghostscript/bin/gs"
+    # Common third-party
+    - "/opt/bin/gs"
   linux:
+    # Standard system paths
     - "/usr/bin/gs"
+    - "/usr/bin/gsc"
     - "/usr/local/bin/gs"
+    - "/usr/local/bin/gsc"
+    # Snap
+    - "/snap/bin/ghostscript"
+    - "/snap/bin/gs"
+    # Flatpak
+    - "/var/lib/flatpak/exports/bin/org.gnu.ghostscript"
+    # Common third-party locations
+    - "/opt/bin/gs"
+    - "/opt/ghostscript/bin/gs"
+    # Version-specific paths (common in distros)
+    - "/usr/bin/gs-*
+  windows:
+    # Program Files (64-bit)
+    - "C:/Program Files/gs/gs*/bin/gswin64c.exe"
+    - "C:/Program Files/gs/gs*/bin/gswin32c.exe"
+    # Program Files (32-bit)
+    - "C:/Program Files (x86)/gs/gs*/bin/gswin64c.exe"
+    - "C:/Program Files (x86)/gs/gs*/bin/gswin32c.exe"
+    # Common Ghostscript installation paths
+    - "C:/gs/gs*/bin/gswin64c.exe"
+    - "C:/gs/gs*/bin/gswin32c.exe"
+    # Scoop
+    - "%USERPROFILE%/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
+    - "~/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
+    # Chocolatey
+    - "C:/ProgramData/chocolatey/lib/ghostscript/tools/gs*/bin/gswin64c.exe"
+    # User-local installation
+    - "%LOCALAPPDATA%/Programs/Ghostscript/gs*/bin/gswin64c.exe"
+    - "~/AppData/Local/Programs/Ghostscript/gs*/bin/gswin64c.exe"
 
 timeout: 120
 
@@ -38,7 +80,7 @@ profiles:
       - fish
       - sh
     version: ">= 9.0"
-    option_style: single_dash
+    option_style: single_dash_equals
 
     commands:
       convert:

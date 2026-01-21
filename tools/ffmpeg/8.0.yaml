@@ -18,11 +18,46 @@ version_detection:
 
 search_paths:
   macos:
+    # Homebrew (Apple Silicon)
     - "/opt/homebrew/bin/ffmpeg"
+    # Homebrew (Intel)
     - "/usr/local/bin/ffmpeg"
+    # MacPorts
+    - "/opt/local/bin/ffmpeg"
+    # Rudix
+    - "/usr/local/opt/ffmpeg/bin/ffmpeg"
+    # Common third-party
+    - "/opt/bin/ffmpeg"
+    # Static builds from ffmpeg.org
+    - "/opt/ffmpeg/bin/ffmpeg"
   linux:
+    # Standard system paths
     - "/usr/bin/ffmpeg"
     - "/usr/local/bin/ffmpeg"
+    # Snap
+    - "/snap/bin/ffmpeg"
+    # Flatpak
+    - "/var/lib/flatpak/exports/bin/org.ffmpeg.FFmpeg"
+    # Common third-party locations
+    - "/opt/bin/ffmpeg"
+    - "/opt/ffmpeg/bin/ffmpeg"
+    # Static builds
+    - "/usr/local/ffmpeg/bin/ffmpeg"
+  windows:
+    # Static builds from gyan.dev (common)
+    - "C:/ffmpeg/bin/ffmpeg.exe"
+    - "C:/Media/ffmpeg/bin/ffmpeg.exe"
+    # Program Files
+    - "C:/Program Files/ffmpeg/bin/ffmpeg.exe"
+    - "C:/Program Files (x86)/ffmpeg/bin/ffmpeg.exe"
+    # Scoop
+    - "%USERPROFILE%/scoop/apps/ffmpeg/current/ffmpeg.exe"
+    - "~/scoop/apps/ffmpeg/current/ffmpeg.exe"
+    # Chocolatey
+    - "C:/ProgramData/chocolatey/lib/ffmpeg/tools/ffmpeg.exe"
+    # User-local installation
+    - "%LOCALAPPDATA%/Programs/ffmpeg/ffmpeg.exe"
+    - "~/AppData/Local/Programs/ffmpeg/ffmpeg.exe"
 
 timeout: 3600
 
