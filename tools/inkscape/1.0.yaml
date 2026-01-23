@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: inkscape
 display_name: Inkscape Vector Graphics Editor
 homepage: https://inkscape.org/
+$self: https://www.ukiryu.com/register/1.0/inkscape/1.0
 version: '1.0'
 aliases:
 - inkscapecom
@@ -169,10 +171,15 @@ profiles:
       cli: "--vacuum-defs"
       description: Remove unused definitions
       default: false
+    - name: batch_process
+      cli: "--batch-process"
+      description: Close GUI after processing (required for headless)
+      default: true
     execution_mode: headless
     name: export
   - description: Query document dimensions
     usage: inkscape --query-width/--query-height input.svg
+    execution_mode: headless
     arguments:
     - name: input
       type: file
