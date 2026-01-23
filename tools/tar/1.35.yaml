@@ -1,0 +1,249 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: tar
+display_name: Tar Archiver
+homepage: https://www.gnu.org/software/tar/
+version: '1.35'
+aliases: []
+version_detection:
+  command: "--version"
+  pattern: "([\\d.]+)"
+  modern_threshold: '1.30'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/gtar"
+  - "/usr/local/bin/gtar"
+  - "/opt/homebrew/bin/tar"
+  - "/usr/local/bin/tar"
+  - "/usr/bin/tar"
+  linux:
+  - "/usr/bin/tar"
+  - "/usr/local/bin/tar"
+  windows:
+  - C:/Program Files/Git/usr/bin/tar.exe
+  - C:/msys64/usr/bin/tar.exe
+  - C:/cygwin64/bin/tar.exe
+timeout: 120
+profiles:
+- name: gnu
+  display_name: GNU tar
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Create a tar archive
+    usage: tar -c [options] -f archive.tar files
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Files/directories to archive
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      required: true
+      description: Archive file name
+    - name: directory
+      type: string
+      cli: "-C"
+      description: Change to directory before processing
+    flags:
+    - name: create
+      cli: "-c"
+      description: Create archive
+      default: true
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    - name: gzip
+      cli: "-z"
+      description: Compress with gzip
+      default: false
+    - name: bzip2
+      cli: "-j"
+      description: Compress with bzip2
+      default: false
+    - name: dereference
+      cli: "-h"
+      description: Follow symlinks
+      default: false
+    name: create
+  - description: Extract a tar archive
+    usage: tar -x [options] -f archive.tar
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: false
+      min: 0
+      position: last
+      description: Specific files to extract
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      required: true
+      description: Archive file name
+    - name: directory
+      type: string
+      cli: "-C"
+      description: Change to directory before processing
+    flags:
+    - name: extract
+      cli: "-x"
+      description: Extract archive
+      default: true
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    - name: gzip
+      cli: "-z"
+      description: Archive is gzipped
+      default: false
+    - name: bzip2
+      cli: "-j"
+      description: Archive is bzipped
+      default: false
+    - name: keep_old
+      cli: "-k"
+      description: Keep existing files
+      default: false
+    name: extract
+  - description: List contents of a tar archive
+    usage: tar -t [options] -f archive.tar
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: false
+      min: 0
+      position: last
+      description: Specific files to list
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      required: true
+      description: Archive file name
+    flags:
+    - name: list
+      cli: "-t"
+      description: List archive
+      default: true
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    name: list
+- name: bsdtar
+  display_name: BSD tar (macOS)
+  platforms:
+  - macos
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Create a tar archive
+    usage: tar -c [options] -f archive.tar files
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Files/directories to archive
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      required: true
+      description: Archive file name
+    flags:
+    - name: create
+      cli: "-c"
+      description: Create archive
+      default: true
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    - name: gzip
+      cli: "-z"
+      description: Compress with gzip
+      default: false
+    name: create
+  - description: Extract a tar archive
+    usage: tar -x [options] -f archive.tar
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: false
+      min: 0
+      position: last
+      description: Specific files to extract
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      required: true
+      description: Archive file name
+    - name: directory
+      type: string
+      cli: "-C"
+      description: Change to directory before processing
+    flags:
+    - name: extract
+      cli: "-x"
+      description: Extract archive
+      default: true
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    - name: gzip
+      cli: "-z"
+      description: Archive is gzipped
+      default: false
+    name: extract
+  - description: List contents of a tar archive
+    usage: tar -t [options] -f archive.tar
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: false
+      min: 0
+      position: last
+      description: Specific files to list
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      required: true
+      description: Archive file name
+    flags:
+    - name: list
+      cli: "-t"
+      description: List archive
+      default: true
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    name: list

@@ -1,0 +1,177 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: exiftool
+display_name: ExifTool Metadata Reader/Writer
+homepage: https://exiftool.org/
+version: '13.0'
+aliases:
+- exiftool
+version_detection:
+  command: "-ver"
+  pattern: "(\\d+\\.\\d+)"
+  modern_threshold: '12.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/exiftool"
+  - "/usr/local/bin/exiftool"
+  - "/usr/bin/exiftool"
+  linux:
+  - "/usr/bin/exiftool"
+  - "/usr/local/bin/exiftool"
+  windows:
+  - C:/exiftool/exiftool.exe
+  - C:/Program Files/exiftool/exiftool.exe
+  - C:/Program Files/File-ExifTool/exiftool.exe
+timeout: 60
+profiles:
+- name: unix
+  display_name: exiftool on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Read metadata from files
+    usage: exiftool [options] [-TAG...] file...
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to read metadata from
+    options:
+    - name: tags
+      type: string
+      cli: "-"
+      variadic: true
+      description: Specific tag(s) to extract
+    - name: csv
+      type: string
+      cli: "-csv"
+      format: single_dash_equals
+      description: Export in CSV format
+    - name: json
+      type: string
+      cli: "-json"
+      format: single_dash_equals
+      description: Export in JSON format
+    - name: output_file
+      type: file
+      cli: "-w"
+      description: Write output to file
+    - name: format
+      type: string
+      cli: "-p"
+      description: Print format string
+    flags:
+    - name: long
+      cli: "-l"
+      description: Long output format (2-line)
+      default: false
+    - name: short
+      cli: "-s"
+      description: Short output format
+      default: false
+    - name: very_short
+      cli: "-S"
+      description: Very short output format
+      default: false
+    - name: tabular
+      cli: "-T"
+      description: Tabular output format
+      default: false
+    - name: xml
+      cli: "-X"
+      description: XML output format
+      default: false
+    - name: html
+      cli: "-h"
+      description: HTML output format
+      default: false
+    - name: binary
+      cli: "-b"
+      description: Binary output
+      default: false
+    - name: numeric
+      cli: "-n"
+      description: No print conversion
+      default: false
+    - name: sort
+      cli: "-sort"
+      description: Sort output alphabetically
+      default: false
+    - name: recursive
+      cli: "-r"
+      description: Recursively process directories
+      default: false
+    - name: extension
+      cli: "-ext"
+      description: Process files with specified extension
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose output
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet processing
+      default: false
+    - name: all
+      cli: "-a"
+      description: Allow duplicate tags
+      default: false
+    - name: list_item
+      cli: "-listItem"
+      description: Extract specific item from list
+      default: false
+    - name: coord_format
+      cli: "-c"
+      description: Set GPS coordinate format
+      default: false
+    - name: date_format
+      cli: "-d"
+      description: Set date/time format
+      default: false
+    name: read
+  - description: Write metadata to files
+    usage: exiftool -TAG[+-<]=[VALUE]... file...
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to write metadata to
+    options:
+    - name: tags_from_file
+      type: file
+      cli: "-tagsFromFile"
+      description: Copy tags from file
+    - name: set_tag
+      type: string
+      cli: "-"
+      format: single_dash_equals
+      variadic: true
+      description: Set tag value (e.g., -TAG=value)
+    flags:
+    - name: overwrite_original
+      cli: "-overwrite_original"
+      description: Overwrite original file
+      default: false
+    - name: overwrite_original_in_place
+      cli: "-overwrite_original_in_place"
+      description: Overwrite original in place
+      default: false
+    - name: preserve
+      cli: "-P"
+      description: Preserve modification date/time
+      default: false
+    name: write

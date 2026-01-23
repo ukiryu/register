@@ -1,0 +1,111 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: gzip
+display_name: gzip Compressor
+homepage: https://www.gnu.org/software/gzip/
+version: '1.12'
+aliases:
+- gunzip
+- gzcat
+version_detection:
+  command: "--version"
+  pattern: gzip ([\d.]+)
+  modern_threshold: '1.10'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/gzip"
+  - "/usr/local/bin/gzip"
+  - "/usr/bin/gzip"
+  linux:
+  - "/usr/bin/gzip"
+  - "/usr/local/bin/gzip"
+  windows:
+  - C:/msys64/usr/bin/gzip.exe
+  - C:/Program Files/Git/usr/bin/gzip.exe
+  - C:/cygwin64/bin/gzip.exe
+timeout: 60
+profiles:
+- name: unix
+  display_name: gzip on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with gzip
+    usage: gzip [options] file
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Write to standard output
+    - name: compression_level
+      type: integer
+      cli: "-"
+      range:
+      - 1
+      - 9
+      description: Compression level (1=fastest, 9=best)
+    - name: suffix
+      type: string
+      cli: "-S"
+      description: Use suffix instead of .gz
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+    - name: recursive
+      cli: "-r"
+      description: Recursive mode
+      default: false
+    name: compress
+  - description: Decompress gzip files
+    usage: gzip -d [options] file
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+    name: decompress

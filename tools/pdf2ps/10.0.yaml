@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: pdf2ps
+display_name: PDF to PostScript Converter
+homepage: https://www.ghostscript.com/
+version: '10.0'
+aliases: []
+version_detection:
+  command:
+    - "-v"
+    - "-"
+  pattern: "(\\d+\\.\\d+)"
+  modern_threshold: '9.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/pdf2ps"
+  - "/usr/local/bin/pdf2ps"
+  - "/usr/bin/pdf2ps"
+  linux:
+  - "/usr/bin/pdf2ps"
+  - "/usr/local/bin/pdf2ps"
+  windows:
+  - C:/Program Files/gs/gs*/bin/pdf2ps.exe
+  - C:/gs/gs*/bin/pdf2ps.exe
+timeout: 120
+profiles:
+- name: unix
+  display_name: pdf2ps on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Convert PDF to PostScript
+    usage: pdf2ps [options] input.pdf output.ps
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: input
+      type: file
+      variadic: false
+      min: 1
+      position: first
+      description: Input PDF file
+    - name: output
+      type: file
+      variadic: false
+      min: 1
+      position: last
+      description: Output PostScript file
+    options:
+    - name: first_page
+      type: integer
+      cli: "-dFirstPage"
+      description: First page to convert
+    - name: last_page
+      type: integer
+      cli: "-dLastPage"
+      description: Last page to convert
+    - name: paper_size
+      type: string
+      cli: "-sPAPERSIZE"
+      values:
+      - letter
+      - legal
+      - a4
+      - a3
+      - tabloid
+      description: Paper size
+    - name: resolution
+      type: integer
+      cli: "-r"
+      description: Resolution in DPI
+    flags:
+    - name: level1
+      cli: "-dLanguageLevel=1"
+      description: Generate Level 1 PostScript
+      default: false
+    - name: level2
+      cli: "-dLanguageLevel=2"
+      description: Generate Level 2 PostScript
+      default: false
+    name: convert

@@ -1,0 +1,108 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: bzip2
+display_name: bzip2 Compressor
+homepage: https://sourceware.org/bzip2/
+version: '1.0'
+aliases:
+- bunzip2
+- bzcat
+version_detection:
+  command: "--version"
+  pattern: Version ([\d.]+)
+  modern_threshold: '1.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/bzip2"
+  - "/usr/local/bin/bzip2"
+  - "/usr/bin/bzip2"
+  linux:
+  - "/usr/bin/bzip2"
+  - "/usr/local/bin/bzip2"
+  windows:
+  - C:/msys64/usr/bin/bzip2.exe
+  - C:/Program Files/Git/usr/bin/bzip2.exe
+  - C:/cygwin64/bin/bzip2.exe
+timeout: 60
+profiles:
+- name: unix
+  display_name: bzip2 on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with bzip2
+    usage: bzip2 [options] file
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      max: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Compress to standard output
+    - name: block_size
+      type: integer
+      cli: "-"
+      range:
+      - 1
+      - 9
+      description: Block size (100k-900k)
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    - name: test
+      cli: "-t"
+      description: Test integrity
+      default: false
+    name: compress
+  - description: Decompress bzip2 files
+    usage: bzip2 -d [options] file
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+    name: decompress

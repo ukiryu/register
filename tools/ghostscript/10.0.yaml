@@ -1,168 +1,149 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
 ---
-# Ghostscript tool profile for Ukiryu
-# Ghostscript PostScript and PDF interpreter
-
 name: ghostscript
 display_name: Ghostscript PS/PDF Interpreter
 homepage: https://www.ghostscript.com/
-version: "10.0"
-
+version: '10.0'
 aliases:
-  - gs
-  - ghostscript
-
+- gs
+- ghostscript
 version_detection:
   command: "--version"
   pattern: "(\\d+\\.\\d+)"
-  modern_threshold: "9.0"
-
+  modern_threshold: '9.0'
 search_paths:
   macos:
-    # Homebrew (Apple Silicon)
-    - "/opt/homebrew/bin/gs"
-    - "/opt/homebrew/bin/gsc"
-    # Homebrew (Intel)
-    - "/usr/local/bin/gs"
-    - "/usr/local/bin/gsc"
-    # MacPorts
-    - "/opt/local/bin/gs"
-    - "/opt/local/bin/gsc"
-    # Rudix
-    - "/usr/local/opt/ghostscript/bin/gs"
-    # Common third-party
-    - "/opt/bin/gs"
+  - "/opt/homebrew/bin/gs"
+  - "/opt/homebrew/bin/gsc"
+  - "/usr/local/bin/gs"
+  - "/usr/local/bin/gsc"
+  - "/opt/local/bin/gs"
+  - "/opt/local/bin/gsc"
+  - "/usr/local/opt/ghostscript/bin/gs"
+  - "/opt/bin/gs"
   linux:
-    # Standard system paths
-    - "/usr/bin/gs"
-    - "/usr/bin/gsc"
-    - "/usr/local/bin/gs"
-    - "/usr/local/bin/gsc"
-    # Snap
-    - "/snap/bin/ghostscript"
-    - "/snap/bin/gs"
-    # Flatpak
-    - "/var/lib/flatpak/exports/bin/org.gnu.ghostscript"
-    # Common third-party locations
-    - "/opt/bin/gs"
-    - "/opt/ghostscript/bin/gs"
-    # Version-specific paths (common in distros)
-    - "/usr/bin/gs-*"
+  - "/usr/bin/gs"
+  - "/usr/bin/gsc"
+  - "/usr/local/bin/gs"
+  - "/usr/local/bin/gsc"
+  - "/snap/bin/ghostscript"
+  - "/snap/bin/gs"
+  - "/var/lib/flatpak/exports/bin/org.gnu.ghostscript"
+  - "/opt/bin/gs"
+  - "/opt/ghostscript/bin/gs"
+  - "/usr/bin/gs-*"
   windows:
-    # Program Files (64-bit)
-    - "C:/Program Files/gs/gs*/bin/gswin64c.exe"
-    - "C:/Program Files/gs/gs*/bin/gswin32c.exe"
-    # Program Files (32-bit)
-    - "C:/Program Files (x86)/gs/gs*/bin/gswin64c.exe"
-    - "C:/Program Files (x86)/gs/gs*/bin/gswin32c.exe"
-    # Common Ghostscript installation paths
-    - "C:/gs/gs*/bin/gswin64c.exe"
-    - "C:/gs/gs*/bin/gswin32c.exe"
-    # Scoop
-    - "%USERPROFILE%/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
-    - "~/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
-    # Chocolatey
-    - "C:/ProgramData/chocolatey/lib/ghostscript/tools/gs*/bin/gswin64c.exe"
-    # User-local installation
-    - "%LOCALAPPDATA%/Programs/Ghostscript/gs*/bin/gswin64c.exe"
-    - "~/AppData/Local/Programs/Ghostscript/gs*/bin/gswin64c.exe"
-
+  - C:/Program Files/gs/gs*/bin/gswin64c.exe
+  - C:/Program Files/gs/gs*/bin/gswin32c.exe
+  - C:/Program Files (x86)/gs/gs*/bin/gswin64c.exe
+  - C:/Program Files (x86)/gs/gs*/bin/gswin32c.exe
+  - C:/gs/gs*/bin/gswin64c.exe
+  - C:/gs/gs*/bin/gswin32c.exe
+  - "%USERPROFILE%/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
+  - "~/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
+  - C:/ProgramData/chocolatey/lib/ghostscript/tools/gs*/bin/gswin64c.exe
+  - "%LOCALAPPDATA%/Programs/Ghostscript/gs*/bin/gswin64c.exe"
+  - "~/AppData/Local/Programs/Ghostscript/gs*/bin/gswin64c.exe"
 timeout: 120
-
 profiles:
-  - name: unix
-    display_name: Ghostscript on Unix
-    platforms:
-      - macos
-      - linux
-    shells:
-      - bash
-      - zsh
-      - fish
-      - sh
-    version: ">= 9.0"
-    option_style: single_dash_equals
-
-    commands:
-      convert:
-        description: "Convert PostScript or PDF to other formats"
-        usage: "gs [options] input-file"
-        subcommand: null
-
-        arguments:
-          - name: inputs
-            type: file
-            variadic: true
-            min: 1
-            position: last
-            description: "Input file(s) to process"
-
-        options:
-          - name: device
-            type: string
-            cli: "-sDEVICE="
-            description: "Output device (e.g., png16m, jpeg, pdfwrite)"
-
-          - name: output
-            type: file
-            cli: "-sOutputFile="
-            description: "Output file path"
-
-          - name: resolution
-            type: string
-            cli: "-r"
-            description: "Resolution (e.g., 150, 300, or 600x600)"
-
-          - name: first_page
-            type: integer
-            cli: "-dFirstPage"
-            description: "First page to process"
-
-          - name: last_page
-            type: integer
-            cli: "-dLastPage"
-            description: "Last page to process"
-
-          - name: pdf_settings
-            type: string
-            cli: "-dPDFSETTINGS="
-            values: [screen, ebook, printer, prepress, default]
-            description: "PDF preset settings"
-
-          - name: quality
-            type: integer
-            cli: "-dJPEGQ="
-            range: [1, 100]
-            description: "JPEG quality (1-100)"
-
-          - name: text_alpha
-            type: integer
-            cli: "-dTextAlphaBits"
-            range: [1, 4]
-            description: "Text anti-aliasing (1=no AA, 4=best)"
-
-          - name: graphics_alpha
-            type: integer
-            cli: "-dGraphicsAlphaBits"
-            range: [1, 4]
-            description: "Graphics anti-aliasing"
-
-        flags:
-          - name: quiet
-            cli: "-q"
-            description: "Quiet mode"
-            default: false
-
-          - name: batch
-            cli: "-dBATCH"
-            description: "Batch mode"
-            default: true
-
-          - name: no_pause
-            cli: "-dNOPAUSE"
-            description: "No pause"
-            default: true
-
-          - name: no_screen
-            cli: "-dNOSAFER"
-            description: "No safety features"
-            default: true
+- name: unix
+  display_name: Ghostscript on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  version: ">= 9.0"
+  option_style: single_dash_equals
+  commands:
+  - description: Convert PostScript or PDF to other formats
+    usage: gs [options] input-file
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input file(s) to process
+    options:
+    - name: device
+      type: string
+      cli: "-sDEVICE"
+      format: double_dash_equals
+      description: Output device (e.g., png16m, jpeg, pdfwrite)
+    - name: output
+      type: file
+      cli: "-sOutputFile"
+      format: double_dash_equals
+      description: Output file path
+    - name: resolution
+      type: string
+      cli: "-r"
+      description: Resolution (e.g., 150, 300, or 600x600)
+    - name: first_page
+      type: integer
+      cli: "-dFirstPage"
+      format: double_dash_equals
+      description: First page to process
+    - name: last_page
+      type: integer
+      cli: "-dLastPage"
+      format: double_dash_equals
+      description: Last page to process
+    - name: pdf_settings
+      type: string
+      cli: "-dPDFSETTINGS"
+      format: double_dash_equals
+      values:
+      - screen
+      - ebook
+      - printer
+      - prepress
+      - default
+      description: PDF preset settings
+    - name: quality
+      type: integer
+      cli: "-dJPEGQ"
+      format: double_dash_equals
+      range:
+      - 1
+      - 100
+      description: JPEG quality (1-100)
+    - name: text_alpha
+      type: integer
+      cli: "-dTextAlphaBits"
+      format: double_dash_equals
+      range:
+      - 1
+      - 4
+      description: Text anti-aliasing (1=no AA, 4=best)
+    - name: graphics_alpha
+      type: integer
+      cli: "-dGraphicsAlphaBits"
+      format: double_dash_equals
+      range:
+      - 1
+      - 4
+      description: Graphics anti-aliasing
+    flags:
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+    - name: batch
+      cli: "-dBATCH"
+      description: Batch mode
+      default: true
+    - name: no_pause
+      cli: "-dNOPAUSE"
+      description: No pause
+      default: true
+    - name: no_screen
+      cli: "-dNOSAFER"
+      description: No safety features
+      default: true
+    name: convert

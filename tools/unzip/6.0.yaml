@@ -1,0 +1,94 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: unzip
+display_name: Zip Extractor
+homepage: https://infozip.sourceforge.net/UnZip.html
+version: '6.0'
+aliases: []
+version_detection:
+  command: "-v"
+  pattern: UnZip ([\d.]+)
+  modern_threshold: '6.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/unzip"
+  - "/usr/local/bin/unzip"
+  - "/usr/bin/unzip"
+  linux:
+  - "/usr/bin/unzip"
+  - "/usr/local/bin/unzip"
+  windows:
+  - C:/Program Files/Git/usr/bin/unzip.exe
+  - C:/msys64/usr/bin/unzip.exe
+  - C:/cygwin64/bin/unzip.exe
+timeout: 120
+profiles:
+- name: unix
+  display_name: unzip on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Extract files from zip archive
+    usage: unzip [options] archive.zip
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Zip archive(s) to extract
+    options:
+    - name: output_dir
+      type: string
+      cli: "-d"
+      description: Extract to directory
+    flags:
+    - name: list
+      cli: "-l"
+      description: List archive contents
+      default: false
+    - name: test
+      cli: "-t"
+      description: Test archive integrity
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+    - name: overwrite
+      cli: "-o"
+      description: Overwrite existing files
+      default: false
+    - name: freshen
+      cli: "-f"
+      description: Freshen existing files only
+      default: false
+    - name: update
+      cli: "-u"
+      description: Update existing files and create new ones
+      default: false
+    - name: never_overwrite
+      cli: "-n"
+      description: Never overwrite files
+      default: false
+    - name: preserve_permissions
+      cli: "-X"
+      description: Restore UID/GID info
+      default: false
+    - name: junk_paths
+      cli: "-j"
+      description: Junk paths (don't make directories)
+      default: false
+    name: extract

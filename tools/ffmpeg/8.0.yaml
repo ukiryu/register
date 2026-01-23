@@ -1,395 +1,309 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
 ---
-# FFmpeg tool profile for Ukiryu
-# FFmpeg 8.x on Unix platforms
-
 name: ffmpeg
 display_name: FFmpeg Media Converter
 homepage: https://ffmpeg.org/
-version: "8.0"
-
+version: '8.0'
 aliases:
-  - ffmpeg
-  - ff
-
+- ffmpeg
+- ff
 version_detection:
   command: "-version"
-  pattern: "ffmpeg version (\\d+\\.\\d+)"
-  modern_threshold: "5.0"
-
+  pattern: ffmpeg version (\d+\.\d+)
+  modern_threshold: '5.0'
 search_paths:
   macos:
-    # Homebrew (Apple Silicon)
-    - "/opt/homebrew/bin/ffmpeg"
-    # Homebrew (Intel)
-    - "/usr/local/bin/ffmpeg"
-    # MacPorts
-    - "/opt/local/bin/ffmpeg"
-    # Rudix
-    - "/usr/local/opt/ffmpeg/bin/ffmpeg"
-    # Common third-party
-    - "/opt/bin/ffmpeg"
-    # Static builds from ffmpeg.org
-    - "/opt/ffmpeg/bin/ffmpeg"
+  - "/opt/homebrew/bin/ffmpeg"
+  - "/usr/local/bin/ffmpeg"
+  - "/opt/local/bin/ffmpeg"
+  - "/usr/local/opt/ffmpeg/bin/ffmpeg"
+  - "/opt/bin/ffmpeg"
+  - "/opt/ffmpeg/bin/ffmpeg"
   linux:
-    # Standard system paths
-    - "/usr/bin/ffmpeg"
-    - "/usr/local/bin/ffmpeg"
-    # Snap
-    - "/snap/bin/ffmpeg"
-    # Flatpak
-    - "/var/lib/flatpak/exports/bin/org.ffmpeg.FFmpeg"
-    # Common third-party locations
-    - "/opt/bin/ffmpeg"
-    - "/opt/ffmpeg/bin/ffmpeg"
-    # Static builds
-    - "/usr/local/ffmpeg/bin/ffmpeg"
+  - "/usr/bin/ffmpeg"
+  - "/usr/local/bin/ffmpeg"
+  - "/snap/bin/ffmpeg"
+  - "/var/lib/flatpak/exports/bin/org.ffmpeg.FFmpeg"
+  - "/opt/bin/ffmpeg"
+  - "/opt/ffmpeg/bin/ffmpeg"
+  - "/usr/local/ffmpeg/bin/ffmpeg"
   windows:
-    # Static builds from gyan.dev (common)
-    - "C:/ffmpeg/bin/ffmpeg.exe"
-    - "C:/Media/ffmpeg/bin/ffmpeg.exe"
-    # Program Files
-    - "C:/Program Files/ffmpeg/bin/ffmpeg.exe"
-    - "C:/Program Files (x86)/ffmpeg/bin/ffmpeg.exe"
-    # Scoop
-    - "%USERPROFILE%/scoop/apps/ffmpeg/current/ffmpeg.exe"
-    - "~/scoop/apps/ffmpeg/current/ffmpeg.exe"
-    # Chocolatey
-    - "C:/ProgramData/chocolatey/lib/ffmpeg/tools/ffmpeg.exe"
-    # User-local installation
-    - "%LOCALAPPDATA%/Programs/ffmpeg/ffmpeg.exe"
-    - "~/AppData/Local/Programs/ffmpeg/ffmpeg.exe"
-
+  - C:/ffmpeg/bin/ffmpeg.exe
+  - C:/Media/ffmpeg/bin/ffmpeg.exe
+  - C:/Program Files/ffmpeg/bin/ffmpeg.exe
+  - C:/Program Files (x86)/ffmpeg/bin/ffmpeg.exe
+  - "%USERPROFILE%/scoop/apps/ffmpeg/current/ffmpeg.exe"
+  - "~/scoop/apps/ffmpeg/current/ffmpeg.exe"
+  - C:/ProgramData/chocolatey/lib/ffmpeg/tools/ffmpeg.exe
+  - "%LOCALAPPDATA%/Programs/ffmpeg/ffmpeg.exe"
+  - "~/AppData/Local/Programs/ffmpeg/ffmpeg.exe"
 timeout: 3600
-
 profiles:
-  # FFmpeg on Unix (macOS, Linux) with Bash/Zsh/Fish/Sh
-  - name: modern_unix
-    display_name: FFmpeg on Unix
-    platforms:
-      - macos
-      - linux
-    shells:
-      - bash
-      - zsh
-      - fish
-      - sh
-    version: ">= 5.0"
-    option_style: single_dash_space
-
-    commands:
-      # Convert command - transcode media files
-      convert:
-        description: "Convert media files between formats"
-        usage: "ffmpeg [global_options] [input_options] -i input [output_options] output"
-
-        arguments:
-          # Input files (specified with -i options, but we track them here)
-          - name: inputs
-            type: file
-            variadic: true
-            min: 1
-            position: 1
-            description: "Input file(s) (use -i before each)"
-
-          # Output file
-          - name: output
-            type: file
-            required: true
-            position: last
-            description: "Output file"
-
-        options:
-          # Input file specification (can have multiple)
-          - name: input
-            type: file
-            cli: "-i"
-            format: single_dash_space
-            description: "Input file URL (can be specified multiple times)"
-
-          # Codec options
-          - name: codec
-            type: string
-            cli: "-c"
-            format: single_dash_space
-            description: "Codec name (e.g., 'copy', 'libx264', 'aac')"
-
-          - name: video_codec
-            type: string
-            cli: "-c:v"
-            format: single_dash_space
-            description: "Video codec"
-
-          - name: audio_codec
-            type: string
-            cli: "-c:a"
-            format: single_dash_space
-            description: "Audio codec"
-
-          - name: subtitle_codec
-            type: string
-            cli: "-c:s"
-            format: single_dash_space
-            description: "Subtitle codec"
-
-          # Bitrate options
-          - name: bitrate
-            type: string
-            cli: "-b"
-            format: single_dash_space
-            description: "Bitrate (e.g., '1M', '500k')"
-
-          - name: video_bitrate
-            type: string
-            cli: "-b:v"
-            format: single_dash_space
-            description: "Video bitrate"
-
-          - name: audio_bitrate
-            type: string
-            cli: "-b:a"
-            format: single_dash_space
-            description: "Audio bitrate"
-
-          # Frame rate
-          - name: frame_rate
-            type: string
-            cli: "-r"
-            format: single_dash_space
-            description: "Frame rate (e.g., '24', '29.97', '30')"
-
-          # Size/Resolution
-          - name: size
-            type: string
-            cli: "-s"
-            format: single_dash_space
-            description: "Frame size (e.g., '1920x1080', '1280x720')"
-
-          - name: video_size
-            type: string
-            cli: "-vsize"
-            format: single_dash_space
-            description: "Video frame size"
-
-          # Video filter
-          - name: video_filter
-            type: string
-            cli: "-vf"
-            format: single_dash_space
-            description: "Video filter graph"
-
-          - name: filter_complex
-            type: string
-            cli: "-filter_complex"
-            format: single_dash_space
-            description: "Complex filter graph"
-
-          # Audio filter
-          - name: audio_filter
-            type: string
-            cli: "-af"
-            format: single_dash_space
-            description: "Audio filter graph"
-
-          # Time options
-          - name: start_time
-            type: string
-            cli: "-ss"
-            format: single_dash_space
-            description: "Start time (e.g., '00:01:30', '90')"
-
-          - name: end_time
-            type: string
-            cli: "-to"
-            format: single_dash_space
-            description: "End time"
-
-          - name: duration
-            type: string
-            cli: "-t"
-            format: single_dash_space
-            description: "Duration (e.g., '00:05:00', '300')"
-
-          # Stream mapping
-          - name: map
-            type: string
-            cli: "-map"
-            format: single_dash_space
-            description: "Map stream from input to output (e.g., '0:v', '0:a')"
-
-          # Format options
-          - name: format
-            type: string
-            cli: "-f"
-            format: single_dash_space
-            description: "Output format"
-
-          - name: input_format
-            type: string
-            cli: "-f"
-            format: single_dash_space
-            description: "Input format (must come before -i)"
-
-          # Quality options
-          - name: quality
-            type: integer
-            cli: "-q"
-            format: single_dash_space
-            range: [1, 31]
-            description: "Quality (1-31, lower is better for some codecs)"
-
-          - name: video_quality
-            type: integer
-            cli: "-q:v"
-            format: single_dash_space
-            range: [1, 31]
-            description: "Video quality (CRF for libx264)"
-
-          - name: audio_quality
-            type: integer
-            cli: "-q:a"
-            format: single_dash_space
-            range: [1, 10]
-            description: "Audio quality"
-
-          # Preset
-          - name: preset
-            type: string
-            cli: "-preset"
-            format: single_dash_space
-            values:
-              - ultrafast
-              - superfast
-              - veryfast
-              - faster
-              - fast
-              - medium
-              - slow
-              - slower
-              - veryslow
-            description: "Encoder preset (speed vs compression)"
-
-          # Tune
-          - name: tune
-            type: string
-            cli: "-tune"
-            format: single_dash_space
-            values:
-              - film
-              - animation
-              - grain
-              - stillimage
-              - fastdecode
-              - zerolatency
-            description: "Encoder tuning"
-
-          # Aspect ratio
-          - name: aspect
-            type: string
-            cli: "-aspect"
-            format: single_dash_space
-            description: "Aspect ratio (e.g., '16:9', '4:3')"
-
-          # Audio options
-          - name: audio_channels
-            type: integer
-            cli: "-ac"
-            format: single_dash_space
-            description: "Number of audio channels"
-
-          - name: audio_sample_rate
-            type: integer
-            cli: "-ar"
-            format: single_dash_space
-            values: [8000, 11025, 16000, 22050, 44100, 48000, 96000]
-            description: "Audio sampling rate"
-
-          # Pixel format
-          - name: pix_fmt
-            type: string
-            cli: "-pix_fmt"
-            format: single_dash_space
-            values:
-              - yuv420p
-              - yuv422p
-              - yuv444p
-              - rgb24
-              - rgba
-            description: "Pixel format"
-
-          # Threads
-          - name: threads
-            type: integer
-            cli: "-threads"
-            format: single_dash_space
-            description: "Number of threads to use"
-
-          # Buffer size
-          - name: bufsize
-            type: string
-            cli: "-bufsize"
-            format: single_dash_space
-            description: "Decoder buffer size"
-
-          # Metadata
-          - name: metadata
-            type: string
-            cli: "-metadata"
-            format: single_dash_space
-            description: "Metadata key=value"
-
-        flags:
-          # Overwrite output
-          - name: overwrite
-            cli: "-y"
-            description: "Overwrite output file without asking"
-            default: false
-
-          # No overwrite
-          - name: no_overwrite
-            cli: "-n"
-            description: "Do not overwrite output file"
-            default: false
-
-          # Quiet mode
-          - name: quiet
-            cli: "-quiet"
-            cli_short: "-loglevel quiet"
-            description: "Suppress output"
-            default: false
-
-          # Verbose mode
-          - name: verbose
-            cli: "-v"
-            description: "Verbose logging"
-            default: false
-
-          # Hide banner
-          - name: hide_banner
-            cli: "-hide_banner"
-            description: "Hide copyright banner"
-            default: false
-
-          # Stream copy (no re-encoding)
-          - name: stream_copy
-            cli: "-c"
-            cli_short: "-c copy"
-            description: "Copy streams without re-encoding"
-            default: false
-
-          # Disable audio
-          - name: no_audio
-            cli: "-an"
-            description: "Disable audio recording"
-            default: false
-
-          # Disable video
-          - name: no_video
-            cli: "-vn"
-            description: "Disable video recording"
-            default: false
-
-          # Disable subtitles
-          - name: no_subtitle
-            cli: "-sn"
-            description: "Disable subtitle recording"
-            default: false
+- name: modern_unix
+  display_name: FFmpeg on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  version: ">= 5.0"
+  option_style: single_dash_space
+  commands:
+  - description: Convert media files between formats
+    usage: ffmpeg [global_options] [input_options] -i input [output_options] output
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: 1
+      description: Input file(s) (use -i before each)
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: input
+      type: file
+      cli: "-i"
+      format: single_dash_space
+      description: Input file URL (can be specified multiple times)
+    - name: codec
+      type: string
+      cli: "-c"
+      format: single_dash_space
+      description: Codec name (e.g., 'copy', 'libx264', 'aac')
+    - name: video_codec
+      type: string
+      cli: "-c:v"
+      format: single_dash_space
+      description: Video codec
+    - name: audio_codec
+      type: string
+      cli: "-c:a"
+      format: single_dash_space
+      description: Audio codec
+    - name: subtitle_codec
+      type: string
+      cli: "-c:s"
+      format: single_dash_space
+      description: Subtitle codec
+    - name: bitrate
+      type: string
+      cli: "-b"
+      format: single_dash_space
+      description: Bitrate (e.g., '1M', '500k')
+    - name: video_bitrate
+      type: string
+      cli: "-b:v"
+      format: single_dash_space
+      description: Video bitrate
+    - name: audio_bitrate
+      type: string
+      cli: "-b:a"
+      format: single_dash_space
+      description: Audio bitrate
+    - name: frame_rate
+      type: string
+      cli: "-r"
+      format: single_dash_space
+      description: Frame rate (e.g., '24', '29.97', '30')
+    - name: size
+      type: string
+      cli: "-s"
+      format: single_dash_space
+      description: Frame size (e.g., '1920x1080', '1280x720')
+    - name: video_size
+      type: string
+      cli: "-vsize"
+      format: single_dash_space
+      description: Video frame size
+    - name: video_filter
+      type: string
+      cli: "-vf"
+      format: single_dash_space
+      description: Video filter graph
+    - name: filter_complex
+      type: string
+      cli: "-filter_complex"
+      format: single_dash_space
+      description: Complex filter graph
+    - name: audio_filter
+      type: string
+      cli: "-af"
+      format: single_dash_space
+      description: Audio filter graph
+    - name: start_time
+      type: string
+      cli: "-ss"
+      format: single_dash_space
+      description: Start time (e.g., '00:01:30', '90')
+    - name: end_time
+      type: string
+      cli: "-to"
+      format: single_dash_space
+      description: End time
+    - name: duration
+      type: string
+      cli: "-t"
+      format: single_dash_space
+      description: Duration (e.g., '00:05:00', '300')
+    - name: map
+      type: string
+      cli: "-map"
+      format: single_dash_space
+      description: Map stream from input to output (e.g., '0:v', '0:a')
+    - name: format
+      type: string
+      cli: "-f"
+      format: single_dash_space
+      description: Output format
+    - name: input_format
+      type: string
+      cli: "-f"
+      format: single_dash_space
+      description: Input format (must come before -i)
+    - name: quality
+      type: integer
+      cli: "-q"
+      format: single_dash_space
+      range:
+      - 1
+      - 31
+      description: Quality (1-31, lower is better for some codecs)
+    - name: video_quality
+      type: integer
+      cli: "-q:v"
+      format: single_dash_space
+      range:
+      - 1
+      - 31
+      description: Video quality (CRF for libx264)
+    - name: audio_quality
+      type: integer
+      cli: "-q:a"
+      format: single_dash_space
+      range:
+      - 1
+      - 10
+      description: Audio quality
+    - name: preset
+      type: string
+      cli: "-preset"
+      format: single_dash_space
+      values:
+      - ultrafast
+      - superfast
+      - veryfast
+      - faster
+      - fast
+      - medium
+      - slow
+      - slower
+      - veryslow
+      description: Encoder preset (speed vs compression)
+    - name: tune
+      type: string
+      cli: "-tune"
+      format: single_dash_space
+      values:
+      - film
+      - animation
+      - grain
+      - stillimage
+      - fastdecode
+      - zerolatency
+      description: Encoder tuning
+    - name: aspect
+      type: string
+      cli: "-aspect"
+      format: single_dash_space
+      description: Aspect ratio (e.g., '16:9', '4:3')
+    - name: audio_channels
+      type: integer
+      cli: "-ac"
+      format: single_dash_space
+      description: Number of audio channels
+    - name: audio_sample_rate
+      type: integer
+      cli: "-ar"
+      format: single_dash_space
+      values:
+      - 8000
+      - 11025
+      - 16000
+      - 22050
+      - 44100
+      - 48000
+      - 96000
+      description: Audio sampling rate
+    - name: pix_fmt
+      type: string
+      cli: "-pix_fmt"
+      format: single_dash_space
+      values:
+      - yuv420p
+      - yuv422p
+      - yuv444p
+      - rgb24
+      - rgba
+      description: Pixel format
+    - name: threads
+      type: integer
+      cli: "-threads"
+      format: single_dash_space
+      description: Number of threads to use
+    - name: bufsize
+      type: string
+      cli: "-bufsize"
+      format: single_dash_space
+      description: Decoder buffer size
+    - name: metadata
+      type: string
+      cli: "-metadata"
+      format: single_dash_space
+      description: Metadata key=value
+    flags:
+    - name: overwrite
+      cli: "-y"
+      description: Overwrite output file without asking
+      default: false
+    - name: no_overwrite
+      cli: "-n"
+      description: Do not overwrite output file
+      default: false
+    - name: quiet
+      cli: "-quiet"
+      cli_short: "-loglevel quiet"
+      description: Suppress output
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose logging
+      default: false
+    - name: hide_banner
+      cli: "-hide_banner"
+      description: Hide copyright banner
+      default: false
+    - name: stream_copy
+      cli: "-c"
+      cli_short: "-c copy"
+      description: Copy streams without re-encoding
+      default: false
+    - name: no_audio
+      cli: "-an"
+      description: Disable audio recording
+      default: false
+    - name: no_video
+      cli: "-vn"
+      description: Disable video recording
+      default: false
+    - name: no_subtitle
+      cli: "-sn"
+      description: Disable subtitle recording
+      default: false
+    name: convert

@@ -1,0 +1,223 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: yq
+display_name: yq Data Processor
+homepage: https://mikefarah.gitbook.io/yq/
+version: '4.50'
+aliases:
+- yq
+version_detection:
+  command: "--version"
+  pattern: version v([\d.]+)
+  modern_threshold: '4.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/yq"
+  - "/usr/local/bin/yq"
+  - "/usr/bin/yq"
+  linux:
+  - "/usr/bin/yq"
+  - "/usr/local/bin/yq"
+  - "/snap/bin/yq"
+  windows:
+  - C:/Program Files/yq/yq.exe
+  - C:/Users/*/scoop/apps/yq/current/yq.exe
+  - "%USERPROFILE%/scoop/apps/yq/current/yq.exe"
+timeout: 60
+profiles:
+- name: unix
+  display_name: yq on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_space
+  commands:
+  - description: Apply expression to each document in sequence
+    usage: yq eval [expression] [files...]
+    subcommand: eval
+    arguments:
+    - name: expression
+      type: string
+      required: true
+      position: 1
+      description: yq expression to apply
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: 'Input file(s) (default: stdin)'
+    options:
+    - name: format
+      type: string
+      cli: "-f"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Output format
+    - name: input_format
+      type: string
+      cli: "-p"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Input format
+    - name: output
+      type: file
+      cli: "-o"
+      description: 'Output file (default: stdout)'
+    - name: separator
+      type: string
+      cli: "--separator"
+      description: Custom separator for multiple documents
+    - name: doc_separator
+      type: string
+      cli: "--doc-separator"
+      description: Custom document separator
+    - name: front_matter
+      type: string
+      cli: "--front-matter"
+      description: Process front matter (e.g. '---')
+    - name: select
+      type: string
+      cli: "--select"
+      description: Select specific nodes by path
+    flags:
+    - name: null_input
+      cli: "-n"
+      description: Null input
+      default: false
+    - name: raw_output
+      cli: "-r"
+      description: Raw string output
+      default: false
+    - name: raw_output_mode
+      cli: "--raw-output"
+      description: Force raw string output
+      default: false
+    - name: unescaped
+      cli: "-I"
+      description: Unescaped output
+      default: false
+    - name: yaml_output
+      cli: "-Y"
+      description: YAML output
+      default: false
+    - name: colors_output
+      cli: "-C"
+      description: Colors output
+      default: false
+    - name: json_flags
+      cli: "-j"
+      description: JSON flags output
+      default: false
+    - name: parse_only
+      cli: "--parse-only"
+      description: Only parse, don't evaluate
+      default: false
+    - name: exit_status
+      cli: "-e"
+      description: Exit status on errors
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose output
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet output
+      default: false
+    - name: help
+      cli: "-h"
+      description: Show help
+      default: false
+    name: eval
+  - description: Evaluate expression on all documents at once
+    usage: yq eval-all [expression] [files...]
+    subcommand: eval-all
+    arguments:
+    - name: expression
+      type: string
+      required: true
+      position: 1
+      description: yq expression to apply
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: 'Input file(s) (default: stdin)'
+    options:
+    - name: format
+      type: string
+      cli: "-f"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Output format
+    - name: input_format
+      type: string
+      cli: "-p"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Input format
+    - name: output
+      type: file
+      cli: "-o"
+      description: 'Output file (default: stdout)'
+    name: eval_all
+  - description: Evaluate expression and update file in place
+    usage: yq eval -i [expression] [files...]
+    subcommand: eval
+    arguments:
+    - name: expression
+      type: string
+      required: true
+      position: 1
+      description: yq expression to apply
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to update in place
+    options:
+    - name: format
+      type: string
+      cli: "-f"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Output format
+    flags:
+    - name: in_place
+      cli: "-i"
+      description: Edit files in place
+      default: true
+    name: eval_in_place

@@ -1,0 +1,150 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: ping_bsd
+display_name: BSD ping (macOS/*BSD)
+homepage: https://www.freebsd.org/cgi/man.cgi?query=ping
+version: '1.0'
+implements: ping
+version_detection:
+  command:
+    - "-c"
+    - "1"
+    - "localhost"
+  pattern: ''
+  modern_threshold: '1.0'
+search_paths:
+  macos:
+  - "/sbin/ping"
+  - "/usr/sbin/ping"
+  - "/bin/ping"
+  - "/usr/bin/ping"
+  freebsd:
+  - "/sbin/ping"
+  - "/usr/sbin/ping"
+  openbsd:
+  - "/sbin/ping"
+  - "/usr/sbin/ping"
+  netbsd:
+  - "/sbin/ping"
+  - "/usr/sbin/ping"
+timeout: 30
+profiles:
+- name: bsd
+  display_name: BSD ping
+  platforms:
+  - macos
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Send ICMP echo requests to host
+    usage: ping [options] host
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: host
+      type: string
+      required: true
+      position: last
+      description: Host to ping
+    options:
+    - name: count
+      type: integer
+      cli: "-c"
+      description: Stop after count packets
+    - name: wait
+      type: float
+      cli: "-i"
+      description: Wait wait seconds between packets
+    - name: packet_size
+      type: integer
+      cli: "-s"
+      description: Packet data size (bytes)
+    - name: timeout
+      type: integer
+      cli: "-W"
+      description: Timeout in seconds before exit
+    - name: interface
+      type: string
+      cli: "-I"
+      description: Multicast interface address
+    - name: ttl
+      type: integer
+      cli: "-m"
+      description: Time To Live (IP hops)
+    - name: pattern
+      type: string
+      cli: "-p"
+      description: Fill pattern (up to 16 bytes)
+    - name: source
+      type: string
+      cli: "-S"
+      description: Source address
+    - name: preload
+      type: integer
+      cli: "-l"
+      description: Send preload packets (superuser only)
+    - name: boundif
+      type: string
+      cli: "-b"
+      description: Bind to interface (Apple/macOS extension)
+    - name: sweepmaxsize
+      type: integer
+      cli: "-G"
+      description: Maximum ICMP payload size for sweeps
+    - name: sweepminsize
+      type: integer
+      cli: "-g"
+      description: Starting ICMP payload size for sweeps
+    - name: sweepincrsize
+      type: integer
+      cli: "-h"
+      description: Increment size for sweeps
+    - name: traffic_class
+      type: string
+      cli: "-k"
+      description: Traffic class (Apple extension)
+    - name: net_service_type
+      type: string
+      cli: "-K"
+      description: Network service type (Apple extension)
+    flags:
+    - name: numeric
+      cli: "-n"
+      description: Numeric output only, no DNS lookup
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet output, summary only
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose output
+      default: false
+    - name: audible
+      cli: "-A"
+      description: Audible bell for missing packets
+      default: false
+    - name: no_loopback
+      cli: "-L"
+      description: Suppress multicast loopback
+      default: false
+    - name: flood
+      cli: "-f"
+      description: Flood ping (superuser only)
+      default: false
+    - name: dont_fragment
+      cli: "-D"
+      description: Set Don't Fragment bit
+      default: false
+    - name: debug
+      cli: "-d"
+      description: Set SO_DEBUG socket option
+      default: false
+    - name: so_debug
+      cli: "-o"
+      description: Exit successfully after one reply
+      default: false
+    name: ping

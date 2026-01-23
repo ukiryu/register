@@ -52,7 +52,7 @@ Key fields:
 `name`:: Tool identifier (e.g., "imagemagick")
 `display_name`:: Human-readable name
 `version`:: Default version
-`aliases`:: Alternative names for finding the tool
+`implements`:: Interface contract this tool implements (e.g., "ping" for ping_gnu, ping_bsd)
 `version_detection`:: How to detect installed version
 `search_paths`:: Platform-specific executable locations
 `profiles`:: Array of platform/shell-specific configurations

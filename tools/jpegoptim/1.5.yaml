@@ -1,239 +1,169 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
 ---
-# jpegoptim tool profile for Ukiryu
-# jpegoptim for JPEG optimization
-
 name: jpegoptim
 display_name: JPEG Image Optimizer
 homepage: https://github.com/tjko/jpegoptim
-version: "1.5"
-
+version: '1.5'
 aliases:
-  - jpegopt
-
+- jpegopt
 version_detection:
   command: "--version"
-  pattern: "jpegoptim v(\\d+\\.\\d+)"
-
+  pattern: jpegoptim v(\d+\.\d+)
 search_paths:
   macos:
-    # Homebrew (Apple Silicon)
-    - "/opt/homebrew/bin/jpegoptim"
-    # Homebrew (Intel)
-    - "/usr/local/bin/jpegoptim"
-    # MacPorts
-    - "/opt/local/bin/jpegoptim"
-    # Rudix
-    - "/usr/local/opt/jpegoptim/bin/jpegoptim"
-    # Common third-party
-    - "/opt/bin/jpegoptim"
+  - "/opt/homebrew/bin/jpegoptim"
+  - "/usr/local/bin/jpegoptim"
+  - "/opt/local/bin/jpegoptim"
+  - "/usr/local/opt/jpegoptim/bin/jpegoptim"
+  - "/opt/bin/jpegoptim"
   linux:
-    # Standard system paths
-    - "/usr/bin/jpegoptim"
-    - "/usr/local/bin/jpegoptim"
-    # Snap
-    - "/snap/bin/jpegoptim"
-    # Common third-party locations
-    - "/opt/bin/jpegoptim"
-    # Source builds often go here
-    - "/usr/local/jpegoptim/bin/jpegoptim"
+  - "/usr/bin/jpegoptim"
+  - "/usr/local/bin/jpegoptim"
+  - "/snap/bin/jpegoptim"
+  - "/opt/bin/jpegoptim"
+  - "/usr/local/jpegoptim/bin/jpegoptim"
   windows:
-    # Static builds (uncommon but possible)
-    - "C:/jpegoptim/jpegoptim.exe"
-    - "C:/Media/jpegoptim/jpegoptim.exe"
-    # Scoop
-    - "%USERPROFILE%/scoop/apps/jpegoptim/current/jpegoptim.exe"
-    - "~/scoop/apps/jpegoptim/current/jpegoptim.exe"
-    # Common locations
-    - "C:/Tools/jpegoptim/jpegoptim.exe"
-    # User-local installation
-    - "%LOCALAPPDATA%/Programs/jpegoptim/jpegoptim.exe"
-    - "~/AppData/Local/Programs/jpegoptim/jpegoptim.exe"
-
+  - C:/jpegoptim/jpegoptim.exe
+  - C:/Media/jpegoptim/jpegoptim.exe
+  - "%USERPROFILE%/scoop/apps/jpegoptim/current/jpegoptim.exe"
+  - "~/scoop/apps/jpegoptim/current/jpegoptim.exe"
+  - C:/Tools/jpegoptim/jpegoptim.exe
+  - "%LOCALAPPDATA%/Programs/jpegoptim/jpegoptim.exe"
+  - "~/AppData/Local/Programs/jpegoptim/jpegoptim.exe"
 timeout: 60
-
 profiles:
-  # jpegoptim on Unix (macOS, Linux)
-  - name: unix
-    display_name: jpegoptim on Unix
-    platforms:
-      - macos
-      - linux
-    shells:
-      - bash
-      - zsh
-      - fish
-      - sh
-    version: ">= 1.0"
-    option_style: single_dash_space
-
-    commands:
-      # Optimize command - optimize JPEG files
-      optimize:
-        description: "Optimize/compress JPEG files losslessly or with lossy compression"
-        usage: "jpegoptim [options] [files]"
-
-        arguments:
-          - name: inputs
-            type: file
-            variadic: true
-            min: 1
-            position: last
-            description: "JPEG file(s) to optimize"
-
-        options:
-          # Destination directory
-          - name: dest
-            type: file
-            cli: "-d"
-            format: single_dash_space
-            description: "Alternative destination directory for optimized files"
-
-          # Maximum quality (enables lossy mode)
-          - name: max
-            type: integer
-            cli: "-m"
-            format: single_dash_space
-            range: [0, 100]
-            description: "Maximum image quality (0-100, disables lossless mode)"
-
-          # Target size (enables lossy mode)
-          - name: size
-            type: string
-            cli: "-S"
-            format: single_dash_space
-            description: "Target size in KB (1-n) or percentage (1%-99%)"
-
-          # Threshold - skip if compression gain is below this
-          - name: threshold
-            type: integer
-            cli: "-T"
-            format: single_dash_space
-            range: [0, 100]
-            description: "Skip if compression gain is below threshold (%)"
-
-        flags:
-          # Force optimization
-          - name: force
-            cli: "-f"
-            description: "Force optimization even if result is larger"
-            default: false
-
-          # Help
-          - name: help
-            cli: "-h"
-            description: "Display usage information"
-            default: false
-
-          # No action (dry run)
-          - name: noaction
-            cli: "-n"
-            description: "Don't optimize, just print results"
-            default: false
-
-          # CSV output
-          - name: csv
-            cli: "-b"
-            description: "Print progress in CSV format"
-            default: false
-
-          # Overwrite
-          - name: overwrite
-            cli: "-o"
-            description: "Overwrite target file even if it exists"
-            default: false
-
-          # Preserve timestamps
-          - name: preserve
-            cli: "-p"
-            description: "Preserve file modification times"
-            default: false
-
-          # Preserve permissions
-          - name: preserve_perms
-            cli: "-P"
-            description: "Preserve file permissions"
-            default: false
-
-          # Quiet mode
-          - name: quiet
-            cli: "-q"
-            description: "Quiet mode"
-            default: false
-
-          # Print totals
-          - name: totals
-            cli: "-t"
-            description: "Print totals after processing"
-            default: false
-
-          # Verbose mode
-          - name: verbose
-            cli: "-v"
-            description: "Enable verbose mode"
-            default: false
-
-          # Force all normal (non-progressive)
-          - name: all_normal
-            cli: "--all-normal"
-            description: "Force all output to be non-progressive"
-            default: false
-
-          # Force all progressive
-          - name: all_progressive
-            cli: "--all-progressive"
-            description: "Force all output to be progressive"
-            default: false
-
-          # Strip all markers
-          - name: strip_all
-            cli: "-s"
-            description: "Strip all markers from output"
-            default: false
-
-          # Strip none
-          - name: strip_none
-            cli: "--strip-none"
-            description: "Preserve all markers"
-            default: false
-
-          # Strip comment markers
-          - name: strip_com
-            cli: "--strip-com"
-            description: "Strip Comment markers"
-            default: false
-
-          # Strip EXIF markers
-          - name: strip_exif
-            cli: "--strip-exif"
-            description: "Strip EXIF markers"
-            default: false
-
-          # Strip IPTC markers
-          - name: strip_iptc
-            cli: "--strip-iptc"
-            description: "Strip IPTC markers"
-            default: false
-
-          # Strip ICC profiles
-          - name: strip_icc
-            cli: "--strip-icc"
-            description: "Strip ICC profiles"
-            default: false
-
-          # Strip XMP profiles
-          - name: strip_xmp
-            cli: "--strip-xmp"
-            description: "Strip XMP profiles"
-            default: false
-
-          # Output to stdout
-          - name: stdout
-            cli: "--stdout"
-            description: "Send output to stdout"
-            default: false
-
-          # Read from stdin
-          - name: stdin
-            cli: "--stdin"
-            description: "Read input from stdin"
-            default: false
+- name: unix
+  display_name: jpegoptim on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  version: ">= 1.0"
+  option_style: single_dash_space
+  commands:
+  - description: Optimize/compress JPEG files losslessly or with lossy compression
+    usage: jpegoptim [options] [files]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: JPEG file(s) to optimize
+    options:
+    - name: dest
+      type: file
+      cli: "-d"
+      format: single_dash_space
+      description: Alternative destination directory for optimized files
+    - name: max
+      type: integer
+      cli: "-m"
+      format: single_dash_space
+      range:
+      - 0
+      - 100
+      description: Maximum image quality (0-100, disables lossless mode)
+    - name: size
+      type: string
+      cli: "-S"
+      format: single_dash_space
+      description: Target size in KB (1-n) or percentage (1%-99%)
+    - name: threshold
+      type: integer
+      cli: "-T"
+      format: single_dash_space
+      range:
+      - 0
+      - 100
+      description: Skip if compression gain is below threshold (%)
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force optimization even if result is larger
+      default: false
+    - name: help
+      cli: "-h"
+      description: Display usage information
+      default: false
+    - name: noaction
+      cli: "-n"
+      description: Don't optimize, just print results
+      default: false
+    - name: csv
+      cli: "-b"
+      description: Print progress in CSV format
+      default: false
+    - name: overwrite
+      cli: "-o"
+      description: Overwrite target file even if it exists
+      default: false
+    - name: preserve
+      cli: "-p"
+      description: Preserve file modification times
+      default: false
+    - name: preserve_perms
+      cli: "-P"
+      description: Preserve file permissions
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+    - name: totals
+      cli: "-t"
+      description: Print totals after processing
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Enable verbose mode
+      default: false
+    - name: all_normal
+      cli: "--all-normal"
+      description: Force all output to be non-progressive
+      default: false
+    - name: all_progressive
+      cli: "--all-progressive"
+      description: Force all output to be progressive
+      default: false
+    - name: strip_all
+      cli: "-s"
+      description: Strip all markers from output
+      default: false
+    - name: strip_none
+      cli: "--strip-none"
+      description: Preserve all markers
+      default: false
+    - name: strip_com
+      cli: "--strip-com"
+      description: Strip Comment markers
+      default: false
+    - name: strip_exif
+      cli: "--strip-exif"
+      description: Strip EXIF markers
+      default: false
+    - name: strip_iptc
+      cli: "--strip-iptc"
+      description: Strip IPTC markers
+      default: false
+    - name: strip_icc
+      cli: "--strip-icc"
+      description: Strip ICC profiles
+      default: false
+    - name: strip_xmp
+      cli: "--strip-xmp"
+      description: Strip XMP profiles
+      default: false
+    - name: stdout
+      cli: "--stdout"
+      description: Send output to stdout
+      default: false
+    - name: stdin
+      cli: "--stdin"
+      description: Read input from stdin
+      default: false
+    name: optimize

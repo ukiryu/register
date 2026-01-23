@@ -1,0 +1,107 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: sort
+display_name: Text Sort Utility
+homepage: https://www.gnu.org/software/coreutils/sort/
+version: '9.5'
+aliases: []
+version_detection:
+  command: "--version"
+  pattern: "([\\d.]+)"
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/sort"
+  - "/usr/local/bin/sort"
+  - "/usr/bin/sort"
+  linux:
+  - "/usr/bin/sort"
+  - "/usr/local/bin/sort"
+  windows:
+  - C:/Program Files/Git/usr/bin/sort.exe
+  - C:/msys64/usr/bin/sort.exe
+  - C:/cygwin64/bin/sort.exe
+timeout: 60
+profiles:
+- name: unix
+  display_name: sort on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Sort text lines
+    usage: sort [options] [file]
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: 'Input file(s) (default: stdin)'
+    options:
+    - name: output
+      type: file
+      cli: "-o"
+      description: Write to file instead of stdout
+    - name: key
+      type: string
+      cli: "-k"
+      variadic: true
+      description: Sort by a key (POS1,POS2)
+    - name: field_separator
+      type: string
+      cli: "-t"
+      description: Field separator character
+    flags:
+    - name: numeric_sort
+      cli: "-n"
+      description: Compare according to string numerical value
+      default: false
+    - name: human_numeric
+      cli: "-h"
+      description: Compare human-readable numbers (e.g., 1K, 2M)
+      default: false
+    - name: month_sort
+      cli: "-M"
+      description: Compare according to month order
+      default: false
+    - name: version_sort
+      cli: "-V"
+      description: Natural sort of version numbers
+      default: false
+    - name: random_sort
+      cli: "-R"
+      description: Sort by random hash of keys
+      default: false
+    - name: reverse
+      cli: "-r"
+      description: Reverse the result of comparisons
+      default: false
+    - name: unique
+      cli: "-u"
+      description: Output only the first of an equal run
+      default: false
+    - name: check
+      cli: "-c"
+      description: Check if input is sorted
+      default: false
+    - name: ignore_case
+      cli: "-f"
+      description: Fold lower case to upper case for sorting
+      default: false
+    - name: ignore_blanks
+      cli: "-b"
+      description: Ignore leading blanks
+      default: false
+    - name: zero_terminated
+      cli: "-z"
+      description: Lines end with 0 byte, not newline
+      default: false
+    name: sort

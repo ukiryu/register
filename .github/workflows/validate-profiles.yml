@@ -1,0 +1,64 @@
+# frozen_string_literal: true
+
+name: Validate Tool Profiles
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**/*.yaml'
+
+jobs:
+  validate-yaml:
+    name: Validate YAML profiles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: false
+
+      - name: Install dependencies
+        run: |
+          gem install json-schema
+
+      - name: Get changed YAML files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            tools/**/*.yaml
+
+      - name: Validate each changed YAML file
+        if: steps.changed-files.outputs.any_changed
+        run: |
+          SCHEMA_PATH="${{ github.workspace }}/../schema/tool-profile.schema.yaml"
+
+          # Get the parent directory of this repo (where schema should be)
+          SCHEMA_PATH="${{ github.workspace }}/../../schema/tool-profile.schema.yaml"
+
+          echo "Schema path: $SCHEMA_PATH"
+
+          # For each changed file, validate against schema
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Validating: $file"
+
+            ruby -rjson-schema -e "
+              require 'yaml'
+
+              schema = YAML.load_file('$SCHEMA_PATH')
+              data = YAML.load_file('$file')
+
+              errors = JSON::Validator.fully_validate(schema, data, strict: true)
+              if errors.any?
+                puts \"Validation errors in $file:\"
+                errors.each { |e| puts \"  - #{e}\" }
+                exit 1
+              else
+                puts \"✓ $file is valid\"
+              end
+            " || exit 1
+          done

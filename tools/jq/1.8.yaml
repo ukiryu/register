@@ -1,0 +1,212 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: jq
+display_name: jq JSON Processor
+homepage: https://stedolan.github.io/jq/
+version: '1.8'
+aliases:
+- jq
+version_detection:
+  command: "--version"
+  pattern: jq-([\d.]+)
+  modern_threshold: '1.5'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/jq"
+  - "/usr/local/bin/jq"
+  - "/usr/bin/jq"
+  linux:
+  - "/usr/bin/jq"
+  - "/usr/local/bin/jq"
+  windows:
+  - C:/Program Files/jq/bin/jq.exe
+  - C:/msys64/usr/bin/jq.exe
+  - C:/Program Files/Git/usr/bin/jq.exe
+timeout: 60
+profiles:
+- name: unix
+  display_name: jq on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_space
+  commands:
+  - description: Process JSON with filter expression
+    usage: jq [options] filter [files...]
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: filter
+      type: string
+      required: true
+      position: 1
+      description: jq filter expression
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: 'Input file(s) (default: stdin)'
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      description: Read filter from file
+    - name: arg
+      type: string
+      cli: "--arg"
+      format: double_dash_space
+      description: Set variable $<name> to <value>
+    - name: argjson
+      type: string
+      cli: "--argjson"
+      format: double_dash_space
+      description: Set variable $<name> to JSON <value>
+    - name: slurpfile
+      type: string
+      cli: "--slurpfile"
+      format: double_dash_space
+      description: Set variable $<name> to array from file
+    - name: rawfile
+      type: string
+      cli: "--rawfile"
+      format: double_dash_space
+      description: Set variable $<name> to raw string from file
+    - name: args
+      type: string
+      cli: "--args"
+      description: Remaining arguments are string arguments
+    - name: jsonargs
+      type: string
+      cli: "--jsonargs"
+      description: Remaining arguments are JSON arguments
+    - name: null_input
+      type: string
+      cli: "-n"
+      description: Use null as input
+    - name: raw_input
+      type: string
+      cli: "-R"
+      description: Read raw strings, not JSON
+    - name: slurp
+      type: string
+      cli: "-s"
+      description: Read all inputs into array
+    - name: compact_output
+      type: string
+      cli: "-c"
+      description: Compact output
+    - name: raw_output
+      type: string
+      cli: "-r"
+      description: Raw string output
+    - name: raw_output0
+      type: string
+      cli: "-j"
+      description: Raw output with NUL separator
+    - name: join_output
+      type: string
+      cli: "-j"
+      description: Join output without newline
+    - name: color_output
+      type: string
+      cli: "-C"
+      description: Colorize output
+    - name: monochrome_output
+      type: string
+      cli: "-M"
+      description: Monochrome output
+    - name: ascii_output
+      type: string
+      cli: "-a"
+      description: ASCII output
+    - name: sort_keys
+      type: string
+      cli: "-S"
+      description: Sort object keys
+    - name: indent
+      type: integer
+      cli: "--indent"
+      description: Number of spaces for indentation
+    - name: tab
+      type: string
+      cli: "--tab"
+      description: Use tabs for indentation
+    - name: unbuffered
+      type: string
+      cli: "--unbuffered"
+      description: Flush output after each output
+    - name: stream
+      type: string
+      cli: "--stream"
+      description: Parse input in stream fashion
+    - name: stream_errors
+      type: string
+      cli: "--stream-errors"
+      description: Show parse errors in stream mode
+    - name: from_file
+      type: file
+      cli: "--from-file"
+      description: Read JSON from file
+    flags:
+    - name: null_input
+      cli: "-n"
+      description: Use null as input
+      default: false
+    - name: raw_input
+      cli: "-R"
+      description: Read raw strings instead of JSON
+      default: false
+    - name: slurp
+      cli: "-s"
+      description: Read all inputs into array
+      default: false
+    - name: compact_output
+      cli: "-c"
+      description: Compact output (no pretty-printing)
+      default: false
+    - name: raw_output
+      cli: "-r"
+      description: Raw string output
+      default: false
+    - name: color_output
+      cli: "-C"
+      description: Colorize output
+      default: false
+    - name: monochrome_output
+      cli: "-M"
+      description: Monochrome output (no color)
+      default: false
+    - name: ascii_output
+      cli: "-a"
+      description: ASCII output only
+      default: false
+    - name: sort_keys
+      cli: "-S"
+      description: Sort object keys in output
+      default: false
+    - name: tab
+      cli: "--tab"
+      description: Use tabs for indentation
+      default: false
+    - name: unbuffered
+      cli: "--unbuffered"
+      description: Unbuffered output
+      default: false
+    - name: stream
+      cli: "--stream"
+      description: Stream parsing mode
+      default: false
+    - name: help
+      cli: "-h"
+      description: Show help
+      default: false
+    - name: version
+      cli: "--version"
+      description: Show version
+      default: false
+    name: process

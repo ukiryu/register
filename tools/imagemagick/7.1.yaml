@@ -1,513 +1,391 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
 ---
-# ImageMagick tool profile for Ukiryu
-# ImageMagick 7.x on Unix platforms
-
 name: imagemagick
 display_name: ImageMagick Image Processing Suite
 homepage: https://imagemagick.org/
-version: "7.1"
-
+version: '7.1'
 aliases:
-  - magick
-  - convert
-  - im
-
+- magick
+- convert
+- im
 version_detection:
   command: "-version"
-  pattern: "Version: ImageMagick (\\d+\\.\\d+)"
-  modern_threshold: "7.0"
-
+  pattern: 'Version: ImageMagick (\d+\.\d+)'
+  modern_threshold: '7.0'
 search_paths:
   macos:
-    # Homebrew (Apple Silicon)
-    - "/opt/homebrew/bin/magick"
-    # Homebrew (Intel)
-    - "/usr/local/bin/magick"
-    # MacPorts
-    - "/opt/local/bin/magick"
-    # Rudix
-    - "/usr/local/opt/imagemagick/bin/magick"
-    # Common third-party
-    - "/opt/bin/magick"
-    # Legacy convert command (for compatibility)
-    - "/opt/homebrew/bin/convert"
-    - "/usr/local/bin/convert"
-    - "/opt/local/bin/convert"
+  - "/opt/homebrew/bin/magick"
+  - "/usr/local/bin/magick"
+  - "/opt/local/bin/magick"
+  - "/usr/local/opt/imagemagick/bin/magick"
+  - "/opt/bin/magick"
+  - "/opt/homebrew/bin/convert"
+  - "/usr/local/bin/convert"
+  - "/opt/local/bin/convert"
   linux:
-    # Standard system paths
-    - "/usr/bin/magick"
-    - "/usr/local/bin/magick"
-    # Snap
-    - "/snap/bin/imagemagick"
-    # Flatpak
-    - "/var/lib/flatpak/exports/bin/org.imagemagick.ImageMagick"
-    # Common third-party locations
-    - "/opt/bin/magick"
-    - "/opt/imagemagick/bin/magick"
-    # Legacy convert command
-    - "/usr/bin/convert"
-    - "/usr/local/bin/convert"
+  - "/usr/bin/magick"
+  - "/usr/local/bin/magick"
+  - "/snap/bin/imagemagick"
+  - "/var/lib/flatpak/exports/bin/org.imagemagick.ImageMagick"
+  - "/opt/bin/magick"
+  - "/opt/imagemagick/bin/magick"
+  - "/usr/bin/convert"
+  - "/usr/local/bin/convert"
   windows:
-    # Program Files (64-bit)
-    - "C:/Program Files/ImageMagick-*/magick.exe"
-    - "C:/Program Files/ImageMagick-*/convert.exe"
-    # Program Files (32-bit)
-    - "C:/Program Files (x86)/ImageMagick-*/magick.exe"
-    - "C:/Program Files (x86)/ImageMagick-*/convert.exe"
-    # Scoop
-    - "%USERPROFILE%/scoop/apps/imagemagick/current/magick.exe"
-    - "~/scoop/apps/imagemagick/current/magick.exe"
-    # Chocolatey
-    - "C:/ProgramData/chocolatey/lib/imagemagick/tools/magick.exe"
-    # User-local installation
-    - "%LOCALAPPDATA%/Programs/ImageMagick-*/magick.exe"
-    - "~/AppData/Local/Programs/ImageMagick-*/magick.exe"
-
+  - C:/Program Files/ImageMagick-*/magick.exe
+  - C:/Program Files/ImageMagick-*/convert.exe
+  - C:/Program Files (x86)/ImageMagick-*/magick.exe
+  - C:/Program Files (x86)/ImageMagick-*/convert.exe
+  - "%USERPROFILE%/scoop/apps/imagemagick/current/magick.exe"
+  - "~/scoop/apps/imagemagick/current/magick.exe"
+  - C:/ProgramData/chocolatey/lib/imagemagick/tools/magick.exe
+  - "%LOCALAPPDATA%/Programs/ImageMagick-*/magick.exe"
+  - "~/AppData/Local/Programs/ImageMagick-*/magick.exe"
 timeout: 300
-
 profiles:
-  # ImageMagick 7.x on Unix (macOS, Linux) with Bash/Zsh/Fish/Sh
-  - name: modern_unix
-    display_name: ImageMagick 7.x on Unix
-    platforms:
-      - macos
-      - linux
-    shells:
-      - bash
-      - zsh
-      - fish
-      - sh
-    version: ">= 7.0"
-    option_style: single_dash_space
-
-    commands:
-      # Convert command - convert between image formats
-      convert:
-        description: "Convert between image formats and apply transformations"
-        usage: "magick [input-options] input-file [processing-options] output-file"
-        # Note: In IMv7, just use 'magick' directly without subcommand for convert
-        subcommand: null
-
-        arguments:
-          # Input files (can be multiple)
-          - name: inputs
-            type: file
-            variadic: true
-            min: 1
-            position: 1
-            description: "Input file(s)"
-
-          # Output file (comes after input files)
-          - name: output
-            type: file
-            required: true
-            position: last
-            description: "Output file"
-
-        # Input options (placed BEFORE input files)
-        options:
-          # Density (affects input reading)
-          - name: density
-            type: string
-            cli: "-density"
-            format: single_dash_space
-            description: "Horizontal and vertical density for input"
-
-          # Colorspace (for input)
-          - name: input_colorspace
-            type: symbol
-            cli: "-colorspace"
-            format: single_dash_space
-            values:
-              - RGB
-              - sRGB
-              - Gray
-              - CMYK
-              - LAB
-              - XYZ
-            description: "Input image colorspace"
-
-        # Processing options (placed AFTER input files, BEFORE output file)
-        post_options:
-          # Resize geometry
-          - name: resize
-            type: string
-            cli: "-resize"
-            format: single_dash_space
-            description: "Resize image (e.g., '50%', '800x600', '800x600!')"
-
-          # Quality (for JPEG, etc.)
-          - name: quality
-            type: integer
-            cli: "-quality"
-            format: single_dash_space
-            range: [1, 100]
-            description: "JPEG/MIFF/PNG compression level (1-100)"
-
-          # Output format
-          - name: format
-            type: string
-            cli: "-format"
-            format: single_dash_space
-            description: "Output format type"
-
-          # Background color
-          - name: background
-            type: string
-            cli: "-background"
-            format: single_dash_space
-            description: "Background color"
-
-          # Fill color
-          - name: fill
-            type: string
-            cli: "-fill"
-            format: single_dash_space
-            description: "Fill color for drawing operations"
-
-          # Gravity (text/placement position)
-          - name: gravity
-            type: symbol
-            cli: "-gravity"
-            format: single_dash_space
-            values:
-              - north
-              - south
-              - east
-              - west
-              - center
-              - northwest
-              - northeast
-              - southwest
-              - southeast
-            description: "Horizontal and vertical text placement"
-
-          # Crop geometry
-          - name: crop
-            type: string
-            cli: "-crop"
-            format: single_dash_space
-            description: "Cut out rectangular region (e.g., '800x600+100+50')"
-
-          # Geometry (preferred size)
-          - name: geometry
-            type: string
-            cli: "-geometry"
-            format: single_dash_space
-            description: "Preferred size or location"
-
-          # Rotate
-          - name: rotate
-            type: float
-            cli: "-rotate"
-            format: single_dash_space
-            description: "Rotate image by degrees"
-
-          # Blur
-          - name: blur
-            type: string
-            cli: "-blur"
-            format: single_dash_space
-            description: "Blur image (e.g., '0x5' for radiusxsigma)"
-
-          # Sharpen
-          - name: sharpen
-            type: string
-            cli: "-sharpen"
-            format: single_dash_space
-            description: "Sharpen image"
-
-          # Density
-          - name: density
-            type: string
-            cli: "-density"
-            format: single_dash_space
-            description: "Horizontal and vertical density"
-
-          # Colorspace
-          - name: colorspace
-            type: symbol
-            cli: "-colorspace"
-            format: single_dash_space
-            values:
-              - RGB
-              - sRGB
-              - Gray
-              - CMYK
-              - LAB
-              - XYZ
-            description: "Alternate image colorspace"
-
-          # Strip (remove profiles)
-          - name: strip
-            type: boolean
-            cli: "-strip"
-            format: single_dash_space
-            description: "Strip image of all profiles and comments"
-
-          # Flatten
-          - name: flatten
-            type: boolean
-            cli: "-flatten"
-            format: single_dash_space
-            description: "Flatten a sequence of images"
-
-          # Define format-specific options
-          - name: define
-            type: array
-            of: string
-            cli: "-define"
-            format: single_dash_space
-            separator: " "
-            description: "Define format-specific options"
-
-          # Page size
-          - name: page
-            type: string
-            cli: "-page"
-            format: single_dash_space
-            description: "Size and location of image canvas"
-
-          # Extent
-          - name: extent
-            type: string
-            cli: "-extent"
-            format: single_dash_space
-            description: "Set the image size"
-
-          # Flip/flop
-          - name: flip
-            type: boolean
-            cli: "-flip"
-            format: single_dash_space
-            description: "Flip image vertically"
-
-          - name: flop
-            type: boolean
-            cli: "-flop"
-            format: single_dash_space
-            description: "Flop image horizontally"
-
-          # Grayscale
-          - name: grayscale
-            type: boolean
-            cli: "-grayscale"
-            format: single_dash_space
-            description: "Convert image to grayscale"
-
-          # Negate
-          - name: negate
-            type: boolean
-            cli: "-negate"
-            format: single_dash_space
-            description: "Replace each pixel with complementary color"
-
-          # Border
-          - name: border
-            type: string
-            cli: "-border"
-            format: single_dash_space
-            description: "Surround image with border"
-
-          # Border color
-          - name: bordercolor
-            type: string
-            cli: "-bordercolor"
-            format: single_dash_space
-            description: "Border color"
-
-        flags:
-          # Verbose output
-          - name: verbose
-            cli: "-verbose"
-            description: "Print detailed information"
-            default: false
-
-          # Quiet mode
-          - name: quiet
-            cli: "-quiet"
-            description: "Suppress all warning messages"
-            default: false
-
-          # Auto orient
-          - name: auto_orient
-            cli: "-auto-orient"
-            description: "Automatically orient image"
-            default: false
-
-          # Strip (also available as flag)
-          - name: strip_flag
-            cli: "-strip"
-            description: "Strip image of all profiles"
-            default: false
-
-      # Identify command - describe image format and characteristics
-      identify:
-        description: "Describe the format and characteristics of image files"
-        usage: "magick identify [options] input-file"
-        subcommand: "identify"
-
-        arguments:
-          - name: input
-            type: file
-            variadic: true
-            min: 1
-            position: last
-            description: "Input file(s) to identify"
-
-        options:
-          # Format string for output
-          - name: format
-            type: string
-            cli: "-format"
-            format: single_dash_space
-            description: "Output formatted image characteristics"
-
-          # Crop (for identification of specific region)
-          - name: crop
-            type: string
-            cli: "-crop"
-            format: single_dash_space
-            description: "Cut out rectangular region to identify"
-
-        flags:
-          # Verbose output
-          - name: verbose
-            cli: "-verbose"
-            description: "Print detailed information"
-            default: false
-
-          # Ping (efficient attribute determination)
-          - name: ping
-            cli: "-ping"
-            description: "Efficiently determine image attributes"
-            default: false
-
-          # Unique colors
-          - name: unique
-            cli: "-unique"
-            description: "Display number of unique colors"
-            default: false
-
-      # Mogrify command - process images (overwrites original)
-      mogrify:
-        description: "Process image files (overwrites original file)"
-        usage: "magick mogrify [options] input-file"
-        subcommand: "mogrify"
-
-        arguments:
-          - name: inputs
-            type: file
-            variadic: true
-            min: 1
-            position: last
-            description: "Input file(s) to modify in place"
-
-        options:
-          # Most options are the same as convert
-          - name: resize
-            type: string
-            cli: "-resize"
-            format: single_dash_space
-            description: "Resize image"
-
-          - name: quality
-            type: integer
-            cli: "-quality"
-            format: single_dash_space
-            range: [1, 100]
-            description: "Compression level"
-
-          - name: format
-            type: string
-            cli: "-format"
-            format: single_dash_space
-            description: "Output format type"
-
-          - name: path
-            type: file
-            cli: "-path"
-            format: single_dash_space
-            description: "Write images to this path on disk"
-
-          - name: crop
-            type: string
-            cli: "-crop"
-            format: single_dash_space
-            description: "Cut out rectangular region"
-
-          - name: geometry
-            type: string
-            cli: "-geometry"
-            format: single_dash_space
-            description: "Preferred size or location"
-
-          - name: rotate
-            type: float
-            cli: "-rotate"
-            format: single_dash_space
-            description: "Rotate image by degrees"
-
-          - name: blur
-            type: string
-            cli: "-blur"
-            format: single_dash_space
-            description: "Blur image"
-
-          - name: sharpen
-            type: string
-            cli: "-sharpen"
-            format: single_dash_space
-            description: "Sharpen image"
-
-          - name: colorspace
-            type: symbol
-            cli: "-colorspace"
-            format: single_dash_space
-            values:
-              - RGB
-              - sRGB
-              - Gray
-              - CMYK
-            description: "Alternate image colorspace"
-
-          - name: strip
-            type: boolean
-            cli: "-strip"
-            format: single_dash_space
-            description: "Strip image of all profiles"
-
-          - name: grayscale
-            type: boolean
-            cli: "-grayscale"
-            format: single_dash_space
-            description: "Convert to grayscale"
-
-          - name: negate
-            type: boolean
-            cli: "-negate"
-            format: single_dash_space
-            description: "Negate colors"
-
-          - name: flip
-            type: boolean
-            cli: "-flip"
-            format: single_dash_space
-            description: "Flip vertically"
-
-          - name: flop
-            type: boolean
-            cli: "-flop"
-            format: single_dash_space
-            description: "Flop horizontally"
-
-        flags:
-          - name: verbose
-            cli: "-verbose"
-            description: "Print detailed information"
-            default: false
-
-          - name: quiet
-            cli: "-quiet"
-            description: "Suppress warning messages"
-            default: false
+- name: modern_unix
+  display_name: ImageMagick 7.x on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  version: ">= 7.0"
+  option_style: single_dash_space
+  commands:
+  - description: Convert between image formats and apply transformations
+    usage: magick [input-options] input-file [processing-options] output-file
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: 1
+      description: Input file(s)
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: density
+      type: string
+      cli: "-density"
+      format: single_dash_space
+      description: Horizontal and vertical density for input
+    - name: input_colorspace
+      type: symbol
+      cli: "-colorspace"
+      format: single_dash_space
+      values:
+      - RGB
+      - sRGB
+      - Gray
+      - CMYK
+      - LAB
+      - XYZ
+      description: Input image colorspace
+    post_options:
+    - name: resize
+      type: string
+      cli: "-resize"
+      format: single_dash_space
+      description: Resize image (e.g., '50%', '800x600', '800x600!')
+    - name: quality
+      type: integer
+      cli: "-quality"
+      format: single_dash_space
+      range:
+      - 1
+      - 100
+      description: JPEG/MIFF/PNG compression level (1-100)
+    - name: format
+      type: string
+      cli: "-format"
+      format: single_dash_space
+      description: Output format type
+    - name: background
+      type: string
+      cli: "-background"
+      format: single_dash_space
+      description: Background color
+    - name: fill
+      type: string
+      cli: "-fill"
+      format: single_dash_space
+      description: Fill color for drawing operations
+    - name: gravity
+      type: symbol
+      cli: "-gravity"
+      format: single_dash_space
+      values:
+      - north
+      - south
+      - east
+      - west
+      - center
+      - northwest
+      - northeast
+      - southwest
+      - southeast
+      description: Horizontal and vertical text placement
+    - name: crop
+      type: string
+      cli: "-crop"
+      format: single_dash_space
+      description: Cut out rectangular region (e.g., '800x600+100+50')
+    - name: geometry
+      type: string
+      cli: "-geometry"
+      format: single_dash_space
+      description: Preferred size or location
+    - name: rotate
+      type: float
+      cli: "-rotate"
+      format: single_dash_space
+      description: Rotate image by degrees
+    - name: blur
+      type: string
+      cli: "-blur"
+      format: single_dash_space
+      description: Blur image (e.g., '0x5' for radiusxsigma)
+    - name: sharpen
+      type: string
+      cli: "-sharpen"
+      format: single_dash_space
+      description: Sharpen image
+    - name: density
+      type: string
+      cli: "-density"
+      format: single_dash_space
+      description: Horizontal and vertical density
+    - name: colorspace
+      type: symbol
+      cli: "-colorspace"
+      format: single_dash_space
+      values:
+      - RGB
+      - sRGB
+      - Gray
+      - CMYK
+      - LAB
+      - XYZ
+      description: Alternate image colorspace
+    - name: strip
+      type: boolean
+      cli: "-strip"
+      format: single_dash_space
+      description: Strip image of all profiles and comments
+    - name: flatten
+      type: boolean
+      cli: "-flatten"
+      format: single_dash_space
+      description: Flatten a sequence of images
+    - name: define
+      type: array
+      of: string
+      cli: "-define"
+      format: single_dash_space
+      separator: " "
+      description: Define format-specific options
+    - name: page
+      type: string
+      cli: "-page"
+      format: single_dash_space
+      description: Size and location of image canvas
+    - name: extent
+      type: string
+      cli: "-extent"
+      format: single_dash_space
+      description: Set the image size
+    - name: flip
+      type: boolean
+      cli: "-flip"
+      format: single_dash_space
+      description: Flip image vertically
+    - name: flop
+      type: boolean
+      cli: "-flop"
+      format: single_dash_space
+      description: Flop image horizontally
+    - name: grayscale
+      type: boolean
+      cli: "-grayscale"
+      format: single_dash_space
+      description: Convert image to grayscale
+    - name: negate
+      type: boolean
+      cli: "-negate"
+      format: single_dash_space
+      description: Replace each pixel with complementary color
+    - name: border
+      type: string
+      cli: "-border"
+      format: single_dash_space
+      description: Surround image with border
+    - name: bordercolor
+      type: string
+      cli: "-bordercolor"
+      format: single_dash_space
+      description: Border color
+    flags:
+    - name: verbose
+      cli: "-verbose"
+      description: Print detailed information
+      default: false
+    - name: quiet
+      cli: "-quiet"
+      description: Suppress all warning messages
+      default: false
+    - name: auto_orient
+      cli: "-auto-orient"
+      description: Automatically orient image
+      default: false
+    - name: strip_flag
+      cli: "-strip"
+      description: Strip image of all profiles
+      default: false
+    name: convert
+  - description: Describe the format and characteristics of image files
+    usage: magick identify [options] input-file
+    subcommand: identify
+    arguments:
+    - name: input
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input file(s) to identify
+    options:
+    - name: format
+      type: string
+      cli: "-format"
+      format: single_dash_space
+      description: Output formatted image characteristics
+    - name: crop
+      type: string
+      cli: "-crop"
+      format: single_dash_space
+      description: Cut out rectangular region to identify
+    flags:
+    - name: verbose
+      cli: "-verbose"
+      description: Print detailed information
+      default: false
+    - name: ping
+      cli: "-ping"
+      description: Efficiently determine image attributes
+      default: false
+    - name: unique
+      cli: "-unique"
+      description: Display number of unique colors
+      default: false
+    name: identify
+  - description: Process image files (overwrites original file)
+    usage: magick mogrify [options] input-file
+    subcommand: mogrify
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input file(s) to modify in place
+    options:
+    - name: resize
+      type: string
+      cli: "-resize"
+      format: single_dash_space
+      description: Resize image
+    - name: quality
+      type: integer
+      cli: "-quality"
+      format: single_dash_space
+      range:
+      - 1
+      - 100
+      description: Compression level
+    - name: format
+      type: string
+      cli: "-format"
+      format: single_dash_space
+      description: Output format type
+    - name: path
+      type: file
+      cli: "-path"
+      format: single_dash_space
+      description: Write images to this path on disk
+    - name: crop
+      type: string
+      cli: "-crop"
+      format: single_dash_space
+      description: Cut out rectangular region
+    - name: geometry
+      type: string
+      cli: "-geometry"
+      format: single_dash_space
+      description: Preferred size or location
+    - name: rotate
+      type: float
+      cli: "-rotate"
+      format: single_dash_space
+      description: Rotate image by degrees
+    - name: blur
+      type: string
+      cli: "-blur"
+      format: single_dash_space
+      description: Blur image
+    - name: sharpen
+      type: string
+      cli: "-sharpen"
+      format: single_dash_space
+      description: Sharpen image
+    - name: colorspace
+      type: symbol
+      cli: "-colorspace"
+      format: single_dash_space
+      values:
+      - RGB
+      - sRGB
+      - Gray
+      - CMYK
+      description: Alternate image colorspace
+    - name: strip
+      type: boolean
+      cli: "-strip"
+      format: single_dash_space
+      description: Strip image of all profiles
+    - name: grayscale
+      type: boolean
+      cli: "-grayscale"
+      format: single_dash_space
+      description: Convert to grayscale
+    - name: negate
+      type: boolean
+      cli: "-negate"
+      format: single_dash_space
+      description: Negate colors
+    - name: flip
+      type: boolean
+      cli: "-flip"
+      format: single_dash_space
+      description: Flip vertically
+    - name: flop
+      type: boolean
+      cli: "-flop"
+      format: single_dash_space
+      description: Flop horizontally
+    flags:
+    - name: verbose
+      cli: "-verbose"
+      description: Print detailed information
+      default: false
+    - name: quiet
+      cli: "-quiet"
+      description: Suppress warning messages
+      default: false
+    name: mogrify

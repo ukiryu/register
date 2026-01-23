@@ -1,0 +1,138 @@
+# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+---
+name: ping_gnu
+display_name: GNU iputils ping (Linux)
+homepage: https://github.com/iputils/iputils
+version: '20240117'
+implements: ping
+version_detection:
+  command:
+    - "-V"
+  pattern: ping from iputils ([\d]+)
+  modern_threshold: '20190609'
+search_paths:
+  linux:
+  - "/bin/ping"
+  - "/usr/bin/ping"
+  - "/usr/local/bin/ping"
+timeout: 30
+profiles:
+- name: gnu
+  display_name: GNU iputils ping
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Send ICMP echo requests to host
+    usage: ping [options] host
+    # subcommand omitted - tool executes directly
+    arguments:
+    - name: host
+      type: string
+      required: true
+      position: last
+      description: Host to ping
+    options:
+    - name: count
+      type: integer
+      cli: "-c"
+      description: Stop after count packets
+    - name: interval
+      type: float
+      cli: "-i"
+      description: Wait interval seconds between packets
+    - name: packet_size
+      type: integer
+      cli: "-s"
+      description: Packet data size (bytes)
+    - name: timeout
+      type: integer
+      cli: "-W"
+      description: Time to wait for response (seconds)
+    - name: ttl
+      type: integer
+      cli: "-t"
+      description: Set Time To Live (IP hops)
+    - name: pattern
+      type: string
+      cli: "-p"
+      description: Fill pattern
+    - name: source
+      type: string
+      cli: "-I"
+      description: Source device or address
+    - name: preload
+      type: integer
+      cli: "-l"
+      description: Send preload packets
+    - name: mark
+      type: integer
+      cli: "-m"
+      description: Set mark
+    - name: mtu
+      type: string
+      cli: "-M"
+      description: Use MTU discovery strategy
+    - name: deadline
+      type: integer
+      cli: "-w"
+      description: Deadline (seconds) before exit
+    flags:
+    - name: numeric
+      cli: "-n"
+      description: No DNS lookup
+      default: false
+    - name: quiet
+      cli: "-q"
+      description: Quiet output
+      default: false
+    - name: verbose
+      cli: "-v"
+      description: Verbose output
+      default: false
+    - name: flood
+      cli: "-f"
+      description: Flood ping (superuser only)
+      default: false
+    - name: adaptive
+      cli: "-A"
+      description: Adaptive ping
+      default: false
+    - name: timestamp
+      cli: "-D"
+      description: Print timestamp
+      default: false
+    - name: router_alert
+      cli: "-R"
+      description: Router alert
+      default: false
+    - name: bind_device
+      cli: "-B"
+      description: Bind to device
+      default: false
+    - name: no_route
+      cli: "-r"
+      description: Bypass normal routing tables
+      default: false
+    - name: suppress_duplicates
+      cli: "-O"
+      description: Suppress duplicate packets
+      default: false
+    - name: header_included
+      cli: "-P"
+      description: Header is included in payload size
+      default: false
+    - name: tclass
+      cli: "-T"
+      description: Set traffic class
+      default: false
+    - name: tos
+      cli: "-z"
+      description: Set Type of Service
+      default: false
+    name: ping
