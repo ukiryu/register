@@ -111,27 +111,27 @@ profiles:
       description: 'Resolution for bitmaps (default: 96)'
     - name: width
       type: integer
-      cli: export-width
+      cli: --export-width
       description: Bitmap width in pixels
     - name: height
       type: integer
-      cli: export-height
+      cli: --export-height
       description: Bitmap height in pixels
     - name: area
       type: string
-      cli: export-area
+      cli: --export-area
       description: Export area (x0:y0:x1:y1)
     - name: export_page
       type: string
-      cli: export-page
+      cli: --export-page
       description: Page number to export
     - name: background
       type: string
-      cli: export-background
+      cli: --export-background
       description: Background color
     - name: background_opacity
       type: float
-      cli: export-background-opacity
+      cli: --export-background-opacity
       range:
       - 0.0
       - 1.0
@@ -139,9 +139,14 @@ profiles:
     - name: export_ids
       type: array
       of: string
-      cli: export-id
+      cli: --export-id
       separator: ";"
       description: Object IDs to export
+    - name: pages
+      type: string
+      cli: --pages
+      format: double_dash_equals
+      description: Page numbers to import from multi-page document (PDF)
     flags:
     - name: plain
       cli: "--export-plain-svg"
