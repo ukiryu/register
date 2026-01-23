@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: yq
 display_name: yq Data Processor
 homepage: https://mikefarah.gitbook.io/yq/
+$self: https://www.ukiryu.com/register/1.0/yq/4.50
 version: '4.50'
 aliases:
 - yq

@@ -1,6 +1,7 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 # Ukiryu Schema Version (like OpenAPI's "openapi" field)
-ukiryu_schema: "1.1"
-$self: https://www.ukiryu.com/register/1.1/git/2.47
+ukiryu_schema: "1.2"
+$self: https://www.ukiryu.com/register/1.0/git/2.47
 
 name: git
 version: "2.47"

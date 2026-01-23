@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: ghostscript
 display_name: Ghostscript PS/PDF Interpreter
 homepage: https://www.ghostscript.com/
+$self: https://www.ukiryu.com/register/1.0/ghostscript/10.0
 version: '10.0'
 aliases:
 - gs

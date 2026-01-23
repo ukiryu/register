@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: ukiryu
 display_name: Ukiryu CLI Tool Runner
 homepage: https://github.com/riboseinc/ukiryu
+$self: https://www.ukiryu.com/register/1.0/ukiryu/0.1
 version: '0.1'
 version_detection:
   command: ["version"]

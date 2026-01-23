@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: pdf2ps
 display_name: PDF to PostScript Converter
 homepage: https://www.ghostscript.com/
+$self: https://www.ukiryu.com/register/1.0/pdf2ps/10.0
 version: '10.0'
 aliases: []
 version_detection:

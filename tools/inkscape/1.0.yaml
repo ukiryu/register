@@ -178,6 +178,7 @@ profiles:
       default: false
     - name: batch_process
       cli: "--batch-process"
+      position_constraint: prefix
       description: Close GUI after processing (required for headless)
       default: true
     execution_mode: headless

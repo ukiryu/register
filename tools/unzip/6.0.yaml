@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: unzip
 display_name: Zip Extractor
 homepage: https://infozip.sourceforge.net/UnZip.html
+$self: https://www.ukiryu.com/register/1.0/unzip/6.0
 version: '6.0'
 aliases: []
 version_detection:

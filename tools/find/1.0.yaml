@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: find
 display_name: Find - Search for Files
 homepage: https://www.gnu.org/software/findutils/
+$self: https://www.ukiryu.com/register/1.0/find/1.0
 version: '1.0'
 version_detection:
   command: ["--version"]

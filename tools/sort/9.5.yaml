@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: sort
 display_name: Text Sort Utility
 homepage: https://www.gnu.org/software/coreutils/sort/
+$self: https://www.ukiryu.com/register/1.0/sort/9.5
 version: '9.5'
 aliases: []
 version_detection:

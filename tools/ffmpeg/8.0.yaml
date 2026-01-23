@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: ffmpeg
 display_name: FFmpeg Media Converter
 homepage: https://ffmpeg.org/
+$self: https://www.ukiryu.com/register/1.0/ffmpeg/8.0
 version: '8.0'
 aliases:
 - ffmpeg

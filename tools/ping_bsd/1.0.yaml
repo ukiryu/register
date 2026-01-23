@@ -1,8 +1,10 @@
-# yaml-language-server: $schema=../../schema/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
 ---
+ukiryu_schema: "1.2"
 name: ping_bsd
 display_name: BSD ping (macOS/*BSD)
 homepage: https://www.freebsd.org/cgi/man.cgi?query=ping
+$self: https://www.ukiryu.com/register/1.0/ping_bsd/1.0
 version: '1.0'
 implements: ping
 version_detection:
