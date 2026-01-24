@@ -1,0 +1,186 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: ansible
+display_name: ansible (automation framework)
+homepage: https://www.ansible.com/
+"$self": https://www.ukiryu.com/register/1.0/ansible/2.18
+version: '2.18'
+aliases:
+  - ansible
+version_detection:
+  command: "--version"
+  pattern: "ansible \\[core ([\\d.]+)\\]"
+  modern_threshold: '2.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/ansible"
+  - "/usr/local/bin/ansible"
+  - "/opt/homebrew/bin/ansible-3"
+  linux:
+  - "/usr/bin/ansible"
+  - "/usr/local/bin/ansible"
+  - "~/.local/bin/ansible"
+  windows:
+  - "C:/Program Files/Ansible/bin/ansible.exe"
+  - "C:/Users/*/AppData/Local/Programs/Python*/Scripts/ansible.exe"
+timeout: 600
+profiles:
+- name: unix
+  display_name: ansible on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Define and run a single task playbook against hosts
+    usage: ansible [options] pattern
+    arguments:
+    - name: pattern
+      type: string
+      required: true
+      position: last
+      description: Host pattern
+    options:
+    - name: inventory
+      type: file
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Specify inventory host path
+    - name: list_hosts
+      cli: "--list-hosts"
+      assignment_delimiter: none
+      description: Output list of matching hosts
+    - name: module_name
+      type: string
+      cli: "-m"
+      assignment_delimiter: auto
+      description: Name of action to execute
+    - name: module_args
+      type: string
+      cli: "-a"
+      assignment_delimiter: auto
+      description: Module options (key=value or JSON)
+    - name: args
+      cli: "--args"
+      assignment_delimiter: equals
+      description: Module arguments
+    - name: extra_vars
+      type: string
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Set additional variables
+    - name: forks
+      type: integer
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Number of parallel processes
+    - name: become
+      cli: "-b"
+      assignment_delimiter: none
+      description: Run operations with become
+    - name: become_user
+      type: string
+      cli: "--become-user"
+      assignment_delimiter: equals
+      description: Run operations as this user
+    - name: become_method
+      type: string
+      cli: "--become-method"
+      assignment_delimiter: equals
+      description: Privilege escalation method
+    - name: ask_become_pass
+      cli: "-K"
+      assignment_delimiter: none
+      description: Ask for privilege escalation password
+    - name: ask_pass
+      cli: "-k"
+      assignment_delimiter: none
+      description: Ask for connection password
+    - name: connection
+      type: string
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Connection type to use
+    - name: timeout
+      type: integer
+      cli: "-T"
+      assignment_delimiter: auto
+      description: Connection timeout
+    - name: private_key
+      type: file
+      cli: "--private-key"
+      assignment_delimiter: equals
+      description: Use this file for authentication
+    - name: user
+      type: string
+      cli: "-u"
+      assignment_delimiter: auto
+      description: Connect as this user
+    - name: check
+      cli: "-C"
+      assignment_delimiter: none
+      description: Don't make changes, predict changes
+    - name: diff
+      cli: "-D"
+      assignment_delimiter: none
+      description: Show differences in files
+    - name: background
+      type: integer
+      cli: "-B"
+      assignment_delimiter: auto
+      description: Run asynchronously, failing after X seconds
+    - name: one_line
+      cli: "-o"
+      assignment_delimiter: none
+      description: Condense output
+    - name: flush_cache
+      cli: "--flush-cache"
+      assignment_delimiter: none
+      description: Clear fact cache
+    - name: tree
+      type: string
+      cli: "-t"
+      assignment_delimiter: auto
+      description: Log output to directory
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Print debug messages
+    - name: module_path
+      type: string
+      cli: "-M"
+      assignment_delimiter: auto
+      description: Prepend path to module library
+    - name: playbook_dir
+      type: string
+      cli: "--playbook-dir"
+      assignment_delimiter: equals
+      description: Substitute playbook directory
+    flags:
+    - name: become
+      cli: "-b"
+      description: Run with become
+      default: false
+      assignment_delimiter: none
+    - name: check
+      cli: "-C"
+      description: Check mode (no changes)
+      default: false
+      assignment_delimiter: none
+    - name: diff
+      cli: "-D"
+      description: Show differences
+      default: false
+      assignment_delimiter: none
+    - name: one_line
+      cli: "-o"
+      description: Condensed output
+      default: false
+      assignment_delimiter: none
+    name: automate

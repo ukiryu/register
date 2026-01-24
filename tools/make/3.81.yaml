@@ -1,0 +1,195 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: make
+display_name: make (build automation tool)
+homepage: https://www.gnu.org/software/make/
+"$self": https://www.ukiryu.com/register/1.0/make/3.81
+version: '3.81'
+aliases:
+  - make
+  - gmake
+version_detection:
+  command: "--version"
+  pattern: "GNU Make ([\\d.]+)"
+  system_tool: true
+  modern_threshold: '4.0'
+search_paths:
+  macos:
+  - "/usr/bin/make"
+  - "/opt/homebrew/bin/make"
+  - "/usr/local/bin/make"
+  linux:
+  - "/usr/bin/make"
+  - "/usr/local/bin/make"
+  windows:
+  - "C:/Program Files/Git/usr/bin/make.exe"
+  - "C:/Program Files/Git/mingw64/bin/mingw32-make.exe"
+  - "C:/msys64/usr/bin/make.exe"
+timeout: 600
+profiles:
+- name: unix
+  display_name: make on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Build automation tool
+    usage: make [options] [target ...]
+    arguments:
+    - name: targets
+      type: string
+      variadic: true
+      required: false
+      position: last
+      description: Targets to build
+    options:
+    - name: file
+      type: file
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Use makefile
+    - name: directory
+      type: string
+      cli: "--directory"
+      assignment_delimiter: equals
+      description: Change to directory
+    - name: jobs
+      type: integer
+      cli: "-j"
+      assignment_delimiter: auto
+      description: Number of jobs to run simultaneously
+    - name: load_average
+      type: string
+      cli: "--load-average"
+      assignment_delimiter: equals
+      description: Do not start new jobs if load average is at least this
+    - name: keep_going
+      cli: "-k"
+      assignment_delimiter: none
+      description: Keep going on error
+    - name: always_make
+      cli: "--always-make"
+      assignment_delimiter: none
+      description: Unconditionally make all targets
+    - name: touch
+      cli: "-t"
+      assignment_delimiter: none
+      description: Touch files instead of running their commands
+    - name: old_file
+      cli: "--old-file"
+      assignment_delimiter: equals
+      description: Consider FILE to be very old
+    - name: assume_old
+      cli: "--assume-old"
+      assignment_delimiter: equals
+      description: Treat FILE as very old
+    - name: new_file
+      cli: "--new-file"
+      assignment_delimiter: equals
+      description: Consider FILE to be brand new
+    - name: assume_new
+      cli: "--assume-new"
+      assignment_delimiter: equals
+      description: Treat FILE as brand new
+    - name: debug
+      cli: "-d"
+      assignment_delimiter: none
+      description: Print debugging information
+    - name: debug_flags
+      type: string
+      cli: "--debug"
+      assignment_delimiter: equals
+      description: Print various types of debugging information
+    - name: environment_overrides
+      cli: "-e"
+      assignment_delimiter: none
+      description: Environment variables override makefiles
+    - name: ignore_errors
+      cli: "-i"
+      assignment_delimiter: none
+      description: Ignore errors from commands
+    - name: print_directory
+      cli: "-w"
+      assignment_delimiter: none
+      description: Print the current directory
+    - name: print_data_base
+      cli: "-p"
+      assignment_delimiter: none
+      description: Print the internal database
+    - name: question
+      cli: "-q"
+      assignment_delimiter: none
+      description: Question mode (run no commands, print nothing)
+    - name: silent
+      cli: "-s"
+      assignment_delimiter: none
+      description: Silent mode (don't echo commands)
+    - name: just_print
+      cli: "--just-print"
+      assignment_delimiter: none
+      description: Only print commands, don't execute
+    - name: dry_run
+      cli: "--dry-run"
+      assignment_delimiter: none
+      description: Print commands without running them
+    - name: reconstruct
+      cli: "--recon"
+      assignment_delimiter: none
+      description: Print commands without running them
+    - name: include_dir
+      type: string
+      cli: "-I"
+      assignment_delimiter: auto
+      description: Search directory for included makefiles
+    - name: warn_undefined_variables
+      cli: "--warn-undefined-variables"
+      assignment_delimiter: none
+      description: Warn when undefined variable is referenced
+    - name: check_symlink_times
+      cli: "--check-symlink-times"
+      assignment_delimiter: none
+      description: Use latest symlink time
+    flags:
+    - name: keep_going
+      cli: "-k"
+      description: Continue on error
+      default: false
+      assignment_delimiter: none
+    - name: always_make
+      cli: "--always-make"
+      description: Make all targets unconditionally
+      default: false
+      assignment_delimiter: none
+    - name: ignore_errors
+      cli: "-i"
+      description: Ignore errors
+      default: false
+      assignment_delimiter: none
+    - name: silent
+      cli: "-s"
+      description: Silent mode
+      default: false
+      assignment_delimiter: none
+    - name: just_print
+      cli: "--just-print"
+      description: Print only, don't execute
+      default: false
+      assignment_delimiter: none
+    - name: dry_run
+      cli: "--dry-run"
+      description: Dry run
+      default: false
+      assignment_delimiter: none
+    - name: touch
+      cli: "-t"
+      description: Touch files instead of making
+      default: false
+      assignment_delimiter: none
+    name: build

@@ -1,0 +1,175 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: vim
+display_name: vim (Vi IMproved text editor)
+homepage: https://www.vim.org/
+"$self": https://www.ukiryu.com/register/1.0/vim/9.1
+version: '9.1'
+aliases:
+  - vim
+  - vi
+  - view
+  - gvim
+  - vimdiff
+version_detection:
+  command: "--version"
+  pattern: "VIM - Vi IMproved ([\\d.]+)"
+  system_tool: true
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/vim"
+  - "/opt/homebrew/bin/vim"
+  - "/usr/local/bin/vim"
+  linux:
+  - "/usr/bin/vim"
+  - "/usr/local/bin/vim"
+  - "/usr/bin/vi"
+  windows:
+  - "C:/Program Files/Vim/vim91/vim.exe"
+  - "C:/Program Files/Git/usr/bin/vim.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: vim on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Vim text editor
+    usage: vim [options] [file ...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      required: false
+      position: last
+      description: Files to edit
+    options:
+    - name: readonly
+      cli: "-R"
+      assignment_delimiter: none
+      description: Readonly mode (like view)
+    - name: binary
+      cli: "-b"
+      assignment_delimiter: none
+      description: Binary mode
+    - name: compatible
+      cli: "-C"
+      assignment_delimiter: none
+      description: Compatible with Vi
+    - name: nocompatible
+      cli: "-N"
+      assignment_delimiter: none
+      description: Not fully Vi compatible
+    - name: recover
+      cli: "-r"
+      assignment_delimiter: none
+      description: Recover crashed session
+    - name: no_swap
+      cli: "-n"
+      assignment_delimiter: none
+      description: No swap file, use memory only
+    - name: plugin
+      cli: "--noplugin"
+      assignment_delimiter: none
+      description: Don't load plugin scripts
+    - name: vimrc
+      type: file
+      cli: "-u"
+      assignment_delimiter: auto
+      description: Use .vimrc file
+    - name: gvimrc
+      type: file
+      cli: "-U"
+      assignment_delimiter: auto
+      description: Use .gvimrc file
+    - name: cmd
+      type: string
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Execute command after loading first file
+    - name: cmd_from_stdin
+      cli: "-s"
+      assignment_delimiter: none
+      description: Read Normal mode commands from stdin
+    - name: start_at_end
+      cli: "+"
+      assignment_delimiter: none
+      description: Start at end of file
+    - name: start_at_line
+      type: string
+      cli: "+"
+      assignment_delimiter: none
+      description: Start at line number
+    - name: diff_mode
+      cli: "-d"
+      assignment_delimiter: none
+      description: Diff mode (like vimdiff)
+    - name: ex_mode
+      cli: "-e"
+      assignment_delimiter: none
+      description: Ex mode (like ex)
+    - name: improved_ex
+      cli: "-E"
+      assignment_delimiter: none
+      description: Improved Ex mode
+    - name: silent
+      cli: "-s"
+      assignment_delimiter: none
+      description: Silent (batch) mode
+    - name: gui
+      cli: "-g"
+      assignment_delimiter: none
+      description: Run using GUI (like gvim)
+    - name: easy
+      cli: "-y"
+      assignment_delimiter: none
+      description: Easy mode (like evim)
+    - name: restricted
+      cli: "-Z"
+      assignment_delimiter: none
+      description: Restricted mode (like rvim)
+    - name: verbose
+      cli: "-V"
+      assignment_delimiter: none
+      description: Be verbose
+    flags:
+    - name: readonly
+      cli: "-R"
+      description: Readonly mode
+      default: false
+      assignment_delimiter: none
+    - name: binary
+      cli: "-b"
+      description: Binary mode
+      default: false
+      assignment_delimiter: none
+    - name: compatible
+      cli: "-C"
+      description: Vi compatible mode
+      default: false
+      assignment_delimiter: none
+    - name: nocompatible
+      cli: "-N"
+      description: Not Vi compatible
+      default: false
+      assignment_delimiter: none
+    - name: diff_mode
+      cli: "-d"
+      description: Diff mode
+      default: false
+      assignment_delimiter: none
+    - name: gui
+      cli: "-g"
+      description: GUI mode
+      default: false
+      assignment_delimiter: none
+    name: edit
