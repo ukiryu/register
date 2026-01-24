@@ -22,8 +22,9 @@ jobs:
           - ubuntu-24
           - ubuntu-24-arm
           - macos-15
-          - macos-13
+          - macos-15-intel
           - windows-2025
+          - windows-11-arm
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
