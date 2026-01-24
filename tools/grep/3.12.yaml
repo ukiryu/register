@@ -11,6 +11,8 @@ aliases:
 version_detection:
   command: "--version"
   pattern: "grep \\(GNU grep\\) ([\\d.]+)|grep \\(BSD\\) ([\\d.]+)"
+  man_date: true
+  system_tool: true
   modern_threshold: '2.5'
 search_paths:
   macos:

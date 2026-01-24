@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: xargs
@@ -7,11 +6,13 @@ homepage: https://www.gnu.org/software/findutils/
 "$self": https://www.ukiryu.com/register/1.0/xargs/0.1
 version: '0.1'
 aliases:
-  - xargs
+- xargs
 version_detection:
   command: "--version"
-  pattern: "xargs \\(GNU findutils\\) ([\\d.]+)"
+  pattern: xargs \(GNU findutils\) ([\d.]+)
   modern_threshold: '4.0'
+  man_date: true
+  system_tool: true
 search_paths:
   macos:
   - "/usr/bin/xargs"
@@ -19,7 +20,7 @@ search_paths:
   linux:
   - "/usr/bin/xargs"
   windows:
-  - "C:/Program Files/Git/usr/bin/xargs.exe"
+  - C:/Program Files/Git/usr/bin/xargs.exe
 timeout: 300
 profiles:
 - name: unix
@@ -48,7 +49,7 @@ profiles:
       position: last
       description: Initial arguments
     options:
-    - name: null
+    - name:
       cli: "-0"
       assignment_delimiter: none
       description: NUL-terminated input
@@ -111,7 +112,7 @@ profiles:
       include_platforms:
       - linux
     flags:
-    - name: null
+    - name:
       cli: "-0"
       description: NUL terminated
       default: false

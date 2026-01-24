@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: diff
@@ -7,11 +6,13 @@ homepage: https://www.gnu.org/software/diffutils/
 "$self": https://www.ukiryu.com/register/1.0/diff/0.1
 version: '0.1'
 aliases:
-  - diff
+- diff
 version_detection:
   command: "--version"
-  pattern: "diff \\(GNU diffutils\\) ([\\d.]+)"
+  pattern: diff \(GNU diffutils\) ([\d.]+)
   modern_threshold: '3.0'
+  man_date: true
+  system_tool: true
 search_paths:
   macos:
   - "/usr/bin/diff"
@@ -19,7 +20,7 @@ search_paths:
   linux:
   - "/usr/bin/diff"
   windows:
-  - "C:/Program Files/Git/usr/bin/diff.exe"
+  - C:/Program Files/Git/usr/bin/diff.exe
 timeout: 300
 profiles:
 - name: unix
@@ -48,7 +49,6 @@ profiles:
       position: last
       description: Second file to compare
     options:
-    # Output formats
     - name: unified
       cli: "-u"
       assignment_delimiter: none
@@ -73,7 +73,6 @@ profiles:
       cli: "--suppress-common-lines"
       assignment_delimiter: none
       description: Suppress common lines
-    # Context options
     - name: lines
       type: integer
       cli: "-U"
@@ -83,7 +82,6 @@ profiles:
       cli: "-p"
       assignment_delimiter: none
       description: Show C function
-    # Behavior
     - name: ignore_all_space
       cli: "-w"
       assignment_delimiter: none

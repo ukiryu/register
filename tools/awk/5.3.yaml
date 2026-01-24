@@ -12,7 +12,9 @@ aliases:
   - nawk
 version_detection:
   command: "--version"
-  pattern: "GNU Awk ([\\d.]+)|awk version ([\\d.]+)"
+  pattern: "GNU Awk ([\\d.]+)|awk version ([\\d.]+)|awk version (\\d+)"
+  man_date: true
+  system_tool: true
   modern_threshold: '4.0'
 search_paths:
   macos:
