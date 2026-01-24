@@ -1,0 +1,147 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: openssl
+display_name: openssl (cryptography toolkit)
+homepage: https://www.openssl.org/
+"$self": https://www.ukiryu.com/register/1.0/openssl/3.4
+version: '3.4'
+aliases:
+  - openssl
+version_detection:
+  command: "version"
+  pattern: "OpenSSL ([\\d.]+)"
+  modern_threshold: '3.0'
+search_paths:
+  macos:
+  - "/usr/bin/openssl"
+  - "/opt/homebrew/bin/openssl"
+  - "/usr/local/bin/openssl"
+  linux:
+  - "/usr/bin/openssl"
+  - "/usr/local/bin/openssl"
+  windows:
+  - "C:/Program Files/Git/usr/bin/openssl.exe"
+  - "C:/Program Files/OpenSSL-Win/bin/openssl.exe"
+timeout: 600
+profiles:
+- name: unix
+  display_name: openssl on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_space
+  commands:
+  - description: OpenSSL cryptography toolkit
+    usage: openssl command [options] [args]
+    arguments:
+    - name: command
+      type: string
+      required: true
+      position: first
+      description: OpenSSL command
+    - name: args
+      type: string
+      variadic: true
+      position: last
+      description: Command arguments
+    options:
+    - name: help
+      cli: "-help"
+      assignment_delimiter: none
+      description: Help for command
+    flags:
+    - name: help
+      cli: "-help"
+      description: Show help
+      default: false
+      assignment_delimiter: none
+    name: crypto
+- name: unix
+  display_name: openssl enc on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: OpenSSL encryption command
+    usage: openssl enc [options] [file]
+    arguments:
+    - name: file
+      type: file
+      required: false
+      position: last
+      description: File to encrypt/decrypt
+    options:
+    - name: encrypt
+      cli: "-e"
+      assignment_delimiter: none
+      description: Encrypt
+    - name: decrypt
+      cli: "-d"
+      assignment_delimiter: none
+      description: Decrypt
+    - name: aes256cbc
+      cli: "-aes-256-cbc"
+      assignment_delimiter: none
+      description: AES-256 CBC
+    - name: aes256gcm
+      cli: "-aes-256-gcm"
+      assignment_delimiter: none
+      description: AES-256 GCM
+    - name: in
+      cli: "-in"
+      assignment_delimiter: auto
+      description: Input file
+    - name: out
+      cli: "-out"
+      assignment_delimiter: auto
+      description: Output file
+    - name: pass
+      cli: "-pass"
+      assignment_delimiter: auto
+      description: Password
+    - name: pbkdf2
+      cli: "-pbkdf2"
+      assignment_delimiter: none
+      description: Use PBKDF2
+    - name: iter
+      type: integer
+      cli: "-iter"
+      assignment_delimiter: auto
+      description: Iteration count
+    - name: salt
+      cli: "-S"
+      assignment_delimiter: auto
+      description: Salt
+    - name: nopad
+      cli: "-nopad"
+      assignment_delimiter: none
+      description: Disable padding
+    flags:
+    - name: encrypt
+      cli: "-e"
+      description: Encrypt mode
+      default: false
+      assignment_delimiter: none
+    - name: decrypt
+      cli: "-d"
+      description: Decrypt mode
+      default: false
+      assignment_delimiter: none
+    - name: pbkdf2
+      cli: "-pbkdf2"
+      description: Use PBKDF2
+      default: false
+      assignment_delimiter: none
+    name: enc

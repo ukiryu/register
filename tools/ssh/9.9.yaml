@@ -1,0 +1,248 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: ssh
+display_name: ssh (OpenSSH remote login client)
+homepage: https://www.openssh.com/
+"$self": https://www.ukiryu.com/register/1.0/ssh/9.9
+version: '9.9'
+aliases:
+  - ssh
+version_detection:
+  command: "-V"
+  pattern: "OpenSSH_([\\d.]+)"
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/ssh"
+  - "/opt/homebrew/bin/ssh"
+  - "/usr/local/bin/ssh"
+  linux:
+  - "/usr/bin/ssh"
+  - "/usr/local/bin/ssh"
+  windows:
+  - "C:/Windows/System32/OpenSSH/ssh.exe"
+  - "C:/Program Files/Git/usr/bin/ssh.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: ssh on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_space
+  commands:
+  - description: OpenSSH remote login client
+    usage: ssh [options] destination [command]
+    arguments:
+    - name: destination
+      type: string
+      required: true
+      position: first
+      description: Remote host in [user@]host format
+    - name: command
+      type: string
+      variadic: true
+      position: last
+      description: Command to execute on remote host
+    options:
+    # Protocol options
+    - name: ipv4
+      cli: "-4"
+      assignment_delimiter: none
+      description: Use IPv4 only
+    - name: ipv6
+      cli: "-6"
+      assignment_delimiter: none
+      description: Use IPv6 only
+    # Authentication
+    - name: identity_file
+      type: file
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Identity file (private key)
+    - name: login_name
+      cli: "-l"
+      assignment_delimiter: auto
+      description: Login name
+    - name: pubkey_authentication
+      cli: "-o PubkeyAuthentication"
+      assignment_delimiter: equals
+      description: Public key authentication
+    - name: password_authentication
+      cli: "-o PasswordAuthentication"
+      assignment_delimiter: equals
+      description: Password authentication
+    - name: host_key_algorithms
+      cli: "-o HostKeyAlgorithms"
+      assignment_delimiter: equals
+      description: Host key algorithms
+    # Connection options
+    - name: port
+      type: integer
+      cli: "-p"
+      assignment_delimiter: auto
+      description: Port to connect to
+    - name: bind_address
+      cli: "-b"
+      assignment_delimiter: auto
+      description: Bind address
+    - name: connect_timeout
+      cli: "-o ConnectTimeout"
+      assignment_delimiter: equals
+      description: Connection timeout
+    - name: server_alive_interval
+      cli: "-o ServerAliveInterval"
+      assignment_delimiter: equals
+      description: Server alive interval
+    - name: server_alive_count_max
+      cli: "-o ServerAliveCountMax"
+      assignment_delimiter: equals
+      description: Server alive count max
+    # Forwarding options
+    - name: local_forward
+      cli: "-L"
+      assignment_delimiter: auto
+      description: Local port forwarding
+    - name: remote_forward
+      cli: "-R"
+      assignment_delimiter: auto
+      description: Remote port forwarding
+    - name: dynamic_forward
+      cli: "-D"
+      assignment_delimiter: auto
+      description: Dynamic port forwarding (SOCKS)
+    - name: forward_agent
+      cli: "-A"
+      assignment_delimiter: none
+      description: Forward authentication agent
+    - name: forward_x11
+      cli: "-X"
+      assignment_delimiter: none
+      description: Forward X11
+    - name: forward_x11_trusted
+      cli: "-Y"
+      assignment_delimiter: none
+      description: Forward X11 (trusted)
+    # Other options
+    - name: compression
+      cli: "-C"
+      assignment_delimiter: none
+      description: Enable compression
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose mode
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: config_file
+      type: file
+      cli: "-F"
+      assignment_delimiter: auto
+      description: Specify config file
+    - name: option
+      cli: "-o"
+      assignment_delimiter: space
+      description: SSH option
+    - name: remote_command
+      cli: "-o RemoteCommand"
+      assignment_delimiter: equals
+      description: Remote command
+    - name: request_tty
+      cli: "-t"
+      assignment_delimiter: none
+      description: Request pseudo-tty
+    - name: no_tty
+      cli: "-T"
+      assignment_delimiter: none
+      description: Disable pseudo-tty allocation
+    - name: escape_char
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Escape character
+    - name: background
+      cli: "-f"
+      assignment_delimiter: none
+      description: Go to background before command
+    - name: no_stdin
+      cli: "-n"
+      assignment_delimiter: none
+      description: Redirect stdin from /dev/null
+    - name: gateway_ports
+      cli: "-g"
+      assignment_delimiter: none
+      description: Allow remote hosts to connect to forwarded ports
+    flags:
+    - name: ipv4
+      cli: "-4"
+      description: IPv4 only
+      default: false
+      assignment_delimiter: none
+    - name: ipv6
+      cli: "-6"
+      description: IPv6 only
+      default: false
+      assignment_delimiter: none
+    - name: compression
+      cli: "-C"
+      description: Enable compression
+      default: false
+      assignment_delimiter: none
+    - name: forward_agent
+      cli: "-A"
+      description: Forward agent
+      default: false
+      assignment_delimiter: none
+    - name: forward_x11
+      cli: "-X"
+      description: Forward X11
+      default: false
+      assignment_delimiter: none
+    - name: forward_x11_trusted
+      cli: "-Y"
+      description: Forward X11 trusted
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: background
+      cli: "-f"
+      description: Background
+      default: false
+      assignment_delimiter: none
+    - name: no_stdin
+      cli: "-n"
+      description: No stdin
+      default: false
+      assignment_delimiter: none
+    - name: request_tty
+      cli: "-t"
+      description: Request TTY
+      default: false
+      assignment_delimiter: none
+    - name: no_tty
+      cli: "-T"
+      description: No TTY
+      default: false
+      assignment_delimiter: none
+    - name: gateway_ports
+      cli: "-g"
+      description: Gateway ports
+      default: false
+      assignment_delimiter: none
+    name: connect

@@ -1,0 +1,160 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: fzf
+display_name: fzf (command-line fuzzy finder)
+homepage: https://github.com/junegunn/fzf
+"$self": https://www.ukiryu.com/register/1.0/fzf/0.55
+version: '0.55'
+aliases:
+  - fzf
+version_detection:
+  command: "--version"
+  pattern: "([\\d.]+)"
+  modern_threshold: '0.40'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/fzf"
+  - "/usr/local/bin/fzf"
+  linux:
+  - "/usr/bin/fzf"
+  - "/usr/local/bin/fzf"
+  windows:
+  - "C:/Users/*/AppData/Local/fzf/fzf.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: fzf on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Command-line fuzzy finder
+    usage: fzf [options]
+    arguments: []
+    options:
+    - name: filter
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Initial filter
+    - name: exact
+      cli: "-e"
+      assignment_delimiter: none
+      description: Exact match
+    - name: toggle_all
+      cli: "--toggle-all"
+      assignment_delimiter: none
+      description: Toggle all
+    - name: select_all
+      cli: "--select-all"
+      assignment_delimiter: none
+      description: Select all
+    - name: deselect_all
+      cli: "--deselect-all"
+      assignment_delimiter: none
+      description: Deselect all
+    - name: multi
+      cli: "-m"
+      assignment_delimiter: none
+      description: Multi-select mode
+    - name: no_multi
+      cli: "+m"
+      assignment_delimiter: none
+      description: No multi-select
+    - name: query
+      cli: "-q"
+      assignment_delimiter: auto
+      description: Query string
+    - name: height
+      cli: "--height"
+      assignment_delimiter: equals
+      description: Height of fzf window
+    - name: layout
+      cli: "--layout"
+      assignment_delimiter: equals
+      description: Layout (default/reverse/list)
+    - name: reverse
+      cli: "--reverse"
+      assignment_delimiter: none
+      description: Reverse layout
+    - name: prompt
+      cli: "--prompt"
+      assignment_delimiter: equals
+      description: Prompt string
+    - name: preview
+      cli: "--preview"
+      assignment_delimiter: equals
+      description: Preview command
+    - name: preview_window
+      cli: "--preview-window"
+      assignment_delimiter: equals
+      description: Preview window options
+    - name: header
+      cli: "--header"
+      assignment_delimiter: equals
+      description: Header lines
+    - name: header_lines
+      cli: "--header-lines"
+      assignment_delimiter: equals
+      description: Header lines count
+    - name: delimiter
+      cli: "-d"
+      assignment_delimiter: auto
+      description: Field delimiter
+    - name: with_nth
+      cli: "--with-nth"
+      assignment_delimiter: equals
+      description: Comma-separated fields to display
+    - name: nth
+      cli: "--nth"
+      assignment_delimiter: equals
+      description: Comma-separated fields to search
+    - name: print_query
+      cli: "--print-query"
+      assignment_delimiter: none
+      description: Print query on exit
+    - name: expect
+      cli: "--expect"
+      assignment_delimiter: equals
+      description: Comma-separated keys for actions
+    - name: bind
+      cli: "--bind"
+      assignment_delimiter: equals
+      description: Key bindings
+    - name: cycle
+      cli: "--cycle"
+      assignment_delimiter: none
+      description: Enable cyclic scroll
+    flags:
+    - name: multi
+      cli: "-m"
+      description: Multi-select
+      default: false
+      assignment_delimiter: none
+    - name: exact
+      cli: "-e"
+      description: Exact match
+      default: false
+      assignment_delimiter: none
+    - name: reverse
+      cli: "--reverse"
+      description: Reverse layout
+      default: false
+      assignment_delimiter: none
+    - name: cycle
+      cli: "--cycle"
+      description: Cyclic scroll
+      default: false
+      assignment_delimiter: none
+    - name: print_query
+      cli: "--print-query"
+      description: Print query
+      default: false
+      assignment_delimiter: none
+    name: fuzzy_find

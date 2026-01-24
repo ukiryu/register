@@ -1,0 +1,117 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: less
+display_name: less (pager program)
+homepage: https://www.greenwoodsoftware.com/less/
+"$self": https://www.ukiryu.com/register/1.0/less/0.1
+version: '0.1'
+aliases:
+  - less
+version_detection:
+  command: "--version"
+  pattern: "less ([\\d.]+)"
+  modern_threshold: '500'
+search_paths:
+  macos:
+  - "/usr/bin/less"
+  - "/opt/homebrew/bin/less"
+  linux:
+  - "/usr/bin/less"
+  windows:
+  - "C:/Program Files/Git/usr/bin/less.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: less on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Pager program for viewing files
+    usage: less [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to view
+    options:
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: quiet_silent
+      cli: "-Q"
+      assignment_delimiter: none
+      description: Very quiet
+    - name: raw_control_chars
+      cli: "-r"
+      assignment_delimiter: none
+      description: Display control chars
+    - name: long_prompt
+      cli: "-M"
+      assignment_delimiter: none
+      description: Long prompt
+    - name: line_numbers
+      cli: "-N"
+      assignment_delimiter: none
+      description: Show line numbers
+    - name: chop_long_lines
+      cli: "-S"
+      assignment_delimiter: none
+      description: Chop long lines
+    - name: no_init
+      cli: "-X"
+      assignment_delimiter: none
+      description: Don't use termcap init
+    - name: no_tilde
+      cli: "-~"
+      assignment_delimiter: none
+      description: Don't show tildes after EOF
+    - name: ignore_case
+      cli: "-i"
+      assignment_delimiter: none
+      description: Ignore case in searches
+    - name: shift
+      cli: "-s"
+      assignment_delimiter: none
+      description: Shift output left
+    flags:
+    - name: quiet
+      cli: "-q"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: line_numbers
+      cli: "-N"
+      description: Line numbers
+      default: false
+      assignment_delimiter: none
+    - name: raw_control_chars
+      cli: "-r"
+      description: Raw control chars
+      default: false
+      assignment_delimiter: none
+    - name: ignore_case
+      cli: "-i"
+      description: Ignore case
+      default: false
+      assignment_delimiter: none
+    - name: chop_long_lines
+      cli: "-S"
+      description: Chop long lines
+      default: false
+      assignment_delimiter: none
+    - name: no_tilde
+      cli: "-~"
+      description: No tildes
+      default: false
+      assignment_delimiter: none
+    name: view

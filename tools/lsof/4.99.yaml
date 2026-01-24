@@ -1,0 +1,138 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: lsof
+display_name: lsof (list open files)
+homepage: https://github.com/lsof-org/lsof
+"$self": https://www.ukiryu.com/register/1.0/lsof/4.99
+version: '4.99'
+aliases:
+  - lsof
+version_detection:
+  command: "-v"
+  pattern: "revision: ([\\d.]+)"
+  modern_threshold: '4.90'
+search_paths:
+  macos:
+  - "/usr/bin/lsof"
+  - "/opt/homebrew/bin/lsof"
+  - "/usr/local/bin/lsof"
+  linux:
+  - "/usr/bin/lsof"
+  - "/usr/local/bin/lsof"
+  windows:
+  - "C:/Program Files/Git/usr/bin/lsof.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: lsof on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: List open files
+    usage: lsof [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to query
+    options:
+    # Output options
+    - name: no_preamble
+      cli: "-p"
+      assignment_delimiter: none
+      description: No preamble
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose output
+    - name: quiet
+      cli: "-b"
+      assignment_delimiter: none
+      description: Avoid kernel blocks
+    - name: fields
+      cli: "-F"
+      assignment_delimiter: auto
+      description: Specify output fields
+    - name: no_header
+      cli: "-t"
+      assignment_delimiter: none
+      description: No header
+    # Process options
+    - name: process
+      cli: "-p"
+      assignment_delimiter: auto
+      description: Process ID
+    - name: command
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Command name
+    - name: user
+      cli: "-u"
+      assignment_delimiter: auto
+      description: User ID or login
+    - name: directory
+      cli: "+d"
+      assignment_delimiter: auto
+      description: Directory
+    - name: network
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Internet files
+    # File options
+    - name: regular
+      cli: "-a"
+      assignment_delimiter: none
+      description: Regular file
+    - name: directory_files
+      cli: "-d"
+      assignment_delimiter: none
+      description: Directory
+    - name: symbolic
+      cli: "-L"
+      assignment_delimiter: none
+      description: Symbolic link
+    # Repeat options
+    - name: repeat
+      cli: "+r"
+      assignment_delimiter: none
+      description: Repeat output
+    - name: timeout
+      cli: "-T"
+      assignment_delimiter: auto
+      description: Timeout
+    flags:
+    - name: no_preamble
+      cli: "-p"
+      description: No preamble
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-b"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: network
+      cli: "-i"
+      description: Internet files
+      default: false
+      assignment_delimiter: none
+    - name: no_header
+      cli: "-t"
+      description: No header
+      default: false
+      assignment_delimiter: none
+    name: list

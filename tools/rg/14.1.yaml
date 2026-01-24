@@ -1,0 +1,232 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: rg
+display_name: ripgrep (fast grep alternative)
+homepage: https://github.com/BurntSushi/ripgrep
+"$self": https://www.ukiryu.com/register/1.0/rg/14.1
+version: '14.1'
+aliases:
+  - rg
+  - ripgrep
+version_detection:
+  command: "--version"
+  pattern: "ripgrep ([\\d.]+)"
+  modern_threshold: '13.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/rg"
+  - "/usr/local/bin/rg"
+  linux:
+  - "/usr/bin/rg"
+  - "/usr/local/bin/rg"
+  windows:
+  - "C:/Users/*/AppData/Local/rg/rg.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: rg on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Fast grep alternative (ripgrep)
+    usage: rg [options] pattern [path...]
+    arguments:
+    - name: pattern
+      type: string
+      required: true
+      position: first
+      description: Search pattern (regex)
+    - name: paths
+      type: string
+      variadic: true
+      position: last
+      description: Files/directories to search
+    options:
+    # Search options
+    - name: case_sensitive
+      cli: "-s"
+      assignment_delimiter: none
+      description: Case-sensitive search
+    - name: case_insensitive
+      cli: "-i"
+      assignment_delimiter: none
+      description: Case-insensitive search
+    - name: smart_case
+      cli: "-S"
+      assignment_delimiter: none
+      description: Smart case search
+    - name: fixed_strings
+      cli: "-F"
+      assignment_delimiter: none
+      description: Treat pattern as fixed string
+    - name: word_regexp
+      cli: "-w"
+      assignment_delimiter: none
+      description: Match whole words
+    - name: line_regexp
+      cli: "-x"
+      assignment_delimiter: none
+      description: Match whole lines
+    # Output options
+    - name: count
+      cli: "-c"
+      assignment_delimiter: none
+      description: Count matches
+    - name: files_with_matches
+      cli: "-l"
+      assignment_delimiter: none
+      description: Only show matching files
+    - name: files_without_matches
+      cli: "--files-without-matches"
+      assignment_delimiter: none
+      description: Only show non-matching files
+    - name: count_matches
+      cli: "--count-matches"
+      assignment_delimiter: none
+      description: Show count of matches
+    - name: context
+      type: integer
+      cli: "-C"
+      assignment_delimiter: auto
+      description: Context lines
+    - name: before_context
+      type: integer
+      cli: "-B"
+      assignment_delimiter: auto
+      description: Lines before match
+    - name: after_context
+      type: integer
+      cli: "-A"
+      assignment_delimiter: auto
+      description: Lines after match
+    - name: heading
+      cli: "--heading"
+      assignment_delimiter: none
+      description: Show file headings
+    - name: hidden
+      cli: "--hidden"
+      assignment_delimiter: none
+      description: Search hidden files
+    - name: no_ignore
+      cli: "-u"
+      assignment_delimiter: none
+      description: Don't respect .gitignore
+    - name: ignore
+      cli: "--ignore"
+      assignment_delimiter: none
+      description: Respect .gitignore (default)
+    - name: binary
+      cli: "-a"
+      assignment_delimiter: none
+      description: Search binary files
+    - name: text
+      cli: "--text"
+      assignment_delimiter: none
+      description: Search binary as text
+    - name: max_count
+      type: integer
+      cli: "-m"
+      assignment_delimiter: auto
+      description: Max results
+    - name: line_number
+      cli: "-n"
+      assignment_delimiter: none
+      description: Show line numbers
+    - name: no_line_number
+      cli: "-N"
+      assignment_delimiter: none
+      description: Don't show line numbers
+    - name: pretty
+      cli: "--pretty"
+      assignment_delimiter: none
+      description: Pretty print
+    - name: color
+      cli: "--color"
+      assignment_delimiter: auto
+      description: Color output
+    - name: invert_match
+      cli: "-v"
+      assignment_delimiter: none
+      description: Invert match
+    - name: only_matching
+      cli: "-o"
+      assignment_delimiter: none
+      description: Show only matched parts
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: replace
+      cli: "--replace"
+      assignment_delimiter: equals
+      description: Replace matches
+    flags:
+    - name: case_insensitive
+      cli: "-i"
+      description: Case insensitive
+      default: false
+      assignment_delimiter: none
+    - name: word_regexp
+      cli: "-w"
+      description: Whole word
+      default: false
+      assignment_delimiter: none
+    - name: line_regexp
+      cli: "-x"
+      description: Whole line
+      default: false
+      assignment_delimiter: none
+    - name: count
+      cli: "-c"
+      description: Count only
+      default: false
+      assignment_delimiter: none
+    - name: files_with_matches
+      cli: "-l"
+      description: Files with matches
+      default: false
+      assignment_delimiter: none
+    - name: hidden
+      cli: "--hidden"
+      description: Include hidden
+      default: false
+      assignment_delimiter: none
+    - name: no_ignore
+      cli: "-u"
+      description: No ignore
+      default: false
+      assignment_delimiter: none
+    - name: binary
+      cli: "-a"
+      description: Search binary
+      default: false
+      assignment_delimiter: none
+    - name: line_number
+      cli: "-n"
+      description: Line numbers
+      default: false
+      assignment_delimiter: none
+    - name: invert_match
+      cli: "-v"
+      description: Invert
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: only_matching
+      cli: "-o"
+      description: Only matching
+      default: false
+      assignment_delimiter: none
+    name: search

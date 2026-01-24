@@ -1,0 +1,387 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: rsync
+display_name: rsync (remote file copy)
+homepage: https://rsync.samba.org/
+"$self": https://www.ukiryu.com/register/1.0/rsync/3.4
+version: '3.4'
+aliases:
+  - rsync
+version_detection:
+  command: "--version"
+  pattern: "rsync  version ([\\d.]+)"
+  modern_threshold: '3.0'
+search_paths:
+  macos:
+  - "/usr/bin/rsync"
+  - "/opt/homebrew/bin/rsync"
+  - "/usr/local/bin/rsync"
+  linux:
+  - "/usr/bin/rsync"
+  - "/usr/local/bin/rsync"
+  windows:
+  - "C:/Program Files/Git/usr/bin/rsync.exe"
+  - "C:/msys64/usr/bin/rsync.exe"
+timeout: 600
+profiles:
+- name: unix
+  display_name: rsync on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Fast, versatile, remote (and local) file-copying tool
+    usage: rsync [options] src... [dest]
+    arguments:
+    - name: sources
+      type: string
+      variadic: true
+      required: true
+      position: not_last
+      description: Source files/directories
+    - name: destination
+      type: string
+      required: true
+      position: last
+      description: Destination
+    options:
+    # Main options
+    - name: archive
+      cli: "-a"
+      assignment_delimiter: none
+      description: Archive mode (equals -rlptgoD)
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose output
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: progress
+      cli: "--progress"
+      assignment_delimiter: none
+      description: Show progress
+    - name: partial
+      cli: "--partial"
+      assignment_delimiter: none
+      description: Keep partially transferred files
+    - name: progress_partial
+      cli: "-P"
+      assignment_delimiter: none
+      description: Same as --progress --partial
+    # File selection
+    - name: recursive
+      cli: "-r"
+      assignment_delimiter: none
+      description: Recursive
+    - name: dirs
+      cli: "-d"
+      assignment_delimiter: none
+      description: Transfer directories without recursion
+    - name: links
+      cli: "-l"
+      assignment_delimiter: none
+      description: Copy symlinks as symlinks
+    - name: copy_links
+      cli: "-L"
+      assignment_delimiter: none
+      description: Transform symlink into referent file/dir
+    - name: copy_unsafe_links
+      cli: "--copy-unsafe-links"
+      assignment_delimiter: none
+      description: Copy unsafe symlinks
+    - name: safe_links
+      cli: "--safe-links"
+      assignment_delimiter: none
+      description: Ignore symlinks outside destination
+    - name: copy_dirlinks
+      cli: "-K"
+      assignment_delimiter: none
+      description: Transform symlink to dir into referent dir
+    - name: keep_dirlinks
+      cli: "-k"
+      assignment_delimiter: none
+      description: Treat symlinked dir on receiver as dir
+    - name: hard_links
+      cli: "-H"
+      assignment_delimiter: none
+      description: Preserve hard links
+    - name: perms
+      cli: "-p"
+      assignment_delimiter: none
+      description: Preserve permissions
+    - name: executability
+      cli: "--executability"
+      assignment_delimiter: none
+      description: Preserve executability
+    - name: acls
+      cli: "-A"
+      assignment_delimiter: none
+      description: Preserve ACLs
+    - name: xattrs
+      cli: "-X"
+      assignment_delimiter: none
+      description: Preserve extended attributes
+    - name: owner
+      cli: "-o"
+      assignment_delimiter: none
+      description: Preserve owner (super-user only)
+    - name: group
+      cli: "-g"
+      assignment_delimiter: none
+      description: Preserve group
+    - name: devices
+      cli: "--devices"
+      assignment_delimiter: none
+      description: Preserve device files (super-user only)
+    - name: specials
+      cli: "--specials"
+      assignment_delimiter: none
+      description: Preserve special files
+    - name: times
+      cli: "-t"
+      assignment_delimiter: none
+      description: Preserve modification times
+    # Compression
+    - name: compress
+      cli: "-z"
+      assignment_delimiter: none
+      description: Compress file data during transfer
+    - name: compress_level
+      type: integer
+      cli: "--compress-level"
+      assignment_delimiter: equals
+      description: Compression level
+    # Delete options
+    - name: delete
+      cli: "--delete"
+      assignment_delimiter: none
+      description: Delete extraneous files from dest dirs
+    - name: delete_before
+      cli: "--delete-before"
+      assignment_delimiter: none
+      description: Delete before transfer (default)
+    - name: delete_during
+      cli: "--delete-during"
+      assignment_delimiter: none
+      description: Delete during transfer
+    - name: delete_delay
+      cli: "--delete-delay"
+      assignment_delimiter: none
+      description: Find deletions after transfer
+    - name: delete_after
+      cli: "--delete-after"
+      assignment_delimiter: none
+      description: Delete after transfer
+    - name: delete_excluded
+      cli: "--delete-excluded"
+      assignment_delimiter: none
+      description: Also delete excluded files from dest dirs
+    - name: ignore_errors
+      cli: "--ignore-errors"
+      assignment_delimiter: none
+      description: Delete even if there are I/O errors
+    # Filter options
+    - name: exclude
+      cli: "--exclude"
+      assignment_delimiter: equals
+      description: Exclude files matching pattern
+    - name: exclude_from
+      cli: "--exclude-from"
+      type: file
+      assignment_delimiter: equals
+      description: Read exclude patterns from file
+    - name: include
+      cli: "--include"
+      assignment_delimiter: equals
+      description: Don't exclude files matching pattern
+    - name: include_from
+      cli: "--include-from"
+      type: file
+      assignment_delimiter: equals
+      description: Read include patterns from file
+    - name: filter
+      cli: "--filter"
+      assignment_delimiter: equals
+      description: Add filter rule
+    - name: filter_from
+      type: file
+      cli: "--filter-from"
+      assignment_delimiter: equals
+      description: Read filter rules from file
+    # Transfer options
+    - name: update
+      cli: "-u"
+      assignment_delimiter: none
+      description: Skip files newer on receiver
+    - name: existing
+      cli: "--existing"
+      assignment_delimiter: none
+      description: Skip creating new files on receiver
+    - name: ignore_existing
+      cli: "--ignore-existing"
+      assignment_delimiter: none
+      description: Skip updating files that exist on receiver
+    - name: size_only
+      cli: "--size-only"
+      assignment_delimiter: none
+      description: Skip files that match in size
+    - name: modify_window
+      type: integer
+      cli: "--modify-window"
+      assignment_delimiter: equals
+      description: Timestamp accuracy (seconds)
+    - name: checksum
+      cli: "-c"
+      assignment_delimiter: none
+      description: Skip based on checksum, not mod-time & size
+    # Remote shell
+    - name: rsh
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Specify remote shell
+    - name: rsync_path
+      cli: "--rsync-path"
+      assignment_delimiter: equals
+      description: Specify path to rsync on remote machine
+    # Other options
+    - name: dry_run
+      cli: "-n"
+      assignment_delimiter: none
+      description: Dry run
+    - name: itemize_changes
+      cli: "-i"
+      assignment_delimiter: none
+      description: Itemize changes
+    - name: stats
+      cli: "--stats"
+      assignment_delimiter: none
+      description: Give file transfer stats
+    - name: human_readable
+      cli: "-h"
+      assignment_delimiter: none
+      description: Output numbers in human-readable format
+    - name: one_file_system
+      cli: "-x"
+      assignment_delimiter: none
+      description: Don't cross filesystem boundaries
+    - name: block_size
+      type: integer
+      cli: "-B"
+      assignment_delimiter: auto
+      description: Block size for checksum
+    - name: bandwidth_limit
+      type: integer
+      cli: "--bwlimit"
+      assignment_delimiter: equals
+      description: Limit bandwidth in KBytes/sec
+    flags:
+    - name: archive
+      cli: "-a"
+      description: Archive mode
+      default: false
+      assignment_delimiter: none
+    - name: recursive
+      cli: "-r"
+      description: Recursive
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: progress
+      cli: "--progress"
+      description: Show progress
+      default: false
+      assignment_delimiter: none
+    - name: dry_run
+      cli: "-n"
+      description: Dry run
+      default: false
+      assignment_delimiter: none
+    - name: compress
+      cli: "-z"
+      description: Compress
+      default: false
+      assignment_delimiter: none
+    - name: update
+      cli: "-u"
+      description: Update only
+      default: false
+      assignment_delimiter: none
+    - name: delete
+      cli: "--delete"
+      description: Delete files
+      default: false
+      assignment_delimiter: none
+    - name: one_file_system
+      cli: "-x"
+      description: One filesystem
+      default: false
+      assignment_delimiter: none
+    - name: links
+      cli: "-l"
+      description: Copy symlinks
+      default: false
+      assignment_delimiter: none
+    - name: hard_links
+      cli: "-H"
+      description: Hard links
+      default: false
+      assignment_delimiter: none
+    - name: perms
+      cli: "-p"
+      description: Preserve permissions
+      default: false
+      assignment_delimiter: none
+    - name: times
+      cli: "-t"
+      description: Preserve times
+      default: false
+      assignment_delimiter: none
+    - name: owner
+      cli: "-o"
+      description: Preserve owner
+      default: false
+      assignment_delimiter: none
+    - name: group
+      cli: "-g"
+      description: Preserve group
+      default: false
+      assignment_delimiter: none
+    - name: devices
+      cli: "--devices"
+      description: Preserve devices
+      default: false
+      assignment_delimiter: none
+    - name: specials
+      cli: "--specials"
+      description: Preserve specials
+      default: false
+      assignment_delimiter: none
+    - name: acls
+      cli: "-A"
+      description: Preserve ACLs
+      default: false
+      assignment_delimiter: none
+    - name: xattrs
+      cli: "-X"
+      description: Preserve xattrs
+      default: false
+      assignment_delimiter: none
+    name: copy

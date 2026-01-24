@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: htop
+display_name: htop (interactive process viewer)
+homepage: https://htop.dev/
+"$self": https://www.ukiryu.com/register/1.0/htop/3.3
+version: '3.3'
+aliases:
+  - htop
+version_detection:
+  command: "--version"
+  pattern: "htop ([\\d.]+)"
+  modern_threshold: '3.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/htop"
+  - "/usr/local/bin/htop"
+  linux:
+  - "/usr/bin/htop"
+  - "/usr/local/bin/htop"
+  windows:
+  - "C:/Program Files/htop/htop.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: htop on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Interactive process viewer
+    usage: htop [options]
+    arguments: []
+    options:
+    - name: delay
+      type: number
+      cli: "-d"
+      assignment_delimiter: auto
+      description: Delay between updates
+    - name: sort_key
+      cli: "--sort-key"
+      assignment_delimiter: equals
+      description: Sort column
+    - name: sort_order
+      cli: "--sort-order"
+      assignment_delimiter: equals
+      description: Sort direction
+    - name: no_color
+      cli: "--no-colour"
+      assignment_delimiter: none
+      description: No color
+    - name: no_colour
+      cli: "--no-colour"
+      assignment_delimiter: none
+      description: No colour (British)
+    - name: tree
+      cli: "-t"
+      assignment_delimiter: none
+      description: Tree view
+    - name: pid
+      cli: "-p"
+      assignment_delimiter: auto
+      description: Process ID to highlight
+    - name: user
+      cli: "-u"
+      assignment_delimiter: auto
+      description: User to show
+    - name: no_highlight
+      cli: "-h"
+      assignment_delimiter: none
+      description: No highlight
+    - name: readonly
+      cli: "--readonly"
+      assignment_delimiter: none
+      description: Readonly mode
+    flags:
+    - name: tree
+      cli: "-t"
+      description: Tree view
+      default: false
+      assignment_delimiter: none
+    - name: no_color
+      cli: "--no-colour"
+      description: No color
+      default: false
+      assignment_delimiter: none
+    - name: readonly
+      cli: "--readonly"
+      description: Readonly
+      default: false
+      assignment_delimiter: none
+    name: view

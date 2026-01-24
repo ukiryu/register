@@ -2,28 +2,28 @@
 ---
 ukiryu_schema: '1.0'
 name: unzip
-display_name: Zip Extractor
+display_name: unzip (extract zip archives)
 homepage: https://infozip.sourceforge.net/UnZip.html
 "$self": https://www.ukiryu.com/register/1.0/unzip/6.0
 version: '6.0'
-aliases: []
+aliases:
+  - unzip
 version_detection:
   command: "-v"
-  pattern: UnZip ([\d.]+)
+  pattern: "UnZip ([\\d.]+)"
   modern_threshold: '6.0'
 search_paths:
   macos:
+  - "/usr/bin/unzip"
   - "/opt/homebrew/bin/unzip"
   - "/usr/local/bin/unzip"
-  - "/usr/bin/unzip"
   linux:
   - "/usr/bin/unzip"
   - "/usr/local/bin/unzip"
   windows:
-  - C:/Program Files/Git/usr/bin/unzip.exe
-  - C:/msys64/usr/bin/unzip.exe
-  - C:/cygwin64/bin/unzip.exe
-timeout: 120
+  - "C:/Program Files/Git/usr/bin/unzip.exe"
+  - "C:/msys64/usr/bin/unzip.exe"
+timeout: 600
 profiles:
 - name: unix
   display_name: unzip on Unix
@@ -35,72 +35,126 @@ profiles:
   - zsh
   - fish
   - sh
-  option_style: single_dash_space
+  option_style: double_dash_equals
   commands:
-  - description: Extract files from zip archive
-    usage: unzip [options] archive.zip
+  - description: Extract zip archives
+    usage: unzip [options] zipfile [file...]
     arguments:
-    - name: inputs
+    - name: zipfile
       type: file
-      variadic: true
-      min: 1
-      position: last
-      description: Zip archive(s) to extract
-    options:
-    - name: output_dir
+      required: true
+      position: first
+      description: Zip file to extract
+    - name: files
       type: string
+      variadic: true
+      position: last
+      description: Files to extract from archive
+    options:
+    # Main options
+    - name: list
+      cli: "-l"
+      assignment_delimiter: none
+      description: List archive contents
+    - name: test
+      cli: "-t"
+      assignment_delimiter: none
+      description: Test archive files
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose mode
+    # Directory options
+    - name: directory
       cli: "-d"
-      description: Extract to directory
       assignment_delimiter: auto
+      description: Extract to directory
+    - name: create_dirs
+      cli: "-D"
+      assignment_delimiter: none
+      description: Create directories as needed
+    # Overwrite options
+    - name: overwrite
+      cli: "-o"
+      assignment_delimiter: none
+      description: Overwrite existing files
+    - name: never_overwrite
+      cli: "-n"
+      assignment_delimiter: none
+      description: Never overwrite files
+    - name: auto_overwrite
+      cli: "-B"
+      assignment_delimiter: none
+      description: Auto overwrite for freshen/update
+    # Other options
+    - name: junk_paths
+      cli: "-j"
+      assignment_delimiter: none
+      description: Junk paths (don't make directories)
+    - name: restore_perms
+      cli: "-K"
+      assignment_delimiter: none
+      description: Restore permissions
+    - name: lowercase
+      cli: "-L"
+      assignment_delimiter: none
+      description: Lowercase filenames
+    - name: encrypt
+      cli: "-P"
+      assignment_delimiter: none
+      description: Decrypt encrypted files
+    - name: unicode
+      cli: "-U"
+      assignment_delimiter: none
+      description: Unicode escape handling
     flags:
     - name: list
       cli: "-l"
-      description: List archive contents
+      description: List contents
       default: false
       assignment_delimiter: none
     - name: test
       cli: "-t"
-      description: Test archive integrity
-      default: false
-      assignment_delimiter: none
-    - name: verbose
-      cli: "-v"
-      description: Verbose mode
+      description: Test archive
       default: false
       assignment_delimiter: none
     - name: quiet
       cli: "-q"
-      description: Quiet mode
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose
       default: false
       assignment_delimiter: none
     - name: overwrite
       cli: "-o"
-      description: Overwrite existing files
-      default: false
-      assignment_delimiter: none
-    - name: freshen
-      cli: "-f"
-      description: Freshen existing files only
-      default: false
-      assignment_delimiter: none
-    - name: update
-      cli: "-u"
-      description: Update existing files and create new ones
+      description: Overwrite
       default: false
       assignment_delimiter: none
     - name: never_overwrite
       cli: "-n"
-      description: Never overwrite files
-      default: false
-      assignment_delimiter: none
-    - name: preserve_permissions
-      cli: "-X"
-      description: Restore UID/GID info
+      description: Never overwrite
       default: false
       assignment_delimiter: none
     - name: junk_paths
       cli: "-j"
-      description: Junk paths (don't make directories)
+      description: Junk paths
+      default: false
+      assignment_delimiter: none
+    - name: restore_perms
+      cli: "-K"
+      description: Restore permissions
+      default: false
+      assignment_delimiter: none
+    - name: lowercase
+      cli: "-L"
+      description: Lowercase
       default: false
       assignment_delimiter: none
     name: extract

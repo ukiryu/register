@@ -1,0 +1,155 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: fd
+display_name: fd (fast find alternative)
+homepage: https://github.com/sharkdp/fd
+"$self": https://www.ukiryu.com/register/1.0/fd/10.2
+version: '10.2'
+aliases:
+  - fd
+  - find
+version_detection:
+  command: "--version"
+  pattern: "fd ([\\d.]+)"
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/fd"
+  - "/usr/local/bin/fd"
+  linux:
+  - "/usr/bin/fd"
+  - "/usr/local/bin/fd"
+  windows:
+  - "C:/Users/*/AppData/Local/fd/fd.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: fd on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Fast find alternative
+    usage: fd [options] [pattern] [path]
+    arguments:
+    - name: pattern
+      type: string
+      required: false
+      position: first
+      description: Search pattern (regex)
+    - name: path
+      type: string
+      required: false
+      position: last
+      description: Root directory for search
+    options:
+    - name: hidden
+      cli: "-H"
+      assignment_delimiter: none
+      description: Search hidden files
+    - name: no_ignore
+      cli: "-I"
+      assignment_delimiter: none
+      description: Do not respect .gitignore
+    - name: case_sensitive
+      cli: "-s"
+      assignment_delimiter: none
+      description: Case-sensitive search
+    - name: case_insensitive
+      cli: "-i"
+      assignment_delimiter: none
+      description: Case-insensitive search
+    - name: fixed_strings
+      cli: "-F"
+      assignment_delimiter: none
+      description: Treat pattern as fixed string
+    - name: absolute
+      cli: "-a"
+      assignment_delimiter: none
+      description: Show absolute paths
+    - name: list_details
+      cli: "-l"
+      assignment_delimiter: none
+      description: Show detailed results
+    - name: follow
+      cli: "-L"
+      assignment_delimiter: none
+      description: Follow symlinks
+    - name: full_path
+      cli: "-p"
+      assignment_delimiter: none
+      description: Search full path
+    - name: extension
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Filter by file extension
+    - name: exec
+      cli: "-x"
+      assignment_delimiter: space
+      description: Execute command for each result
+    - name: exec_batch
+      cli: "-X"
+      assignment_delimiter: space
+      description: Execute command with all results
+    - name: type
+      cli: "-t"
+      assignment_delimiter: auto
+      description: Filter by type (f/d/l/x)
+    - name: exclude
+      cli: "-E"
+      assignment_delimiter: auto
+      description: Exclude entries matching pattern
+    - name: max_depth
+      type: integer
+      cli: "-d"
+      assignment_delimiter: auto
+      description: Maximum search depth
+    - name: min_depth
+      type: integer
+      cli: "--min-depth"
+      assignment_delimiter: equals
+      description: Minimum search depth
+    flags:
+    - name: hidden
+      cli: "-H"
+      description: Include hidden
+      default: false
+      assignment_delimiter: none
+    - name: no_ignore
+      cli: "-I"
+      description: No ignore
+      default: false
+      assignment_delimiter: none
+    - name: case_sensitive
+      cli: "-s"
+      description: Case sensitive
+      default: false
+      assignment_delimiter: none
+    - name: case_insensitive
+      cli: "-i"
+      description: Case insensitive
+      default: false
+      assignment_delimiter: none
+    - name: absolute
+      cli: "-a"
+      description: Absolute paths
+      default: false
+      assignment_delimiter: none
+    - name: follow
+      cli: "-L"
+      description: Follow symlinks
+      default: false
+      assignment_delimiter: none
+    - name: list_details
+      cli: "-l"
+      description: Detailed results
+      default: false
+      assignment_delimiter: none
+    name: find

@@ -1,0 +1,162 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: awk
+display_name: awk (pattern scanning and processing)
+homepage: https://www.gnu.org/software/gawk/
+"$self": https://www.ukiryu.com/register/1.0/awk/5.3
+version: '5.3'
+aliases:
+  - awk
+  - gawk
+  - nawk
+version_detection:
+  command: "--version"
+  pattern: "GNU Awk ([\\d.]+)|awk version ([\\d.]+)"
+  modern_threshold: '4.0'
+search_paths:
+  macos:
+  - "/usr/bin/awk"
+  - "/opt/homebrew/bin/gawk"
+  - "/usr/local/bin/gawk"
+  linux:
+  - "/usr/bin/awk"
+  - "/usr/bin/gawk"
+  - "/usr/local/bin/gawk"
+  windows:
+  - "C:/Program Files/Git/usr/bin/awk.exe"
+  - "C:/Program Files/Git/usr/bin/gawk.exe"
+  - "C:/msys64/usr/bin/awk.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: awk on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Pattern scanning and processing language
+    usage: awk [options] 'program' [file...]
+    arguments:
+    - name: program
+      type: string
+      required: false
+      position: first
+      description: Awk program to execute
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to process
+    options:
+    - name: file
+      cli: "-f"
+      type: file
+      assignment_delimiter: auto
+      description: Read program from file
+    - name: field_separator
+      cli: "-F"
+      assignment_delimiter: auto
+      description: Field separator
+    - name: value
+      cli: "-v"
+      assignment_delimiter: auto
+      description: Variable assignment
+    - name: posix
+      cli: "--posix"
+      assignment_delimiter: none
+      description: POSIX compatibility mode
+      include_platforms:
+      - linux
+    - name: traditional
+      cli: "--traditional"
+      assignment_delimiter: none
+      description: Traditional mode
+      include_platforms:
+      - linux
+    - name: lint
+      cli: "--lint"
+      assignment_delimiter: none
+      description: Warn about dubious constructs
+      include_platforms:
+      - linux
+    - name: lint_old
+      cli: "--lint-old"
+      assignment_delimiter: none
+      description: Warn about old constructs
+      include_platforms:
+      - linux
+    - name: gen_pot
+      cli: "--gen-pot"
+      assignment_delimiter: none
+      description: Generate pot file
+      include_platforms:
+      - linux
+    - name: pretty_print
+      cli: "--pretty-print"
+      assignment_delimiter: none
+      description: Pretty print program
+      include_platforms:
+      - linux
+    - name: copyright
+      cli: "--copyright"
+      assignment_delimiter: none
+      description: Print copyright info
+      include_platforms:
+      - linux
+    - name: use_lc_ctype
+      cli: "--use-lc-ctype"
+      assignment_delimiter: none
+      description: Use locale for characters
+      include_platforms:
+      - linux
+    - name: source
+      type: string
+      cli: "--source"
+      assignment_delimiter: equals
+      description: Read program from file
+      include_platforms:
+      - linux
+    flags:
+    - name: posix
+      cli: "--posix"
+      description: POSIX mode
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: traditional
+      cli: "--traditional"
+      description: Traditional mode
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: lint
+      cli: "--lint"
+      description: Enable lint warnings
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: lint_old
+      cli: "--lint-old"
+      description: Warn about old constructs
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: pretty_print
+      cli: "--pretty-print"
+      description: Pretty print program
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    name: process

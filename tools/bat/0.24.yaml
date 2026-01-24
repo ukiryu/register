@@ -1,0 +1,124 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: bat
+display_name: bat (cat clone with syntax highlighting)
+homepage: https://github.com/sharkdp/bat
+"$self": https://www.ukiryu.com/register/1.0/bat/0.24
+version: '0.24'
+aliases:
+  - bat
+version_detection:
+  command: "--version"
+  pattern: "bat ([\\d.]+)"
+  modern_threshold: '0.20'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/bat"
+  - "/usr/local/bin/bat"
+  linux:
+  - "/usr/bin/bat"
+  - "/usr/local/bin/bat"
+  windows:
+  - "C:/Users/*/AppData/Local/bat/bat.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: bat on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Print and concatenate files with syntax highlighting
+    usage: bat [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to display
+    options:
+    - name: language
+      cli: "-l"
+      assignment_delimiter: auto
+      description: Explicit language for syntax highlighting
+    - name: line_range
+      cli: "-r"
+      assignment_delimiter: auto
+      description: Only print specified line range
+    - name: style
+      cli: "--style"
+      assignment_delimiter: equals
+      description: Comma-separated list of style components
+    - name: pager
+      cli: "-p"
+      assignment_delimiter: none
+      description: Automatically pipe to pager
+    - name: no_pager
+      cli: "-P"
+      assignment_delimiter: none
+      description: Disable pager
+    - name: theme
+      cli: "--theme"
+      assignment_delimiter: equals
+      description: Set theme
+    - name: plain
+      cli: "-pp"
+      assignment_delimiter: none
+      description: Show plain output (no styling)
+    - name: number
+      cli: "-n"
+      assignment_delimiter: none
+      description: Show line numbers
+    - name: color
+      cli: "--color"
+      assignment_delimiter: auto
+      description: When to use colors
+    - name: decorative
+      cli: "--decorations"
+      assignment_delimiter: auto
+      description: When to show decorations
+    - name: map_syntax
+      cli: "--map-syntax"
+      assignment_delimiter: equals
+      description: Map file extensions to languages
+    - name: theme_override
+      cli: "--theme-overrides"
+      assignment_delimiter: equals
+      description: Override theme settings
+    - name: wrap
+      cli: "--wrap"
+      assignment_delimiter: auto
+      description: Text wrapping mode
+    - name: terminal_width
+      cli: "--terminal-width"
+      assignment_delimiter: equals
+      description: Width of the terminal
+    flags:
+    - name: number
+      cli: "-n"
+      description: Show line numbers
+      default: false
+      assignment_delimiter: none
+    - name: pager
+      cli: "-p"
+      description: Use pager
+      default: false
+      assignment_delimiter: none
+    - name: no_pager
+      cli: "-P"
+      description: No pager
+      default: false
+      assignment_delimiter: none
+    - name: plain
+      cli: "-pp"
+      description: Plain output
+      default: false
+      assignment_delimiter: none
+    name: display

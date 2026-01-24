@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: wc
+display_name: wc (line, word, and byte count)
+homepage: https://www.gnu.org/software/coreutils/
+"$self": https://www.ukiryu.com/register/1.0/wc/0.1
+version: '0.1'
+aliases:
+  - wc
+version_detection:
+  command: "--version"
+  pattern: "wc \\(GNU coreutils\\) ([\\d.]+)"
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/wc"
+  - "/opt/homebrew/bin/wc"
+  linux:
+  - "/usr/bin/wc"
+  windows:
+  - "C:/Program Files/Git/usr/bin/wc.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: wc on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Print line, word, and byte counts
+    usage: wc [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to count
+    options:
+    - name: bytes
+      cli: "-c"
+      assignment_delimiter: none
+      description: Byte count
+    - name: chars
+      cli: "-m"
+      assignment_delimiter: none
+      description: Character count
+    - name: lines
+      cli: "-l"
+      assignment_delimiter: none
+      description: Line count
+    - name: words
+      cli: "-w"
+      assignment_delimiter: none
+      description: Word count
+    - name: max_line_length
+      cli: "-L"
+      assignment_delimiter: none
+      description: Maximum line length
+    - name: zero_terminated
+      cli: "-z"
+      assignment_delimiter: none
+      description: Line delimiter is NUL
+      include_platforms:
+      - linux
+    flags:
+    - name: bytes
+      cli: "-c"
+      description: Count bytes
+      default: false
+      assignment_delimiter: none
+    - name: chars
+      cli: "-m"
+      description: Count chars
+      default: false
+      assignment_delimiter: none
+    - name: lines
+      cli: "-l"
+      description: Count lines
+      default: false
+      assignment_delimiter: none
+    - name: words
+      cli: "-w"
+      description: Count words
+      default: false
+      assignment_delimiter: none
+    - name: max_line_length
+      cli: "-L"
+      description: Max line length
+      default: false
+      assignment_delimiter: none
+    - name: zero_terminated
+      cli: "-z"
+      description: NUL terminated
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    name: count

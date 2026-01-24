@@ -1,0 +1,499 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: grep
+display_name: grep (pattern searcher)
+homepage: https://www.gnu.org/software/grep/
+"$self": https://www.ukiryu.com/register/1.0/grep/3.12
+version: '3.12'
+aliases:
+  - grep
+version_detection:
+  command: "--version"
+  pattern: "grep \\(GNU grep\\) ([\\d.]+)|grep \\(BSD\\) ([\\d.]+)"
+  modern_threshold: '2.5'
+search_paths:
+  macos:
+  - "/usr/bin/grep"
+  - "/opt/homebrew/bin/grep"
+  - "/usr/local/bin/grep"
+  linux:
+  - "/usr/bin/grep"
+  - "/usr/local/bin/grep"
+  windows:
+  - "C:/Windows/System32/find.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: grep on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Search for patterns in files
+    usage: grep [options] pattern [file...]
+    arguments:
+    - name: pattern
+      type: string
+      required: true
+      position: first
+      description: Pattern to search for
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to search
+    options:
+    # Pattern syntax options
+    - name: extended_regexp
+      cli: "-E"
+      assignment_delimiter: none
+      description: Extended regular expression
+    - name: fixed_strings
+      cli: "-F"
+      assignment_delimiter: none
+      description: Fixed strings (not regex)
+    - name: basic_regexp
+      cli: "-G"
+      assignment_delimiter: none
+      description: Basic regular expression (default)
+    - name: perl_regexp
+      cli: "-P"
+      assignment_delimiter: none
+      description: Perl-compatible regular expression
+      include_platforms:
+      - linux
+    - name: regexp
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Specify pattern
+    - name: file
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Patterns from file
+    # Matching control
+    - name: ignore_case
+      cli: "-i"
+      assignment_delimiter: none
+      description: Case insensitive matching
+    - name: invert_match
+      cli: "-v"
+      assignment_delimiter: none
+      description: Select non-matching lines
+    - name: word_regexp
+      cli: "-w"
+      assignment_delimiter: none
+      description: Match whole words
+    - name: line_regexp
+      cli: "-x"
+      assignment_delimiter: none
+      description: Match whole lines
+    # General output control
+    - name: count
+      cli: "-c"
+      assignment_delimiter: none
+      description: Count matching lines
+    - name: color
+      cli: "--color"
+      assignment_delimiter: auto
+      description: Highlight matches
+    - name: colour
+      cli: "--colour"
+      assignment_delimiter: auto
+      description: Highlight matches (British)
+    - name: files_without_match
+      cli: "-L"
+      assignment_delimiter: none
+      description: Files without matches
+    - name: files_with_matches
+      cli: "-l"
+      assignment_delimiter: none
+      description: Files with matches
+    - name: max_count
+      type: integer
+      cli: "-m"
+      assignment_delimiter: auto
+      description: Stop after NUM matches
+    - name: only_matching
+      cli: "-o"
+      assignment_delimiter: none
+      description: Show only matched parts
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: silent
+      cli: "--silent"
+      assignment_delimiter: none
+      description: Silent mode
+    - name: no_messages
+      cli: "-s"
+      assignment_delimiter: none
+      description: Suppress error messages
+    # Output line prefix control
+    - name: byte_offset
+      cli: "-b"
+      assignment_delimiter: none
+      description: Byte offset
+    - name: with_filename
+      cli: "-H"
+      assignment_delimiter: none
+      description: Always show filename
+    - name: no_filename
+      cli: "-h"
+      assignment_delimiter: none
+      description: Never show filename
+    - name: label
+      cli: "--label"
+      assignment_delimiter: equals
+      description: Label for stdin
+    - name: line_number
+      cli: "-n"
+      assignment_delimiter: none
+      description: Line numbers
+    - name: initial_tab
+      cli: "-T"
+      assignment_delimiter: none
+      description: Tab alignment
+      include_platforms:
+      - linux
+    - name: null
+      cli: "-Z"
+      assignment_delimiter: none
+      description: Null byte after filename
+    # Context line control
+    - name: after_context
+      type: integer
+      cli: "-A"
+      assignment_delimiter: auto
+      description: Lines after match
+    - name: before_context
+      type: integer
+      cli: "-B"
+      assignment_delimiter: auto
+      description: Lines before match
+    - name: context
+      type: integer
+      cli: "-C"
+      assignment_delimiter: auto
+      description: Lines before and after match
+    - name: group_separator
+      cli: "--group-separator"
+      assignment_delimiter: equals
+      description: Group separator
+      include_platforms:
+      - linux
+    - name: no_group_separator
+      cli: "--no-group-separator"
+      assignment_delimiter: none
+      description: No group separator
+      include_platforms:
+      - linux
+    # File and directory selection
+    - name: text
+      cli: "-a"
+      assignment_delimiter: none
+      description: Process binary as text
+    - name: binary_files
+      cli: "--binary-files"
+      assignment_delimiter: equals
+      description: Binary file handling
+    - name: devices
+      cli: "-D"
+      assignment_delimiter: auto
+      description: Device handling
+    - name: directories
+      cli: "-d"
+      assignment_delimiter: auto
+      description: Directory handling
+    - name: exclude
+      cli: "--exclude"
+      assignment_delimiter: equals
+      description: Exclude files
+    - name: exclude_from
+      cli: "--exclude-from"
+      assignment_delimiter: equals
+      description: Exclude from file
+      include_platforms:
+      - linux
+    - name: exclude_dir
+      cli: "--exclude-dir"
+      assignment_delimiter: equals
+      description: Exclude directories
+    - name: include
+      cli: "--include"
+      assignment_delimiter: equals
+      description: Include files
+    - name: include_dir
+      cli: "--include-dir"
+      assignment_delimiter: equals
+      description: Include directories
+    # BSD-specific options
+    - name: bz2_decompress
+      cli: "-J"
+      assignment_delimiter: none
+      description: Decompress bzip2
+      include_platforms:
+      - macos
+    - name: lzma_decompress
+      cli: "-M"
+      assignment_delimiter: none
+      description: Decompress LZMA
+      include_platforms:
+      - macos
+    - name: xz_decompress
+      cli: "-X"
+      assignment_delimiter: none
+      description: Decompress xz
+      include_platforms:
+      - macos
+    - name: decompress
+      cli: "-Z"
+      assignment_delimiter: none
+      description: Decompress (zgrep mode)
+      include_platforms:
+      - macos
+    # Other options
+    - name: line_buffered
+      cli: "--line-buffered"
+      assignment_delimiter: none
+      description: Line buffered output
+    - name: binary
+      cli: "-U"
+      assignment_delimiter: none
+      description: Binary mode
+    - name: null_data
+      cli: "-z"
+      assignment_delimiter: none
+      description: Null-terminated lines
+    - name: mmap
+      cli: "--mmap"
+      assignment_delimiter: none
+      description: Use mmap
+      include_platforms:
+      - macos
+    # Symbolic link handling (BSD)
+    - name: follow_symlinks_cmdline
+      cli: "-O"
+      assignment_delimiter: none
+      description: Follow symlinks on cmdline
+      include_platforms:
+      - macos
+    - name: no_symlinks
+      cli: "-p"
+      assignment_delimiter: none
+      description: Don't follow symlinks
+      include_platforms:
+      - macos
+    - name: follow_all_symlinks
+      cli: "-S"
+      assignment_delimiter: none
+      description: Follow all symlinks
+      include_platforms:
+      - macos
+    flags:
+    - name: recursive
+      cli: "-r"
+      description: Recursive search
+      default: false
+      assignment_delimiter: none
+    - name: dereference_recursive
+      cli: "-R"
+      description: Recursive with dereference
+      default: false
+      assignment_delimiter: none
+    - name: extended_regexp
+      cli: "-E"
+      description: Use extended regex
+      default: false
+      assignment_delimiter: none
+    - name: fixed_strings
+      cli: "-F"
+      description: Fixed strings not regex
+      default: false
+      assignment_delimiter: none
+    - name: ignore_case
+      cli: "-i"
+      description: Case insensitive
+      default: false
+      assignment_delimiter: none
+    - name: invert_match
+      cli: "-v"
+      description: Invert match
+      default: false
+      assignment_delimiter: none
+    - name: word_regexp
+      cli: "-w"
+      description: Whole word match
+      default: false
+      assignment_delimiter: none
+    - name: line_regexp
+      cli: "-x"
+      description: Whole line match
+      default: false
+      assignment_delimiter: none
+    - name: count
+      cli: "-c"
+      description: Count only
+      default: false
+      assignment_delimiter: none
+    - name: files_with_matches
+      cli: "-l"
+      description: Files with matches
+      default: false
+      assignment_delimiter: none
+    - name: files_without_match
+      cli: "-L"
+      description: Files without matches
+      default: false
+      assignment_delimiter: none
+    - name: only_matching
+      cli: "-o"
+      description: Only matching
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: silent
+      cli: "--silent"
+      description: Silent mode
+      default: false
+      assignment_delimiter: none
+    - name: no_messages
+      cli: "-s"
+      description: No error messages
+      default: false
+      assignment_delimiter: none
+    - name: byte_offset
+      cli: "-b"
+      description: Byte offset
+      default: false
+      assignment_delimiter: none
+    - name: with_filename
+      cli: "-H"
+      description: Always filename
+      default: false
+      assignment_delimiter: none
+    - name: no_filename
+      cli: "-h"
+      description: Never filename
+      default: false
+      assignment_delimiter: none
+    - name: line_number
+      cli: "-n"
+      description: Line numbers
+      default: false
+      assignment_delimiter: none
+    - name: null
+      cli: "-Z"
+      description: Null after filename
+      default: false
+      assignment_delimiter: none
+    - name: text
+      cli: "-a"
+      description: Text mode
+      default: false
+      assignment_delimiter: none
+    - name: binary
+      cli: "-U"
+      description: Binary mode
+      default: false
+      assignment_delimiter: none
+    - name: line_buffered
+      cli: "--line-buffered"
+      description: Line buffered
+      default: false
+      assignment_delimiter: none
+    - name: null_data
+      cli: "-z"
+      description: Null data
+      default: false
+      assignment_delimiter: none
+    - name: perl_regexp
+      cli: "-P"
+      description: Perl-compatible regex
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: initial_tab
+      cli: "-T"
+      description: Initial tab
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: no_group_separator
+      cli: "--no-group-separator"
+      description: No group separator
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    # BSD-specific flags
+    - name: bz2_decompress
+      cli: "-J"
+      description: Decompress bzip2
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: lzma_decompress
+      cli: "-M"
+      description: Decompress LZMA
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: xz_decompress
+      cli: "-X"
+      description: Decompress xz
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: decompress
+      cli: "-Z"
+      description: Decompress mode
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: mmap
+      cli: "--mmap"
+      description: Use mmap
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: follow_symlinks_cmdline
+      cli: "-O"
+      description: Follow cmdline symlinks
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: no_symlinks
+      cli: "-p"
+      description: No symlinks
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: follow_all_symlinks
+      cli: "-S"
+      description: Follow all symlinks
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    name: search

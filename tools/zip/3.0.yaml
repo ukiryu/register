@@ -1,0 +1,176 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: zip
+display_name: zip (package and compress files)
+homepage: https://infozip.sourceforge.net/Zip.html
+"$self": https://www.ukiryu.com/register/1.0/zip/3.0
+version: '3.0'
+aliases:
+  - zip
+version_detection:
+  command: "-h"
+  pattern: "Zip ([\\d.]+)"
+  modern_threshold: '3.0'
+search_paths:
+  macos:
+  - "/usr/bin/zip"
+  - "/opt/homebrew/bin/zip"
+  - "/usr/local/bin/zip"
+  linux:
+  - "/usr/bin/zip"
+  - "/usr/local/bin/zip"
+  windows:
+  - "C:/Program Files/Git/usr/bin/zip.exe"
+  - "C:/msys64/usr/bin/zip.exe"
+timeout: 600
+profiles:
+- name: unix
+  display_name: zip on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Package and compress files
+    usage: zip [options] zipfile file...
+    arguments:
+    - name: zipfile
+      type: file
+      required: true
+      position: first
+      description: Name of zip file to create
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to add to archive
+    options:
+    # Main options
+    - name: recursive
+      cli: "-r"
+      assignment_delimiter: none
+      description: Recursive directory traversal
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose mode
+    - name: delete
+      cli: "-d"
+      assignment_delimiter: none
+      description: Delete entries from zipfile
+    - name: update
+      cli: "-u"
+      assignment_delimiter: none
+      description: Update existing entries
+    - name: freshen
+      cli: "-f"
+      assignment_delimiter: none
+      description: Freshen existing entries
+    - name: move
+      cli: "-m"
+      assignment_delimiter: none
+      description: Delete files after adding
+    # Compression options
+    - name: compression_level
+      type: integer
+      cli: "-[0-9]"
+      assignment_delimiter: none
+      description: Compression level (0-9)
+    - name: fastest
+      cli: "-0"
+      assignment_delimiter: none
+      description: Fastest compression
+    - name: fast
+      cli: "-1"
+      assignment_delimiter: none
+      description: Fast compression
+    - name: normal
+      cli: "-6"
+      assignment_delimiter: none
+      description: Normal compression
+    - name: best
+      cli: "-9"
+      assignment_delimiter: none
+      description: Best compression
+    - name: no_compression
+      cli: "-0"
+      assignment_delimiter: none
+      description: Store without compression
+    # Path options
+    - name: paths
+      cli: "-p"
+      assignment_delimiter: none
+      description: Store full paths
+    - name: store_symlinks
+      cli: "-y"
+      assignment_delimiter: none
+      description: Store symlinks as such
+    # Other options
+    - name: exclude
+      cli: "-x"
+      assignment_delimiter: auto
+      description: Exclude files
+    - name: include
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Include files
+    - name: encrypt
+      cli: "-e"
+      assignment_delimiter: none
+      description: Encrypt entries
+    - name: from_stdin
+      cli: "-"
+      assignment_delimiter: none
+      description: Read file names from stdin
+    flags:
+    - name: recursive
+      cli: "-r"
+      description: Recursive
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose
+      default: false
+      assignment_delimiter: none
+    - name: update
+      cli: "-u"
+      description: Update
+      default: false
+      assignment_delimiter: none
+    - name: freshen
+      cli: "-f"
+      description: Freshen
+      default: false
+      assignment_delimiter: none
+    - name: move
+      cli: "-m"
+      description: Move
+      default: false
+      assignment_delimiter: none
+    - name: encrypt
+      cli: "-e"
+      description: Encrypt
+      default: false
+      assignment_delimiter: none
+    - name: store_symlinks
+      cli: "-y"
+      description: Store symlinks
+      default: false
+      assignment_delimiter: none
+    name: create

@@ -1,0 +1,247 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: sed
+display_name: sed (stream editor)
+homepage: https://www.gnu.org/software/sed/
+"$self": https://www.ukiryu.com/register/1.0/sed/4.9
+version: '4.9'
+aliases:
+  - sed
+version_detection:
+  command: "--version"
+  pattern: "sed \\(GNU sed\\) ([\\d.]+)|sed \\(BSD\\) ([\\d.]+)"
+  modern_threshold: '4.0'
+search_paths:
+  macos:
+  - "/usr/bin/sed"
+  - "/opt/homebrew/bin/sed"
+  - "/usr/local/bin/sed"
+  linux:
+  - "/usr/bin/sed"
+  - "/usr/local/bin/sed"
+  windows:
+  - "C:/Program Files/Git/usr/bin/sed.exe"
+  - "C:/msys64/usr/bin/sed.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: sed on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Stream editor for filtering and transforming text
+    usage: sed [options] script [file...]
+    arguments:
+    - name: script
+      type: string
+      required: false
+      position: first
+      description: Sed script/command
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to edit
+    options:
+    # Script options
+    - name: expression
+      type: string
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Add script to commands
+    - name: file
+      type: file
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Add commands from file
+    # Regular expression options
+    - name: regexp_extended
+      cli: "-E"
+      assignment_delimiter: none
+      description: Extended regular expressions
+    - name: extended_regexp
+      cli: "-r"
+      assignment_delimiter: none
+      description: Extended regular expressions (GNU compatibility)
+    - name: enhanced_regex
+      cli: "-H"
+      assignment_delimiter: none
+      description: Enhanced regex features
+      include_platforms:
+      - macos
+    # In-place editing
+    - name: in_place
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Edit files in place
+    - name: in_place_continuous
+      cli: "-I"
+      assignment_delimiter: auto
+      description: In-place, continuous across files
+      include_platforms:
+      - macos
+    - name: follow_symlinks
+      cli: "--follow-symlinks"
+      assignment_delimiter: none
+      description: Follow symlinks when processing in place
+      include_platforms:
+      - linux
+    # Output control
+    - name: quiet
+      cli: "-n"
+      assignment_delimiter: none
+      description: Suppress automatic printing
+    - name: silent
+      cli: "--silent"
+      assignment_delimiter: none
+      description: Suppress automatic printing
+    - name: line_buffered
+      cli: "-l"
+      assignment_delimiter: none
+      description: Line buffered output
+    - name: line_length
+      type: integer
+      cli: "--line-length"
+      assignment_delimiter: equals
+      description: Line wrap length for l command
+      include_platforms:
+      - linux
+    - name: unbuffered
+      cli: "-u"
+      assignment_delimiter: none
+      description: Unbuffered output
+    # File handling
+    - name: separate
+      cli: "-s"
+      assignment_delimiter: none
+      description: Treat files separately
+      include_platforms:
+      - linux
+    - name: sandbox
+      cli: "--sandbox"
+      assignment_delimiter: none
+      description: Sandbox mode
+      include_platforms:
+      - linux
+    # Input options
+    - name: null_data
+      cli: "-z"
+      assignment_delimiter: none
+      description: Separate lines by NUL characters
+      include_platforms:
+      - linux
+    - name: delay_open
+      cli: "-a"
+      assignment_delimiter: none
+      description: Delay opening files for w command
+      include_platforms:
+      - macos
+    # Other options
+    - name: posix
+      cli: "--posix"
+      assignment_delimiter: none
+      description: Disable GNU extensions
+      include_platforms:
+      - linux
+    - name: debug
+      cli: "--debug"
+      assignment_delimiter: none
+      description: Annotate program execution
+      include_platforms:
+      - linux
+    flags:
+    - name: regexp_extended
+      cli: "-E"
+      description: Use extended regex
+      default: false
+      assignment_delimiter: none
+    - name: extended_regexp
+      cli: "-r"
+      description: Use extended regex (GNU compat)
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-n"
+      description: Suppress auto print
+      default: false
+      assignment_delimiter: none
+    - name: silent
+      cli: "--silent"
+      description: Suppress auto print
+      default: false
+      assignment_delimiter: none
+    - name: line_buffered
+      cli: "-l"
+      description: Line buffered
+      default: false
+      assignment_delimiter: none
+    - name: unbuffered
+      cli: "-u"
+      description: Unbuffered
+      default: false
+      assignment_delimiter: none
+    - name: separate
+      cli: "-s"
+      description: Treat files separately
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: sandbox
+      cli: "--sandbox"
+      description: Sandbox mode
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: null_data
+      cli: "-z"
+      description: NUL-separated lines
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: follow_symlinks
+      cli: "--follow-symlinks"
+      description: Follow symlinks
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: delay_open
+      cli: "-a"
+      description: Delay file opening
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: enhanced_regex
+      cli: "-H"
+      description: Enhanced regex
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - macos
+    - name: posix
+      cli: "--posix"
+      description: POSIX mode
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: debug
+      cli: "--debug"
+      description: Debug mode
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    name: edit

@@ -1,0 +1,278 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: yt-dlp
+display_name: yt-dlp (YouTube video downloader)
+homepage: https://github.com/yt-dlp/yt-dlp
+"$self": https://www.ukiryu.com/register/1.0/yt-dlp/2024.12
+version: '2024.12'
+aliases:
+  - yt-dlp
+  - youtube-dl
+version_detection:
+  command: "--version"
+  pattern: "([\\d.]+)"
+  modern_threshold: '2024.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/yt-dlp"
+  - "/usr/local/bin/yt-dlp"
+  linux:
+  - "/usr/bin/yt-dlp"
+  - "/usr/local/bin/yt-dlp"
+  windows:
+  - "C:/Users/*/AppData/Local/Programs/Python*/Scripts/yt-dlp.exe"
+timeout: 600
+profiles:
+- name: unix
+  display_name: yt-dlp on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Download videos from YouTube and other sites
+    usage: yt-dlp [options] URL [URL...]
+    arguments:
+    - name: urls
+      type: string
+      variadic: true
+      required: true
+      position: last
+      description: Video URLs to download
+    options:
+    # Output options
+    - name: output
+      cli: "-o"
+      assignment_delimiter: equals
+      description: Output filename template
+    - name: output_na_placeholder
+      cli: "-o"
+      assignment_delimiter: equals
+      description: Placeholder for unavailable metadata
+    - name: output_dir
+      cli: "--output-dir"
+      assignment_delimiter: equals
+      description: Output directory
+    - name: format
+      cli: "-f"
+      assignment_delimiter: equals
+      description: Video format
+    - name: format_sort
+      cli: "-S"
+      assignment_delimiter: equals
+      description: Format selection sort order
+    - name: merge_output_format
+      cli: "--merge-output-format"
+      assignment_delimiter: equals
+      description: Format to merge into
+    - name: recode_video
+      cli: "--recode-video"
+      assignment_delimiter: equals
+      description: Recode video
+    # Download options
+    - name: write_sub
+      cli: "--write-subs"
+      assignment_delimiter: none
+      description: Write subtitles
+    - name: write_auto_sub
+      cli: "--write-auto-subs"
+      assignment_delimiter: none
+      description: Write auto-generated subtitles
+    - name: sub_lang
+      cli: "--sub-langs"
+      assignment_delimiter: equals
+      description: Subtitle languages
+    - name: embed_subs
+      cli: "--embed-subs"
+      assignment_delimiter: none
+      description: Embed subtitles
+    - name: write_description
+      cli: "--write-description"
+      assignment_delimiter: none
+      description: Write description
+    - name: write_info_json
+      cli: "--write-info-json"
+      assignment_delimiter: none
+      description: Write info JSON
+    - name: write_thumbnail
+      cli: "--write-thumbnail"
+      assignment_delimiter: none
+      description: Write thumbnail
+    - name: keep_video
+      cli: "-k"
+      assignment_delimiter: none
+      description: Keep video file after post-processing
+    - name: no_overwrites
+      cli: "-w"
+      assignment_delimiter: none
+      description: Do not overwrite files
+    - name: continue
+      cli: "-c"
+      assignment_delimiter: none
+      description: Resume partially downloaded files
+    - name: no_continue
+      cli: "--no-continue"
+      assignment_delimiter: none
+      description: Do not resume
+    # Playback options
+    - name: extract_audio
+      cli: "-x"
+      assignment_delimiter: none
+      description: Extract audio
+    - name: audio_format
+      cli: "--audio-format"
+      assignment_delimiter: equals
+      description: Audio format
+    - name: audio_quality
+      cli: "--audio-quality"
+      assignment_delimiter: equals
+      description: Audio quality
+    - name: remux_video
+      cli: "--remux-video"
+      assignment_delimiter: none
+      description: Remux video
+    # Playlist options
+    - name: yes_playlist
+      cli: "--yes-playlist"
+      assignment_delimiter: none
+      description: Download entire playlist
+    - name: no_playlist
+      cli: "--no-playlist"
+      assignment_delimiter: none
+      description: Download only single video
+    - name: playlist_items
+      cli: "--playlist-items"
+      assignment_delimiter: equals
+      description: Playlist items to download
+    - name: playlist_end
+      cli: "--playlist-end"
+      assignment_delimiter: equals
+      description: Playlist item to end at
+    - name: playlist_start
+      cli: "--playlist-start"
+      assignment_delimiter: equals
+      description: Playlist item to start at
+    # Other options
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: no_warnings
+      cli: "--no-warnings"
+      assignment_delimiter: none
+      description: Ignore warnings
+    - name: ignore_errors
+      cli: "-i"
+      assignment_delimiter: none
+      description: Continue on download errors
+    - name: abort_on_error
+      cli: "--abort-on-error"
+      assignment_delimiter: none
+      description: Abort on error
+    - name: dump_json
+      cli: "-J"
+      assignment_delimiter: none
+      description: Simulate and dump JSON
+    - name: flat_playlist
+      cli: "--flat-playlist"
+      assignment_delimiter: none
+      description: Do not extract playlist
+    - name: limit_rate
+      cli: "-r"
+      assignment_delimiter: equals
+      description: Maximum download rate
+    - name: retries
+      type: integer
+      cli: "--retries"
+      assignment_delimiter: equals
+      description: Number of retries
+    - name: socket_timeout
+      type: integer
+      cli: "--socket-timeout"
+      assignment_delimiter: equals
+      description: Network timeout
+    - name: username
+      cli: "-u"
+      assignment_delimiter: equals
+      description: Login username
+    - name: password
+      cli: "-p"
+      assignment_delimiter: equals
+      description: Login password
+    - name: two_factor
+      cli: "-2"
+      assignment_delimiter: equals
+      description: Two-factor code
+    flags:
+    - name: extract_audio
+      cli: "-x"
+      description: Extract audio only
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: ignore_errors
+      cli: "-i"
+      description: Continue on errors
+      default: false
+      assignment_delimiter: none
+    - name: no_warnings
+      cli: "--no-warnings"
+      description: No warnings
+      default: false
+      assignment_delimiter: none
+    - name: continue
+      cli: "-c"
+      description: Resume
+      default: false
+      assignment_delimiter: none
+    - name: no_overwrites
+      cli: "-w"
+      description: No overwrite
+      default: false
+      assignment_delimiter: none
+    - name: yes_playlist
+      cli: "--yes-playlist"
+      description: Yes playlist
+      default: false
+      assignment_delimiter: none
+    - name: no_playlist
+      cli: "--no-playlist"
+      description: No playlist
+      default: false
+      assignment_delimiter: none
+    - name: write_sub
+      cli: "--write-subs"
+      description: Write subs
+      default: false
+      assignment_delimiter: none
+    - name: write_auto_sub
+      cli: "--write-auto-subs"
+      description: Write auto subs
+      default: false
+      assignment_delimiter: none
+    - name: embed_subs
+      cli: "--embed-subs"
+      description: Embed subs
+      default: false
+      assignment_delimiter: none
+    - name: write_thumbnail
+      cli: "--write-thumbnail"
+      description: Write thumbnail
+      default: false
+      assignment_delimiter: none
+    - name: keep_video
+      cli: "-k"
+      description: Keep video
+      default: false
+      assignment_delimiter: none
+    name: download

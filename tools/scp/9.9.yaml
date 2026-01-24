@@ -1,0 +1,205 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: scp
+display_name: scp (OpenSSH secure file copy)
+homepage: https://www.openssh.com/
+"$self": https://www.ukiryu.com/register/1.0/scp/9.9
+version: '9.9'
+aliases:
+  - scp
+version_detection:
+  command: "-V"
+  pattern: "scp: Remotely ([\\d.]+)|OpenSSH_([\\d.]+)"
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/scp"
+  - "/opt/homebrew/bin/scp"
+  - "/usr/local/bin/scp"
+  linux:
+  - "/usr/bin/scp"
+  - "/usr/local/bin/scp"
+  windows:
+  - "C:/Windows/System32/OpenSSH/scp.exe"
+  - "C:/Program Files/Git/usr/bin/scp.exe"
+timeout: 600
+profiles:
+- name: unix
+  display_name: scp on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_space
+  commands:
+  - description: Secure file copy (remote file copy)
+    usage: scp [options] source... target
+    arguments:
+    - name: sources
+      type: string
+      variadic: true
+      required: true
+      position: not_last
+      description: Source files/directories
+    - name: target
+      type: string
+      required: true
+      position: last
+      description: Target destination
+    options:
+    # Main options
+    - name: preserve
+      cli: "-p"
+      assignment_delimiter: none
+      description: Preserve modification times, access times, modes
+    - name: recursive
+      cli: "-r"
+      assignment_delimiter: none
+      description: Recursively copy directories
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose mode
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode (disable progress)
+    - name: compression
+      cli: "-C"
+      assignment_delimiter: none
+      description: Enable compression
+    # Protocol selection
+    - name: sftp_protocol
+      cli: "-s"
+      assignment_delimiter: none
+      description: Use SFTP protocol (default)
+    - name: scp_protocol
+      cli: "-O"
+      assignment_delimiter: none
+      description: Use legacy SCP protocol
+    # Remote transfer options
+    - name: through_local
+      cli: "-3"
+      assignment_delimiter: none
+      description: Copy between two remote hosts via local
+    - name: remote_origin
+      cli: "-R"
+      assignment_delimiter: none
+      description: Copy from remote origin to destination
+    # SSH options
+    - name: port
+      type: integer
+      cli: "-P"
+      assignment_delimiter: auto
+      description: Port to connect to
+    - name: identity_file
+      type: file
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Identity file (private key)
+    - name: config_file
+      type: file
+      cli: "-F"
+      assignment_delimiter: auto
+      description: SSH config file
+    - name: ssh_option
+      cli: "-o"
+      assignment_delimiter: space
+      description: SSH option
+    - name: cipher
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Cipher specification
+    - name: ssh_program
+      cli: "-S"
+      assignment_delimiter: auto
+      description: SSH program
+    # Authentication
+    - name: batch_mode
+      cli: "-B"
+      assignment_delimiter: none
+      description: Batch mode (no password prompts)
+    - name: agent_forwarding
+      cli: "-A"
+      assignment_delimiter: none
+      description: Forward authentication agent
+    - name: jump_host
+      cli: "-J"
+      assignment_delimiter: auto
+      description: Jump host
+    # Limit options
+    - name: limit
+      type: integer
+      cli: "-l"
+      assignment_delimiter: auto
+      description: Bandwidth limit (Kbit/s)
+    # Other options
+    - name: ipv4
+      cli: "-4"
+      assignment_delimiter: none
+      description: Use IPv4 only
+    - name: ipv6
+      cli: "-6"
+      assignment_delimiter: none
+      description: Use IPv6 only
+    - name: disable_strict_check
+      cli: "-T"
+      assignment_delimiter: none
+      description: Disable strict filename checking
+    flags:
+    - name: preserve
+      cli: "-p"
+      description: Preserve attributes
+      default: false
+      assignment_delimiter: none
+    - name: recursive
+      cli: "-r"
+      description: Recursive
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: compression
+      cli: "-C"
+      description: Compress
+      default: false
+      assignment_delimiter: none
+    - name: batch_mode
+      cli: "-B"
+      description: Batch mode
+      default: false
+      assignment_delimiter: none
+    - name: agent_forwarding
+      cli: "-A"
+      description: Forward agent
+      default: false
+      assignment_delimiter: none
+    - name: ipv4
+      cli: "-4"
+      description: IPv4 only
+      default: false
+      assignment_delimiter: none
+    - name: ipv6
+      cli: "-6"
+      description: IPv6 only
+      default: false
+      assignment_delimiter: none
+    - name: through_local
+      cli: "-3"
+      description: Via local host
+      default: false
+      assignment_delimiter: none
+    name: copy

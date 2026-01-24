@@ -1,0 +1,121 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: tail
+display_name: tail (output last part of files)
+homepage: https://www.gnu.org/software/coreutils/
+"$self": https://www.ukiryu.com/register/1.0/tail/0.1
+version: '0.1'
+aliases:
+  - tail
+version_detection:
+  command: "--version"
+  pattern: "tail \\(GNU coreutils\\) ([\\d.]+)"
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/tail"
+  - "/opt/homebrew/bin/tail"
+  linux:
+  - "/usr/bin/tail"
+  windows:
+  - "C:/Program Files/Git/usr/bin/tail.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: tail on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Output last part of files
+    usage: tail [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to read
+    options:
+    - name: lines
+      type: integer
+      cli: "-n"
+      assignment_delimiter: auto
+      description: Number of lines
+    - name: bytes
+      type: string
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Number of bytes
+    - name: follow
+      cli: "-f"
+      assignment_delimiter: none
+      description: Follow appended data
+    - name: follow_retry
+      cli: "-F"
+      assignment_delimiter: none
+      description: Follow with retry
+      include_platforms:
+      - linux
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Never print headers
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Always print headers
+    - name: sleep_interval
+      type: string
+      cli: "-s"
+      assignment_delimiter: auto
+      description: Sleep interval
+    - name: pid
+      cli: "--pid"
+      assignment_delimiter: equals
+      description: Process ID to watch
+      include_platforms:
+      - linux
+    - name: zero_terminated
+      cli: "-z"
+      assignment_delimiter: none
+      description: Line delimiter is NUL
+      include_platforms:
+      - linux
+    flags:
+    - name: follow
+      cli: "-f"
+      description: Follow mode
+      default: false
+      assignment_delimiter: none
+    - name: follow_retry
+      cli: "-F"
+      description: Follow with retry
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: zero_terminated
+      cli: "-z"
+      description: NUL terminated
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    name: show_end

@@ -1,0 +1,435 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: curl
+display_name: curl (URL transfer tool)
+homepage: https://curl.se/
+"$self": https://www.ukiryu.com/register/1.0/curl/8.11
+version: '8.11'
+aliases:
+  - curl
+version_detection:
+  command: "--version"
+  pattern: curl ([\d.]+)
+  modern_threshold: '7.0'
+search_paths:
+  macos:
+  - "/usr/bin/curl"
+  - "/opt/homebrew/bin/curl"
+  linux:
+  - "/usr/bin/curl"
+  - "/usr/local/bin/curl"
+  windows:
+  - "C:/Windows/System32/curl.exe"
+  - "C:/Program Files/Git/usr/bin/curl.exe"
+  - "C:/Program Files/Git/mingw64/bin/curl.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: curl on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_space
+  commands:
+  - description: Transfer data from or to a server
+    usage: curl [options] [URL...]
+    arguments:
+    - name: urls
+      type: string
+      variadic: true
+      required: true
+      position: last
+      description: URLs to transfer
+    options:
+    - name: request
+      type: string
+      cli: "-X"
+      assignment_delimiter: auto
+      description: Specify request method
+    - name: head
+      cli: "-I"
+      assignment_delimiter: none
+      description: Show headers only
+    - name: data
+      type: string
+      cli: "-d"
+      assignment_delimiter: auto
+      description: HTTP POST data
+    - name: data_urlencode
+      type: string
+      cli: "--data-urlencode"
+      assignment_delimiter: space
+      description: URL encode POST data
+    - name: data_binary
+      cli: "--data-binary"
+      assignment_delimiter: space
+      description: HTTP POST binary data
+    - name: data_raw
+      cli: "--data-raw"
+      assignment_delimiter: space
+      description: HTTP POST raw data
+    - name: url_query
+      type: string
+      cli: "-G"
+      assignment_delimiter: none
+      description: Send URL data as GET query
+    - name: header
+      type: string
+      cli: "-H"
+      assignment_delimiter: auto
+      description: Custom header
+    - name: user_agent
+      type: string
+      cli: "-A"
+      assignment_delimiter: auto
+      description: User-Agent string
+    - name: referer
+      type: string
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Referer URL
+    - name: cookie
+      type: string
+      cli: "-b"
+      assignment_delimiter: auto
+      description: Send cookie
+    - name: cookie_jar
+      type: file
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Read cookies from file
+    - name: output
+      type: file
+      cli: "-o"
+      assignment_delimiter: auto
+      description: Write to file
+    - name: remote_name
+      cli: "-O"
+      assignment_delimiter: none
+      description: Use remote filename
+    - name: remote_name_all
+      cli: "-O"
+      assignment_delimiter: none
+      description: Use remote filename for all URLs
+    - name: create_dirs
+      cli: "--create-dirs"
+      assignment_delimiter: none
+      description: Create necessary directories
+    - name: proxy
+      type: string
+      cli: "-x"
+      assignment_delimiter: auto
+      description: Use proxy
+    - name: socks_proxy
+      type: string
+      cli: "--socks"
+      assignment_delimiter: auto
+      description: SOCKS proxy
+    - name: socks5
+      cli: "--socks5"
+      assignment_delimiter: auto
+      description: SOCKS5 proxy
+    - name: tcp_nodelay
+      cli: "--tcp-nodelay"
+      assignment_delimiter: none
+      description: Use TCP_NODELAY
+    - name: connect_timeout
+      type: string
+      cli: "--connect-timeout"
+      assignment_delimiter: equals
+      description: Maximum time for connection
+    - name: max_time
+      type: string
+      cli: "-m"
+      assignment_delimiter: auto
+      description: Maximum time for operation
+    - name: retry
+      type: integer
+      cli: "--retry"
+      assignment_delimiter: equals
+      description: Number of retries
+    - name: retry_delay
+      type: string
+      cli: "--retry-delay"
+      assignment_delimiter: equals
+      description: Delay between retries
+    - name: retry_max_time
+      type: string
+      cli: "--retry-max-time"
+      assignment_delimiter: equals
+      description: Maximum retry time
+    - name: compressed
+      cli: "--compressed"
+      assignment_delimiter: none
+      description: Request compressed response
+    - name: location
+      cli: "-L"
+      assignment_delimiter: none
+      description: Follow redirects
+    - name: max_redirects
+      type: integer
+      cli: "--max-redirs"
+      assignment_delimiter: equals
+      description: Maximum redirects
+    - name: include
+      type: string
+      cli: "--include"
+      assignment_delimiter: auto
+      description: Include headers in output
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose output
+    - name: silent
+      cli: "-s"
+      assignment_delimiter: none
+      description: Silent mode
+    - name: insecure
+      cli: "-k"
+      assignment_delimiter: none
+      description: Skip SSL verification
+    - name: cert
+      type: file
+      cli: "--cert"
+      assignment_delimiter: auto
+      description: Client certificate file
+    - name: key
+      type: file
+      cli: "--key"
+      assignment_delimiter: auto
+      description: Private key file
+    - name: cacert
+      type: file
+      cli: "--cacert"
+      assignment_delimiter: auto
+      description: CA certificate
+    - name: capath
+      type: string
+      cli: "--capath"
+      assignment_delimiter: auto
+      description: CA directory
+    - name: cert_status
+      cli: "--cert-status"
+      assignment_delimiter: none
+      description: Verify cert status
+    - name: user
+      type: string
+      cli: "-u"
+      assignment_delimiter: auto
+      description: Server user and password
+    - name: digest
+      cli: "--digest"
+      assignment_delimiter: none
+      description: Use HTTP Digest authentication
+    - name: basic
+      cli: "--basic"
+      assignment_delimiter: none
+      description: Use HTTP Basic authentication
+    - name: ntlm
+      cli: "--ntlm"
+      assignment_delimiter: none
+      description: Use HTTP NTLM authentication
+    - name: bearer
+      type: string
+      cli: "--bearer"
+      assignment_delimiter: auto
+      description: Bearer token
+    - name: upload_file
+      type: file
+      cli: "-T"
+      assignment_delimiter: auto
+      description: Upload file
+    - name: form
+      cli: "-F"
+      assignment_delimiter: auto
+      description: Multipart form data
+    - name: form_string
+      cli: "--form-string"
+      assignment_delimiter: space
+      description: Multipart form string
+    - name: rate
+      type: string
+      cli: "--rate"
+      assignment_delimiter: auto
+      description: Request rate limit
+    - name: limit_rate
+      type: string
+      cli: "--limit-rate"
+      assignment_delimiter: auto
+      description: Maximum transfer rate
+    - name: range
+      type: string
+      cli: "-r"
+      assignment_delimiter: auto
+      description: Byte range
+    - name: continue_at
+      type: string
+      cli: "-C"
+      assignment_delimiter: auto
+      description: Resume at offset
+    - name: append
+      cli: "-a"
+      assignment_delimiter: none
+      description: Append to output file
+    - name: ftp_ssl
+      cli: "--ssl-reqd"
+      assignment_delimiter: none
+      description: Require SSL/TLS for FTP
+    - name: ftp_pasv
+      cli: "--no-epsv"
+      assignment_delimiter: none
+      description: Use EPSV for FTP
+    - name: upload
+      cli: "-T"
+      assignment_delimiter: auto
+      description: Upload to URL
+    - name: list_only
+      cli: "-l"
+      assignment_delimiter: none
+      description: List mode
+    - name: show_error
+      cli: "-S"
+      assignment_delimiter: none
+      description: Show error on failure
+    - name: fail
+      cli: "-f"
+      assignment_delimiter: none
+      description: Fail silently
+    - name: fail_early
+      cli: "--fail-early"
+      assignment_delimiter: none
+      description: Fail on first transfer error
+    - name: progress_bar
+      cli: "-#"
+      assignment_delimiter: none
+      description: Display progress bar
+    - name: stderr
+      type: file
+      cli: "--stderr"
+      assignment_delimiter: auto
+      description: Where to redirect stderr
+    - name: parallel
+      cli: "-Z"
+      assignment_delimiter: none
+      description: Parallel transfers
+    - name: next
+      cli: "-:"
+      assignment_delimiter: none
+      description: Reset options between URLs
+    - name: json
+      cli: "--json"
+      assignment_delimiter: none
+      description: Output JSON metadata
+    flags:
+    - name: location
+      cli: "-L"
+      description: Follow redirects (3xx)
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose output
+      default: false
+      assignment_delimiter: none
+    - name: silent
+      cli: "-s"
+      description: Silent mode
+      default: false
+      assignment_delimiter: none
+    - name: show_error
+      cli: "-S"
+      description: Show error even with -f
+      default: false
+      assignment_delimiter: none
+    - name: head
+      cli: "-I"
+      description: Fetch headers only
+      default: false
+      assignment_delimiter: none
+    - name: compressed
+      cli: "--compressed"
+      description: Request compressed transfer encoding
+      default: false
+      assignment_delimiter: none
+    - name: create_dirs
+      cli: "--create-dirs"
+      description: Create necessary local directory hierarchy
+      default: false
+      assignment_delimiter: none
+    - name: remote_name
+      cli: "-O"
+      description: Use remote filename for output
+      default: false
+      assignment_delimiter: none
+    - name: remote_name_all
+      cli: "-O"
+      description: Use remote filename for all URLs
+      default: false
+      assignment_delimiter: none
+    - name: proxy_tunnel
+      cli: "-p"
+      description: Operate through HTTP proxy
+      default: false
+      assignment_delimiter: none
+    - name: proxy_anyauth
+      cli: "--proxy-anyauth"
+      description: Pick proxy auth method automatically
+      default: false
+      assignment_delimiter: none
+    - name: insecure
+      cli: "-k"
+      description: Allow insecure SSL connections
+      default: false
+      assignment_delimiter: none
+    - name: cert_status
+      cli: "--cert-status"
+      description: Verify server cert status
+      default: false
+      assignment_delimiter: none
+    - name: ftp_ssl
+      cli: "--ssl-reqd"
+      description: Require SSL/TLS for FTP
+      default: false
+      assignment_delimiter: none
+    - name: tcp_nodelay
+      cli: "--tcp-nodelay"
+      description: Turn on TCP_NODELAY
+      default: false
+      assignment_delimiter: none
+    - name: keepalive
+      cli: "--no-keepalive"
+      description: Disable keepalive
+      default: true
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Make operation more talkative
+      default: false
+      assignment_delimiter: none
+    - name: no_progress
+      cli: "--no-progress"
+      description: Disable progress meter
+      default: false
+      assignment_delimiter: none
+    - name: fail
+      cli: "-f"
+      description: Fail silently (no output at all)
+      default: false
+      assignment_delimiter: none
+    - name: fail_early
+      cli: "--fail-early"
+      description: Fail on first transfer error
+      default: false
+      assignment_delimiter: none
+    - name: help
+      cli: "-h"
+      description: Show help
+      default: false
+      assignment_delimiter: none
+    name: transfer

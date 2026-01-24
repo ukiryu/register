@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: cut
+display_name: cut (remove sections from lines)
+homepage: https://www.gnu.org/software/coreutils/
+"$self": https://www.ukiryu.com/register/1.0/cut/0.1
+version: '0.1'
+aliases:
+  - cut
+version_detection:
+  command: "--version"
+  pattern: "cut \\(GNU coreutils\\) ([\\d.]+)"
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/cut"
+  - "/opt/homebrew/bin/cut"
+  linux:
+  - "/usr/bin/cut"
+  windows:
+  - "C:/Program Files/Git/usr/bin/cut.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: cut on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Remove sections from each line of files
+    usage: cut [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to read
+    options:
+    - name: bytes
+      cli: "-b"
+      assignment_delimiter: auto
+      description: Select by bytes
+    - name: characters
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Select by characters
+    - name: delimiter
+      cli: "-d"
+      assignment_delimiter: auto
+      description: Field delimiter
+    - name: fields
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Select by fields
+    - name: complement
+      cli: "--complement"
+      assignment_delimiter: none
+      description: Invert selection
+      include_platforms:
+      - linux
+    - name: only_delimited
+      cli: "-s"
+      assignment_delimiter: none
+      description: Only delimited lines
+    - name: zero_terminated
+      cli: "-z"
+      assignment_delimiter: none
+      description: NUL delimited
+      include_platforms:
+      - linux
+    flags:
+    - name: only_delimited
+      cli: "-s"
+      description: Only delimited
+      default: false
+      assignment_delimiter: none
+    - name: complement
+      cli: "--complement"
+      description: Complement
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    - name: zero_terminated
+      cli: "-z"
+      description: NUL terminated
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    name: extract
