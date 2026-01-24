@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: gzip
 display_name: gzip Compressor
 homepage: https://www.gnu.org/software/gzip/
-$self: https://www.ukiryu.com/register/1.0/gzip/1.12
+"$self": https://www.ukiryu.com/register/1.0/gzip/1.12
 version: '1.12'
 aliases:
 - gunzip
@@ -41,7 +41,6 @@ profiles:
   commands:
   - description: Compress files with gzip
     usage: gzip [options] file
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -54,6 +53,7 @@ profiles:
       type: file
       cli: "-c"
       description: Write to standard output
+      assignment_delimiter: auto
     - name: compression_level
       type: integer
       cli: "-"
@@ -61,35 +61,41 @@ profiles:
       - 1
       - 9
       description: Compression level (1=fastest, 9=best)
+      assignment_delimiter: auto
     - name: suffix
       type: string
       cli: "-S"
       description: Use suffix instead of .gz
+      assignment_delimiter: auto
     flags:
     - name: force
       cli: "-f"
       description: Force overwrite
       default: false
+      assignment_delimiter: none
     - name: keep
       cli: "-k"
       description: Keep input files
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet mode
       default: false
+      assignment_delimiter: none
     - name: recursive
       cli: "-r"
       description: Recursive mode
       default: false
+      assignment_delimiter: none
     name: compress
   - description: Decompress gzip files
     usage: gzip -d [options] file
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -102,12 +108,15 @@ profiles:
       cli: "-d"
       description: Decompress mode
       default: true
+      assignment_delimiter: none
     - name: keep
       cli: "-k"
       description: Keep input files
       default: false
+      assignment_delimiter: none
     - name: force
       cli: "-f"
       description: Force overwrite
       default: false
+      assignment_delimiter: none
     name: decompress

@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: imagemagick
 display_name: ImageMagick Image Processing Suite
 homepage: https://imagemagick.org/
-$self: https://www.ukiryu.com/register/1.0/imagemagick/7.1
+"$self": https://www.ukiryu.com/register/1.0/imagemagick/7.1
 version: '7.1'
 aliases:
 - magick
@@ -60,7 +60,6 @@ profiles:
   commands:
   - description: Convert between image formats and apply transformations
     usage: magick [input-options] input-file [processing-options] output-file
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -77,12 +76,11 @@ profiles:
     - name: density
       type: string
       cli: "-density"
-      format: single_dash_space
       description: Horizontal and vertical density for input
+      assignment_delimiter: space
     - name: input_colorspace
       type: symbol
       cli: "-colorspace"
-      format: single_dash_space
       values:
       - RGB
       - sRGB
@@ -91,6 +89,7 @@ profiles:
       - LAB
       - XYZ
       description: Input image colorspace
+      assignment_delimiter: space
     post_options:
     - name: resize
       type: string
@@ -239,18 +238,22 @@ profiles:
       cli: "-verbose"
       description: Print detailed information
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-quiet"
       description: Suppress all warning messages
       default: false
+      assignment_delimiter: none
     - name: auto_orient
       cli: "-auto-orient"
       description: Automatically orient image
       default: false
+      assignment_delimiter: none
     - name: strip_flag
       cli: "-strip"
       description: Strip image of all profiles
       default: false
+      assignment_delimiter: none
     name: convert
   - description: Describe the format and characteristics of image files
     usage: magick identify [options] input-file
@@ -266,26 +269,29 @@ profiles:
     - name: format
       type: string
       cli: "-format"
-      format: single_dash_space
       description: Output formatted image characteristics
+      assignment_delimiter: space
     - name: crop
       type: string
       cli: "-crop"
-      format: single_dash_space
       description: Cut out rectangular region to identify
+      assignment_delimiter: space
     flags:
     - name: verbose
       cli: "-verbose"
       description: Print detailed information
       default: false
+      assignment_delimiter: none
     - name: ping
       cli: "-ping"
       description: Efficiently determine image attributes
       default: false
+      assignment_delimiter: none
     - name: unique
       cli: "-unique"
       description: Display number of unique colors
       default: false
+      assignment_delimiter: none
     name: identify
   - description: Process image files (overwrites original file)
     usage: magick mogrify [options] input-file
@@ -301,93 +307,95 @@ profiles:
     - name: resize
       type: string
       cli: "-resize"
-      format: single_dash_space
       description: Resize image
+      assignment_delimiter: space
     - name: quality
       type: integer
       cli: "-quality"
-      format: single_dash_space
       range:
       - 1
       - 100
       description: Compression level
+      assignment_delimiter: space
     - name: format
       type: string
       cli: "-format"
-      format: single_dash_space
       description: Output format type
+      assignment_delimiter: space
     - name: path
       type: file
       cli: "-path"
-      format: single_dash_space
       description: Write images to this path on disk
+      assignment_delimiter: space
     - name: crop
       type: string
       cli: "-crop"
-      format: single_dash_space
       description: Cut out rectangular region
+      assignment_delimiter: space
     - name: geometry
       type: string
       cli: "-geometry"
-      format: single_dash_space
       description: Preferred size or location
+      assignment_delimiter: space
     - name: rotate
       type: float
       cli: "-rotate"
-      format: single_dash_space
       description: Rotate image by degrees
+      assignment_delimiter: space
     - name: blur
       type: string
       cli: "-blur"
-      format: single_dash_space
       description: Blur image
+      assignment_delimiter: space
     - name: sharpen
       type: string
       cli: "-sharpen"
-      format: single_dash_space
       description: Sharpen image
+      assignment_delimiter: space
     - name: colorspace
       type: symbol
       cli: "-colorspace"
-      format: single_dash_space
       values:
       - RGB
       - sRGB
       - Gray
       - CMYK
       description: Alternate image colorspace
+      assignment_delimiter: space
     - name: strip
       type: boolean
       cli: "-strip"
-      format: single_dash_space
       description: Strip image of all profiles
+      assignment_delimiter: space
     - name: grayscale
       type: boolean
       cli: "-grayscale"
-      format: single_dash_space
       description: Convert to grayscale
+      assignment_delimiter: space
     - name: negate
       type: boolean
       cli: "-negate"
-      format: single_dash_space
       description: Negate colors
+      assignment_delimiter: space
     - name: flip
       type: boolean
       cli: "-flip"
-      format: single_dash_space
       description: Flip vertically
+      assignment_delimiter: space
     - name: flop
       type: boolean
       cli: "-flop"
-      format: single_dash_space
       description: Flop horizontally
+      assignment_delimiter: space
     flags:
     - name: verbose
       cli: "-verbose"
       description: Print detailed information
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-quiet"
       description: Suppress warning messages
       default: false
+      assignment_delimiter: none
     name: mogrify

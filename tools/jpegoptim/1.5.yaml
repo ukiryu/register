@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: jpegoptim
 display_name: JPEG Image Optimizer
 homepage: https://github.com/tjko/jpegoptim
-$self: https://www.ukiryu.com/register/1.0/jpegoptim/1.5
+"$self": https://www.ukiryu.com/register/1.0/jpegoptim/1.5
 version: '1.5'
 aliases:
 - jpegopt
@@ -60,112 +60,133 @@ profiles:
     - name: dest
       type: file
       cli: "-d"
-      format: single_dash_space
       description: Alternative destination directory for optimized files
+      assignment_delimiter: space
     - name: max
       type: integer
       cli: "-m"
-      format: single_dash_space
       range:
       - 0
       - 100
       description: Maximum image quality (0-100, disables lossless mode)
+      assignment_delimiter: space
     - name: size
       type: string
       cli: "-S"
-      format: single_dash_space
       description: Target size in KB (1-n) or percentage (1%-99%)
+      assignment_delimiter: space
     - name: threshold
       type: integer
       cli: "-T"
-      format: single_dash_space
       range:
       - 0
       - 100
       description: Skip if compression gain is below threshold (%)
+      assignment_delimiter: space
     flags:
     - name: force
       cli: "-f"
       description: Force optimization even if result is larger
       default: false
+      assignment_delimiter: none
     - name: help
       cli: "-h"
       description: Display usage information
       default: false
+      assignment_delimiter: none
     - name: noaction
       cli: "-n"
       description: Don't optimize, just print results
       default: false
+      assignment_delimiter: none
     - name: csv
       cli: "-b"
       description: Print progress in CSV format
       default: false
+      assignment_delimiter: none
     - name: overwrite
       cli: "-o"
       description: Overwrite target file even if it exists
       default: false
+      assignment_delimiter: none
     - name: preserve
       cli: "-p"
       description: Preserve file modification times
       default: false
+      assignment_delimiter: none
     - name: preserve_perms
       cli: "-P"
       description: Preserve file permissions
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet mode
       default: false
+      assignment_delimiter: none
     - name: totals
       cli: "-t"
       description: Print totals after processing
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Enable verbose mode
       default: false
+      assignment_delimiter: none
     - name: all_normal
       cli: "--all-normal"
       description: Force all output to be non-progressive
       default: false
+      assignment_delimiter: none
     - name: all_progressive
       cli: "--all-progressive"
       description: Force all output to be progressive
       default: false
+      assignment_delimiter: none
     - name: strip_all
       cli: "-s"
       description: Strip all markers from output
       default: false
+      assignment_delimiter: none
     - name: strip_none
       cli: "--strip-none"
       description: Preserve all markers
       default: false
+      assignment_delimiter: none
     - name: strip_com
       cli: "--strip-com"
       description: Strip Comment markers
       default: false
+      assignment_delimiter: none
     - name: strip_exif
       cli: "--strip-exif"
       description: Strip EXIF markers
       default: false
+      assignment_delimiter: none
     - name: strip_iptc
       cli: "--strip-iptc"
       description: Strip IPTC markers
       default: false
+      assignment_delimiter: none
     - name: strip_icc
       cli: "--strip-icc"
       description: Strip ICC profiles
       default: false
+      assignment_delimiter: none
     - name: strip_xmp
       cli: "--strip-xmp"
       description: Strip XMP profiles
       default: false
+      assignment_delimiter: none
     - name: stdout
       cli: "--stdout"
       description: Send output to stdout
       default: false
+      assignment_delimiter: none
     - name: stdin
       cli: "--stdin"
       description: Read input from stdin
       default: false
+      assignment_delimiter: none
     name: optimize

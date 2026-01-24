@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: exiftool
 display_name: ExifTool Metadata Reader/Writer
 homepage: https://exiftool.org/
-$self: https://www.ukiryu.com/register/1.0/exiftool/13.0
+"$self": https://www.ukiryu.com/register/1.0/exiftool/13.0
 version: '13.0'
 aliases:
 - exiftool
@@ -40,7 +40,6 @@ profiles:
   commands:
   - description: Read metadata from files
     usage: exiftool [options] [-TAG...] file...
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -54,97 +53,116 @@ profiles:
       cli: "-"
       variadic: true
       description: Specific tag(s) to extract
+      assignment_delimiter: auto
     - name: csv
       type: string
       cli: "-csv"
-      format: single_dash_equals
       description: Export in CSV format
+      assignment_delimiter: equals
     - name: json
       type: string
       cli: "-json"
-      format: single_dash_equals
       description: Export in JSON format
+      assignment_delimiter: equals
     - name: output_file
       type: file
       cli: "-w"
       description: Write output to file
+      assignment_delimiter: auto
     - name: format
       type: string
       cli: "-p"
       description: Print format string
+      assignment_delimiter: auto
     flags:
     - name: long
       cli: "-l"
       description: Long output format (2-line)
       default: false
+      assignment_delimiter: none
     - name: short
       cli: "-s"
       description: Short output format
       default: false
+      assignment_delimiter: none
     - name: very_short
       cli: "-S"
       description: Very short output format
       default: false
+      assignment_delimiter: none
     - name: tabular
       cli: "-T"
       description: Tabular output format
       default: false
+      assignment_delimiter: none
     - name: xml
       cli: "-X"
       description: XML output format
       default: false
+      assignment_delimiter: none
     - name: html
       cli: "-h"
       description: HTML output format
       default: false
+      assignment_delimiter: none
     - name: binary
       cli: "-b"
       description: Binary output
       default: false
+      assignment_delimiter: none
     - name: numeric
       cli: "-n"
       description: No print conversion
       default: false
+      assignment_delimiter: none
     - name: sort
       cli: "-sort"
       description: Sort output alphabetically
       default: false
+      assignment_delimiter: none
     - name: recursive
       cli: "-r"
       description: Recursively process directories
       default: false
+      assignment_delimiter: none
     - name: extension
       cli: "-ext"
       description: Process files with specified extension
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose output
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet processing
       default: false
+      assignment_delimiter: none
     - name: all
       cli: "-a"
       description: Allow duplicate tags
       default: false
+      assignment_delimiter: none
     - name: list_item
       cli: "-listItem"
       description: Extract specific item from list
       default: false
+      assignment_delimiter: none
     - name: coord_format
       cli: "-c"
       description: Set GPS coordinate format
       default: false
+      assignment_delimiter: none
     - name: date_format
       cli: "-d"
       description: Set date/time format
       default: false
+      assignment_delimiter: none
     name: read
   - description: Write metadata to files
     usage: exiftool -TAG[+-<]=[VALUE]... file...
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -157,23 +175,27 @@ profiles:
       type: file
       cli: "-tagsFromFile"
       description: Copy tags from file
+      assignment_delimiter: auto
     - name: set_tag
       type: string
       cli: "-"
-      format: single_dash_equals
       variadic: true
       description: Set tag value (e.g., -TAG=value)
+      assignment_delimiter: equals
     flags:
     - name: overwrite_original
       cli: "-overwrite_original"
       description: Overwrite original file
       default: false
+      assignment_delimiter: none
     - name: overwrite_original_in_place
       cli: "-overwrite_original_in_place"
       description: Overwrite original in place
       default: false
+      assignment_delimiter: none
     - name: preserve
       cli: "-P"
       description: Preserve modification date/time
       default: false
+      assignment_delimiter: none
     name: write

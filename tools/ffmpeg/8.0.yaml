@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: ffmpeg
 display_name: FFmpeg Media Converter
 homepage: https://ffmpeg.org/
-$self: https://www.ukiryu.com/register/1.0/ffmpeg/8.0
+"$self": https://www.ukiryu.com/register/1.0/ffmpeg/8.0
 version: '8.0'
 aliases:
 - ffmpeg
@@ -72,131 +72,130 @@ profiles:
     - name: input
       type: file
       cli: "-i"
-      format: single_dash_space
       description: Input file URL (can be specified multiple times)
+      assignment_delimiter: space
     - name: codec
       type: string
       cli: "-c"
-      format: single_dash_space
       description: Codec name (e.g., 'copy', 'libx264', 'aac')
+      assignment_delimiter: space
     - name: video_codec
       type: string
       cli: "-c:v"
-      format: single_dash_space
       description: Video codec
+      assignment_delimiter: space
     - name: audio_codec
       type: string
       cli: "-c:a"
-      format: single_dash_space
       description: Audio codec
+      assignment_delimiter: space
     - name: subtitle_codec
       type: string
       cli: "-c:s"
-      format: single_dash_space
       description: Subtitle codec
+      assignment_delimiter: space
     - name: bitrate
       type: string
       cli: "-b"
-      format: single_dash_space
       description: Bitrate (e.g., '1M', '500k')
+      assignment_delimiter: space
     - name: video_bitrate
       type: string
       cli: "-b:v"
-      format: single_dash_space
       description: Video bitrate
+      assignment_delimiter: space
     - name: audio_bitrate
       type: string
       cli: "-b:a"
-      format: single_dash_space
       description: Audio bitrate
+      assignment_delimiter: space
     - name: frame_rate
       type: string
       cli: "-r"
-      format: single_dash_space
       description: Frame rate (e.g., '24', '29.97', '30')
+      assignment_delimiter: space
     - name: size
       type: string
       cli: "-s"
-      format: single_dash_space
       description: Frame size (e.g., '1920x1080', '1280x720')
+      assignment_delimiter: space
     - name: video_size
       type: string
       cli: "-vsize"
-      format: single_dash_space
       description: Video frame size
+      assignment_delimiter: space
     - name: video_filter
       type: string
       cli: "-vf"
-      format: single_dash_space
       description: Video filter graph
+      assignment_delimiter: space
     - name: filter_complex
       type: string
       cli: "-filter_complex"
-      format: single_dash_space
       description: Complex filter graph
+      assignment_delimiter: space
     - name: audio_filter
       type: string
       cli: "-af"
-      format: single_dash_space
       description: Audio filter graph
+      assignment_delimiter: space
     - name: start_time
       type: string
       cli: "-ss"
-      format: single_dash_space
       description: Start time (e.g., '00:01:30', '90')
+      assignment_delimiter: space
     - name: end_time
       type: string
       cli: "-to"
-      format: single_dash_space
       description: End time
+      assignment_delimiter: space
     - name: duration
       type: string
       cli: "-t"
-      format: single_dash_space
       description: Duration (e.g., '00:05:00', '300')
+      assignment_delimiter: space
     - name: map
       type: string
       cli: "-map"
-      format: single_dash_space
       description: Map stream from input to output (e.g., '0:v', '0:a')
+      assignment_delimiter: space
     - name: format
       type: string
       cli: "-f"
-      format: single_dash_space
       description: Output format
+      assignment_delimiter: space
     - name: input_format
       type: string
       cli: "-f"
-      format: single_dash_space
       description: Input format (must come before -i)
+      assignment_delimiter: space
     - name: quality
       type: integer
       cli: "-q"
-      format: single_dash_space
       range:
       - 1
       - 31
       description: Quality (1-31, lower is better for some codecs)
+      assignment_delimiter: space
     - name: video_quality
       type: integer
       cli: "-q:v"
-      format: single_dash_space
       range:
       - 1
       - 31
       description: Video quality (CRF for libx264)
+      assignment_delimiter: space
     - name: audio_quality
       type: integer
       cli: "-q:a"
-      format: single_dash_space
       range:
       - 1
       - 10
       description: Audio quality
+      assignment_delimiter: space
     - name: preset
       type: string
       cli: "-preset"
-      format: single_dash_space
       values:
       - ultrafast
       - superfast
@@ -208,10 +207,10 @@ profiles:
       - slower
       - veryslow
       description: Encoder preset (speed vs compression)
+      assignment_delimiter: space
     - name: tune
       type: string
       cli: "-tune"
-      format: single_dash_space
       values:
       - film
       - animation
@@ -220,20 +219,20 @@ profiles:
       - fastdecode
       - zerolatency
       description: Encoder tuning
+      assignment_delimiter: space
     - name: aspect
       type: string
       cli: "-aspect"
-      format: single_dash_space
       description: Aspect ratio (e.g., '16:9', '4:3')
+      assignment_delimiter: space
     - name: audio_channels
       type: integer
       cli: "-ac"
-      format: single_dash_space
       description: Number of audio channels
+      assignment_delimiter: space
     - name: audio_sample_rate
       type: integer
       cli: "-ar"
-      format: single_dash_space
       values:
       - 8000
       - 11025
@@ -243,10 +242,10 @@ profiles:
       - 48000
       - 96000
       description: Audio sampling rate
+      assignment_delimiter: space
     - name: pix_fmt
       type: string
       cli: "-pix_fmt"
-      format: single_dash_space
       values:
       - yuv420p
       - yuv422p
@@ -254,58 +253,68 @@ profiles:
       - rgb24
       - rgba
       description: Pixel format
+      assignment_delimiter: space
     - name: threads
       type: integer
       cli: "-threads"
-      format: single_dash_space
       description: Number of threads to use
+      assignment_delimiter: space
     - name: bufsize
       type: string
       cli: "-bufsize"
-      format: single_dash_space
       description: Decoder buffer size
+      assignment_delimiter: space
     - name: metadata
       type: string
       cli: "-metadata"
-      format: single_dash_space
       description: Metadata key=value
+      assignment_delimiter: space
     flags:
     - name: overwrite
       cli: "-y"
       description: Overwrite output file without asking
       default: false
+      assignment_delimiter: none
     - name: no_overwrite
       cli: "-n"
       description: Do not overwrite output file
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-quiet"
       cli_short: "-loglevel quiet"
       description: Suppress output
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose logging
       default: false
+      assignment_delimiter: none
     - name: hide_banner
       cli: "-hide_banner"
       description: Hide copyright banner
       default: false
+      assignment_delimiter: none
     - name: stream_copy
       cli: "-c"
       cli_short: "-c copy"
       description: Copy streams without re-encoding
       default: false
+      assignment_delimiter: none
     - name: no_audio
       cli: "-an"
       description: Disable audio recording
       default: false
+      assignment_delimiter: none
     - name: no_video
       cli: "-vn"
       description: Disable video recording
       default: false
+      assignment_delimiter: none
     - name: no_subtitle
       cli: "-sn"
       description: Disable subtitle recording
       default: false
+      assignment_delimiter: none
     name: convert

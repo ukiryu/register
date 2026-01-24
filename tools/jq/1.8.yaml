@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: jq
 display_name: jq JSON Processor
 homepage: https://stedolan.github.io/jq/
-$self: https://www.ukiryu.com/register/1.0/jq/1.8
+"$self": https://www.ukiryu.com/register/1.0/jq/1.8
 version: '1.8'
 aliases:
 - jq
@@ -40,7 +40,6 @@ profiles:
   commands:
   - description: Process JSON with filter expression
     usage: jq [options] filter [files...]
-    # subcommand omitted - tool executes directly
     arguments:
     - name: filter
       type: string
@@ -58,157 +57,191 @@ profiles:
       type: file
       cli: "-f"
       description: Read filter from file
+      assignment_delimiter: auto
     - name: arg
       type: string
       cli: "--arg"
-      format: double_dash_space
       description: Set variable $<name> to <value>
+      assignment_delimiter: space
     - name: argjson
       type: string
       cli: "--argjson"
-      format: double_dash_space
       description: Set variable $<name> to JSON <value>
+      assignment_delimiter: space
     - name: slurpfile
       type: string
       cli: "--slurpfile"
-      format: double_dash_space
       description: Set variable $<name> to array from file
+      assignment_delimiter: space
     - name: rawfile
       type: string
       cli: "--rawfile"
-      format: double_dash_space
       description: Set variable $<name> to raw string from file
+      assignment_delimiter: space
     - name: args
       type: string
       cli: "--args"
       description: Remaining arguments are string arguments
+      assignment_delimiter: auto
     - name: jsonargs
       type: string
       cli: "--jsonargs"
       description: Remaining arguments are JSON arguments
+      assignment_delimiter: auto
     - name: null_input
       type: string
       cli: "-n"
       description: Use null as input
+      assignment_delimiter: auto
     - name: raw_input
       type: string
       cli: "-R"
       description: Read raw strings, not JSON
+      assignment_delimiter: auto
     - name: slurp
       type: string
       cli: "-s"
       description: Read all inputs into array
+      assignment_delimiter: auto
     - name: compact_output
       type: string
       cli: "-c"
       description: Compact output
+      assignment_delimiter: auto
     - name: raw_output
       type: string
       cli: "-r"
       description: Raw string output
+      assignment_delimiter: auto
     - name: raw_output0
       type: string
       cli: "-j"
       description: Raw output with NUL separator
+      assignment_delimiter: auto
     - name: join_output
       type: string
       cli: "-j"
       description: Join output without newline
+      assignment_delimiter: auto
     - name: color_output
       type: string
       cli: "-C"
       description: Colorize output
+      assignment_delimiter: auto
     - name: monochrome_output
       type: string
       cli: "-M"
       description: Monochrome output
+      assignment_delimiter: auto
     - name: ascii_output
       type: string
       cli: "-a"
       description: ASCII output
+      assignment_delimiter: auto
     - name: sort_keys
       type: string
       cli: "-S"
       description: Sort object keys
+      assignment_delimiter: auto
     - name: indent
       type: integer
       cli: "--indent"
       description: Number of spaces for indentation
+      assignment_delimiter: auto
     - name: tab
       type: string
       cli: "--tab"
       description: Use tabs for indentation
+      assignment_delimiter: auto
     - name: unbuffered
       type: string
       cli: "--unbuffered"
       description: Flush output after each output
+      assignment_delimiter: auto
     - name: stream
       type: string
       cli: "--stream"
       description: Parse input in stream fashion
+      assignment_delimiter: auto
     - name: stream_errors
       type: string
       cli: "--stream-errors"
       description: Show parse errors in stream mode
+      assignment_delimiter: auto
     - name: from_file
       type: file
       cli: "--from-file"
       description: Read JSON from file
+      assignment_delimiter: auto
     flags:
     - name: null_input
       cli: "-n"
       description: Use null as input
       default: false
+      assignment_delimiter: none
     - name: raw_input
       cli: "-R"
       description: Read raw strings instead of JSON
       default: false
+      assignment_delimiter: none
     - name: slurp
       cli: "-s"
       description: Read all inputs into array
       default: false
+      assignment_delimiter: none
     - name: compact_output
       cli: "-c"
       description: Compact output (no pretty-printing)
       default: false
+      assignment_delimiter: none
     - name: raw_output
       cli: "-r"
       description: Raw string output
       default: false
+      assignment_delimiter: none
     - name: color_output
       cli: "-C"
       description: Colorize output
       default: false
+      assignment_delimiter: none
     - name: monochrome_output
       cli: "-M"
       description: Monochrome output (no color)
       default: false
+      assignment_delimiter: none
     - name: ascii_output
       cli: "-a"
       description: ASCII output only
       default: false
+      assignment_delimiter: none
     - name: sort_keys
       cli: "-S"
       description: Sort object keys in output
       default: false
+      assignment_delimiter: none
     - name: tab
       cli: "--tab"
       description: Use tabs for indentation
       default: false
+      assignment_delimiter: none
     - name: unbuffered
       cli: "--unbuffered"
       description: Unbuffered output
       default: false
+      assignment_delimiter: none
     - name: stream
       cli: "--stream"
       description: Stream parsing mode
       default: false
+      assignment_delimiter: none
     - name: help
       cli: "-h"
       description: Show help
       default: false
+      assignment_delimiter: none
     - name: version
       cli: "--version"
       description: Show version
       default: false
+      assignment_delimiter: none
     name: process

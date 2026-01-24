@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: bzip2
 display_name: bzip2 Compressor
 homepage: https://sourceware.org/bzip2/
-$self: https://www.ukiryu.com/register/1.0/bzip2/1.0
+"$self": https://www.ukiryu.com/register/1.0/bzip2/1.0
 version: '1.0'
 aliases:
 - bunzip2
@@ -41,7 +41,6 @@ profiles:
   commands:
   - description: Compress files with bzip2
     usage: bzip2 [options] file
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -55,6 +54,7 @@ profiles:
       type: file
       cli: "-c"
       description: Compress to standard output
+      assignment_delimiter: auto
     - name: block_size
       type: integer
       cli: "-"
@@ -62,31 +62,36 @@ profiles:
       - 1
       - 9
       description: Block size (100k-900k)
+      assignment_delimiter: auto
     flags:
     - name: force
       cli: "-f"
       description: Force overwrite
       default: false
+      assignment_delimiter: none
     - name: keep
       cli: "-k"
       description: Keep input files
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet mode
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     - name: test
       cli: "-t"
       description: Test integrity
       default: false
+      assignment_delimiter: none
     name: compress
   - description: Decompress bzip2 files
     usage: bzip2 -d [options] file
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -99,12 +104,15 @@ profiles:
       cli: "-d"
       description: Decompress mode
       default: true
+      assignment_delimiter: none
     - name: keep
       cli: "-k"
       description: Keep input files
       default: false
+      assignment_delimiter: none
     - name: force
       cli: "-f"
       description: Force overwrite
       default: false
+      assignment_delimiter: none
     name: decompress

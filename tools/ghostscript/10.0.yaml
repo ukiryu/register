@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: ghostscript
 display_name: Ghostscript PS/PDF Interpreter
 homepage: https://www.ghostscript.com/
-$self: https://www.ukiryu.com/register/1.0/ghostscript/10.0
+"$self": https://www.ukiryu.com/register/1.0/ghostscript/10.0
 version: '10.0'
 aliases:
 - gs
@@ -63,7 +63,6 @@ profiles:
   commands:
   - description: Convert PostScript or PDF to other formats
     usage: gs [options] input-file
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -75,31 +74,31 @@ profiles:
     - name: device
       type: string
       cli: "-sDEVICE"
-      format: double_dash_equals
       description: Output device (e.g., png16m, jpeg, pdfwrite)
+      assignment_delimiter: equals
     - name: output
       type: file
       cli: "-sOutputFile"
-      format: double_dash_equals
       description: Output file path
+      assignment_delimiter: equals
     - name: resolution
       type: string
       cli: "-r"
       description: Resolution (e.g., 150, 300, or 600x600)
+      assignment_delimiter: auto
     - name: first_page
       type: integer
       cli: "-dFirstPage"
-      format: double_dash_equals
       description: First page to process
+      assignment_delimiter: equals
     - name: last_page
       type: integer
       cli: "-dLastPage"
-      format: double_dash_equals
       description: Last page to process
+      assignment_delimiter: equals
     - name: pdf_settings
       type: string
       cli: "-dPDFSETTINGS"
-      format: double_dash_equals
       values:
       - screen
       - ebook
@@ -107,45 +106,50 @@ profiles:
       - prepress
       - default
       description: PDF preset settings
+      assignment_delimiter: equals
     - name: quality
       type: integer
       cli: "-dJPEGQ"
-      format: double_dash_equals
       range:
       - 1
       - 100
       description: JPEG quality (1-100)
+      assignment_delimiter: equals
     - name: text_alpha
       type: integer
       cli: "-dTextAlphaBits"
-      format: double_dash_equals
       range:
       - 1
       - 4
       description: Text anti-aliasing (1=no AA, 4=best)
+      assignment_delimiter: equals
     - name: graphics_alpha
       type: integer
       cli: "-dGraphicsAlphaBits"
-      format: double_dash_equals
       range:
       - 1
       - 4
       description: Graphics anti-aliasing
+      assignment_delimiter: equals
     flags:
     - name: quiet
       cli: "-q"
       description: Quiet mode
       default: false
+      assignment_delimiter: none
     - name: batch
       cli: "-dBATCH"
       description: Batch mode
       default: true
+      assignment_delimiter: none
     - name: no_pause
       cli: "-dNOPAUSE"
       description: No pause
       default: true
+      assignment_delimiter: none
     - name: no_screen
       cli: "-dNOSAFER"
       description: No safety features
       default: true
+      assignment_delimiter: none
     name: convert

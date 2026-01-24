@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: pandoc
 display_name: Pandoc Universal Document Converter
 homepage: https://pandoc.org/
-$self: https://www.ukiryu.com/register/1.0/pandoc/3.0
+"$self": https://www.ukiryu.com/register/1.0/pandoc/3.0
 version: '3.0'
 aliases:
 - pandoc
@@ -68,168 +68,214 @@ profiles:
     options:
     - name: from
       type: string
-      cli: "--from="
+      cli: "--from"
       description: Input format (e.g., 'markdown', 'html', 'docx')
+      assignment_delimiter: auto
     - name: to
       type: string
-      cli: "--to="
+      cli: "--to"
       description: Output format (e.g., 'html', 'pdf', 'docx')
+      assignment_delimiter: auto
     - name: output
       type: file
-      cli: "--output="
+      cli: "--output"
       description: Output file
+      assignment_delimiter: auto
     - name: standalone
       type: boolean
-      cli: "--standalone="
+      cli: "--standalone"
       description: Produce output with appropriate header and footer
+      assignment_delimiter: auto
     - name: template
       type: file
-      cli: "--template="
+      cli: "--template"
       description: Template file to use
+      assignment_delimiter: auto
     - name: metadata
       type: array
       of: string
-      cli: "--metadata="
+      cli: "--metadata"
       description: Metadata key=value
+      assignment_delimiter: auto
     - name: variable
       type: array
       of: string
-      cli: "--variable="
+      cli: "--variable"
       description: Set variable key=value
+      assignment_delimiter: auto
     - name: css
       type: array
       of: file
-      cli: "--css="
+      cli: "--css"
       description: Link to CSS stylesheet
+      assignment_delimiter: auto
     - name: include_in_header
       type: array
       of: file
-      cli: "--include-in-header="
+      cli: "--include-in-header"
       description: Include contents of file in header
+      assignment_delimiter: auto
     - name: include_before_body
       type: array
       of: file
-      cli: "--include-before-body="
+      cli: "--include-before-body"
       description: Include contents of file before body
+      assignment_delimiter: auto
     - name: include_after_body
       type: array
       of: file
-      cli: "--include-after-body="
+      cli: "--include-after-body"
       description: Include contents of file after body
+      assignment_delimiter: auto
     - name: toc
       type: boolean
-      cli: "--toc="
+      cli: "--toc"
       description: Generate table of contents
+      assignment_delimiter: auto
     - name: toc_depth
       type: integer
-      cli: "--toc-depth="
+      cli: "--toc-depth"
       range:
       - 1
       - 10
       description: Number of levels in TOC
+      assignment_delimiter: auto
     - name: highlight_style
       type: string
-      cli: "--highlight-style="
+      cli: "--highlight-style"
       description: Syntax highlighting style
+      assignment_delimiter: auto
     - name: number_sections
       type: boolean
-      cli: "--number-sections="
+      cli: "--number-sections"
       description: Number sections
+      assignment_delimiter: auto
     - name: shift_heading_level
       type: integer
-      cli: "--shift-heading-level-by="
+      cli: "--shift-heading-level-by"
       description: Shift heading levels by this amount
+      assignment_delimiter: auto
     - name: indent
       type: boolean
-      cli: "--indent="
+      cli: "--indent"
       description: Indent code blocks
+      assignment_delimiter: auto
     - name: wrap
       type: integer
-      cli: "--wrap="
+      cli: "--wrap"
       description: Wrap text at column (0=no wrap, none=never)
+      assignment_delimiter: auto
     - name: columns
       type: integer
-      cli: "--columns="
+      cli: "--columns"
       description: Number of columns for text wrapping
+      assignment_delimiter: auto
     - name: pdf_engine
       type: string
-      cli: "--pdf-engine="
+      cli: "--pdf-engine"
       description: PDF engine (e.g., 'xelatex', 'pdflatex', 'lualatex')
+      assignment_delimiter: auto
     - name: bibliography
       type: file
-      cli: "--bibliography="
+      cli: "--bibliography"
       description: Bibliography file
+      assignment_delimiter: auto
     - name: csl
       type: file
-      cli: "--csl="
+      cli: "--csl"
       description: CSL style file
+      assignment_delimiter: auto
     - name: resource_path
       type: file
-      cli: "--resource-path="
+      cli: "--resource-path"
       description: Path to search for images/resources
+      assignment_delimiter: auto
     - name: extract_media
       type: file
-      cli: "--extract-media="
+      cli: "--extract-media"
       description: Directory to extract media to
+      assignment_delimiter: auto
     - name: self_contained
       type: boolean
-      cli: "--self-contained="
+      cli: "--self-contained"
       description: Include CSS/JS in output HTML
+      assignment_delimiter: auto
+    - name: default_image_extension
+      type: string
+      cli: "--default-image-extension"
+      description: Default image extension
+      assignment_delimiter: auto
+    - name: email_obfuscation
+      type: string
+      cli: "--email-obfuscation"
+      description: Email obfuscation method
+      assignment_delimiter: auto
+    - name: id_prefix
+      type: string
+      cli: "--id-prefix"
+      description: Prefix for section IDs
+      assignment_delimiter: auto
+    - name: title_prefix
+      type: string
+      cli: "--title-prefix"
+      description: Prefix for title
+      assignment_delimiter: auto
+    - name: slide_level
+      type: integer
+      cli: "--slide-level"
+      description: Header level for slides
+      assignment_delimiter: auto
+    - name: abbreviations
+      type: file
+      cli: "--abbreviations"
+      description: File of abbreviations
+      assignment_delimiter: auto
     flags:
     - name: verbose
       cli: "--verbose"
       description: Verbose output
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "--quiet"
       description: Suppress warning messages
       default: false
+      assignment_delimiter: none
     - name: fail_if_warnings
       cli: "--fail-if-warnings"
       description: Exit with error if warnings
       default: false
+      assignment_delimiter: none
     - name: help
       cli: "--help"
       description: Show help message
       default: false
-    - name: version
+      assignment_delimiter: none
+    - name: version_flag
       cli: "--version"
       description: Show version
       default: false
+      assignment_delimiter: none
     - name: smart
       cli: "--smart"
       description: Use smart quotes
       default: false
+      assignment_delimiter: none
     - name: no_smart
       cli: "--no-smart"
       description: Don't use smart quotes
       default: false
-    - name: default_image_extension
-      cli: "--default-image-extension="
-      description: Default image extension
-    - name: email_obfuscation
-      cli: "--email-obfuscation="
-      description: Email obfuscation method
-    - name: id_prefix
-      cli: "--id-prefix="
-      description: Prefix for section IDs
-    - name: title_prefix
-      cli: "--title-prefix="
-      description: Prefix for title
-    - name: slide_level
-      cli: "--slide-level="
-      description: Header level for slides
-    - name: abbreviations
-      cli: "--abbreviations="
-      description: File of abbreviations
+      assignment_delimiter: none
     - name: ascii
       cli: "--ascii"
       description: Use ASCII-only output
       default: false
+      assignment_delimiter: none
     - name: trace
       cli: "--trace"
       description: Enable tracing
       default: false
+      assignment_delimiter: none
     name: convert
 - name: windows_powershell
   display_name: Pandoc on Windows (PowerShell)

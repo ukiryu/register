@@ -1,24 +1,25 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: ukiryu
 display_name: Ukiryu CLI Tool Runner
 homepage: https://github.com/riboseinc/ukiryu
-$self: https://www.ukiryu.com/register/1.0/ukiryu/0.1
+"$self": https://www.ukiryu.com/register/1.0/ukiryu/0.1
 version: '0.1'
 version_detection:
-  command: ["version"]
-  pattern: 'Ukiryu v([\d.]+)'
+  command:
+  - version
+  pattern: Ukiryu version ([\d.]+)
 search_paths:
   macos:
-    - "/usr/local/bin/ukiryu"
-    - "./ukiryu/exe/ukiryu"
+  - "/usr/local/bin/ukiryu"
+  - "./ukiryu/exe/ukiryu"
   linux:
-    - "/usr/bin/ukiryu"
-    - "./ukiryu/exe/ukiryu"
+  - "/usr/bin/ukiryu"
+  - "./ukiryu/exe/ukiryu"
   windows:
-    - "C:/Program Files/ukiryu/bin/ukiryu.exe"
-    - "./ukiryu/exe/ukiryu.exe"
+  - C:/Program Files/ukiryu/bin/ukiryu.exe
+  - "./ukiryu/exe/ukiryu.exe"
 timeout: 60
 profiles:
 - name: default
@@ -36,7 +37,6 @@ profiles:
   - cmd
   option_style: double_dash_space
   commands:
-  # HELP COMMAND - shows help for other commands
   - name: help
     description: Show help for a command or general help
     usage: ukiryu help [COMMAND]
@@ -46,24 +46,23 @@ profiles:
       required: false
       position: last
       description: Command to show help for (omit for general help)
-
-  # LIST COMMAND - lists all tools
   - name: list
-    description: List all available tools in the registry
-    usage: ukiryu list [--registry PATH]
-    aliases: [ls]
+    description: List all available tools in the register
+    usage: ukiryu list [--register PATH]
+    aliases:
+    - ls
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
-
-  # INFO COMMAND - shows tool information
+      description: Path to tool register
+      assignment_delimiter: auto
   - name: info
     description: Show detailed information about a tool
-    usage: ukiryu info [TOOL] [--registry PATH] [--all]
-    aliases: [show]
+    usage: ukiryu info [TOOL] [--register PATH] [--all]
+    aliases:
+    - show
     arguments:
     - name: tool
       type: string
@@ -71,20 +70,23 @@ profiles:
       position: 1
       description: Tool name (omit for general info)
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
+      description: Path to tool register
+      assignment_delimiter: auto
     - name: all
       cli: "--all"
       description: Show all implementations for interfaces
-
-  # EXEC COMMAND - execute a tool command
+      assignment_delimiter: auto
   - name: exec
     description: Execute a tool command inline
     usage: ukiryu exec TOOL [COMMAND] [KEY=VALUE ...]
-    aliases: [ex, run, execute]
+    aliases:
+    - ex
+    - run
+    - execute
     arguments:
     - name: tool
       type: string
@@ -97,11 +99,12 @@ profiles:
       position: 2
       description: Command name (uses default if omitted)
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
+      description: Path to tool register
+      assignment_delimiter: auto
     - name: format
       type: symbol
       cli: "--format"
@@ -112,15 +115,18 @@ profiles:
       - table
       - raw
       description: Response format (use 'raw' for pipe composition)
+      assignment_delimiter: auto
     - name: output
       type: file
       cli: "--output"
       cli_short: "-o"
       description: Output file for response
+      assignment_delimiter: auto
     - name: dry_run
       cli: "--dry-run"
       cli_short: "-d"
       description: Show execution request without executing
+      assignment_delimiter: auto
     - name: shell
       type: symbol
       cli: "--shell"
@@ -132,16 +138,18 @@ profiles:
       - powershell
       - cmd
       description: Shell to use for command execution
+      assignment_delimiter: auto
     flags:
     - name: stdin
       cli: "--stdin"
       description: Read input from stdin (pass to command)
-
-  # VALIDATE COMMAND - validate tool profiles
+      assignment_delimiter: none
   - name: validate
     description: Validate tool profile(s) against schema
-    usage: ukiryu validate [TOOL] [--registry PATH]
-    aliases: [check, test]
+    usage: ukiryu validate [TOOL] [--register PATH]
+    aliases:
+    - check
+    - test
     arguments:
     - name: tool
       type: string
@@ -149,23 +157,24 @@ profiles:
       position: last
       description: Tool name to validate (validates all if omitted)
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
-
-  # CONFIG COMMAND - manage configuration
+      description: Path to tool register
+      assignment_delimiter: auto
   - name: config
     description: Manage configuration (list, get, set, unset)
     usage: ukiryu config [ACTION] [KEY] [VALUE]
-    aliases: [cfg, settings]
+    aliases:
+    - cfg
+    - settings
     arguments:
     - name: action
       type: symbol
       required: false
       position: 1
-      default: "list"
+      default: list
       values:
       - list
       - get
@@ -183,17 +192,18 @@ profiles:
       position: 3
       description: Configuration value (for set action)
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
-
-  # DESCRIBE COMMAND - show comprehensive documentation
+      description: Path to tool register
+      assignment_delimiter: auto
   - name: describe
     description: Show comprehensive documentation for a tool or command
-    usage: ukiryu describe TOOL [COMMAND] [--registry PATH] [--format FORMAT]
-    aliases: [docs, documentation]
+    usage: ukiryu describe TOOL [COMMAND] [--register PATH] [--format FORMAT]
+    aliases:
+    - docs
+    - documentation
     arguments:
     - name: tool
       type: string
@@ -206,11 +216,12 @@ profiles:
       position: 2
       description: Command name (optional)
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
+      description: Path to tool register
+      assignment_delimiter: auto
     - name: format
       type: symbol
       cli: "--format"
@@ -220,12 +231,12 @@ profiles:
       - yaml
       - json
       description: Output format
-
-  # SYSTEM COMMAND - show system information
+      assignment_delimiter: auto
   - name: system
     description: Show system information (shells, etc.)
-    usage: ukiryu system [SUBCOMMAND] [--registry PATH]
-    aliases: [sys]
+    usage: ukiryu system [SUBCOMMAND] [--register PATH]
+    aliases:
+    - sys
     arguments:
     - name: subcommand
       type: string
@@ -233,23 +244,24 @@ profiles:
       position: last
       description: System subcommand (e.g., 'shells')
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
-
-  # VERSION COMMAND
+      description: Path to tool register
+      assignment_delimiter: auto
   - name: version
     description: Show Ukiryu version
     usage: ukiryu version
-    aliases: [v, ver]
-
-  # WHICH COMMAND - show tool resolution
+    aliases:
+    - v
+    - ver
   - name: which
     description: Show which tool implementation would be selected
-    usage: ukiryu which IDENTIFIER [--registry PATH] [--platform PLATFORM] [--shell SHELL]
-    aliases: [resolve, find]
+    usage: ukiryu which IDENTIFIER [--register PATH] [--platform PLATFORM] [--shell SHELL]
+    aliases:
+    - resolve
+    - find
     arguments:
     - name: identifier
       type: string
@@ -257,11 +269,12 @@ profiles:
       position: last
       description: Tool or interface identifier
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
+      description: Path to tool register
+      assignment_delimiter: auto
     - name: platform
       type: symbol
       cli: "--platform"
@@ -270,6 +283,7 @@ profiles:
       - linux
       - windows
       description: Platform to check
+      assignment_delimiter: auto
     - name: shell
       type: symbol
       cli: "--shell"
@@ -281,13 +295,14 @@ profiles:
       - powershell
       - cmd
       description: Shell to check
-
-  # RUN-FILE COMMAND - execute from YAML file
+      assignment_delimiter: auto
   - name: run_file
     description: Execute a Ukiryu Structured Execution Request from a YAML file
     usage: ukiryu run-file REQUEST_FILE [OPTIONS]
-    subcommand: "run-file"  # Multi-word subcommand
-    aliases: [run-file, rf]
+    subcommand: run-file
+    aliases:
+    - run-file
+    - rf
     arguments:
     - name: request_file
       type: file
@@ -295,11 +310,12 @@ profiles:
       position: 1
       description: YAML file containing execution request
     options:
-    - name: registry
+    - name: register
       type: string
-      cli: "--registry"
+      cli: "--register"
       cli_short: "-r"
-      description: Path to tool registry
+      description: Path to tool register
+      assignment_delimiter: auto
     - name: format
       type: symbol
       cli: "--format"
@@ -310,15 +326,18 @@ profiles:
       - table
       - raw
       description: Response format
+      assignment_delimiter: auto
     - name: output
       type: file
       cli: "--output"
       cli_short: "-o"
       description: Output file for response
+      assignment_delimiter: auto
     - name: dry_run
       cli: "--dry-run"
       cli_short: "-d"
       description: Show execution request without executing
+      assignment_delimiter: auto
     - name: shell
       type: symbol
       cli: "--shell"
@@ -330,3 +349,4 @@ profiles:
       - powershell
       - cmd
       description: Shell to use for command execution
+      assignment_delimiter: auto

@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: ghostscript
 display_name: Ghostscript Interpreter
 homepage: https://www.ghostscript.com/
-$self: https://www.ukiryu.com/register/1.0/ghostscript/9.5
+"$self": https://www.ukiryu.com/register/1.0/ghostscript/9.5
 version: '9.5'
 aliases:
 - gs
@@ -72,7 +72,6 @@ profiles:
     - name: device
       type: symbol
       cli: "-sDEVICE"
-      format: double_dash_equals
       values:
       - pdfwrite
       - eps2write
@@ -81,11 +80,12 @@ profiles:
       - pnggray
       - jpeg
       description: Output device
+      assignment_delimiter: equals
     - name: output
       type: file
       cli: "-sOutputFile"
-      format: double_dash_equals
       description: Output file
+      assignment_delimiter: equals
     - name: resolution
       type: array
       of: integer
@@ -93,35 +93,40 @@ profiles:
       - 1
       - 2
       cli: "-r"
-      format: single_dash_space
       separator: x
       description: Resolution (e.g., 300 or 300x600)
+      assignment_delimiter: space
     - name: lib_paths
       type: array
       of: file
       cli: "-I"
-      format: single_dash_space
       separator: " "
       description: Library search paths
+      assignment_delimiter: space
     flags:
     - name: safer
       cli: "-dSAFER"
       description: Run in safer mode
       default: true
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Suppress informational messages
       default: false
+      assignment_delimiter: none
     - name: batch
       cli: "-dBATCH"
       description: Run in batch mode
       default: true
+      assignment_delimiter: none
     - name: nopause
       cli: "-dNOPAUSE"
       description: Don't pause per page
       default: true
+      assignment_delimiter: none
     - name: eps_crop
       cli: "-dEPSCrop"
       description: Automatically crop EPS bounding box
       default: false
+      assignment_delimiter: none
     name: convert

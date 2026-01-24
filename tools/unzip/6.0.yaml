@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: unzip
 display_name: Zip Extractor
 homepage: https://infozip.sourceforge.net/UnZip.html
-$self: https://www.ukiryu.com/register/1.0/unzip/6.0
+"$self": https://www.ukiryu.com/register/1.0/unzip/6.0
 version: '6.0'
 aliases: []
 version_detection:
@@ -39,7 +39,6 @@ profiles:
   commands:
   - description: Extract files from zip archive
     usage: unzip [options] archive.zip
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -52,45 +51,56 @@ profiles:
       type: string
       cli: "-d"
       description: Extract to directory
+      assignment_delimiter: auto
     flags:
     - name: list
       cli: "-l"
       description: List archive contents
       default: false
+      assignment_delimiter: none
     - name: test
       cli: "-t"
       description: Test archive integrity
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet mode
       default: false
+      assignment_delimiter: none
     - name: overwrite
       cli: "-o"
       description: Overwrite existing files
       default: false
+      assignment_delimiter: none
     - name: freshen
       cli: "-f"
       description: Freshen existing files only
       default: false
+      assignment_delimiter: none
     - name: update
       cli: "-u"
       description: Update existing files and create new ones
       default: false
+      assignment_delimiter: none
     - name: never_overwrite
       cli: "-n"
       description: Never overwrite files
       default: false
+      assignment_delimiter: none
     - name: preserve_permissions
       cli: "-X"
       description: Restore UID/GID info
       default: false
+      assignment_delimiter: none
     - name: junk_paths
       cli: "-j"
       description: Junk paths (don't make directories)
       default: false
+      assignment_delimiter: none
     name: extract

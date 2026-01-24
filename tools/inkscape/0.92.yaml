@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: inkscape
 display_name: Inkscape Vector Graphics Editor
 homepage: https://inkscape.org/
-$self: https://www.ukiryu.com/register/1.0/inkscape/0.92
+"$self": https://www.ukiryu.com/register/1.0/inkscape/0.92
 version: '0.92'
 aliases:
 - inkscapecom
@@ -63,14 +63,13 @@ profiles:
     options:
     - name: output
       type: file
-      cli: "--export-filename="
-      format: double_dash_equals
+      cli: "--export-filename"
       description: Output filename
       required: true
+      assignment_delimiter: equals
     - name: format
       type: symbol
-      cli: "--export-type="
-      format: double_dash_equals
+      cli: "--export-type"
       values:
       - svg
       - png
@@ -81,34 +80,39 @@ profiles:
       - wmf
       - xaml
       description: Output format
+      assignment_delimiter: equals
     - name: dpi
       type: integer
       cli: "-d"
-      format: single_dash_space
       separator: " "
       range:
       - 1
       - 10000
       description: 'Resolution for bitmaps (default: 96)'
+      assignment_delimiter: space
     - name: width
       type: integer
-      cli: "--export-width="
+      cli: "--export-width"
       description: Bitmap width in pixels
+      assignment_delimiter: equals
     - name: height
       type: integer
-      cli: "--export-height="
+      cli: "--export-height"
       description: Bitmap height in pixels
+      assignment_delimiter: equals
     flags:
     - name: plain
       cli: "--export-plain-svg"
       cli_short: "-l"
       description: Remove Inkscape-specific attributes
       default: false
+      assignment_delimiter: none
     - name: text_to_path
       cli: "--export-text-to-path"
       cli_short: "-T"
       description: Convert text to paths
       default: false
+      assignment_delimiter: none
     env_vars:
     - name: DISPLAY
       value: ''
@@ -131,19 +135,23 @@ profiles:
       cli_short: "-W"
       description: Query width
       default: false
+      assignment_delimiter: none
     - name: height
       cli: "--query-height"
       cli_short: "-H"
       description: Query height
       default: false
+      assignment_delimiter: none
     - name: x
       cli: "--query-x"
       cli_short: "-X"
       description: Query X coordinate
       default: false
+      assignment_delimiter: none
     - name: "y"
       cli: "--query-y"
       cli_short: "-Y"
       description: Query Y coordinate
       default: false
+      assignment_delimiter: none
     name: query

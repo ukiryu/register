@@ -1,16 +1,16 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: yq
 display_name: yq Data Processor
 homepage: https://mikefarah.gitbook.io/yq/
-$self: https://www.ukiryu.com/register/1.0/yq/4.50
+"$self": https://www.ukiryu.com/register/1.0/yq/4.50
 version: '4.50'
 aliases:
 - yq
 version_detection:
   command: "--version"
-  pattern: version v([\d.]+)
+  pattern: '^yq(?: version)? v?([\d.]+)'
   modern_threshold: '4.0'
 search_paths:
   macos:
@@ -66,6 +66,7 @@ profiles:
       - props
       - toml
       description: Output format
+      assignment_delimiter: auto
     - name: input_format
       type: string
       cli: "-p"
@@ -77,75 +78,93 @@ profiles:
       - props
       - toml
       description: Input format
+      assignment_delimiter: auto
     - name: output
       type: file
       cli: "-o"
       description: 'Output file (default: stdout)'
+      assignment_delimiter: auto
     - name: separator
       type: string
       cli: "--separator"
       description: Custom separator for multiple documents
+      assignment_delimiter: auto
     - name: doc_separator
       type: string
       cli: "--doc-separator"
       description: Custom document separator
+      assignment_delimiter: auto
     - name: front_matter
       type: string
       cli: "--front-matter"
       description: Process front matter (e.g. '---')
+      assignment_delimiter: auto
     - name: select
       type: string
       cli: "--select"
       description: Select specific nodes by path
+      assignment_delimiter: auto
     flags:
     - name: null_input
       cli: "-n"
       description: Null input
       default: false
+      assignment_delimiter: none
     - name: raw_output
       cli: "-r"
       description: Raw string output
       default: false
+      assignment_delimiter: none
     - name: raw_output_mode
       cli: "--raw-output"
       description: Force raw string output
       default: false
+      assignment_delimiter: none
     - name: unescaped
       cli: "-I"
       description: Unescaped output
       default: false
+      assignment_delimiter: none
     - name: yaml_output
       cli: "-Y"
       description: YAML output
       default: false
+      assignment_delimiter: none
     - name: colors_output
       cli: "-C"
       description: Colors output
       default: false
+      assignment_delimiter: none
     - name: json_flags
       cli: "-j"
       description: JSON flags output
       default: false
+      assignment_delimiter: none
     - name: parse_only
       cli: "--parse-only"
       description: Only parse, don't evaluate
       default: false
+      assignment_delimiter: none
     - name: exit_status
       cli: "-e"
       description: Exit status on errors
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose output
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet output
       default: false
+      assignment_delimiter: none
     - name: help
       cli: "-h"
       description: Show help
       default: false
+      assignment_delimiter: none
     name: eval
   - description: Evaluate expression on all documents at once
     usage: yq eval-all [expression] [files...]
@@ -174,6 +193,7 @@ profiles:
       - props
       - toml
       description: Output format
+      assignment_delimiter: auto
     - name: input_format
       type: string
       cli: "-p"
@@ -185,10 +205,12 @@ profiles:
       - props
       - toml
       description: Input format
+      assignment_delimiter: auto
     - name: output
       type: file
       cli: "-o"
       description: 'Output file (default: stdout)'
+      assignment_delimiter: auto
     name: eval_all
   - description: Evaluate expression and update file in place
     usage: yq eval -i [expression] [files...]
@@ -217,9 +239,11 @@ profiles:
       - props
       - toml
       description: Output format
+      assignment_delimiter: auto
     flags:
     - name: in_place
       cli: "-i"
       description: Edit files in place
       default: true
+      assignment_delimiter: none
     name: eval_in_place

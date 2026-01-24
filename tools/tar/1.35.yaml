@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: tar
 display_name: Tar Archiver
 homepage: https://www.gnu.org/software/tar/
-$self: https://www.ukiryu.com/register/1.0/tar/1.35
+"$self": https://www.ukiryu.com/register/1.0/tar/1.35
 version: '1.35'
 aliases: []
 version_detection:
@@ -40,7 +40,6 @@ profiles:
   commands:
   - description: Create a tar archive
     usage: tar -c [options] -f archive.tar files
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -54,35 +53,41 @@ profiles:
       cli: "-f"
       required: true
       description: Archive file name
+      assignment_delimiter: auto
     - name: directory
       type: string
       cli: "-C"
       description: Change to directory before processing
+      assignment_delimiter: auto
     flags:
     - name: create
       cli: "-c"
       description: Create archive
       default: true
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     - name: gzip
       cli: "-z"
       description: Compress with gzip
       default: false
+      assignment_delimiter: none
     - name: bzip2
       cli: "-j"
       description: Compress with bzip2
       default: false
+      assignment_delimiter: none
     - name: dereference
       cli: "-h"
       description: Follow symlinks
       default: false
+      assignment_delimiter: none
     name: create
   - description: Extract a tar archive
     usage: tar -x [options] -f archive.tar
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -96,35 +101,41 @@ profiles:
       cli: "-f"
       required: true
       description: Archive file name
+      assignment_delimiter: auto
     - name: directory
       type: string
       cli: "-C"
       description: Change to directory before processing
+      assignment_delimiter: auto
     flags:
     - name: extract
       cli: "-x"
       description: Extract archive
       default: true
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     - name: gzip
       cli: "-z"
       description: Archive is gzipped
       default: false
+      assignment_delimiter: none
     - name: bzip2
       cli: "-j"
       description: Archive is bzipped
       default: false
+      assignment_delimiter: none
     - name: keep_old
       cli: "-k"
       description: Keep existing files
       default: false
+      assignment_delimiter: none
     name: extract
   - description: List contents of a tar archive
     usage: tar -t [options] -f archive.tar
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -138,15 +149,18 @@ profiles:
       cli: "-f"
       required: true
       description: Archive file name
+      assignment_delimiter: auto
     flags:
     - name: list
       cli: "-t"
       description: List archive
       default: true
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     name: list
 - name: bsdtar
   display_name: BSD tar (macOS)
@@ -161,7 +175,6 @@ profiles:
   commands:
   - description: Create a tar archive
     usage: tar -c [options] -f archive.tar files
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -175,23 +188,26 @@ profiles:
       cli: "-f"
       required: true
       description: Archive file name
+      assignment_delimiter: auto
     flags:
     - name: create
       cli: "-c"
       description: Create archive
       default: true
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     - name: gzip
       cli: "-z"
       description: Compress with gzip
       default: false
+      assignment_delimiter: none
     name: create
   - description: Extract a tar archive
     usage: tar -x [options] -f archive.tar
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -205,27 +221,31 @@ profiles:
       cli: "-f"
       required: true
       description: Archive file name
+      assignment_delimiter: auto
     - name: directory
       type: string
       cli: "-C"
       description: Change to directory before processing
+      assignment_delimiter: auto
     flags:
     - name: extract
       cli: "-x"
       description: Extract archive
       default: true
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     - name: gzip
       cli: "-z"
       description: Archive is gzipped
       default: false
+      assignment_delimiter: none
     name: extract
   - description: List contents of a tar archive
     usage: tar -t [options] -f archive.tar
-    # subcommand omitted - tool executes directly
     arguments:
     - name: inputs
       type: file
@@ -239,13 +259,16 @@ profiles:
       cli: "-f"
       required: true
       description: Archive file name
+      assignment_delimiter: auto
     flags:
     - name: list
       cli: "-t"
       description: List archive
       default: true
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
+      assignment_delimiter: none
     name: list

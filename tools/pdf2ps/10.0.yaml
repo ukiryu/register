@@ -1,16 +1,16 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: pdf2ps
 display_name: PDF to PostScript Converter
 homepage: https://www.ghostscript.com/
-$self: https://www.ukiryu.com/register/1.0/pdf2ps/10.0
+"$self": https://www.ukiryu.com/register/1.0/pdf2ps/10.0
 version: '10.0'
 aliases: []
 version_detection:
   command:
-    - "-v"
-    - "-"
+  - "-v"
+  - "-"
   pattern: "(\\d+\\.\\d+)"
   modern_threshold: '9.0'
 search_paths:
@@ -40,7 +40,6 @@ profiles:
   commands:
   - description: Convert PDF to PostScript
     usage: pdf2ps [options] input.pdf output.ps
-    # subcommand omitted - tool executes directly
     arguments:
     - name: input
       type: file
@@ -59,10 +58,12 @@ profiles:
       type: integer
       cli: "-dFirstPage"
       description: First page to convert
+      assignment_delimiter: auto
     - name: last_page
       type: integer
       cli: "-dLastPage"
       description: Last page to convert
+      assignment_delimiter: auto
     - name: paper_size
       type: string
       cli: "-sPAPERSIZE"
@@ -73,17 +74,21 @@ profiles:
       - a3
       - tabloid
       description: Paper size
+      assignment_delimiter: auto
     - name: resolution
       type: integer
       cli: "-r"
       description: Resolution in DPI
+      assignment_delimiter: auto
     flags:
     - name: level1
       cli: "-dLanguageLevel=1"
       description: Generate Level 1 PostScript
       default: false
+      assignment_delimiter: none
     - name: level2
       cli: "-dLanguageLevel=2"
       description: Generate Level 2 PostScript
       default: false
+      assignment_delimiter: none
     name: convert

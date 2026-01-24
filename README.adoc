@@ -1,13 +1,13 @@
-= Ukiryu Tool Registry
+= Ukiryu Tool Register (v1)
 
 Collection of YAML tool profiles for https://github.com/ukiryu/ukiryu[Ukiryu]
 platform-adaptive command execution framework.
 
-image:https://img.shields.io/badge/version-0.1.0-blue[Version]
+image:https://img.shields.io/badge/version-1.0.0-blue[Version]
 
 == Purpose
 
-The Ukiryu Tool Registry contains declarative YAML profiles that define how to
+The Ukiryu Tool Register contains declarative YAML profiles that define how to
 execute various command-line tools across different platforms, shells, and
 versions.
 
@@ -18,17 +18,22 @@ Each tool profile includes:
 * Shell-specific command formatting (bash, zsh, PowerShell, etc.)
 * Version detection and compatibility handling
 
+== Schema Version
+
+This register follows the **v1 schema**. All tool definitions conform to the schema
+defined in https://github.com/ukiryu/schemas/tree/v1[`schemas/v1/tool.schema.yaml`].
+
 == Tool Profiles
 
 === Supported Tools
 
-* https://github.com/ukiryu/register/tree/main/tools/imagemagick[ImageMagick] - Image conversion and processing
-* https://github.com/ukiryu/register/tree/main/tools/ghostscript[Ghostscript] - PostScript and PDF interpreter
-* https://github.com/ukiryu/register/tree/main/tools/ffmpeg[FFmpeg] - Video/audio processing
-* https://github.com/ukiryu/register/tree/main/tools/pandoc[Pandoc] - Document conversion
-* https://github.com/ukiryu/register/tree/main/tools/jpegoptim[jpegoptim] - JPEG optimization
-* https://github.com/ukiryu/register/tree/main/tools/optipng[optipng] - PNG optimization
-* https://github.com/ukiryu/register/tree/main/tools/inkscape[Inkscape] - SVG vector graphics
+* https://github.com/ukiryu/register/tree/v1/tools/imagemagick[ImageMagick] - Image conversion and processing
+* https://github.com/ukiryu/register/tree/v1/tools/ghostscript[Ghostscript] - PostScript and PDF interpreter
+* https://github.com/ukiryu/register/tree/v1/tools/ffmpeg[FFmpeg] - Video/audio processing
+* https://github.com/ukiryu/register/tree/v1/tools/pandoc[Pandoc] - Document conversion
+* https://github.com/ukiryu/register/tree/v1/tools/jpegoptim[jpegoptim] - JPEG optimization
+* https://github.com/ukiryu/register/tree/v1/tools/optipng[optipng] - PNG optimization
+* https://github.com/ukiryu/register/tree/v1/tools/inkscape[Inkscape] - SVG vector graphics
 
 == Directory Structure
 
@@ -45,7 +50,7 @@ register/
 
 == Profile Schema
 
-Tool profiles follow the schema defined in https://github.com/ukiryu/schema[Ukiryu Schema].
+Tool profiles follow the v1 schema defined in https://github.com/ukiryu/schemas[`schemas`].
 
 Key fields:
 
@@ -58,15 +63,137 @@ Key fields:
 `profiles`:: Array of platform/shell-specific configurations
 `commands`:: Command definitions with arguments, options, and flags
 
+== Validating Tool Profiles
+
+=== Local Validation
+
+To validate a tool profile locally, install the Ukiryu gem and use the `validate`
+command:
+
+[source,shell]
+----
+# Install ukiryu
+gem install ukiryu
+
+# Validate a specific profile
+ukiryu validate --definition tools/imagemagick/7.1.yaml
+
+# Validate with schema from schemas repository
+ukiryu validate --definition tools/imagemagick/7.1.yaml \
+  --schema ../schemas/v1/tool.schema.yaml
+
+# Validate all profiles in the register
+ukiryu validate all
+----
+
+For executable testing (smoke tests), use the `--executable` flag:
+
+[source,shell]
+----
+ukiryu validate --definition tools/imagemagick/7.1.yaml --executable
+----
+
+=== Linting
+
+For best practices checking, use the `lint` command:
+
+[source,shell]
+----
+# Lint a specific profile
+ukiryu lint file tools/imagemagick/7.1.yaml
+
+# Lint all profiles
+ukiryu lint all
+
+# Show all linting rules
+ukiryu lint rules
+----
+
+=== Automated Validation
+
+GitHub Actions automatically validates all tool profiles on:
+
+* Pull requests that modify YAML files in `tools/**/*.yaml`
+* Version tag pushes (e.g., `v1.2.3`)
+
+The validation workflow:
+
+. Validates YAML syntax
+. Checks against the v1 JSON Schema
+. Runs structural validation rules
+
+=== CI/CD Integration
+
+You can add profile validation to your own CI/CD pipeline:
+
+[source,yaml]
+----
+# .github/workflows/validate-profiles.yml
+name: Validate Tool Profiles
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**/*.yaml'
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install ukiryu
+        run: gem install ukiryu
+
+      - name: Validate profiles
+        run: |
+          # Validate all changed YAML files
+          ukiryu validate all
+----
+
 == Adding a New Tool
 
 To add a new tool profile:
 
 . Check the tool's man page for command syntax
 . Create a new YAML file in `tools/<tool-name>/<version>.yaml`
-. Follow the schema defined in Ukiryu Schema
+. Follow the v1 schema defined in https://github.com/ukiryu/schemas/tree/v1[`schemas/v1/tool.schema.yaml`]
+. Validate locally: `ukiryu validate --definition tools/<tool-name>/<version>.yaml`
 . Test the profile with real commands
-. Submit a pull request
+. Submit a pull request to the `v1` branch
+
+=== Validation Checklist
+
+Before submitting a pull request:
+
+* [ ] YAML syntax is valid
+* [ ] Conforms to v1 schema
+* [ ] All required fields are present
+* [ ] Tool name and version are correct
+* [ ] Commands work on all supported platforms
+* [ ] Version detection works if defined
+* [ ] No linting warnings (or warnings are documented)
+
+=== Extracting Definitions
+
+If you need to create a new profile from an installed tool, use the extract command:
+
+[source,shell]
+----
+# Extract definition from git
+ukiryu extract git --output tools/git/2.45.yaml
+
+# Extract with verbose output
+ukiryu extract git --output tools/git/2.45.yaml --verbose
+----
 
 == Usage
 
@@ -76,7 +203,7 @@ Tools are loaded automatically by Ukiryu:
 ----
 require 'ukiryu'
 
-Ukiryu::Registry.default_registry_path = 'path/to/register'
+Ukiryu::Register.default_register_path = 'path/to/register'
 
 tool = Ukiryu::Tool.get(:imagemagick)
 result = tool.execute(:convert, {
@@ -85,7 +212,6 @@ result = tool.execute(:convert, {
   resize: '50x50'
 })
 ----
-
 
 == License
 

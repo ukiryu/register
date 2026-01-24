@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: optipng
 display_name: PNG Image Optimizer
 homepage: https://optipng.sourceforge.net/
-$self: https://www.ukiryu.com/register/1.0/optipng/7.9
+"$self": https://www.ukiryu.com/register/1.0/optipng/7.9
 version: '7.9'
 aliases:
 - opt
@@ -64,129 +64,148 @@ profiles:
     - name: level
       type: integer
       cli: "-o"
-      format: single_dash_space
       range:
       - 0
       - 7
       description: Optimization level (0=min, 7=max, default varies)
+      assignment_delimiter: space
     - name: output
       type: file
       cli: "-out"
-      format: single_dash_space
       description: Write output to file (requires single input)
+      assignment_delimiter: space
     - name: dir
       type: file
       cli: "-dir"
-      format: single_dash_space
       description: Write output files to directory
+      assignment_delimiter: space
     - name: filters
       type: string
       cli: "-f"
-      format: single_dash_space
       description: PNG delta filters (e.g., '0-5', '0,3,5')
+      assignment_delimiter: space
     - name: interlace
       type: integer
       cli: "-i"
-      format: single_dash_space
       range:
       - 0
       - 1
       description: Interlace type (0=non-interlaced, 1=Adam7)
+      assignment_delimiter: space
     - name: zc_levels
       type: string
       cli: "-zc"
-      format: single_dash_space
       description: Zlib compression levels (e.g., '6-9')
+      assignment_delimiter: space
     - name: zm_levels
       type: string
       cli: "-zm"
-      format: single_dash_space
       description: Zlib memory levels (e.g., '8-9')
+      assignment_delimiter: space
     - name: zs_strategies
       type: string
       cli: "-zs"
-      format: single_dash_space
       description: Zlib compression strategies (e.g., '0-3')
+      assignment_delimiter: space
     - name: zw_size
       type: string
       cli: "-zw"
-      format: single_dash_space
       description: Zlib window size (e.g., '32k', '16k', '256')
+      assignment_delimiter: space
     flags:
     - name: help
       cli: "-h"
       description: Show help
       default: false
+      assignment_delimiter: none
     - name: backup
       cli: "-keep"
       description: Keep backup of modified files
       default: false
+      assignment_delimiter: none
     - name: clobber
       cli: "-clobber"
       description: Overwrite existing output and backup files
       default: false
+      assignment_delimiter: none
     - name: fix
       cli: "-fix"
       description: Enable error recovery
       default: false
+      assignment_delimiter: none
     - name: force
       cli: "-force"
       description: Force writing of new output file
       default: false
+      assignment_delimiter: none
     - name: preserve
       cli: "-preserve"
       description: Preserve file attributes
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-quiet"
       description: Run in quiet mode
       default: false
+      assignment_delimiter: none
     - name: silent
       cli: "-silent"
       description: Run in silent mode
       default: false
+      assignment_delimiter: none
     - name: simulate
       cli: "-simulate"
       description: Run in simulation mode (no output files)
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-verbose"
       description: Run in verbose mode
       default: false
+      assignment_delimiter: none
     - name: version
       cli: "-version"
       description: Show version info
       default: false
+      assignment_delimiter: none
     - name: full
       cli: "-full"
       description: Produce full report on IDAT
       default: false
+      assignment_delimiter: none
     - name: nb
       cli: "-nb"
       description: Do not apply bit depth reduction
       default: false
+      assignment_delimiter: none
     - name: nc
       cli: "-nc"
       description: Do not apply color type reduction
       default: false
+      assignment_delimiter: none
     - name: np
       cli: "-np"
       description: Do not apply palette reduction
       default: false
+      assignment_delimiter: none
     - name: nx
       cli: "-nx"
       description: Do not apply any lossless reduction
       default: false
+      assignment_delimiter: none
     - name: nz
       cli: "-nz"
       description: Do not recode IDAT datastreams
       default: false
+      assignment_delimiter: none
     - name: strip
       cli: "-strip"
       description: Strip metadata objects (e.g., 'all')
       default: false
+      assignment_delimiter: none
     - name: snip
       cli: "-snip"
       description: Cut one image from multi-image files
       default: false
+      assignment_delimiter: none
     name: optimize

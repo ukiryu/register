@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: inkscape
 display_name: Inkscape Vector Graphics Editor
 homepage: https://inkscape.org/
-$self: https://www.ukiryu.com/register/1.0/inkscape/1.0
+"$self": https://www.ukiryu.com/register/1.0/inkscape/1.0
 version: '1.0'
 aliases:
 - inkscapecom
@@ -53,10 +53,19 @@ profiles:
   - sh
   version: ">= 1.0"
   option_style: double_dash_equals
-  execution_mode: headless
+  env_var_sets:
+    headless:
+    - name: DISPLAY
+      value: ''
+      platforms:
+      - macos
+      - linux
+      description: Disable display for headless operation
   commands:
   - description: Export document to different format
     usage: inkscape [OPTIONS] input1.svg [input2.svg ...]
+    use_env_vars:
+    - headless
     arguments:
     - name: inputs
       type: file
@@ -67,14 +76,13 @@ profiles:
     options:
     - name: output
       type: file
-      cli: --export-filename
-      format: double_dash_equals
+      cli: "--export-filename"
       description: Output filename
       required: true
+      assignment_delimiter: equals
     - name: format
       type: symbol
-      cli: --export-type
-      format: double_dash_equals
+      cli: "--export-type"
       values:
       - svg
       - png
@@ -85,107 +93,107 @@ profiles:
       - wmf
       - xaml
       description: Output format
-    - name: export_types
-      type: array
-      of: symbol
-      cli: --export-type
-      separator: ","
-      values:
-      - svg
-      - png
-      - ps
-      - eps
-      - pdf
-      - emf
-      - wmf
-      - xaml
-      description: Multiple export formats
+      assignment_delimiter: equals
     - name: dpi
       type: integer
       cli: "-d"
-      format: single_dash_space
       separator: " "
       range:
       - 1
       - 10000
       description: 'Resolution for bitmaps (default: 96)'
+      assignment_delimiter: space
     - name: width
       type: integer
-      cli: --export-width
+      cli: "--export-width"
       description: Bitmap width in pixels
+      assignment_delimiter: auto
     - name: height
       type: integer
-      cli: --export-height
+      cli: "--export-height"
       description: Bitmap height in pixels
+      assignment_delimiter: auto
     - name: area
       type: string
-      cli: --export-area
+      cli: "--export-area"
       description: Export area (x0:y0:x1:y1)
+      assignment_delimiter: auto
     - name: export_page
       type: string
-      cli: --export-page
+      cli: "--export-page"
       description: Page number to export
+      assignment_delimiter: auto
     - name: background
       type: string
-      cli: --export-background
+      cli: "--export-background"
       description: Background color
+      assignment_delimiter: auto
     - name: background_opacity
       type: float
-      cli: --export-background-opacity
+      cli: "--export-background-opacity"
       range:
       - 0.0
       - 1.0
       description: Background opacity (0.0 to 1.0)
+      assignment_delimiter: auto
     - name: export_ids
       type: array
       of: string
-      cli: --export-id
+      cli: "--export-id"
       separator: ";"
       description: Object IDs to export
+      assignment_delimiter: auto
     - name: pages
       type: string
-      cli: --pages
-      format: double_dash_equals
+      cli: "--pages"
       description: Page numbers to import from multi-page document (PDF)
+      assignment_delimiter: equals
     flags:
     - name: plain
       cli: "--export-plain-svg"
       cli_short: "-l"
       description: Remove Inkscape-specific attributes
       default: false
+      assignment_delimiter: none
     - name: area_page
       cli: "--export-area-page"
       cli_short: "-C"
       description: Export area is page
       default: false
+      assignment_delimiter: none
     - name: area_drawing
       cli: "--export-area-drawing"
       cli_short: "-D"
       description: Export area is drawing
       default: false
+      assignment_delimiter: none
     - name: text_to_path
       cli: "--export-text-to-path"
       cli_short: "-T"
       description: Convert text to paths
       default: false
+      assignment_delimiter: none
     - name: ignore_filters
       cli: "--export-ignore-filters"
       description: Render without filters
       default: false
+      assignment_delimiter: none
     - name: vacuum_defs
       cli: "--vacuum-defs"
       description: Remove unused definitions
       default: false
+      assignment_delimiter: none
     - name: batch_process
       cli: "--batch-process"
       position_constraint: prefix
       description: Close GUI after processing (required for headless)
       default: true
-    execution_mode: headless
+      assignment_delimiter: none
     name: export
   - description: Query document dimensions
     usage: inkscape --query-width/--query-height input.svg
-    execution_mode: headless
+    use_env_vars:
+    - headless
     arguments:
     - name: input
       type: file
@@ -198,21 +206,25 @@ profiles:
       cli_short: "-W"
       description: Query width
       default: false
+      assignment_delimiter: none
     - name: height
       cli: "--query-height"
       cli_short: "-H"
       description: Query height
       default: false
+      assignment_delimiter: none
     - name: x
       cli: "--query-x"
       cli_short: "-X"
       description: Query X coordinate
       default: false
+      assignment_delimiter: none
     - name: "y"
       cli: "--query-y"
       cli_short: "-Y"
       description: Query Y coordinate
       default: false
+      assignment_delimiter: none
     parse_output:
       type: hash
       pattern: key:\s*value

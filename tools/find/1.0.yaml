@@ -1,26 +1,41 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: find
 display_name: Find - Search for Files
 homepage: https://www.gnu.org/software/findutils/
-$self: https://www.ukiryu.com/register/1.0/find/1.0
+"$self": https://www.ukiryu.com/register/1.0/find/1.0
 version: '1.0'
+# Platform-specific version detection
+# GNU find (Linux) supports --version
+# BSD find (macOS) requires man page inspection
 version_detection:
-  command: ["--version"]
-  pattern: 'find \(GNU findutils\) ([\d.]+)'
+  command:
+    - "man"
+    - "find"
+  pattern: macOS ([\d.]+)
+  source: man
 search_paths:
   macos:
-    - "/usr/bin/find"
+  - "/usr/bin/find"
   linux:
-    - "/usr/bin/find"
+  - "/usr/bin/find"
 timeout: 60
 profiles:
 - name: gnu
-  display_name: GNU Find on Unix
+  display_name: GNU Find on Linux
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+- name: bsd
+  display_name: BSD Find on macOS
   platforms:
   - macos
-  - linux
   shells:
   - bash
   - zsh
@@ -42,6 +57,7 @@ profiles:
       type: string
       cli: "-name"
       description: Base of file name (with shell patterns)
+      assignment_delimiter: auto
     - name: type
       type: symbol
       cli: "-type"
@@ -50,74 +66,88 @@ profiles:
       - d
       - l
       description: File type (f=file, d=directory, l=symlink)
+      assignment_delimiter: auto
     - name: size
       type: string
       cli: "-size"
       description: File size
+      assignment_delimiter: auto
     - name: mtime
       type: string
       cli: "-mtime"
       description: Modification time (n days ago)
+      assignment_delimiter: auto
     - name: perm
       type: string
       cli: "-perm"
       description: File permissions
+      assignment_delimiter: auto
     - name: user
       type: string
       cli: "-user"
       description: File owner
+      assignment_delimiter: auto
     flags:
-    # Regular flags - can appear anywhere
     - name: print
       cli: "-print"
       description: Print file name (default action)
       default: false
+      assignment_delimiter: none
     - name: print0
       cli: "-print0"
       description: Print file name null-terminated
       default: false
+      assignment_delimiter: none
     - name: ls
       cli: "-ls"
       description: List file in ls -dils format
       default: false
+      assignment_delimiter: none
     - name: depth
       cli: "-depth"
       description: Process directory contents before directory itself
       default: false
+      assignment_delimiter: none
     - name: prune
       cli: "-prune"
       description: Don't descend into directory
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-quiet"
       description: Suppress error messages
       default: false
-    # Positional flags - operators that appear between expressions
+      assignment_delimiter: none
     - name: and
       cli: "-and"
       position_constraint: between_expressions
       description: Logical AND between expressions (default)
       default: false
+      assignment_delimiter: none
     - name: or
       cli: "-or"
       position_constraint: between_expressions
       description: Logical OR between expressions
       default: false
+      assignment_delimiter: none
     - name: not
       cli: "-not"
       position_constraint: between_expressions
       description: Logical NOT
       default: false
+      assignment_delimiter: none
     - name: not_exclamation
       cli: "!"
       position_constraint: between_expressions
       description: Logical NOT (alternative syntax)
       default: false
+      assignment_delimiter: none
     - name: comma
       cli: ","
       position_constraint: between_expressions
       description: Actions separated by commas (evaluated left-to-right)
       default: false
+      assignment_delimiter: none
     - name: exec
       cli: "-exec"
       cli_short: "-exec"
@@ -125,6 +155,7 @@ profiles:
       position_after: expression
       description: Execute command on found files (terminated with \;)
       default: false
+      assignment_delimiter: none
     - name: exec_plus
       cli: "-exec"
       cli_short: "-exec"
@@ -132,10 +163,12 @@ profiles:
       position_after: expression
       description: Execute command on found files (terminated with +, batches files)
       default: false
+      assignment_delimiter: none
     - name: ok
       cli: "-ok"
       position_constraint: after_argument
       position_after: expression
       description: Execute command with confirmation
       default: false
+      assignment_delimiter: none
     name: find

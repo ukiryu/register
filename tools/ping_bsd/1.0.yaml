@@ -1,17 +1,19 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: ping_bsd
 display_name: BSD ping (macOS/*BSD)
 homepage: https://www.freebsd.org/cgi/man.cgi?query=ping
-$self: https://www.ukiryu.com/register/1.0/ping_bsd/1.0
+"$self": https://www.ukiryu.com/register/1.0/ping_bsd/1.0
 version: '1.0'
 implements: ping
+aliases:
+- ping
 version_detection:
   command:
-    - "-c"
-    - "1"
-    - "localhost"
+  - "-c"
+  - '1'
+  - localhost
   pattern: ''
   modern_threshold: '1.0'
 search_paths:
@@ -44,7 +46,6 @@ profiles:
   commands:
   - description: Send ICMP echo requests to host
     usage: ping [options] host
-    # subcommand omitted - tool executes directly
     arguments:
     - name: host
       type: string
@@ -56,97 +57,121 @@ profiles:
       type: integer
       cli: "-c"
       description: Stop after count packets
+      assignment_delimiter: auto
     - name: wait
       type: float
       cli: "-i"
       description: Wait wait seconds between packets
+      assignment_delimiter: auto
     - name: packet_size
       type: integer
       cli: "-s"
       description: Packet data size (bytes)
+      assignment_delimiter: auto
     - name: timeout
       type: integer
       cli: "-W"
       description: Timeout in seconds before exit
+      assignment_delimiter: auto
     - name: interface
       type: string
       cli: "-I"
       description: Multicast interface address
+      assignment_delimiter: auto
     - name: ttl
       type: integer
       cli: "-m"
       description: Time To Live (IP hops)
+      assignment_delimiter: auto
     - name: pattern
       type: string
       cli: "-p"
       description: Fill pattern (up to 16 bytes)
+      assignment_delimiter: auto
     - name: source
       type: string
       cli: "-S"
       description: Source address
+      assignment_delimiter: auto
     - name: preload
       type: integer
       cli: "-l"
       description: Send preload packets (superuser only)
+      assignment_delimiter: auto
     - name: boundif
       type: string
       cli: "-b"
       description: Bind to interface (Apple/macOS extension)
+      assignment_delimiter: auto
     - name: sweepmaxsize
       type: integer
       cli: "-G"
       description: Maximum ICMP payload size for sweeps
+      assignment_delimiter: auto
     - name: sweepminsize
       type: integer
       cli: "-g"
       description: Starting ICMP payload size for sweeps
+      assignment_delimiter: auto
     - name: sweepincrsize
       type: integer
       cli: "-h"
       description: Increment size for sweeps
+      assignment_delimiter: auto
     - name: traffic_class
       type: string
       cli: "-k"
       description: Traffic class (Apple extension)
+      assignment_delimiter: auto
     - name: net_service_type
       type: string
       cli: "-K"
       description: Network service type (Apple extension)
+      assignment_delimiter: auto
     flags:
     - name: numeric
       cli: "-n"
       description: Numeric output only, no DNS lookup
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet output, summary only
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose output
       default: false
+      assignment_delimiter: none
     - name: audible
       cli: "-A"
       description: Audible bell for missing packets
       default: false
+      assignment_delimiter: none
     - name: no_loopback
       cli: "-L"
       description: Suppress multicast loopback
       default: false
+      assignment_delimiter: none
     - name: flood
       cli: "-f"
       description: Flood ping (superuser only)
       default: false
+      assignment_delimiter: none
     - name: dont_fragment
       cli: "-D"
       description: Set Don't Fragment bit
       default: false
+      assignment_delimiter: none
     - name: debug
       cli: "-d"
       description: Set SO_DEBUG socket option
       default: false
+      assignment_delimiter: none
     - name: so_debug
       cli: "-o"
       description: Exit successfully after one reply
       default: false
+      assignment_delimiter: none
     name: ping

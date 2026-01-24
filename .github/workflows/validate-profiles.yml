@@ -6,14 +6,26 @@ on:
   pull_request:
     paths:
       - 'tools/**/*.yaml'
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-  validate-yaml:
+  validate:
     name: Validate YAML profiles
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout schemas repository
+        uses: actions/checkout@v4
+        with:
+          repository: ukiryu/schemas
+          path: schemas
+          ref: v1
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -21,9 +33,9 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: false
 
-      - name: Install dependencies
+      - name: Install ukiryu
         run: |
-          gem install json-schema
+          gem install ukiryu
 
       - name: Get changed YAML files
         id: changed-files
@@ -32,33 +44,47 @@ jobs:
           files: |
             tools/**/*.yaml
 
-      - name: Validate each changed YAML file
+      - name: Validate profiles
         if: steps.changed-files.outputs.any_changed
+        env:
+          SCHEMA_PATH: ${{ github.workspace }}/schemas/v1/tool.schema.yaml
         run: |
-          SCHEMA_PATH="${{ github.workspace }}/../schema/tool-profile.schema.yaml"
+          echo "Validating against schema: $SCHEMA_PATH"
+          echo ""
 
-          # Get the parent directory of this repo (where schema should be)
-          SCHEMA_PATH="${{ github.workspace }}/../../schema/tool-profile.schema.yaml"
-
-          echo "Schema path: $SCHEMA_PATH"
-
-          # For each changed file, validate against schema
+          # Validate each changed file
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "Validating: $file"
 
-            ruby -rjson-schema -e "
-              require 'yaml'
+            # Use ukiryu validate command
+            if [ -f "$file" ]; then
+              ukiryu validate --definition "$file" --schema "$SCHEMA_PATH"
 
-              schema = YAML.load_file('$SCHEMA_PATH')
-              data = YAML.load_file('$file')
-
-              errors = JSON::Validator.fully_validate(schema, data, strict: true)
-              if errors.any?
-                puts \"Validation errors in $file:\"
-                errors.each { |e| puts \"  - #{e}\" }
-                exit 1
+              if [ $? -eq 0 ]; then
+                echo "✓ $file is valid"
               else
-                puts \"✓ $file is valid\"
-              end
-            " || exit 1
+                echo "✗ $file validation failed"
+                exit 1
+              fi
+            else
+              echo "⚠ $file was deleted (skipping validation)"
+            fi
+            echo ""
+          done
+
+      - name: Lint profiles
+        if: steps.changed-files.outputs.any_changed
+        run: |
+          echo "Running linting checks..."
+          echo ""
+
+          # Lint each changed file
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Linting: $file"
+
+            # Use ukiryu lint command
+            if [ -f "$file" ]; then
+              ukiryu lint file "$file"
+            fi
+            echo ""
           done

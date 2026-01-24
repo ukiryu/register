@@ -1,15 +1,17 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
-ukiryu_schema: "1.2"
+ukiryu_schema: '1.0'
 name: ping_gnu
 display_name: GNU iputils ping (Linux)
 homepage: https://github.com/iputils/iputils
-$self: https://www.ukiryu.com/register/1.0/ping_gnu/20240117
-version: '20240117'
+"$self": https://www.ukiryu.com/register/1.0/ping_gnu/2024.01.17
+version: '2024.01.17'
 implements: ping
+aliases:
+- ping
 version_detection:
   command:
-    - "-V"
+  - "-V"
   pattern: ping from iputils ([\d]+)
   modern_threshold: '20190609'
 search_paths:
@@ -32,7 +34,6 @@ profiles:
   commands:
   - description: Send ICMP echo requests to host
     usage: ping [options] host
-    # subcommand omitted - tool executes directly
     arguments:
     - name: host
       type: string
@@ -44,97 +45,121 @@ profiles:
       type: integer
       cli: "-c"
       description: Stop after count packets
+      assignment_delimiter: auto
     - name: interval
       type: float
       cli: "-i"
       description: Wait interval seconds between packets
+      assignment_delimiter: auto
     - name: packet_size
       type: integer
       cli: "-s"
       description: Packet data size (bytes)
+      assignment_delimiter: auto
     - name: timeout
       type: integer
       cli: "-W"
       description: Time to wait for response (seconds)
+      assignment_delimiter: auto
     - name: ttl
       type: integer
       cli: "-t"
       description: Set Time To Live (IP hops)
+      assignment_delimiter: auto
     - name: pattern
       type: string
       cli: "-p"
       description: Fill pattern
+      assignment_delimiter: auto
     - name: source
       type: string
       cli: "-I"
       description: Source device or address
+      assignment_delimiter: auto
     - name: preload
       type: integer
       cli: "-l"
       description: Send preload packets
+      assignment_delimiter: auto
     - name: mark
       type: integer
       cli: "-m"
       description: Set mark
+      assignment_delimiter: auto
     - name: mtu
       type: string
       cli: "-M"
       description: Use MTU discovery strategy
+      assignment_delimiter: auto
     - name: deadline
       type: integer
       cli: "-w"
       description: Deadline (seconds) before exit
+      assignment_delimiter: auto
     flags:
     - name: numeric
       cli: "-n"
       description: No DNS lookup
       default: false
+      assignment_delimiter: none
     - name: quiet
       cli: "-q"
       description: Quiet output
       default: false
+      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose output
       default: false
+      assignment_delimiter: none
     - name: flood
       cli: "-f"
       description: Flood ping (superuser only)
       default: false
+      assignment_delimiter: none
     - name: adaptive
       cli: "-A"
       description: Adaptive ping
       default: false
+      assignment_delimiter: none
     - name: timestamp
       cli: "-D"
       description: Print timestamp
       default: false
+      assignment_delimiter: none
     - name: router_alert
       cli: "-R"
       description: Router alert
       default: false
+      assignment_delimiter: none
     - name: bind_device
       cli: "-B"
       description: Bind to device
       default: false
+      assignment_delimiter: none
     - name: no_route
       cli: "-r"
       description: Bypass normal routing tables
       default: false
+      assignment_delimiter: none
     - name: suppress_duplicates
       cli: "-O"
       description: Suppress duplicate packets
       default: false
+      assignment_delimiter: none
     - name: header_included
       cli: "-P"
       description: Header is included in payload size
       default: false
+      assignment_delimiter: none
     - name: tclass
       cli: "-T"
       description: Set traffic class
       default: false
+      assignment_delimiter: none
     - name: tos
       cli: "-z"
       description: Set Type of Service
       default: false
+      assignment_delimiter: none
     name: ping
