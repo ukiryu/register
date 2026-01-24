@@ -41,10 +41,14 @@ defined in https://github.com/ukiryu/schemas/tree/v1[`schemas/v1/tool.schema.yam
 register/
 └── tools/
     ├── imagemagick/
-    │   └── 7.1.yaml
+    │   └── 7.1.yaml         # Versioned tool (specific version)
     ├── ghostscript/
     │   ├── 9.5.yaml
     │   └── 10.0.yaml
+    ├── cat/
+    │   └── generic.yaml     # Generic tool (stable interface)
+    ├── sort/
+    │   └── generic.yaml     # Generic tool (stable interface)
     └── ...
 ----
 
@@ -56,12 +60,117 @@ Key fields:
 
 `name`:: Tool identifier (e.g., "imagemagick")
 `display_name`:: Human-readable name
-`version`:: Default version
+`version`:: Tool version (see <<version_naming, Version Naming>>)
 `implements`:: Interface contract this tool implements (e.g., "ping" for ping_gnu, ping_bsd)
-`version_detection`:: How to detect installed version
+`version_detection`:: How to detect installed version (see <<version_detection, Version Detection>>)
 `search_paths`:: Platform-specific executable locations
 `profiles`:: Array of platform/shell-specific configurations
 `commands`:: Command definitions with arguments, options, and flags
+
+[[version_naming]]
+=== Version Naming
+
+Tool profiles use two distinct versioning schemes:
+
+* **Versioned tools** (e.g., `imagemagick/7.1.yaml`, `ghostscript/10.0.yaml`):: Tools with
+  well-defined, detectable versions. These tools have version-specific commands, options,
+  or behaviors that differ between releases.
+
+* **Generic tools** (e.g., `cat/generic.yaml`, `sort/generic.yaml`):: System utilities whose
+  core interface is stable across versions or where version detection is unreliable/unnecessary.
+  These tools use `"version: generic"` instead of a numeric version.
+
+When to use each:
+
+* Use **versioned profiles** when:
+** The tool has version-specific command syntax or options
+** Version detection is reliable via `--version` or similar
+** Different versions have incompatible interfaces
+
+* Use **generic profiles** when:
+** The tool is a standard Unix utility with stable interface (cat, grep, sort, etc.)
+** Version output varies by OS/distribution or is unreliable
+** The command syntax hasn't changed meaningfully across versions
+
+Examples:
+
+[source,yaml]
+----
+# Versioned tool - FFmpeg has version-specific features
+name: ffmpeg
+version: "8.0"
+version_detection:
+  command: -version
+  pattern: ffmpeg version ([\d.]+)
+
+# Generic tool - cat has stable interface across versions
+name: cat
+version: generic
+version_detection:
+  detection_methods:
+    - type: command
+      command: --version
+      pattern: cat \\(GNU coreutils\\) ([\\d.]+)
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/cat.1
+        linux: /usr/share/man/man1/cat.1
+  system_tool: true
+----
+
+[[version_detection]]
+=== Version Detection
+
+Version detection determines which installed tool version to use. Ukiryu supports multiple
+detection methods with automatic fallback:
+
+**Detection Methods Array** (recommended):: Provides multiple detection strategies with
+ automatic fallback. If one method fails, the next is tried.
+
+[source,yaml]
+----
+version_detection:
+  detection_methods:
+    # Method 1: Try --version flag first
+    - type: command
+      command: --version
+      pattern: "Version ([\\d.]+)"
+
+    # Method 2: Fall back to parsing man page
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/tool.1
+        linux: /usr/share/man/man1/tool.1
+
+    # Method 3: Mark as system tool if detection fails
+    - type: system_tool
+
+  modern_threshold: "1.0"  # Minimum "modern" version
+----
+
+**Legacy Single Method** (deprecated):: Simple single-method detection:
+
+[source,yaml]
+----
+version_detection:
+  command: --version
+  pattern: "Version ([\\d.]+)"
+  modern_threshold: "1.0"
+----
+
+Detection method types:
+
+* `command`:: Run the tool and parse stdout/stderr for version
+** `command`:: Array of arguments (e.g., `["--version"]` or `["-v", "-"]`)
+** `pattern`:: Regex with capture group for version number
+
+* `man_page`:: Parse the man page for version information
+** `paths`:: Platform-specific man page paths
+
+* `system_tool`:: Mark as OS-provided utility (no version detection)
+
+The `modern_threshold` specifies the minimum version considered "modern" for compatibility
+checks.
 
 == Validating Tool Profiles
 
@@ -143,7 +252,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -163,12 +272,71 @@ jobs:
 
 To add a new tool profile:
 
+. Determine the appropriate <<version_naming,version naming scheme>>:
+** Use versioned profiles (`tools/<tool>/<version>.yaml`) for tools with version-specific interfaces
+** Use generic profiles (`tools/<tool>/generic.yaml`) for stable system utilities
 . Check the tool's man page for command syntax
-. Create a new YAML file in `tools/<tool-name>/<version>.yaml`
+. Create a new YAML file in `tools/<tool-name>/`
 . Follow the v1 schema defined in https://github.com/ukiryu/schemas/tree/v1[`schemas/v1/tool.schema.yaml`]
+. Implement <<version_detection,version detection>> using `detection_methods` array with fallback
 . Validate locally: `ukiryu validate --definition tools/<tool-name>/<version>.yaml`
 . Test the profile with real commands
 . Submit a pull request to the `v1` branch
+
+=== Versioned Profile Example
+
+[source,yaml]
+----
+----
+name: imagemagick
+version: "7.1"
+version_detection:
+  command: -version
+  pattern: Version: ImageMagick ([\d.]+)
+search_paths:
+  macos:
+  - /opt/homebrew/bin/magick
+  linux:
+  - /usr/bin/convert
+profiles:
+  - name: default
+    platforms: [macos, linux]
+    shells: [bash, zsh]
+    commands:
+      - name: convert
+        # ... command definition
+----
+
+=== Generic Profile Example
+
+[source,yaml]
+----
+----
+name: cat
+version: generic
+version_detection:
+  detection_methods:
+    - type: command
+      command: --version
+      pattern: cat \\(GNU coreutils\\) ([\\d.]+)
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/cat.1
+        linux: /usr/share/man/man1/cat.1
+  system_tool: true
+search_paths:
+  macos:
+  - /usr/bin/cat
+  linux:
+  - /usr/bin/cat
+profiles:
+  - name: unix
+    platforms: [macos, linux]
+    shells: [bash, zsh, fish, sh]
+    commands:
+      - name: concatenate
+        # ... command definition
+----
 
 === Validation Checklist
 

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: gzip_gnu
@@ -125,3 +125,107 @@ profiles:
       default: false
       assignment_delimiter: none
     name: decompress
+- name: windows
+  display_name: gzip on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with gzip
+    usage: gzip [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Write to standard output
+      assignment_delimiter: auto
+    - name: compression_level
+      type: integer
+      cli: "-"
+      range:
+      - 1
+      - 9
+      description: Compression level (1=fastest, 9=best)
+      assignment_delimiter: auto
+    - name: suffix
+      type: string
+      cli: "-S"
+      description: Use suffix instead of .gz
+      assignment_delimiter: auto
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: recursive
+      cli: "-r"
+      description: Recursive mode
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress gzip files
+    usage: gzip -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    name: decompress
+smoke_tests:
+- name: version
+  description: Verify gzip version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

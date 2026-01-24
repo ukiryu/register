@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: bat
@@ -7,10 +7,10 @@ homepage: https://github.com/sharkdp/bat
 "$self": https://www.ukiryu.com/register/1.0/bat/0.24
 version: '0.24'
 aliases:
-  - bat
+- bat
 version_detection:
   command: "--version"
-  pattern: "bat ([\\d.]+)"
+  pattern: bat ([\d.]+)
   modern_threshold: '0.20'
 search_paths:
   macos:
@@ -20,7 +20,7 @@ search_paths:
   - "/usr/bin/bat"
   - "/usr/local/bin/bat"
   windows:
-  - "C:/Users/*/AppData/Local/bat/bat.exe"
+  - C:/Users/*/AppData/Local/bat/bat.exe
 timeout: 300
 profiles:
 - name: unix
@@ -122,3 +122,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: display
+smoke_tests:
+- name: version
+  description: Verify bat version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

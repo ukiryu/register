@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: optipng
@@ -209,3 +209,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: optimize
+smoke_tests:
+- name: version
+  description: Verify optipng version
+  command:
+  - "-version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

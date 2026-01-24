@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: bzip2_busybox
+display_name: bzip2 (BusyBox wrapper)
+homepage: https://www.busybox.net/
+"$self": https://www.ukiryu.com/register/1.0/bzip2_busybox/1.0
+version: '1.0'
+implements: bzip2@1.0
+description: |
+  BusyBox bzip2 implementation. This is a wrapper where /bin/bzip2
+  is a symlink to /bin/busybox. When invoked as 'bzip2', BusyBox
+  runs its internal bzip2 applet with minimal options.
+backed_by: busybox
+aliases:
+- bunzip2
+- bzcat
+version_detection:
+  command: "--help"
+  pattern: BusyBox v([\d.]+)
+  modern_threshold: '1.0'
+search_paths:
+  linux:
+  - "/bin/bzip2"
+  - "/usr/bin/bzip2"
+timeout: 60
+profiles:
+- name: busybox
+  display_name: BusyBox bzip2
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - ash
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with bzip2
+    usage: bzip2 [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      max: 1
+      position: last
+      description: File(s) to compress
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode (suppress warnings)
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress bzip2 files
+    usage: bzip2 -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode (suppress warnings)
+      default: false
+      assignment_delimiter: none
+    name: decompress
+smoke_tests:
+- name: version
+  description: Verify BusyBox bzip2 version
+  command:
+  - "--help"
+  expect:
+    exit_code: 0
+    stdout_pattern: BusyBox

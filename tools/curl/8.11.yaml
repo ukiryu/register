@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: curl
@@ -7,7 +7,7 @@ homepage: https://curl.se/
 "$self": https://www.ukiryu.com/register/1.0/curl/8.11
 version: '8.11'
 aliases:
-  - curl
+- curl
 version_detection:
   command: "--version"
   pattern: curl ([\d.]+)
@@ -20,9 +20,9 @@ search_paths:
   - "/usr/bin/curl"
   - "/usr/local/bin/curl"
   windows:
-  - "C:/Windows/System32/curl.exe"
-  - "C:/Program Files/Git/usr/bin/curl.exe"
-  - "C:/Program Files/Git/mingw64/bin/curl.exe"
+  - C:/Windows/System32/curl.exe
+  - C:/Program Files/Git/usr/bin/curl.exe
+  - C:/Program Files/Git/mingw64/bin/curl.exe
 timeout: 300
 profiles:
 - name: unix
@@ -433,3 +433,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: transfer
+smoke_tests:
+- name: version
+  description: Verify curl version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

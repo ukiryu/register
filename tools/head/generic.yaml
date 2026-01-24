@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: head
+display_name: head (output first part of files)
+homepage: https://www.gnu.org/software/coreutils/
+"$self": https://www.ukiryu.com/register/1.0/head/0.1
+version: generic
+aliases:
+  - head
+version_detection:
+  command: "--version"
+  pattern: "head \\(GNU coreutils\\) ([\\d.]+)"
+  man_date: true
+  system_tool: true
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/head"
+  - "/opt/homebrew/bin/head"
+  linux:
+  - "/usr/bin/head"
+  windows:
+  - "C:/Program Files/Git/usr/bin/head.exe"
+timeout: 300
+profiles:
+- name: unix
+  display_name: head on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Output first part of files
+    usage: head [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to read
+    options:
+    - name: lines
+      type: integer
+      cli: "-n"
+      assignment_delimiter: auto
+      description: Number of lines
+    - name: bytes
+      type: string
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Number of bytes
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Never print headers
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Always print headers
+    - name: zero_terminated
+      cli: "-z"
+      assignment_delimiter: none
+      description: Line delimiter is NUL, not newline
+      include_platforms:
+      - linux
+    flags:
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: zero_terminated
+      cli: "-z"
+      description: NUL terminated
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    name: show_beginning

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: jq
@@ -88,7 +88,7 @@ profiles:
       cli: "--jsonargs"
       description: Remaining arguments are JSON arguments
       assignment_delimiter: auto
-    - name: null_input
+    - name: zero_input
       type: string
       cli: "-n"
       description: Use null as input
@@ -174,7 +174,7 @@ profiles:
       description: Read JSON from file
       assignment_delimiter: auto
     flags:
-    - name: null_input
+    - name: zero_input
       cli: "-n"
       description: Use null as input
       default: false
@@ -245,3 +245,25 @@ profiles:
       default: false
       assignment_delimiter: none
     name: process
+- name: windows
+  display_name: jq on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  inherits: unix
+smoke_tests:
+- name: version
+  description: Verify jq version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

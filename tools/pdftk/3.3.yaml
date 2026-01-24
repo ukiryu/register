@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: pdftk
@@ -7,10 +7,10 @@ homepage: https://www.pdflabs.com/tools/pdftk-server/
 "$self": https://www.ukiryu.com/register/1.0/pdftk/3.3
 version: '3.3'
 aliases:
-  - pdftk
+- pdftk
 version_detection:
   command: "--version"
-  pattern: "pdftk ([\\d.]+)"
+  pattern: pdftk ([\d.]+)
   modern_threshold: '3.0'
 search_paths:
   macos:
@@ -20,8 +20,8 @@ search_paths:
   - "/usr/bin/pdftk"
   - "/usr/local/bin/pdftk"
   windows:
-  - "C:/Program Files/Git/usr/bin/pdftk.exe"
-  - "C:/msys64/usr/bin/pdftk.exe"
+  - C:/Program Files/Git/usr/bin/pdftk.exe
+  - C:/msys64/usr/bin/pdftk.exe
 timeout: 600
 profiles:
 - name: unix
@@ -51,82 +51,94 @@ profiles:
       description: Output PDF file
     options:
     - name: operation
-      cli: "operation"
+      cli: operation
       assignment_delimiter: none
       description: PDFTK operation
-    # Operations
     - name: cat
-      cli: "cat"
+      cli: cat
       assignment_delimiter: none
       description: Concatenate pages
     - name: burst
-      cli: "burst"
+      cli: burst
       assignment_delimiter: none
       description: Split into pages
     - name: shuffle
-      cli: "shuffle"
+      cli: shuffle
       assignment_delimiter: none
       description: Shuffle pages
     - name: dump_data
-      cli: "dump_data"
+      cli: dump_data
       assignment_delimiter: none
       description: Dump data fields
     - name: dump_data_fields
-      cli: "dump_data_fields"
+      cli: dump_data_fields
       assignment_delimiter: none
       description: Dump data fields to stdout
     - name: generate_fdf
-      cli: "generate_fdf"
+      cli: generate_fdf
       assignment_delimiter: none
       description: Generate FDF
     - name: fill_form
-      cli: "fill_form"
+      cli: fill_form
       assignment_delimiter: none
       description: Fill form
     - name: background
-      cli: "background"
+      cli: background
       assignment_delimiter: none
       description: Add background
     - name: multistamp
-      cli: "multistamp"
+      cli: multistamp
       assignment_delimiter: none
       description: Multiple stamps
     - name: unpack_files
-      cli: "unpack_files"
+      cli: unpack_files
       assignment_delimiter: none
       description: Extract attachments
     - name: encrypt
-      cli: "encrypt"
+      cli: encrypt
       assignment_delimiter: none
       description: Encrypt PDF
     - name: decrypt
-      cli: "decrypt"
+      cli: decrypt
       assignment_delimiter: none
       description: Decrypt PDF
     flags:
     - name: burst
-      cli: "burst"
+      cli: burst
       description: Burst mode
       default: false
       assignment_delimiter: none
     - name: cat
-      cli: "cat"
+      cli: cat
       description: Cat mode
       default: false
       assignment_delimiter: none
     - name: shuffle
-      cli: "shuffle"
+      cli: shuffle
       description: Shuffle
       default: false
       assignment_delimiter: none
     - name: encrypt
-      cli: "encrypt"
+      cli: encrypt
       description: Encrypt
       default: false
       assignment_delimiter: none
     - name: decrypt
-      cli: "decrypt"
+      cli: decrypt
       description: Decrypt
       default: false
       assignment_delimiter: none
     name: manipulate
+smoke_tests:
+- name: version
+  description: Verify pdftk version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

@@ -1,0 +1,179 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: diff
+display_name: diff (compare files line by line)
+homepage: https://www.gnu.org/software/diffutils/
+"$self": https://www.ukiryu.com/register/1.0/diff/0.1
+version: generic
+aliases:
+- diff
+version_detection:
+  command: "--version"
+  pattern: diff \(GNU diffutils\) ([\d.]+)
+  modern_threshold: '3.0'
+  man_date: true
+  system_tool: true
+search_paths:
+  macos:
+  - "/usr/bin/diff"
+  - "/opt/homebrew/bin/diff"
+  linux:
+  - "/usr/bin/diff"
+  windows:
+  - C:/Program Files/Git/usr/bin/diff.exe
+timeout: 300
+profiles:
+- name: unix
+  display_name: diff on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Compare files line by line
+    usage: diff [options] file1 file2
+    arguments:
+    - name: file1
+      type: file
+      required: true
+      position: first
+      description: First file to compare
+    - name: file2
+      type: file
+      required: true
+      position: last
+      description: Second file to compare
+    options:
+    - name: unified
+      cli: "-u"
+      assignment_delimiter: none
+      description: Unified format
+    - name: context
+      cli: "-c"
+      assignment_delimiter: none
+      description: Context format
+    - name: ed
+      cli: "-e"
+      assignment_delimiter: none
+      description: Ed script format
+    - name: rcs
+      cli: "-n"
+      assignment_delimiter: none
+      description: RCS format
+    - name: side_by_side
+      cli: "-y"
+      assignment_delimiter: none
+      description: Side-by-side format
+    - name: suppress_common
+      cli: "--suppress-common-lines"
+      assignment_delimiter: none
+      description: Suppress common lines
+    - name: lines
+      type: integer
+      cli: "-U"
+      assignment_delimiter: auto
+      description: Lines of context
+    - name: show_function
+      cli: "-p"
+      assignment_delimiter: none
+      description: Show C function
+    - name: ignore_all_space
+      cli: "-w"
+      assignment_delimiter: none
+      description: Ignore all whitespace
+    - name: ignore_space_change
+      cli: "-b"
+      assignment_delimiter: none
+      description: Ignore whitespace changes
+    - name: ignore_blank_lines
+      cli: "-B"
+      assignment_delimiter: none
+      description: Ignore blank lines
+    - name: ignore_case
+      cli: "-i"
+      assignment_delimiter: none
+      description: Ignore case
+    - name: brief
+      cli: "-q"
+      assignment_delimiter: none
+      description: Brief (only whether different)
+    - name: report_identical
+      cli: "-s"
+      assignment_delimiter: none
+      description: Report when files are same
+    - name: recursive
+      cli: "-r"
+      assignment_delimiter: none
+      description: Recursive directory comparison
+    - name: text
+      cli: "-a"
+      assignment_delimiter: none
+      description: Treat files as text
+    - name: width
+      type: integer
+      cli: "-W"
+      assignment_delimiter: auto
+      description: Output width
+    - name: tabsize
+      type: integer
+      cli: "--tabsize"
+      assignment_delimiter: equals
+      description: Tab size
+      include_platforms:
+      - linux
+    flags:
+    - name: unified
+      cli: "-u"
+      description: Unified format
+      default: false
+      assignment_delimiter: none
+    - name: context
+      cli: "-c"
+      description: Context format
+      default: false
+      assignment_delimiter: none
+    - name: recursive
+      cli: "-r"
+      description: Recursive
+      default: false
+      assignment_delimiter: none
+    - name: ignore_case
+      cli: "-i"
+      description: Ignore case
+      default: false
+      assignment_delimiter: none
+    - name: ignore_all_space
+      cli: "-w"
+      description: Ignore whitespace
+      default: false
+      assignment_delimiter: none
+    - name: brief
+      cli: "-q"
+      description: Brief mode
+      default: false
+      assignment_delimiter: none
+    - name: report_identical
+      cli: "-s"
+      description: Report identical
+      default: false
+      assignment_delimiter: none
+    name: compare
+smoke_tests:
+- name: version
+  description: Verify diff version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

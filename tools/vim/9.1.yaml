@@ -7,11 +7,10 @@ homepage: https://www.vim.org/
 "$self": https://www.ukiryu.com/register/1.0/vim/9.1
 version: '9.1'
 aliases:
-  - vim
-  - vi
-  - view
-  - gvim
-  - vimdiff
+- vim
+- vi
+- view
+- gvim
 version_detection:
   command: "--version"
   pattern: "VIM - Vi IMproved ([\\d.]+)"
@@ -30,6 +29,22 @@ search_paths:
   - "C:/Program Files/Vim/vim91/vim.exe"
   - "C:/Program Files/Git/usr/bin/vim.exe"
 timeout: 300
+smoke_tests:
+- name: version
+  description: Verify vim version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+    output_match: VIM - Vi IMproved
+- name: help
+  description: Verify vim help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0
+    output_contains:
+    - Vim
 profiles:
 - name: unix
   display_name: vim on Unix

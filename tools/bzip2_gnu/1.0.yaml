@@ -1,0 +1,219 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: bzip2_gnu
+display_name: bzip2 (GNU)
+homepage: https://sourceware.org/bzip2/
+"$self": https://www.ukiryu.com/register/1.0/bzip2_gnu/1.0
+version: '1.0'
+implements: bzip2@1.0
+aliases:
+- bunzip2
+- bzcat
+version_detection:
+  command: "--help"
+  pattern: Version ([\d.]+)
+  modern_threshold: '1.0'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/bzip2"
+  - "/usr/local/bin/bzip2"
+  - "/usr/bin/bzip2"
+  linux:
+  - "/usr/bin/bzip2"
+  - "/usr/local/bin/bzip2"
+  windows:
+  - C:/msys64/usr/bin/bzip2.exe
+  - C:/Program Files/Git/usr/bin/bzip2.exe
+  - C:/cygwin64/bin/bzip2.exe
+timeout: 60
+profiles:
+- name: unix
+  display_name: bzip2 on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with bzip2
+    usage: bzip2 [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      max: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Compress to standard output
+      assignment_delimiter: auto
+    - name: block_size
+      type: integer
+      cli: "-"
+      range:
+      - 1
+      - 9
+      description: Block size (100k-900k)
+      assignment_delimiter: auto
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: test
+      cli: "-t"
+      description: Test integrity
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress bzip2 files
+    usage: bzip2 -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    name: decompress
+- name: windows
+  display_name: bzip2 on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with bzip2
+    usage: bzip2 [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      max: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Compress to standard output
+      assignment_delimiter: auto
+    - name: block_size
+      type: integer
+      cli: "-"
+      range:
+      - 1
+      - 9
+      description: Block size (100k-900k)
+      assignment_delimiter: auto
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: test
+      cli: "-t"
+      description: Test integrity
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress bzip2 files
+    usage: bzip2 -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    name: decompress
+smoke_tests:
+- name: version
+  description: Verify bzip2 version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: ffmpeg
@@ -10,7 +10,9 @@ aliases:
 - ffmpeg
 - ff
 version_detection:
-  command: "-version"
+  # ffmpeg outputs version info when run without arguments
+  # Use empty array to mean "run with no arguments"
+  command: []
   pattern: ffmpeg version (\d+\.\d+)
   modern_threshold: '5.0'
 search_paths:
@@ -318,3 +320,20 @@ profiles:
       default: false
       assignment_delimiter: none
     name: convert
+- name: modern_windows
+  display_name: FFmpeg on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  version: ">= 5.0"
+  inherits: modern_unix
+smoke_tests:
+- name: version
+  description: Verify ffmpeg version
+  command: []
+  expect:
+    exit_code: 1
+    stdout_pattern: ffmpeg version

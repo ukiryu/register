@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: imagemagick
@@ -399,3 +399,26 @@ profiles:
       default: false
       assignment_delimiter: none
     name: mogrify
+- name: modern_windows
+  display_name: ImageMagick 7.x on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  version: ">= 7.0"
+  inherits: modern_unix
+smoke_tests:
+- name: version
+  description: Verify imagemagick version
+  command:
+  - "-version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

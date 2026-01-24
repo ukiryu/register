@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: fzf
@@ -7,7 +7,7 @@ homepage: https://github.com/junegunn/fzf
 "$self": https://www.ukiryu.com/register/1.0/fzf/0.55
 version: '0.55'
 aliases:
-  - fzf
+- fzf
 version_detection:
   command: "--version"
   pattern: "([\\d.]+)"
@@ -20,7 +20,7 @@ search_paths:
   - "/usr/bin/fzf"
   - "/usr/local/bin/fzf"
   windows:
-  - "C:/Users/*/AppData/Local/fzf/fzf.exe"
+  - C:/Users/*/AppData/Local/fzf/fzf.exe
 timeout: 300
 profiles:
 - name: unix
@@ -158,3 +158,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: fuzzy_find
+smoke_tests:
+- name: version
+  description: Verify fzf version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

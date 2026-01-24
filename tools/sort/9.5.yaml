@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: sort
@@ -120,3 +120,109 @@ profiles:
       default: false
       assignment_delimiter: none
     name: sort
+- name: windows
+  display_name: sort on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - description: Sort text lines
+    usage: sort [options] [file]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: 'Input file(s) (default: stdin)'
+    options:
+    - name: output
+      type: file
+      cli: "-o"
+      description: Write to file instead of stdout
+      assignment_delimiter: auto
+    - name: key
+      type: string
+      cli: "-k"
+      variadic: true
+      description: Sort by a key (POS1,POS2)
+      assignment_delimiter: auto
+    - name: field_separator
+      type: string
+      cli: "-t"
+      description: Field separator character
+      assignment_delimiter: auto
+    flags:
+    - name: numeric_sort
+      cli: "-n"
+      description: Compare according to string numerical value
+      default: false
+      assignment_delimiter: none
+    - name: human_numeric
+      cli: "-h"
+      description: Compare human-readable numbers (e.g., 1K, 2M)
+      default: false
+      assignment_delimiter: none
+    - name: month_sort
+      cli: "-M"
+      description: Compare according to month order
+      default: false
+      assignment_delimiter: none
+    - name: version_sort
+      cli: "-V"
+      description: Natural sort of version numbers
+      default: false
+      assignment_delimiter: none
+    - name: random_sort
+      cli: "-R"
+      description: Sort by random hash of keys
+      default: false
+      assignment_delimiter: none
+    - name: reverse
+      cli: "-r"
+      description: Reverse the result of comparisons
+      default: false
+      assignment_delimiter: none
+    - name: unique
+      cli: "-u"
+      description: Output only the first of an equal run
+      default: false
+      assignment_delimiter: none
+    - name: check
+      cli: "-c"
+      description: Check if input is sorted
+      default: false
+      assignment_delimiter: none
+    - name: ignore_case
+      cli: "-f"
+      description: Fold lower case to upper case for sorting
+      default: false
+      assignment_delimiter: none
+    - name: ignore_blanks
+      cli: "-b"
+      description: Ignore leading blanks
+      default: false
+      assignment_delimiter: none
+    - name: zero_terminated
+      cli: "-z"
+      description: Lines end with 0 byte, not newline
+      default: false
+      assignment_delimiter: none
+    name: sort
+smoke_tests:
+- name: version
+  description: Verify sort version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

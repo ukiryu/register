@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: yq_jq
+display_name: yq-jq (JQ wrapper for YAML)
+homepage: https://github.com/kislyuk/yq
+"$self": https://www.ukiryu.com/register/1.0/yq_jq/1.0
+version: '1.0'
+aliases:
+- yq
+description: |
+  This is the jq wrapper for YAML (often packaged as 'yq' in some distros).
+  It is NOT the same as mikefarah/yq.
+
+  This wrapper provides YAML processing using jq syntax.
+  For the full yq experience, install mikefarah/yq instead.
+
+version_detection:
+  command: "--version"
+  pattern: "^yq (.+)$"
+  modern_threshold: '1.0'
+
+# The jq wrapper is typically found in PATH, no special search paths needed
+search_paths: {}
+
+profiles:
+- name: unix
+  display_name: yq-jq on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - sh
+  - fish
+  option_style: double_dash_space
+  commands:
+  - description: Evaluate expression on YAML/JSON input
+    usage: yq [options] expression [files...]
+    arguments:
+    - name: expression
+      type: string
+      required: true
+      position: 1
+      description: jq expression to evaluate
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: "Input file(s) (default: stdin)"
+    flags:
+    - name: raw_output
+      cli: "-j"
+      description: Output raw JSON strings
+      default: false
+    - name: help
+      cli: "-h"
+      description: Show help
+      default: false
+    name: eval
+
+- name: windows
+  display_name: yq-jq on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  inherits: unix
+
+# Note: This is a simplified profile for the jq wrapper.
+# For full yq features, use the 'yq' tool (mikefarah/yq) instead.
+smoke_tests:
+- name: version
+  description: Verify yq-jq version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0

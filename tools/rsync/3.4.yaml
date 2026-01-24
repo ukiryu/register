@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: rsync
@@ -7,10 +7,10 @@ homepage: https://rsync.samba.org/
 "$self": https://www.ukiryu.com/register/1.0/rsync/3.4
 version: '3.4'
 aliases:
-  - rsync
+- rsync
 version_detection:
   command: "--version"
-  pattern: "rsync  version ([\\d.]+)"
+  pattern: rsync  version ([\d.]+)
   modern_threshold: '3.0'
 search_paths:
   macos:
@@ -21,8 +21,8 @@ search_paths:
   - "/usr/bin/rsync"
   - "/usr/local/bin/rsync"
   windows:
-  - "C:/Program Files/Git/usr/bin/rsync.exe"
-  - "C:/msys64/usr/bin/rsync.exe"
+  - C:/Program Files/Git/usr/bin/rsync.exe
+  - C:/msys64/usr/bin/rsync.exe
 timeout: 600
 profiles:
 - name: unix
@@ -44,7 +44,7 @@ profiles:
       type: string
       variadic: true
       required: true
-      position: not_last
+      position: first
       description: Source files/directories
     - name: destination
       type: string
@@ -52,7 +52,6 @@ profiles:
       position: last
       description: Destination
     options:
-    # Main options
     - name: archive
       cli: "-a"
       assignment_delimiter: none
@@ -77,7 +76,6 @@ profiles:
       cli: "-P"
       assignment_delimiter: none
       description: Same as --progress --partial
-    # File selection
     - name: recursive
       cli: "-r"
       assignment_delimiter: none
@@ -150,7 +148,6 @@ profiles:
       cli: "-t"
       assignment_delimiter: none
       description: Preserve modification times
-    # Compression
     - name: compress
       cli: "-z"
       assignment_delimiter: none
@@ -160,7 +157,6 @@ profiles:
       cli: "--compress-level"
       assignment_delimiter: equals
       description: Compression level
-    # Delete options
     - name: delete
       cli: "--delete"
       assignment_delimiter: none
@@ -189,7 +185,6 @@ profiles:
       cli: "--ignore-errors"
       assignment_delimiter: none
       description: Delete even if there are I/O errors
-    # Filter options
     - name: exclude
       cli: "--exclude"
       assignment_delimiter: equals
@@ -217,7 +212,6 @@ profiles:
       cli: "--filter-from"
       assignment_delimiter: equals
       description: Read filter rules from file
-    # Transfer options
     - name: update
       cli: "-u"
       assignment_delimiter: none
@@ -243,7 +237,6 @@ profiles:
       cli: "-c"
       assignment_delimiter: none
       description: Skip based on checksum, not mod-time & size
-    # Remote shell
     - name: rsh
       cli: "-e"
       assignment_delimiter: auto
@@ -252,7 +245,6 @@ profiles:
       cli: "--rsync-path"
       assignment_delimiter: equals
       description: Specify path to rsync on remote machine
-    # Other options
     - name: dry_run
       cli: "-n"
       assignment_delimiter: none
@@ -385,3 +377,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: copy
+smoke_tests:
+- name: version
+  description: Verify rsync version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

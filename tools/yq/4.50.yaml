@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: yq
@@ -10,7 +10,9 @@ aliases:
 - yq
 version_detection:
   command: "--version"
-  pattern: '^yq(?: version)? v?([\d.]+)'
+  # Only match mikefarah/yq which ALWAYS includes "version" in output.
+  # The jq wrapper (impostor) outputs "yq 0.0.0" without "version" word.
+  pattern: "yq.*version v?([\\d.]+)"
   modern_threshold: '4.0'
 search_paths:
   macos:
@@ -105,7 +107,7 @@ profiles:
       description: Select specific nodes by path
       assignment_delimiter: auto
     flags:
-    - name: null_input
+    - name: zero_input
       cli: "-n"
       description: Null input
       default: false
@@ -247,3 +249,25 @@ profiles:
       default: true
       assignment_delimiter: none
     name: eval_in_place
+- name: windows
+  display_name: yq on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  inherits: unix
+smoke_tests:
+- name: version
+  description: Verify yq version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

@@ -27,6 +27,22 @@ search_paths:
   - "C:/Program Files/Git/mingw64/bin/mingw32-make.exe"
   - "C:/msys64/usr/bin/make.exe"
 timeout: 600
+smoke_tests:
+- name: version
+  description: Verify make version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+    output_match: GNU Make
+- name: help
+  description: Verify make help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0
+    output_contains:
+    - 'Usage:'
 profiles:
 - name: unix
   display_name: make on Unix

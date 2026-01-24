@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: ukiryu
@@ -258,7 +258,8 @@ profiles:
     - ver
   - name: which
     description: Show which tool implementation would be selected
-    usage: ukiryu which IDENTIFIER [--register PATH] [--platform PLATFORM] [--shell SHELL]
+    usage: ukiryu which IDENTIFIER [--register PATH] [--platform PLATFORM] [--shell
+      SHELL]
     aliases:
     - resolve
     - find
@@ -350,3 +351,16 @@ profiles:
       - cmd
       description: Shell to use for command execution
       assignment_delimiter: auto
+smoke_tests:
+- name: version
+  description: Verify ukiryu version
+  command:
+  - version
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

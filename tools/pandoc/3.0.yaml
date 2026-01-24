@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: pandoc
@@ -277,6 +277,14 @@ profiles:
       default: false
       assignment_delimiter: none
     name: convert
+- name: windows_bash
+  display_name: Pandoc on Windows (Git Bash)
+  platforms:
+  - windows
+  shells:
+  - bash
+  version: ">= 2.0"
+  inherits: unix
 - name: windows_powershell
   display_name: Pandoc on Windows (PowerShell)
   platforms:
@@ -293,3 +301,16 @@ profiles:
   - cmd
   version: ">= 2.0"
   inherits: unix
+smoke_tests:
+- name: version
+  description: Verify pandoc version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

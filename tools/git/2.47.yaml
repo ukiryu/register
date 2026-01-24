@@ -1,205 +1,205 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/tool-profile.schema.yaml
-# Ukiryu Schema Version (like OpenAPI's "openapi" field)
-ukiryu_schema: "1.2"
-$self: https://www.ukiryu.com/register/1.0/git/2.47
-
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.0/git/2.47
 name: git
-version: "2.47"
+version: '2.47'
 display_name: Git
 homepage: https://git-scm.com/
-
-aliases: [g]
-
+aliases:
+- g
 version_detection:
-  command: --version
-  pattern: "git version (\\d+\\.\\d+\\.\\d+)"
-  modern_threshold: "2.0"
-
+  command: "--version"
+  pattern: git version (\d+\.\d+\.\d+)
+  modern_threshold: '2.0'
 search_paths:
   windows:
-    - "C:/Program Files/Git/bin/git.exe"
-    - "C:/Program Files (x86)/Git/bin/git.exe"
+  - C:/Program Files/Git/bin/git.exe
+  - C:/Program Files (x86)/Git/bin/git.exe
   macos:
-    - "/usr/local/bin/git"
-    - "/opt/homebrew/bin/git"
-    - "/usr/bin/git"
+  - "/usr/local/bin/git"
+  - "/opt/homebrew/bin/git"
+  - "/usr/bin/git"
   linux:
-    - "/usr/bin/git"
-    - "/usr/local/bin/git"
-
+  - "/usr/bin/git"
+  - "/usr/local/bin/git"
 profiles:
-  - name: default
-    platforms: [macos, linux, windows]
-    shells: [bash, zsh, fish, sh, powershell, cmd]
-
-    # Routing table: external command mapping
-    routing:
-      remote: git-remote
-      branch: git-branch
-      stash: git-stash
-      worktree: git-worktree
-      notes: git-notes
-      tag: git-tag
-      config: git-config
-
-    # Actions: internal profiles (flat structure with hierarchical references)
-    commands:
-      # git remote actions (route to git-remote executable)
-      - name: add
-        belongs_to: remote
-        description: Add a new remote
-        arguments:
-          - name: name
-            type: string
-            required: true
-            description: Name of the remote
-          - name: url
-            type: string
-            required: true
-            description: URL of the remote
-        flags:
-          - name: fetch
-            cli: -f
-            description: Add fetch refspec
-          - name: tags
-            cli: --tags
-            description: Fetch tags
-          - name: track
-            cli: -t
-            description: Track specific branch
-
-      - name: remove
-        belongs_to: remote
-        aliases: [rm]
-        description: Remove a remote
-        arguments:
-          - name: name
-            type: string
-            required: true
-            description: Name of the remote to remove
-
-      - name: show
-        belongs_to: remote
-        description: Show information about a remote
-        arguments:
-          - name: name
-            type: string
-            required: false
-            description: Name of the remote (shows all if omitted)
-        flags:
-          - name: verbose
-            cli: -v
-
-      # git branch actions (route to git-branch executable)
-      - name: list
-        belongs_to: branch
-        description: List branches
-        flags:
-          - name: all
-            cli: -a
-            description: List both local and remote branches
-          - name: remotes
-            cli: -r
-            description: List remote-tracking branches
-          - name: verbose
-            cli: -v
-            description: Show SHA1 and commit subject line
-
-      - name: delete
-        belongs_to: branch
-        cli_flag: -d
-        description: Delete a branch
-        arguments:
-          - name: branch_name
-            type: string
-            required: true
-            description: Name of the branch to delete
-        flags:
-          - name: force
-            cli: -f
-            description: Force deletion even if not merged
-
-      - name: delete_force
-        belongs_to: branch
-        cli_flag: -D
-        description: Force delete a branch
-        arguments:
-          - name: branch_name
-            type: string
-            required: true
-            description: Name of the branch to delete
-
-      - name: rename
-        belongs_to: branch
-        cli_flag: -m
-        description: Rename a branch
-        arguments:
-          - name: old_name
-            type: string
-            required: false
-            description: Current branch name
-          - name: new_name
-            type: string
-            required: false
-            description: New branch name
-
-      # git stash actions (route to git-stash executable)
-      - name: list
-        belongs_to: stash
-        description: List stashed changes
-        flags:
-          - name: porcelain
-            cli: --porcelain
-
-      - name: save
-        belongs_to: stash
-        description: Save changes to stash
-        arguments:
-          - name: message
-            type: string
-            required: false
-            description: Stash message
-        flags:
-          - name: keep_index
-            cli: --keep-index
-          - name: include_untracked
-            cli: -u
-          - name: all
-            cli: -a
-
-      - name: pop
-        belongs_to: stash
-        description: Apply and remove stashed changes
-        arguments:
-          - name: stash_ref
-            type: string
-            required: false
-            description: 'Stash reference (default: stash@{0})'
-        flags:
-          - name: index
-            cli: --index
-
-      - name: apply
-        belongs_to: stash
-        description: Apply stashed changes
-        arguments:
-          - name: stash_ref
-            type: string
-            required: false
-            description: 'Stash reference (default: stash@{0})'
-        flags:
-          - name: index
-            cli: --index
-
-      - name: drop
-        belongs_to: stash
-        description: Remove a single stashed state
-        arguments:
-          - name: stash_ref
-            type: string
-            required: false
-            description: 'Stash reference (default: stash@{0})'
-
-      - name: clear
-        belongs_to: stash
-        description: Remove all stashed states
+- name: default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  routing:
+    remote: git-remote
+    branch: git-branch
+    stash: git-stash
+    worktree: git-worktree
+    notes: git-notes
+    tag: git-tag
+    config: git-config
+  commands:
+  - name: add
+    belongs_to: remote
+    description: Add a new remote
+    arguments:
+    - name: name
+      type: string
+      required: true
+      description: Name of the remote
+    - name: url
+      type: string
+      required: true
+      description: URL of the remote
+    flags:
+    - name: fetch
+      cli: "-f"
+      description: Add fetch refspec
+    - name: tags
+      cli: "--tags"
+      description: Fetch tags
+    - name: track
+      cli: "-t"
+      description: Track specific branch
+  - name: remove
+    belongs_to: remote
+    aliases:
+    - rm
+    description: Remove a remote
+    arguments:
+    - name: name
+      type: string
+      required: true
+      description: Name of the remote to remove
+  - name: show
+    belongs_to: remote
+    description: Show information about a remote
+    arguments:
+    - name: name
+      type: string
+      required: false
+      description: Name of the remote (shows all if omitted)
+    flags:
+    - name: verbose
+      cli: "-v"
+  - name: list
+    belongs_to: branch
+    description: List branches
+    flags:
+    - name: all
+      cli: "-a"
+      description: List both local and remote branches
+    - name: remotes
+      cli: "-r"
+      description: List remote-tracking branches
+    - name: verbose
+      cli: "-v"
+      description: Show SHA1 and commit subject line
+  - name: delete
+    belongs_to: branch
+    cli_flag: "-d"
+    description: Delete a branch
+    arguments:
+    - name: branch_name
+      type: string
+      required: true
+      description: Name of the branch to delete
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force deletion even if not merged
+  - name: delete_force
+    belongs_to: branch
+    cli_flag: "-D"
+    description: Force delete a branch
+    arguments:
+    - name: branch_name
+      type: string
+      required: true
+      description: Name of the branch to delete
+  - name: rename
+    belongs_to: branch
+    cli_flag: "-m"
+    description: Rename a branch
+    arguments:
+    - name: old_name
+      type: string
+      required: false
+      description: Current branch name
+    - name: new_name
+      type: string
+      required: false
+      description: New branch name
+  - name: list
+    belongs_to: stash
+    description: List stashed changes
+    flags:
+    - name: porcelain
+      cli: "--porcelain"
+  - name: save
+    belongs_to: stash
+    description: Save changes to stash
+    arguments:
+    - name: message
+      type: string
+      required: false
+      description: Stash message
+    flags:
+    - name: keep_index
+      cli: "--keep-index"
+    - name: include_untracked
+      cli: "-u"
+    - name: all
+      cli: "-a"
+  - name: pop
+    belongs_to: stash
+    description: Apply and remove stashed changes
+    arguments:
+    - name: stash_ref
+      type: string
+      required: false
+      description: 'Stash reference (default: stash@{0})'
+    flags:
+    - name: index
+      cli: "--index"
+  - name: apply
+    belongs_to: stash
+    description: Apply stashed changes
+    arguments:
+    - name: stash_ref
+      type: string
+      required: false
+      description: 'Stash reference (default: stash@{0})'
+    flags:
+    - name: index
+      cli: "--index"
+  - name: drop
+    belongs_to: stash
+    description: Remove a single stashed state
+    arguments:
+    - name: stash_ref
+      type: string
+      required: false
+      description: 'Stash reference (default: stash@{0})'
+  - name: clear
+    belongs_to: stash
+    description: Remove all stashed states
+smoke_tests:
+- name: version
+  description: Verify git version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

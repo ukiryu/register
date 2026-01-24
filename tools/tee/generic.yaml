@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: tee
+display_name: tee (read stdin and write to files)
+homepage: https://www.gnu.org/software/coreutils/
+"$self": https://www.ukiryu.com/register/1.0/tee/0.1
+version: generic
+aliases:
+- tee
+version_detection:
+  detection_methods:
+    - type: command
+      command: "--version"
+      pattern: tee \(GNU coreutils\) ([\d.]+)
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/tee.1
+        linux: /usr/share/man/man1/tee.1
+  system_tool: true
+  modern_threshold: '8.0'
+search_paths:
+  macos:
+  - "/usr/bin/tee"
+  - "/opt/homebrew/bin/tee"
+  linux:
+  - "/usr/bin/tee"
+  windows:
+  - C:/Program Files/Git/usr/bin/tee.exe
+timeout: 300
+profiles:
+- name: unix
+  display_name: tee on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Read stdin and write to files and stdout
+    usage: tee [options] file...
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to write to
+    options:
+    - name: append
+      cli: "-a"
+      assignment_delimiter: none
+      description: Append to files
+    - name: ignore_interrupts
+      cli: "-i"
+      assignment_delimiter: none
+      description: Ignore interrupt signals
+    - name: error
+      cli: "-p"
+      assignment_delimiter: none
+      description: Write errors to pipe
+      include_platforms:
+      - linux
+    flags:
+    - name: append
+      cli: "-a"
+      description: Append to files
+      default: false
+      assignment_delimiter: none
+    - name: ignore_interrupts
+      cli: "-i"
+      description: Ignore interrupts
+      default: false
+      assignment_delimiter: none
+    name: redirect

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: zip
@@ -7,10 +7,10 @@ homepage: https://infozip.sourceforge.net/Zip.html
 "$self": https://www.ukiryu.com/register/1.0/zip/3.0
 version: '3.0'
 aliases:
-  - zip
+- zip
 version_detection:
   command: "-h"
-  pattern: "Zip ([\\d.]+)"
+  pattern: Zip ([\d.]+)
   modern_threshold: '3.0'
 search_paths:
   macos:
@@ -21,8 +21,8 @@ search_paths:
   - "/usr/bin/zip"
   - "/usr/local/bin/zip"
   windows:
-  - "C:/Program Files/Git/usr/bin/zip.exe"
-  - "C:/msys64/usr/bin/zip.exe"
+  - C:/Program Files/Git/usr/bin/zip.exe
+  - C:/msys64/usr/bin/zip.exe
 timeout: 600
 profiles:
 - name: unix
@@ -51,7 +51,6 @@ profiles:
       position: last
       description: Files to add to archive
     options:
-    # Main options
     - name: recursive
       cli: "-r"
       assignment_delimiter: none
@@ -80,7 +79,6 @@ profiles:
       cli: "-m"
       assignment_delimiter: none
       description: Delete files after adding
-    # Compression options
     - name: compression_level
       type: integer
       cli: "-[0-9]"
@@ -106,7 +104,6 @@ profiles:
       cli: "-0"
       assignment_delimiter: none
       description: Store without compression
-    # Path options
     - name: paths
       cli: "-p"
       assignment_delimiter: none
@@ -115,7 +112,6 @@ profiles:
       cli: "-y"
       assignment_delimiter: none
       description: Store symlinks as such
-    # Other options
     - name: exclude
       cli: "-x"
       assignment_delimiter: auto
@@ -174,3 +170,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: create
+smoke_tests:
+- name: version
+  description: Verify zip version
+  command:
+  - "-h"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

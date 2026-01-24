@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: scp
@@ -7,10 +7,10 @@ homepage: https://www.openssh.com/
 "$self": https://www.ukiryu.com/register/1.0/scp/9.9
 version: '9.9'
 aliases:
-  - scp
+- scp
 version_detection:
   command: "-V"
-  pattern: "scp: Remotely ([\\d.]+)|OpenSSH_([\\d.]+)"
+  pattern: 'scp: Remotely ([\d.]+)|OpenSSH_([\d.]+)'
   modern_threshold: '8.0'
 search_paths:
   macos:
@@ -21,8 +21,8 @@ search_paths:
   - "/usr/bin/scp"
   - "/usr/local/bin/scp"
   windows:
-  - "C:/Windows/System32/OpenSSH/scp.exe"
-  - "C:/Program Files/Git/usr/bin/scp.exe"
+  - C:/Windows/System32/OpenSSH/scp.exe
+  - C:/Program Files/Git/usr/bin/scp.exe
 timeout: 600
 profiles:
 - name: unix
@@ -44,7 +44,7 @@ profiles:
       type: string
       variadic: true
       required: true
-      position: not_last
+      position: first
       description: Source files/directories
     - name: target
       type: string
@@ -52,7 +52,6 @@ profiles:
       position: last
       description: Target destination
     options:
-    # Main options
     - name: preserve
       cli: "-p"
       assignment_delimiter: none
@@ -73,7 +72,6 @@ profiles:
       cli: "-C"
       assignment_delimiter: none
       description: Enable compression
-    # Protocol selection
     - name: sftp_protocol
       cli: "-s"
       assignment_delimiter: none
@@ -82,7 +80,6 @@ profiles:
       cli: "-O"
       assignment_delimiter: none
       description: Use legacy SCP protocol
-    # Remote transfer options
     - name: through_local
       cli: "-3"
       assignment_delimiter: none
@@ -91,7 +88,6 @@ profiles:
       cli: "-R"
       assignment_delimiter: none
       description: Copy from remote origin to destination
-    # SSH options
     - name: port
       type: integer
       cli: "-P"
@@ -119,7 +115,6 @@ profiles:
       cli: "-S"
       assignment_delimiter: auto
       description: SSH program
-    # Authentication
     - name: batch_mode
       cli: "-B"
       assignment_delimiter: none
@@ -132,13 +127,11 @@ profiles:
       cli: "-J"
       assignment_delimiter: auto
       description: Jump host
-    # Limit options
     - name: limit
       type: integer
       cli: "-l"
       assignment_delimiter: auto
       description: Bandwidth limit (Kbit/s)
-    # Other options
     - name: ipv4
       cli: "-4"
       assignment_delimiter: none
@@ -203,3 +196,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: copy
+smoke_tests:
+- name: version
+  description: Verify scp version
+  command:
+  - "-V"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

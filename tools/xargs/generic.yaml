@@ -1,0 +1,148 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: xargs
+display_name: xargs (build command from stdin)
+homepage: https://www.gnu.org/software/findutils/
+"$self": https://www.ukiryu.com/register/1.0/xargs/0.1
+version: generic
+aliases:
+- xargs
+version_detection:
+  detection_methods:
+    - type: command
+      command: "--version"
+      pattern: xargs \(GNU findutils\) ([\d.]+)
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/xargs.1
+        linux: /usr/share/man/man1/xargs.1
+  modern_threshold: '4.0'
+  system_tool: true
+search_paths:
+  macos:
+  - "/usr/bin/xargs"
+  - "/opt/homebrew/bin/xargs"
+  linux:
+  - "/usr/bin/xargs"
+  windows:
+  - C:/Program Files/Git/usr/bin/xargs.exe
+timeout: 300
+profiles:
+- name: unix
+  display_name: xargs on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  commands:
+  - description: Build command from standard input
+    usage: xargs [options] [command [args...]]
+    arguments:
+    - name: command
+      type: string
+      required: false
+      position: first
+      description: Command to execute
+    - name: args
+      type: string
+      variadic: true
+      position: last
+      description: Initial arguments
+    options:
+    - name: zero_delimiter
+      cli: "-0"
+      assignment_delimiter: none
+      description: NUL-terminated input
+    - name: delimiter
+      cli: "-d"
+      assignment_delimiter: auto
+      description: Custom delimiter
+      include_platforms:
+      - linux
+    - name: eof
+      cli: "-E"
+      assignment_delimiter: auto
+      description: EOF string
+    - name: eof_str
+      cli: "-e"
+      assignment_delimiter: auto
+      description: EOF string (deprecated)
+    - name: max_args
+      cli: "-n"
+      assignment_delimiter: auto
+      description: Max arguments per command
+    - name: max_lines
+      cli: "-L"
+      assignment_delimiter: auto
+      description: Max lines per command
+    - name: max_procs
+      cli: "-P"
+      assignment_delimiter: auto
+      description: Max processes
+    - name: max_chars
+      cli: "-s"
+      assignment_delimiter: auto
+      description: Max characters per command
+    - name: interactive
+      cli: "-p"
+      assignment_delimiter: none
+      description: Prompt before execution
+    - name: verbose
+      cli: "-t"
+      assignment_delimiter: none
+      description: Print commands
+    - name: dry_run
+      cli: "--dry-run"
+      assignment_delimiter: none
+      description: Print without execution
+      include_platforms:
+      - linux
+    - name: no_run_if_empty
+      cli: "-r"
+      assignment_delimiter: none
+      description: Do not run if empty
+    - name: replace
+      cli: "-I"
+      assignment_delimiter: auto
+      description: Replace str in initial arguments
+    - name: replace_str
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Replace occurrences of str
+      include_platforms:
+      - linux
+    flags:
+    - name: zero_delimiter_flag
+      cli: "-0"
+      description: NUL terminated
+      default: false
+      assignment_delimiter: none
+    - name: interactive
+      cli: "-p"
+      description: Prompt
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-t"
+      description: Verbose
+      default: false
+      assignment_delimiter: none
+    - name: no_run_if_empty
+      cli: "-r"
+      description: No run if empty
+      default: false
+      assignment_delimiter: none
+    - name: dry_run
+      cli: "--dry-run"
+      description: Dry run
+      default: false
+      assignment_delimiter: none
+      include_platforms:
+      - linux
+    name: execute

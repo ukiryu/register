@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: lsof
@@ -7,10 +7,10 @@ homepage: https://github.com/lsof-org/lsof
 "$self": https://www.ukiryu.com/register/1.0/lsof/4.99
 version: '4.99'
 aliases:
-  - lsof
+- lsof
 version_detection:
   command: "-v"
-  pattern: "revision: ([\\d.]+)"
+  pattern: 'revision: ([\d.]+)'
   modern_threshold: '4.90'
 search_paths:
   macos:
@@ -21,7 +21,7 @@ search_paths:
   - "/usr/bin/lsof"
   - "/usr/local/bin/lsof"
   windows:
-  - "C:/Program Files/Git/usr/bin/lsof.exe"
+  - C:/Program Files/Git/usr/bin/lsof.exe
 timeout: 300
 profiles:
 - name: unix
@@ -45,7 +45,6 @@ profiles:
       position: last
       description: Files to query
     options:
-    # Output options
     - name: no_preamble
       cli: "-p"
       assignment_delimiter: none
@@ -66,7 +65,6 @@ profiles:
       cli: "-t"
       assignment_delimiter: none
       description: No header
-    # Process options
     - name: process
       cli: "-p"
       assignment_delimiter: auto
@@ -87,7 +85,6 @@ profiles:
       cli: "-i"
       assignment_delimiter: auto
       description: Internet files
-    # File options
     - name: regular
       cli: "-a"
       assignment_delimiter: none
@@ -100,7 +97,6 @@ profiles:
       cli: "-L"
       assignment_delimiter: none
       description: Symbolic link
-    # Repeat options
     - name: repeat
       cli: "+r"
       assignment_delimiter: none
@@ -136,3 +132,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: list
+smoke_tests:
+- name: version
+  description: Verify lsof version
+  command:
+  - "-v"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

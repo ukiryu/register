@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
 name: ssh
@@ -7,10 +7,10 @@ homepage: https://www.openssh.com/
 "$self": https://www.ukiryu.com/register/1.0/ssh/9.9
 version: '9.9'
 aliases:
-  - ssh
+- ssh
 version_detection:
   command: "-V"
-  pattern: "OpenSSH_([\\d.]+)"
+  pattern: OpenSSH_([\d.]+)
   modern_threshold: '8.0'
 search_paths:
   macos:
@@ -21,8 +21,8 @@ search_paths:
   - "/usr/bin/ssh"
   - "/usr/local/bin/ssh"
   windows:
-  - "C:/Windows/System32/OpenSSH/ssh.exe"
-  - "C:/Program Files/Git/usr/bin/ssh.exe"
+  - C:/Windows/System32/OpenSSH/ssh.exe
+  - C:/Program Files/Git/usr/bin/ssh.exe
 timeout: 300
 profiles:
 - name: unix
@@ -51,7 +51,6 @@ profiles:
       position: last
       description: Command to execute on remote host
     options:
-    # Protocol options
     - name: ipv4
       cli: "-4"
       assignment_delimiter: none
@@ -60,7 +59,6 @@ profiles:
       cli: "-6"
       assignment_delimiter: none
       description: Use IPv6 only
-    # Authentication
     - name: identity_file
       type: file
       cli: "-i"
@@ -82,7 +80,6 @@ profiles:
       cli: "-o HostKeyAlgorithms"
       assignment_delimiter: equals
       description: Host key algorithms
-    # Connection options
     - name: port
       type: integer
       cli: "-p"
@@ -104,7 +101,6 @@ profiles:
       cli: "-o ServerAliveCountMax"
       assignment_delimiter: equals
       description: Server alive count max
-    # Forwarding options
     - name: local_forward
       cli: "-L"
       assignment_delimiter: auto
@@ -129,7 +125,6 @@ profiles:
       cli: "-Y"
       assignment_delimiter: none
       description: Forward X11 (trusted)
-    # Other options
     - name: compression
       cli: "-C"
       assignment_delimiter: none
@@ -246,3 +241,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: connect
+smoke_tests:
+- name: version
+  description: Verify ssh version
+  command:
+  - "-V"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0
