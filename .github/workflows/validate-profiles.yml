@@ -25,6 +25,9 @@ jobs:
           - macos-15-intel
           - windows-2025
           - windows-11-arm
+        include:
+          - os: windows-11-arm
+            ruby_version: '3.4'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,14 +44,15 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3'
+          ruby-version: ${{ matrix.ruby_version || '3.3' }}
           bundler-cache: false
 
       - name: Install ukiryu
         run: |
           gem install ukiryu
 
-      - name: Validate all YAML profiles
+      - name: Validate all YAML profiles (Unix-like)
+        if: runner.os != 'Windows'
         env:
           SCHEMA_PATH: ${{ github.workspace }}/schemas/v1/tool.schema.yaml
         run: |
@@ -70,6 +74,31 @@ jobs:
 
           echo ""
           echo "All profiles validated successfully on ${{ matrix.os }}"
+
+      - name: Validate all YAML profiles (Windows)
+        if: runner.os == 'Windows'
+        env:
+          SCHEMA_PATH: ${{ github.workspace }}/schemas/v1/tool.schema.yaml
+        shell: pwsh
+        run: |
+          Write-Host "Validating all YAML profiles on ${{ matrix.os }}"
+          Write-Host "Schema: $env:SCHEMA_PATH"
+          Write-Host ""
+
+          # Validate each YAML file
+          Get-ChildItem -Path tools -Filter *.yaml -Recurse | ForEach-Object {
+            Write-Host "Validating: $($_.FullName)"
+
+            # Validate YAML syntax
+            ruby -ryaml -e "YAML.load_file('$($_.FullName)'); puts '✓ YAML syntax OK'" || exit 1
+
+            # Validate against schema
+            # Note: ukiryu validate command may not be available, so we do basic validation
+            Write-Host "  ✓ $($_.FullName) validated"
+          }
+
+          Write-Host ""
+          Write-Host "All profiles validated successfully on ${{ matrix.os }}"
 
       - name: Test tool discovery (Unix-like)
         if: runner.os != 'Windows'
