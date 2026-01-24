@@ -115,5 +115,3 @@ jobs:
           }
 
           Write-Host "Found $found/$total common tools"
-EOF
-echo "Updated GHA workflow with multi-platform matrix"
