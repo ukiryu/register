@@ -107,52 +107,6 @@ profiles:
       cli: "-U"
       assignment_delimiter: none
       description: Unicode escape handling
-    flags:
-    - name: list
-      cli: "-l"
-      description: List contents
-      default: false
-      assignment_delimiter: none
-    - name: test
-      cli: "-t"
-      description: Test archive
-      default: false
-      assignment_delimiter: none
-    - name: quiet
-      cli: "-q"
-      description: Quiet
-      default: false
-      assignment_delimiter: none
-    - name: verbose
-      cli: "-v"
-      description: Verbose
-      default: false
-      assignment_delimiter: none
-    - name: overwrite
-      cli: "-o"
-      description: Overwrite
-      default: false
-      assignment_delimiter: none
-    - name: never_overwrite
-      cli: "-n"
-      description: Never overwrite
-      default: false
-      assignment_delimiter: none
-    - name: junk_paths
-      cli: "-j"
-      description: Junk paths
-      default: false
-      assignment_delimiter: none
-    - name: restore_perms
-      cli: "-K"
-      description: Restore permissions
-      default: false
-      assignment_delimiter: none
-    - name: lowercase
-      cli: "-L"
-      description: Lowercase
-      default: false
-      assignment_delimiter: none
     name: extract
 - name: windows
   display_name: unzip on Windows
@@ -234,52 +188,6 @@ profiles:
       cli: "-U"
       assignment_delimiter: none
       description: Unicode escape handling
-    flags:
-    - name: list
-      cli: "-l"
-      description: List contents
-      default: false
-      assignment_delimiter: none
-    - name: test
-      cli: "-t"
-      description: Test archive
-      default: false
-      assignment_delimiter: none
-    - name: quiet
-      cli: "-q"
-      description: Quiet
-      default: false
-      assignment_delimiter: none
-    - name: verbose
-      cli: "-v"
-      description: Verbose
-      default: false
-      assignment_delimiter: none
-    - name: overwrite
-      cli: "-o"
-      description: Overwrite
-      default: false
-      assignment_delimiter: none
-    - name: never_overwrite
-      cli: "-n"
-      description: Never overwrite
-      default: false
-      assignment_delimiter: none
-    - name: junk_paths
-      cli: "-j"
-      description: Junk paths
-      default: false
-      assignment_delimiter: none
-    - name: restore_perms
-      cli: "-K"
-      description: Restore permissions
-      default: false
-      assignment_delimiter: none
-    - name: lowercase
-      cli: "-L"
-      description: Lowercase
-      default: false
-      assignment_delimiter: none
     name: extract
 smoke_tests:
 - name: version
