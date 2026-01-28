@@ -9,7 +9,7 @@ version: '1.36.1'
 implements: grep
 version_detection:
   command: "--version"
-  pattern: \(BusyBox\) ([\d.]+)
+  pattern: ''
   modern_threshold: '1.30'
 search_paths:
   linux:

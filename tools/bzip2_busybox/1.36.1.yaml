@@ -12,7 +12,7 @@ aliases:
 - bzcat
 version_detection:
   command: "--version"
-  pattern: \(BusyBox\) ([\d.]+)
+  pattern: ''
   modern_threshold: '1.30'
 search_paths:
   linux:
