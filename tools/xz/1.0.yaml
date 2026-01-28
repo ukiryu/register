@@ -1,0 +1,323 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: xz
+display_name: XZ Utils
+homepage: https://tukaani.org/xz/
+"$self": https://www.ukiryu.com/register/1.0/xz/1.0
+version: '1.0'
+aliases:
+- unxz
+- xzcat
+- lzma
+version_detection:
+  command: "--version"
+  pattern: "xz \\(XZ Utils\\) (\\d+\\.\\d+)"
+  modern_threshold: '5.4'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/xz"
+  - "/usr/local/bin/xz"
+  - "/usr/bin/xz"
+  linux:
+  - "/usr/bin/xz"
+  - "/usr/local/bin/xz"
+  windows:
+  - C:/msys64/usr/bin/xz.exe
+  - C:/Program Files/Git/usr/bin/xz.exe
+  - C:/cygwin64/bin/xz.exe
+timeout: 300
+profiles:
+- name: unix
+  display_name: XZ on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - dash
+  - tcsh
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with xz
+    usage: xz [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      max: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Write to standard output
+      assignment_delimiter: auto
+    - name: preset
+      type: string
+      cli: "-"
+      description: Compression preset (0-9, e=extreme)
+      default: "6"
+      assignment_delimiter: auto
+    - name: threads
+      type: integer
+      cli: "-T"
+      description: Number of threads (0=auto)
+      assignment_delimiter: auto
+    flags:
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: test
+      cli: "-t"
+      description: Test integrity
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress xz files
+    usage: xz -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Write to standard output
+      assignment_delimiter: auto
+    - name: threads
+      type: integer
+      cli: "-T"
+      description: Number of threads (0=auto)
+      assignment_delimiter: auto
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: test
+      cli: "-t"
+      description: Test integrity
+      default: false
+      assignment_delimiter: none
+    name: decompress
+  - description: List information about xz files
+    usage: xz -l [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: xz files to list info about
+    options:
+    - name: verbosity
+      type: integer
+      cli: "-v"
+      description: Verbosity level (0-2)
+      assignment_delimiter: auto
+    flags:
+    - name: list
+      cli: "-l"
+      description: List information
+      default: true
+      assignment_delimiter: none
+    name: list
+- name: windows
+  display_name: XZ on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with xz
+    usage: xz [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      max: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Write to standard output
+      assignment_delimiter: auto
+    - name: preset
+      type: string
+      cli: "-"
+      description: Compression preset (0-9, e=extreme)
+      default: "6"
+      assignment_delimiter: auto
+    - name: threads
+      type: integer
+      cli: "-T"
+      description: Number of threads
+      assignment_delimiter: auto
+    flags:
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: test
+      cli: "-t"
+      description: Test integrity
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress xz files
+    usage: xz -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    options:
+    - name: output
+      type: file
+      cli: "-c"
+      description: Write to standard output
+      assignment_delimiter: auto
+    - name: threads
+      type: integer
+      cli: "-T"
+      description: Number of threads
+      assignment_delimiter: auto
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    - name: test
+      cli: "-t"
+      description: Test integrity
+      default: false
+      assignment_delimiter: none
+    name: decompress
+  - description: List information about xz files
+    usage: xz -l [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: xz files to list info about
+    options:
+    - name: verbosity
+      type: integer
+      cli: "-v"
+      description: Verbosity level (0-2)
+      assignment_delimiter: auto
+    flags:
+    - name: list
+      cli: "-l"
+      description: List information
+      default: true
+      assignment_delimiter: none
+    name: list
+smoke_tests:
+- name: version
+  description: Verify xz version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0
