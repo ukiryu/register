@@ -21,9 +21,6 @@ search_paths:
   - "/opt/local/bin/magick"
   - "/usr/local/opt/imagemagick/bin/magick"
   - "/opt/bin/magick"
-  - "/opt/homebrew/bin/convert"
-  - "/usr/local/bin/convert"
-  - "/opt/local/bin/convert"
   linux:
   - "/usr/bin/magick"
   - "/usr/local/bin/magick"
@@ -31,13 +28,9 @@ search_paths:
   - "/var/lib/flatpak/exports/bin/org.imagemagick.ImageMagick"
   - "/opt/bin/magick"
   - "/opt/imagemagick/bin/magick"
-  - "/usr/bin/convert"
-  - "/usr/local/bin/convert"
   windows:
   - C:/Program Files/ImageMagick-*/magick.exe
-  - C:/Program Files/ImageMagick-*/convert.exe
   - C:/Program Files (x86)/ImageMagick-*/magick.exe
-  - C:/Program Files (x86)/ImageMagick-*/convert.exe
   - "%USERPROFILE%/scoop/apps/imagemagick/current/magick.exe"
   - "~/scoop/apps/imagemagick/current/magick.exe"
   - C:/ProgramData/chocolatey/lib/imagemagick/tools/magick.exe
