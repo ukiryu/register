@@ -1,0 +1,187 @@
+---
+ukiryu_schema: '2.0'
+name: convert
+display_name: Image Convert
+version: '1.0'
+description: |
+  Interface for tools that convert between image formats.
+  Defines the contract for image conversion tools like ImageMagick and GraphicsMagick.
+
+# === Discovery Configuration ===
+discovery:
+  # Executables to search for in PATH
+  executables:
+    - convert    # ImageMagick 6.x standalone
+    - magick     # ImageMagick 7.x unified
+    - gm         # GraphicsMagick
+
+  # Version detection patterns
+  version_patterns:
+    - pattern: 'Version: ImageMagick ([\d.]+)'
+      tool: imagemagick
+      modern_threshold: '7.0'
+    - pattern: 'GraphicsMagick ([\d.]+)'
+      tool: graphicsmagick
+
+# === Contract Definition ===
+contract:
+  # Required parameters
+  required_params:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      required: true
+      description: Input file(s) to convert
+      position: last
+
+    - name: output
+      type: file
+      required: true
+      description: Output file path
+      position: last
+
+  # Optional parameters
+  optional_params:
+    - name: resize
+      type: string
+      description: |
+        Resize image dimensions.
+        Examples: '50%', '800x600', 'x400' (width x height)
+      example: '50%'
+
+    - name: quality
+      type: integer
+      min: 1
+      max: 100
+      description: |
+        Compression quality for lossy formats (JPEG, MIFF, PNG).
+        Range: 1-100, where 100 is highest quality
+      example: 85
+
+    - name: strip
+      type: boolean
+      description: Remove all profiles and comments (EXIF, IPTC, etc.)
+
+    - name: flatten
+      type: boolean
+      description: Flatten a sequence of images into one image
+
+    - name: negate
+      type: boolean
+      description: Negate the colors in the image
+
+    - name: flip
+      type: boolean
+      description: Flip image vertically (top to bottom)
+
+    - name: flop
+      type: boolean
+      description: Flop image horizontally (left to right)
+
+    - name: grayscale
+      type: boolean
+      description: Convert image to grayscale
+
+    - name: blur
+      type: string
+      description: |
+        Blur image with Gaussian blur.
+        Format: {radius}x{sigma}, e.g., '0x5' for radius 0, sigma 5
+
+    - name: sharpen
+      type: string
+      description: |
+        Sharpen image with unsharp mask.
+        Format: {radius}x{sigma}
+
+    - name: rotate
+      type: float
+      description: Rotate image by degrees (clockwise)
+
+    - name: background
+      type: string
+      description: Background color for transparent images
+      example: 'white'
+
+  # Required capabilities (all implementations must provide)
+  required_capabilities:
+    - format_conversion
+    - file_input_output
+
+  # Optional capabilities (implementations may support)
+  optional_capabilities:
+    - name: format_png
+      description: Support PNG format (read/write)
+
+    - name: format_jpeg
+      description: Support JPEG format (read/write)
+
+    - name: format_gif
+      description: Support GIF format (read/write)
+
+    - name: format_webp
+      description: Support WebP format (read/write)
+
+    - name: format_tiff
+      description: Support TIFF format (read/write)
+
+    - name: format_bmp
+      description: Support BMP format (read/write)
+
+    - name: format_svg
+      description: Support SVG format (read/write)
+
+    - name: format_pdf
+      description: Support PDF format (read/write)
+
+    - name: resize
+      description: Image resizing capability
+
+    - name: crop
+      description: Image cropping capability
+
+    - name: rotate
+      description: Image rotation capability
+
+    - name: strip_metadata
+      description: Remove EXIF/IPTC metadata
+
+    - name: grayscale
+      description: Convert to grayscale
+
+    - name: blur_sharpen
+      description: Blur and sharpen filters
+
+    - name: multi_page
+      description: Support multi-page images (PDF, GIF, TIFF)
+
+  # Required behavior
+  required_behavior:
+    - Accept one or more input files
+    - Produce a single output file
+    - Convert between at least two image formats
+    - Preserve image data (no data loss in lossless formats)
+
+# === Implementations Registry ===
+implementations:
+  - tool: magick
+    version: '7.1'
+    package: imagemagick
+    invocation_type: subcommand
+    priority: 1
+    description: ImageMagick 7.x unified executable (preferred)
+
+  - tool: convert
+    version: '6.9'
+    package: imagemagick
+    invocation_type: direct
+    priority: 2
+    description: ImageMagick 6.x standalone convert executable
+
+  - tool: gm
+    version: '1.4'
+    package: graphicsmagick
+    invocation_type: subcommand
+    priority: 3
+    description: GraphicsMagick (fork of ImageMagick)

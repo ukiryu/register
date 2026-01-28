@@ -1,0 +1,320 @@
+---
+# yaml-language-server: $schema=../../../../lib/ukiryu/schemas/v2/tool.schema.yaml
+ukiryu_schema: '2.0'
+name: magick
+version: '7.1'
+display_name: ImageMagick 7.x
+description: |
+  ImageMagick 7.x unified command-line tool.
+  Provides convert, identify, mogrify, and other image processing commands.
+homepage: https://imagemagick.org
+
+# === Interface Declarations ===
+implements:
+  - convert
+  - identify
+  - mogrify
+
+# === Version Detection ===
+version_detection:
+  command: -version
+  pattern: 'Version: ImageMagick ([\d.]+)'
+  modern_threshold: '7.0'
+
+# === Invocation Configuration ===
+invocation:
+  type: subcommand
+  multi_call: true
+  symlink_detection: false
+
+# === Search Paths ===
+search_paths:
+  macos:
+    - /opt/homebrew/bin/magick
+    - /usr/local/bin/magick
+    - /opt/local/bin/magick
+  linux:
+    - /usr/bin/magick
+    - /usr/local/bin/magick
+  windows:
+    - C:/Program Files/ImageMagick-*/magick.exe
+    - C:/Program Files/ImageMagick*/magick.exe
+
+# === Timeout ===
+timeout: 300
+
+# === Profiles ===
+profiles:
+  # === Unix Profile ===
+  - name: unix
+    display_name: ImageMagick 7.x on Unix
+    platforms: [macos, linux]
+    shells: [bash, zsh, fish, sh]
+    option_style: single_dash_space
+
+    commands:
+      # Convert Command
+      - name: convert
+        implements: [convert]
+        display_name: Convert Images
+        description: Convert between image formats and apply transformations
+        usage: magick convert [options] input_file output_file
+        subcommand: convert
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            required: true
+            description: Input file(s) to convert
+            position: 99
+
+          - name: output
+            type: file
+            required: true
+            description: Output file
+            position: last
+
+        options:
+          - name: resize
+            type: string
+            cli: -resize
+            format: single_dash_space
+            description: Resize image (e.g., '50%', '800x600')
+
+          - name: quality
+            type: integer
+            cli: -quality
+            format: single_dash_space
+            min: 1
+            max: 100
+            description: JPEG/MIFF/PNG compression level (1-100)
+
+          - name: strip
+            type: boolean
+            cli: -strip
+            format: single_dash_space
+            description: Strip image of all profiles and comments
+
+          - name: flatten
+            type: boolean
+            cli: -flatten
+            format: single_dash_space
+            description: Flatten a sequence of images
+
+          - name: negate
+            type: boolean
+            cli: -negate
+            format: single_dash_space
+            description: Negate the colors
+
+          - name: flip
+            type: boolean
+            cli: -flip
+            format: single_dash_space
+            description: Flip image vertically
+
+          - name: flop
+            type: boolean
+            cli: -flop
+            format: single_dash_space
+            description: Flop image horizontally
+
+          - name: grayscale
+            type: boolean
+            cli: -grayscale
+            format: single_dash_space
+            description: Convert image to grayscale
+
+          - name: blur
+            type: string
+            cli: -blur
+            format: single_dash_space
+            description: Blur image with Gaussian blur
+
+          - name: sharpen
+            type: string
+            cli: -sharpen
+            format: single_dash_space
+            description: Sharpen image
+
+          - name: rotate
+            type: float
+            cli: -rotate
+            format: single_dash_space
+            description: Rotate image by degrees
+
+          - name: background
+            type: string
+            cli: -background
+            format: single_dash_space
+            description: Background color
+
+          - name: density
+            type: string
+            cli: -density
+            format: single_dash_space
+            description: Horizontal and vertical density in pixels
+
+      # Identify Command
+      - name: identify
+        implements: [identify]
+        display_name: Identify Images
+        description: Describe the format and characteristics of image files
+        usage: magick identify [options] input-file
+        subcommand: identify
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            required: true
+            description: Input file(s) to identify
+            position: last
+
+        options:
+          - name: format
+            type: string
+            cli: -format
+            description: Output formatted image characteristics
+
+          - name: verbose
+            type: boolean
+            cli: -verbose
+            default: false
+            description: Print detailed information
+
+          - name: ping
+            type: boolean
+            cli: -ping
+            default: false
+            description: Efficiently determine image attributes
+
+      # Mogrify Command
+      - name: mogrify
+        implements: [mogrify]
+        display_name: Mogrify Images
+        description: Process image files (overwrites original file)
+        usage: magick mogrify [options] input-file
+        subcommand: mogrify
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            required: true
+            description: Input file(s) to modify in place
+            position: last
+
+        options:
+          - name: resize
+            type: string
+            cli: -resize
+            format: single_dash_space
+            description: Resize image
+
+          - name: quality
+            type: integer
+            cli: -quality
+            format: single_dash_space
+            min: 1
+            max: 100
+            description: JPEG/MIFF/PNG compression level
+
+          - name: strip
+            type: boolean
+            cli: -strip
+            format: single_dash_space
+            default: false
+            description: Strip image of all profiles
+
+  # === Windows Profile ===
+  - name: windows
+    display_name: ImageMagick 7.x on Windows
+    platforms: [windows]
+    shells: [powershell, cmd]
+    option_style: single_dash_space
+
+    commands:
+      - name: convert
+        implements: [convert]
+        subcommand: convert
+        description: Convert between image formats
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            required: true
+            position: 99
+
+          - name: output
+            type: file
+            required: true
+            position: last
+
+        options:
+          - name: resize
+            type: string
+            cli: -resize
+            format: single_dash_space
+
+          - name: quality
+            type: integer
+            cli: -quality
+            format: single_dash_space
+            min: 1
+            max: 100
+
+          - name: strip
+            type: boolean
+            cli: -strip
+            format: single_dash_space
+
+      - name: identify
+        implements: [identify]
+        subcommand: identify
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            position: last
+
+        options:
+          - name: format
+            type: string
+            cli: -format
+
+          - name: verbose
+            type: boolean
+            cli: -verbose
+
+      - name: mogrify
+        implements: [mogrify]
+        subcommand: mogrify
+
+        arguments:
+          - name: inputs
+            type: file
+            variadic: true
+            min: 1
+            position: last
+
+        options:
+          - name: resize
+            type: string
+            cli: -resize
+            format: single_dash_space
+
+          - name: quality
+            type: integer
+            cli: -quality
+            format: single_dash_space
+            min: 1
+            max: 100
