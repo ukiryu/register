@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: awk_busybox
+display_name: BusyBox awk (Alpine Linux)
+homepage: https://busybox.net/
+"$self": https://www.ukiryu.com/register/1.0/awk_busybox/1.36.1
+version: '1.36.1'
+implements: awk
+version_detection:
+  command: "--version"
+  pattern: \(BusyBox\) ([\d.]+)
+  modern_threshold: '1.30'
+search_paths:
+  linux:
+  - "/bin/awk"
+  - "/usr/bin/awk"
+timeout: 300
+profiles:
+- name: busybox
+  display_name: BusyBox awk on Linux
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Pattern scanning and processing language
+    usage: awk [options] 'program' [file...]
+    arguments:
+    - name: program
+      type: string
+      required: false
+      position: first
+      description: Awk program to execute
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to process
+    options:
+    - name: file
+      cli: "-f"
+      type: file
+      assignment_delimiter: auto
+      description: Read program from file
+    - name: field_separator
+      cli: "-F"
+      assignment_delimiter: auto
+      description: Field separator
+    - name: value
+      cli: "-v"
+      assignment_delimiter: auto
+      description: Variable assignment
+    name: process
