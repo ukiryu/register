@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/cwebp/1.0
+name: cwebp
+version: '1.0'
+display_name: cwebp - WebP encoder
+homepage: https://developers.google.com/speed/webp/docs/cwebp
+version_detection:
+  command: "-version"
+  pattern: (\d+\.\d+\.\d+)
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/libwebp/current/cwebp.exe"
+  macos:
+  - "/opt/homebrew/bin/cwebp"
+  - "/usr/local/bin/cwebp"
+  linux:
+  - "/usr/bin/cwebp"
+  - "/usr/local/bin/cwebp"
+timeout: 300
+profiles:
+- name: default
+  display_name: cwebp - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: encode
+    display_name: Encode to WebP
+    description: Encode image to WebP format
+    usage: cwebp [options] input.webp output.png
+    arguments:
+    - name: input
+      type: file
+      required: true
+      position: 1
+      description: Input file
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: quality
+      cli: "-q"
+      type: float
+      range:
+      - 0
+      - 100
+      description: Quality (0-100)
+    - name: alpha_quality
+      cli: "-alpha_q"
+      type: float
+      range:
+      - 0
+      - 100
+      description: Alpha quality (0-100)
+    - name: method
+      cli: "-m"
+      type: integer
+      range:
+      - 0
+      - 6
+      description: Compression method (0=fast, 6=slowest)
+    - name: resize
+      cli: "-resize"
+      description: Resize dimensions (e.g., 800x600)
+    - name: crop
+      cli: "-crop"
+      description: Crop rectangle (x,y,w,h)
+    - name: output
+      cli: "-o"
+      description: Output file
+    flags:
+    - name: lossless
+      cli: "-lossless"
+      description: Lossless encoding
+    - name: near_lossless
+      cli: "-near_lossless"
+      type: integer
+      description: Near lossless quality (0-100)
+    - name: alpha
+      cli: "-alpha"
+      description: Use alpha channel
+    - name: no_alpha
+      cli: "-noalpha"
+      description: Disable alpha channel
+    - name: keep_metadata
+      cli: "-metadata"
+      description: Keep metadata
+    - name: mt
+      cli: "-mt"
+      type: boolean
+      description: Multi-threading
+    - name: quiet
+      cli: "-quiet"
+      description: Suppress output
+    - name: help
+      cli: "-h"
+      short: "-long"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "-long"
+  expect:
+    exit_code: 0

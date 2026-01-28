@@ -1,0 +1,251 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/zstd/1.5
+name: zstd
+version: '1.5'
+display_name: zstd - Zstandard compression
+homepage: https://github.com/facebook/zstd
+version_detection:
+  command: "--version"
+  pattern: v(\d+\.\d+)
+  modern_threshold: '1.5'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/zstd/current/zstd.exe"
+  macos:
+  - "/opt/homebrew/bin/zstd"
+  - "/usr/local/bin/zstd"
+  linux:
+  - "/usr/bin/zstd"
+  - "/usr/local/bin/zstd"
+timeout: 300
+profiles:
+- name: default
+  display_name: zstd - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: compress
+    display_name: Compress files
+    description: Compress files using Zstandard algorithm
+    usage: zstd [options] input [output]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input files to compress
+    options:
+    - name: output
+      cli: "-o"
+      type: file
+      description: Output file
+    - name: level
+      cli: "-"
+      type: integer
+      range:
+      - 1
+      - 19
+      description: Compression level (1-19, higher=better)
+    - name: output_dir_flat
+      cli: "--output-dir-flat"
+      description: Store output files in directory
+    - name: output_dir_mirror
+      cli: "--output-dir-mirror"
+      description: Preserve directory structure
+    - name: threads
+      cli: "-T"
+      type: integer
+      description: Number of compression threads (0=core count)
+    - name: format
+      cli: "--format"
+      type: symbol
+      values:
+      - zstd
+      - gzip
+      - xz
+      - lzma
+      description: Output format
+    - name: password
+      cli: "--password"
+      description: Encrypt with password
+    flags:
+    - name: decompress
+      cli: "-d"
+      short: "--decompress"
+      description: Decompress mode
+    - name: keep
+      cli: "-k"
+      short: "--keep"
+      description: Preserve input files
+    - name: rm
+      cli: "--rm"
+      description: Remove input files after (de)compression
+    - name: recursive
+      cli: "-r"
+      description: Operate recursively on directories
+    - name: force
+      cli: "-f"
+      short: "--force"
+      description: Force overwrite, disable checks
+    - name: stdout
+      cli: "-c"
+      short: "--stdout"
+      description: Write to STDOUT
+    - name: ultra
+      cli: "--ultra"
+      description: Enable levels beyond 19, up to 22
+    - name: fast
+      cli: "--fast"
+      description: Use very fast compression levels
+    - name: adapt
+      cli: "--adapt"
+      description: Dynamically adapt compression level
+    - name: verbose
+      cli: "-v"
+      short: "--verbose"
+      description: Enable verbose output
+    - name: quiet
+      cli: "-q"
+      short: "--quiet"
+      description: Suppress warnings
+    - name: help
+      cli: "-H"
+      short: "--help"
+      description: Show help
+
+  - name: decompress
+    display_name: Decompress files
+    description: Decompress zstd files
+    usage: zstd -d [options] input.zst [output]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input files to decompress
+    options:
+    - name: output
+      cli: "-o"
+      type: file
+      description: Output file
+    - name: output_dir_flat
+      cli: "--output-dir-flat"
+      description: Store output files in directory
+    - name: output_dir_mirror
+      cli: "--output-dir-mirror"
+      description: Preserve directory structure
+    - name: threads
+      cli: "-T"
+      type: integer
+      description: Number of threads (0=core count)
+    flags:
+    - name: keep
+      cli: "-k"
+      short: "--keep"
+      description: Preserve input files
+    - name: rm
+      cli: "--rm"
+      description: Remove input files after decompression
+    - name: recursive
+      cli: "-r"
+      description: Operate recursively on directories
+    - name: force
+      cli: "-f"
+      short: "--force"
+      description: Force overwrite
+    - name: stdout
+      cli: "-c"
+      short: "--stdout"
+      description: Write to STDOUT
+    - name: verbose
+      cli: "-v"
+      short: "--verbose"
+      description: Enable verbose output
+    - name: quiet
+      cli: "-q"
+      short: "--quiet"
+      description: Suppress warnings
+    - name: help
+      cli: "-H"
+      short: "--help"
+      description: Show help
+
+  - name: test
+    display_name: Test compressed files
+    description: Test integrity of compressed files
+    usage: zstd -t [options] files.zst
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Compressed files to test
+    options:
+    - name: threads
+      cli: "-T"
+      type: integer
+      description: Number of threads
+    flags:
+    - name: recursive
+      cli: "-r"
+      description: Operate recursively on directories
+    - name: verbose
+      cli: "-v"
+      short: "--verbose"
+      description: Enable verbose output
+    - name: quiet
+      cli: "-q"
+      short: "--quiet"
+      description: Suppress warnings
+    - name: help
+      cli: "-H"
+      short: "--help"
+      description: Show help
+
+  - name: list
+    display_name: List compressed contents
+    description: List contents of compressed files
+    usage: zstd -l [options] files.zst
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Compressed files to list
+    options:
+    - name: output_dir_mirror
+      cli: "--output-dir-mirror"
+      description: Test files in output directory
+    flags:
+    - name: verbose
+      cli: "-v"
+      short: "--verbose"
+      description: Show detailed information
+    - name: help
+      cli: "-H"
+      short: "--help"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

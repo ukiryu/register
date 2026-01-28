@@ -1,6 +1,6 @@
 ---
-# yaml-language-server: $schema=../../../../lib/ukiryu/schemas/v2/tool.schema.yaml
-ukiryu_schema: '2.0'
+# yaml-language-server: $schema=../../../../lib/ukiryu/schemas/v1/tool.schema.yaml
+ukiryu_schema: '1.0'
 name: convert
 version: '6.9'
 display_name: ImageMagick 6.x Convert

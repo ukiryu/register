@@ -1,0 +1,134 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/ripgrep-all/0.1
+name: ripgrep-all
+version: '0.1'
+display_name: ripgrep-all - Document search
+homepage: https://github.com/phiresky/ripgrep-all
+version_detection:
+  command: "--version"
+  pattern: 'ripgrep-all (\d+\.\d+)'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/ripgrep-all/current/rga.exe"
+  - "%USERPROFILE%/scoop/apps/ripgrep-all/current/ripgrep-all.exe"
+  macos:
+  - "/opt/homebrew/bin/rga"
+  - "/usr/local/bin/rga"
+  linux:
+  - "/usr/bin/rga"
+  - "/usr/local/bin/rga"
+timeout: 300
+profiles:
+- name: default
+  display_name: ripgrep-all - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: search
+    display_name: Search documents
+    description: Search text in documents (PDF, Office, etc.)
+    usage: "rga pattern [path...]"
+    arguments:
+    - name: pattern
+      type: string
+      required: true
+      position: 1
+      description: Search pattern
+    - name: paths
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: Paths to search
+    options:
+    - name: context
+      cli: "-C"
+      type: integer
+      description: Context lines
+    - name: before_context
+      cli: "-B"
+      type: integer
+      description: Lines before match
+    - name: after_context
+      cli: "-A"
+      type: integer
+      description: Lines after match
+    - name: max_count
+      cli: "-m"
+      type: integer
+      description: Max matches per file
+    - name: max_depth
+      cli: "-d"
+      type: integer
+      description: Max search depth
+    - name: glob
+      cli: "-g"
+      description: Glob file pattern
+    flags:
+    - name: ignore_case
+      cli: "-i"
+      description: Case insensitive
+    - name: case_sensitive
+      cli: "-s"
+      description: Case sensitive
+    - name: word_match
+      cli: "-w"
+      description: Match whole words
+    - name: fixed_string
+      cli: "-F"
+      description: Literal string (not regex)
+    - name: count
+      cli: "-c"
+      description: Count matches only
+    - name: files_with_matches
+      cli: "-l"
+      description: Files with matches
+    - name: files_without_matches
+      cli: "-L"
+      description: Files without matches
+    - name: hidden
+      cli: "."
+      description: Search hidden files
+    - name: no_ignore
+      cli: "--no-ignore"
+      description: Don't respect ignore files
+    - name: json
+      cli: "--json"
+      description: JSON output
+    - name: pretty
+      cli: "--pretty"
+      description: Pretty print
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: list_adapters
+    display_name: List adapters
+    description: List available document adapters
+    usage: "rga --list-adapters"
+    flags:
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

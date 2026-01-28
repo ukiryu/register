@@ -1,0 +1,212 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/rclone/1.65
+name: rclone
+version: '1.65'
+display_name: rclone - Cloud storage sync
+homepage: https://rclone.org/
+version_detection:
+  command: "--version"
+  pattern: 'rclone v(\d+\.\d+)'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/rclone/current/rclone.exe"
+  macos:
+  - "/opt/homebrew/bin/rclone"
+  - "/usr/local/bin/rclone"
+  linux:
+  - "/usr/bin/rclone"
+  - "/usr/local/bin/rclone"
+timeout: 600
+profiles:
+- name: default
+  display_name: rclone - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_space
+  commands:
+  - name: sync
+    display_name: Sync directories
+    description: Sync source to destination, changing destination only
+    usage: "rclone sync source: remote:path"
+    arguments:
+    - name: source
+      type: string
+      required: true
+      position: 1
+      description: Source path
+    - name: destination
+      type: string
+      required: true
+      position: 2
+      description: Destination path
+    options:
+    - name: config
+      cli: "--config"
+      description: Config file path
+    - name: bwlimit
+      cli: "--bwlimit"
+      description: Bandwidth limit
+    - name: backup_dir
+      cli: "--backup-dir"
+      description: Backup directory for deleted files
+    - name: max_age
+      cli: "--max-age"
+      description: Maximum file age to transfer
+    - name: min_age
+      cli: "--min-age"
+      description: Minimum file age to transfer
+    flags:
+    - name: dry_run
+      cli: "--dry-run"
+      description: Trial run with no changes
+    - name: verbose
+      cli: "--verbose"
+      short: "-v"
+      description: Verbose logging
+    - name: progress
+      cli: "--progress"
+      description: Show progress
+    - name: update
+      cli: "--update"
+      description: Skip files that are newer on destination
+    - name: create_empty_src_dirs
+      cli: "--create-empty-src-dirs"
+      description: Create empty source directories
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: copy
+    display_name: Copy files
+    description: Copy files from source to destination
+    usage: "rclone copy source: remote:path"
+    arguments:
+    - name: source
+      type: string
+      required: true
+      position: 1
+      description: Source path
+    - name: destination
+      type: string
+      required: true
+      position: 2
+      description: Destination path
+    options:
+    - name: config
+      cli: "--config"
+      description: Config file path
+    - name: bwlimit
+      cli: "--bwlimit"
+      description: Bandwidth limit
+    flags:
+    - name: dry_run
+      cli: "--dry-run"
+      description: Trial run with no changes
+    - name: verbose
+      cli: "--verbose"
+      short: "-v"
+      description: Verbose logging
+    - name: progress
+      cli: "--progress"
+      description: Show progress
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: list
+    display_name: List files
+    description: List files and directories in the source
+    usage: "rclone ls remote:path"
+    arguments:
+    - name: path
+      type: string
+      required: true
+      position: last
+      description: Remote path to list
+    options:
+    - name: config
+      cli: "--config"
+      description: Config file path
+    flags:
+    - name: long
+      cli: "--long"
+      short: "-l"
+      description: Long format
+    - name: dirs_only
+      cli: "--dirs-only"
+      description: List only directories
+    - name: files_only
+      cli: "--files-only"
+      description: List only files
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: mkdir
+    display_name: Create directory
+    description: Create directory in remote
+    usage: "rclone mkdir remote:path"
+    arguments:
+    - name: path
+      type: string
+      required: true
+      position: last
+      description: Remote path to create
+    options:
+    - name: config
+      cli: "--config"
+      description: Config file path
+    flags:
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: delete
+    display_name: Delete files
+    description: Delete files in remote
+    usage: "rclone delete remote:path"
+    arguments:
+    - name: path
+      type: string
+      required: true
+      position: last
+      description: Remote path to delete from
+    options:
+    - name: config
+      cli: "--config"
+      description: Config file path
+    flags:
+    - name: dry_run
+      cli: "--dry-run"
+      description: Trial run with no changes
+    - name: verbose
+      cli: "--verbose"
+      short: "-v"
+      description: Verbose logging
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

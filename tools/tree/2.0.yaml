@@ -1,0 +1,132 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/tree/2.0
+name: tree
+version: '2.0'
+display_name: tree - Directory tree
+homepage: http://mama.indstate.edu/users/ice/tree/
+version_detection:
+  command: "--version"
+  pattern: 'tree v(\d+\.\d+)'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/tree/current/tree.exe"
+  macos:
+  - "/opt/homebrew/bin/tree"
+  - "/usr/local/bin/tree"
+  linux:
+  - "/usr/bin/tree"
+  - "/usr/local/bin/tree"
+timeout: 60
+profiles:
+- name: default
+  display_name: tree - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: list
+    display_name: List directory tree
+    description: List directory structure in tree format
+    usage: 'tree [options] [directory]'
+    arguments:
+    - name: directory
+      type: file
+      required: false
+      position: last
+      description: 'Directory to list (default: current)'
+    options:
+    - name: level
+      cli: "-L"
+      type: integer
+      description: Max depth level
+    - name: output
+      cli: "-o"
+      type: file
+      description: Output to file
+    - name: pattern
+      cli: "-P"
+      description: Pattern filter
+    - name: ignore
+      cli: "-I"
+      description: Ignore pattern
+    - name: sort
+      cli: "--sort"
+      type: symbol
+      values:
+      - name
+      - size
+      - mtime
+      - version
+      description: Sort order
+    flags:
+    - name: all
+      cli: "-a"
+      description: List all files
+    - name: dirs_only
+      cli: "-d"
+      description: List directories only
+    - name: full_path
+      cli: "-f"
+      description: Print full path prefix
+    - name: no_indent
+      cli: "-i"
+      description: Don't print indentation lines
+    - name: files_only
+      cli: "--filesfirst"
+      description: Files before directories
+    - name: dirs_first
+      cli: "--dirsfirst"
+      description: Directories before files
+    - name: size
+      cli: "-s"
+      description: Print file size
+    - name: human_readable
+      cli: "-h"
+      description: Human readable sizes
+    - name: du
+      cli: "-D"
+      description: Compute directory size
+    - name: prune
+      cli: "-P"
+      description: Prune empty directories
+    - name: permissions
+      cli: "-p"
+      description: Print permissions
+    - name: owner
+      cli: "-u"
+      description: Print owner
+    - name: group
+      cli: "-g"
+      description: Print group
+    - name: time
+      cli: "-t"
+      description: Print last modification time
+    - name: no_files
+      cli: "--nofiles"
+      description: Don't print files
+    - name: no_dirs
+      cli: "--nodirs"
+      description: Don't print directories
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

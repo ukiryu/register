@@ -1,0 +1,124 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/gifsicle/1.95
+name: gifsicle
+version: '1.95'
+display_name: gifsicle - GIF optimization
+homepage: https://www.lcdf.org/gifsicle/
+version_detection:
+  command: "--version"
+  pattern: gifsicle (\d+\.\d+)
+  modern_threshold: '1.90'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/gifsicle/current/gifsicle.exe"
+  macos:
+  - "/opt/homebrew/bin/gifsicle"
+  - "/usr/local/bin/gifsicle"
+  linux:
+  - "/usr/bin/gifsicle"
+  - "/usr/local/bin/gifsicle"
+timeout: 300
+profiles:
+- name: default
+  display_name: gifsicle - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: optimize
+    display_name: Optimize GIF
+    description: Optimize GIF file
+    usage: gifsicle [options] input.gif -O output.gif
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input GIF files
+    options:
+    - name: output
+      cli: "-o"
+      description: Output file
+    - name: optimize
+      cli: "-O"
+      type: integer
+      range:
+      - 1
+      - 3
+      description: Optimization level (1-3)
+    - name: lossy
+      cli: "--lossy"
+      type: boolean
+      description: Lossy optimization (better compression)
+    - name: colors
+      cli: "--colors"
+      type: integer
+      description: Reduce number of colors
+    - name: color_method
+      cli: "--color-method"
+      type: symbol
+      values:
+      - diversified
+      - blend-diversity
+      - median-cut
+      description: Color reduction method
+    - name: dither
+      cli: "--dither"
+      type: symbol
+      values:
+      - fs8
+      - bayer
+      - ordered
+      description: Dithering method
+    - name: care
+      cli: "--careful"
+      type: boolean
+      description: Write larger GIF but avoid bugs
+    flags:
+    - name: batch
+      cli: "-b"
+      description: Batch mode
+    - name: info
+      cli: "-I"
+      description: Show GIF information only
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: info
+    display_name: Show GIF info
+    description: Display GIF information
+    usage: gifsicle -I input.gif
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input GIF files
+    flags:
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

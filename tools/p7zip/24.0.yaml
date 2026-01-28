@@ -1,0 +1,259 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/p7zip/24.0
+name: p7zip
+version: '24.0'
+display_name: 7-Zip
+homepage: https://www.7-zip.org/
+version_detection:
+  command: "--help"
+  pattern: '7-Zip (\d+\.\d+)'
+  modern_threshold: '24.0'
+search_paths:
+  windows:
+  - C:/Program Files/7-Zip/7z.exe
+  - C:/Program Files (x86)/7-Zip/7z.exe
+  - "%USERPROFILE%/scoop/apps/7zip/current/7z.exe"
+  macos:
+  - "/opt/homebrew/bin/7z"
+  - "/usr/local/bin/7z"
+  linux:
+  - "/usr/bin/7z"
+  - "/usr/local/bin/7z"
+timeout: 300
+profiles:
+- name: default
+  display_name: 7-Zip - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: archive
+    display_name: Create archive
+    description: Create a 7z archive
+    usage: 7z a archive.7z [files...]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Files/directories to archive
+    options:
+    - name: archive
+      type: file
+      required: true
+      cli: "-t"
+      description: Archive type (7z, zip, gzip, bzip2, tar)
+    - name: output
+      type: file
+      required: true
+      cli: "-o"
+      description: Output archive file
+    - name: compression
+      type: integer
+      cli: "-mx"
+      range:
+      - 0
+      - 9
+      description: Compression level (0-9, default 5)
+    - name: method
+      type: symbol
+      cli: "-m"
+      values:
+      - copy
+      - deflate
+      - bzip2
+      - lzma
+      - lzma2
+      description: Compression method
+    - name: password
+      type: string
+      cli: "-p"
+      description: Password protection
+    - name: volumes
+      cli: "-v"
+      type: boolean
+      description: Create volumes
+    - name: solid
+      cli: "-s"
+      type: boolean
+      description: Create solid archive
+    - name: delete
+      cli: "-sdel"
+      type: boolean
+      description: Delete files after compression
+    - name: include
+      cli: "-i"
+      type: array
+      of: string
+      description: Include filenames
+    - name: exclude
+      cli: "-x"
+      type: array
+      of: string
+      description: Exclude filenames
+    flags:
+    - name: yes
+      cli: "-y"
+      description: Assume yes on all queries
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: extract
+    display_name: Extract archive
+    description: Extract files from archive
+    usage: 7z x archive.7z [files...]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: Specific files to extract (empty = all)
+    options:
+    - name: output
+      type: string
+      cli: "-o"
+      description: Output directory
+    - name: password
+      type: string
+      cli: "-p"
+      description: Archive password
+    - name: include
+      cli: "-i"
+      type: array
+      of: string
+      description: Include filenames
+    - name: exclude
+      cli: -x
+      type: array
+      of: string
+      description: Exclude filenames
+    - name: overwrite
+      cli: "-ao"
+      type: symbol
+      values:
+      - a
+      - t
+      - u
+      description: Overwrite mode
+    flags:
+    - name: yes
+      cli: "-y"
+      description: Assume yes on all queries
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: list
+    display_name: List archive
+    description: List archive contents
+    usage: 7z l archive.7z [files...]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Archive file(s) to list
+    options:
+    - name: password
+      type: string
+      cli: "-p"
+      description: Archive password
+    - name: include
+      cli: "-i"
+      type: array
+      of: string
+      description: Include filenames
+    - name: exclude
+      cli: -x
+      type: array
+      of: string
+      description: Exclude filenames
+    flags:
+    - name: technical
+      cli: "-slt"
+      description: Technical information
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: test
+    display_name: Test archive
+    description: Test archive integrity
+    usage: 7z t archive.7z [files...]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Archive file(s) to test
+    options:
+    - name: password
+      type: string
+      cli: "-p"
+      description: Archive password
+    flags:
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: update
+    display_name: Update archive
+    description: Update existing archive
+    usage: 7z u archive.7z [files...]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Files/directories to update
+    options:
+    - name: output
+      type: file
+      required: true
+      cli: "-o"
+      description: Archive file to update
+    - name: password
+      type: string
+      cli: "-p"
+      description: Archive password
+    - name: delete
+      cli: "-sd"
+      type: boolean
+      description: Delete files after compression
+    flags:
+    - name: yes
+      cli: "-y"
+      description: Assume yes on all queries
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

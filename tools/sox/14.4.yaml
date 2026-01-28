@@ -1,0 +1,202 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/sox/14.4
+name: sox
+version: '14.4'
+display_name: SoX - Sound Exchange
+homepage: https://sox.sourceforge.net/
+version_detection:
+  command: "--version"
+  pattern: 'SoX v(\d+\.\d+)'
+  modern_threshold: '14.0'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/sox/current/sox.exe"
+  - C:/Program Files/sox/sox.exe
+  macos:
+  - "/opt/homebrew/bin/sox"
+  - "/usr/local/bin/sox"
+  linux:
+  - "/usr/bin/sox"
+  - "/usr/local/bin/sox"
+timeout: 300
+profiles:
+- name: default
+  display_name: SoX - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: convert
+    display_name: Convert audio
+    description: Convert audio file format
+    usage: sox input.mp3 output.wav [effects...]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: 1
+      description: Input files
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: rate
+      type: integer
+      cli: "-r"
+      description: Sample rate in Hz
+    - name: channels
+      type: integer
+      cli: "-c"
+      description: Number of channels (1=mono, 2=stereo)
+    - name: bits
+      type: integer
+      cli: "-b"
+      description: Sample size in bits
+    - name: encoding
+      type: string
+      cli: "-e"
+      description: Encoding type (signed-integer, unsigned-integer, etc.)
+    flags:
+    - name: verbose
+      cli: "-V"
+      description: Verbose mode
+    - name: help
+      cli: "-h"
+      description: Show help
+
+  - name: info
+    display_name: Audio info
+    description: Display audio file information
+    usage: sox --info file.mp3
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input files
+    options:
+    - name: verbose
+      cli: "-V"
+      type: boolean
+      description: Show more information
+    flags:
+    - name: help
+      cli: "-h"
+      description: Show help
+
+  - name: trim
+    display_name: Trim audio
+    description: Trim audio from start/end
+    usage: sox input.mp3 output.mp3 trim 0 10
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: 1
+      description: Input files
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: start
+      type: string
+      cli: "|trim"
+      description: Start position (e.g., 0, 0:00, 00:00:30)
+    - name: duration
+      type: string
+      cli: "|trim"
+      description: Duration to trim (e.g., 10, 0:30, 00:01:30)
+    flags:
+    - name: help
+      cli: "-h"
+      description: Show help
+
+  - name: fade
+    display_name: Fade audio
+    description: Add fade in/out
+    usage: sox input.mp3 output.mp3 fade q 3
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: 1
+      description: Input files
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: fade_in
+      type: string
+      cli: "|fade"
+      description: Fade in (e.g., q 3 for quadratic 3 seconds)
+    - name: fade_out
+      type: string
+      cli: "|reverse|fade"
+      description: Fade out (e.g., q 3 for quadratic 3 seconds)
+    flags:
+    - name: help
+      cli: "-h"
+      description: Show help
+
+  - name: volume
+    display_name: Adjust volume
+    description: Adjust audio volume
+    usage: sox input.mp3 output.mp3 gain -3
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: 1
+      description: Input files
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: gain
+      type: float
+      cli: "|gain"
+      description: Volume adjustment in dB (negative = quieter, positive = louder)
+    - name: normalize
+      cli: "-n"
+      type: boolean
+      description: Normalize audio to peak level
+    - name: gain_option
+      cli: "-G"
+      type: boolean
+      description: Use gain option
+    flags:
+    - name: help
+      cli: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "-h"
+  expect:
+    exit_code: 0

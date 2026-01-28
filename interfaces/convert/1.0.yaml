@@ -1,5 +1,5 @@
 ---
-ukiryu_schema: '2.0'
+ukiryu_schema: '1.0'
 name: convert
 display_name: Image Convert
 version: '1.0'

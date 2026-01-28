@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/dwebp/1.0
+name: dwebp
+version: '1.0'
+display_name: dwebp - WebP decoder
+homepage: https://developers.google.com/speed/webp/docs/dwebp
+version_detection:
+  command: "-version"
+  pattern: (\d+\.\d+\.\d+)
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/libwebp/current/dwebp.exe"
+  macos:
+  - "/opt/homebrew/bin/dwebp"
+  - "/usr/local/bin/dwebp"
+  linux:
+  - "/usr/bin/dwebp"
+  - "/usr/local/bin/dwebp"
+timeout: 300
+profiles:
+- name: default
+  display_name: dwebp - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  commands:
+  - name: decode
+    display_name: Decode WebP
+    description: Decode WebP to other format
+    usage: dwebp [options] input.webp output.png
+    arguments:
+    - name: input
+      type: file
+      required: true
+      position: 1
+      description: Input WebP file
+    - name: output
+      type: file
+      required: true
+      position: last
+      description: Output file
+    options:
+    - name: output_format
+      cli: "-outputfmt"
+      description: Output format (png, pam, ppm, pgm)
+    - name: alpha
+      cli: "-alpha"
+      description: Preserve alpha channel
+    - name: no_fancy
+      cli: "-nofancy"
+      description: Use fast upscaling
+    - name: mt
+      cli: "-mt"
+      type: boolean
+      description: Multi-threading
+    - name: quiet
+      cli: "-quiet"
+      description: Suppress output
+    flags:
+    - name: help
+      cli: "-h"
+      short: "-long"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "-long"
+  expect:
+    exit_code: 0

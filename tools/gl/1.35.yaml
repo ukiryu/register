@@ -1,0 +1,117 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/gl/1.35
+name: gl
+version: '1.35'
+display_name: GitLab CLI
+homepage: https://gitlab.com/gitlab-org/cli
+version_detection:
+  command: "--version"
+  pattern: gl version (\d+\.\d+)
+  modern_threshold: '1.0'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/gl/current/gl.exe"
+  macos:
+  - "/opt/homebrew/bin/gl"
+  - "/usr/local/bin/gl"
+  linux:
+  - "/usr/bin/gl"
+  - "/usr/local/bin/gl"
+timeout: 300
+profiles:
+- name: default
+  display_name: GitLab CLI - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_space
+  commands:
+  - name: repo_ls
+    display_name: List repositories
+    description: List GitLab repositories
+    subcommand: repo
+    arguments:
+    - name: owner
+      type: string
+      required: false
+      position: 1
+      description: Owner path (default is current user)
+    options:
+    - name: visibility
+      type: symbol
+      cli: "--visibility"
+      values:
+      - public
+      - private
+      - internal
+      description: Repository visibility
+    - name: page
+      type: integer
+      cli: "--page"
+      description: Target page number
+    - name: per_page
+      type: integer
+      cli: "--per-page"
+      description: Per page data number
+    - name: owned
+      cli: "--owned"
+      type: boolean
+      description: User-owned repositories only
+    - name: json
+      cli: "--json"
+      short: "-j"
+      type: boolean
+      description: Output raw JSON data
+    flags:
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help documentation
+
+  - name: mr_list
+    display_name: List merge requests
+    description: List merge requests
+    subcommand: mr
+    options:
+    - name: repo
+      type: string
+      cli: "--repo"
+      description: Target repository
+    - name: state
+      type: symbol
+      cli: "--state"
+      values:
+      - opened
+      - closed
+      - locked
+      - merged
+      description: Filter by state
+    - name: json
+      cli: "--json"
+      short: "-j"
+      type: boolean
+      description: Output raw JSON data
+    flags:
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help documentation
+
+smoke_tests:
+- name: version
+  description: Verify gl version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+    output_match: "gl version"

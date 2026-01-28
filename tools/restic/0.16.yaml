@@ -1,0 +1,216 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/restic/0.16
+name: restic
+version: '0.16'
+display_name: restic - Modern backup
+homepage: https://restic.net/
+version_detection:
+  command: "--version"
+  pattern: 'restic (\d+\.\d+)'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/restic/current/restic.exe"
+  macos:
+  - "/opt/homebrew/bin/restic"
+  - "/usr/local/bin/restic"
+  linux:
+  - "/usr/bin/restic"
+  - "/usr/local/bin/restic"
+timeout: 600
+profiles:
+- name: default
+  display_name: restic - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_space
+  commands:
+  - name: backup
+    display_name: Backup files
+    description: Backup files to repository
+    usage: "restic backup /path/to/files"
+    arguments:
+    - name: paths
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Paths to backup
+    options:
+    - name: repo
+      cli: "--repo"
+      description: Repository path
+    - name: password_file
+      cli: "--password-file"
+      description: Password file
+    - name: tag
+      cli: "--tag"
+      description: Tags for snapshot
+    flags:
+    - name: verbose
+      cli: "--verbose"
+      short: "-v"
+      description: Verbose output
+    - name: quiet
+      cli: "--quiet"
+      description: Quiet output
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: restore
+    display_name: Restore files
+    description: Restore files from snapshot
+    usage: "restic restore snapshotID"
+    arguments:
+    - name: snapshot
+      type: string
+      required: true
+      position: last
+      description: Snapshot ID to restore
+    options:
+    - name: repo
+      cli: "--repo"
+      description: Repository path
+    - name: password_file
+      cli: "--password-file"
+      description: Password file
+    - name: target
+      cli: "--target"
+      description: Restore target directory
+    - name: include
+      cli: "--include"
+      description: Include patterns
+    - name: exclude
+      cli: "--exclude"
+      description: Exclude patterns
+    flags:
+    - name: verbose
+      cli: "--verbose"
+      short: "-v"
+      description: Verbose output
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: snapshots
+    display_name: List snapshots
+    description: List snapshots in repository
+    usage: "restic snapshots"
+    arguments:
+    - name: snapshot_id
+      type: string
+      required: false
+      position: last
+      description: Optional snapshot ID filter
+    options:
+    - name: repo
+      cli: "--repo"
+      description: Repository path
+    - name: password_file
+      cli: "--password-file"
+      description: Password file
+    flags:
+    - name: compact
+      cli: "--compact"
+      description: Compact output
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: check
+    display_name: Check repository
+    description: Check repository integrity
+    usage: "restic check"
+    options:
+    - name: repo
+      cli: "--repo"
+      description: Repository path
+    - name: password_file
+      cli: "--password-file"
+      description: Password file
+    flags:
+    - name: read_data
+      cli: "--read-data"
+      description: Read all data files
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: init
+    display_name: Initialize repository
+    description: Initialize a new repository
+    usage: "restic init"
+    options:
+    - name: repo
+      cli: "--repo"
+      description: Repository path
+    - name: password_file
+      cli: "--password-file"
+      description: Password file
+    flags:
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: forget
+    display_name: Remove snapshots
+    description: Remove snapshots based on policy
+    usage: "restic forget"
+    options:
+    - name: repo
+      cli: "--repo"
+      description: Repository path
+    - name: password_file
+      cli: "--password-file"
+      description: Password file
+    - name: keep_daily
+      cli: "--keep-daily"
+      type: integer
+      description: Keep daily snapshots
+    - name: keep_weekly
+      cli: "--keep-weekly"
+      type: integer
+      description: Keep weekly snapshots
+    - name: keep_monthly
+      cli: "--keep-monthly"
+      type: integer
+      description: Keep monthly snapshots
+    - name: keep_yearly
+      cli: "--keep-yearly"
+      type: integer
+      description: Keep yearly snapshots
+    flags:
+    - name: dry_run
+      cli: "--dry-run"
+      description: Show what would be removed
+    - name: prune
+      cli: "--prune"
+      description: Remove unused data
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

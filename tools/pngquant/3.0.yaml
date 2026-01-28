@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/pngquant/3.0
+name: pngquant
+version: '3.0'
+display_name: pngquant - PNG lossy compression
+homepage: https://pngquant.org/
+version_detection:
+  command: "--version"
+  pattern: (\d+\.\d+)
+  modern_threshold: '3.0'
+search_paths:
+  windows:
+  - "%USERPROFILE%/scoop/apps/pngquant/current/pngquant.exe"
+  macos:
+  - "/opt/homebrew/bin/pngquant"
+  - "/usr/local/bin/pngquant"
+  linux:
+  - "/usr/bin/pngquant"
+  - "/usr/local/bin/pngquant"
+timeout: 300
+profiles:
+- name: default
+  display_name: pngquant - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_space
+  commands:
+  - name: compress
+    display_name: Compress PNG
+    description: Compress PNG with lossy compression
+    usage: pngquant [options] input.png [output.png]
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input PNG files
+    options:
+    - name: quality
+      cli: "--quality"
+      description: Min-max quality (0-100)
+    - name: speed
+      cli: "--speed"
+      type: integer
+      range:
+      - 1
+      - 11
+      description: Speed/quality tradeoff (1=slow, 11=fast)
+    - name: output
+      cli: "--output"
+      short: "-o"
+      description: Output filename
+    - name: ext
+      cli: "--ext"
+      description: Output extension
+    - name: no_fs
+      cli: "--nofs"
+      type: boolean
+      description: Disable Floyd-Steinberg dithering
+    - name: posterize
+      cli: "--posterize"
+      type: integer
+      description: Posterize to n bits
+    - name: strip
+      cli: "--strip"
+      type: boolean
+      description: Remove metadata
+    flags:
+    - name: force
+      cli: "--force"
+      short: "-f"
+      description: Force overwrite
+    - name: skip_if_larger
+      cli: "--skip-if-larger"
+      type: boolean
+      description: Skip if output would be larger
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

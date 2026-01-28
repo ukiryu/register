@@ -1,0 +1,129 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.2'
+"$self": https://www.ukiryu.com/register/1.2/libreoffice/24.0
+name: libreoffice
+version: '24.0'
+display_name: LibreOffice - Document suite
+homepage: https://www.libreoffice.org/
+version_detection:
+  command: "--version"
+  pattern: 'LibreOffice (\d+\.\d+)'
+search_paths:
+  windows:
+  - "C:/Program Files/LibreOffice/program/soffice.exe"
+  - "C:/Program Files (x86)/LibreOffice/program/soffice.exe"
+  macos:
+  - "/Applications/LibreOffice.app/Contents/MacOS/soffice"
+  linux:
+  - "/usr/bin/soffice"
+  - "/usr/lib/libreoffice/program/soffice"
+timeout: 300
+profiles:
+- name: default
+  display_name: LibreOffice - Default
+  platforms:
+  - macos
+  - linux
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_space
+  commands:
+  - name: convert
+    display_name: Convert documents
+    description: Convert documents between formats
+    usage: soffice --headless --convert-to format input.docx
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Input files to convert
+    options:
+    - name: format
+      cli: "--convert-to"
+      description: Output format (pdf, html, doc, txt, etc.)
+    - name: outdir
+      cli: "--outdir"
+      description: Output directory
+    flags:
+    - name: headless
+      cli: "--headless"
+      description: Run without GUI
+    - name: nologo
+      cli: "--nologo"
+      description: Don't show startup screen
+    - name: norestore
+      cli: "--norestore"
+      description: Don't restore session
+    - name: nodefault
+      cli: "--nodefault"
+      description: Don't create default document
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: print
+    display_name: Print documents
+    description: Print documents to printer
+    usage: soffice --headless --print file.docx
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: Files to print
+    options:
+    - name: printer
+      cli: "--printer-name"
+      description: Printer name
+    flags:
+    - name: headless
+      cli: "--headless"
+      description: Run without GUI
+    - name: nologo
+      cli: "--nologo"
+      description: Don't show startup screen
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+  - name: cat
+    display_name: Display document content
+    description: Display document content to stdout
+    usage: soffice --headless --cat file.docx
+    arguments:
+    - name: input
+      type: file
+      required: true
+      position: last
+      description: File to display
+    flags:
+    - name: headless
+      cli: "--headless"
+      description: Run without GUI
+    - name: nologo
+      cli: "--nologo"
+      description: Don't show startup screen
+    - name: help
+      cli: "--help"
+      short: "-h"
+      description: Show help
+
+smoke_tests:
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0
