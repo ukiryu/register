@@ -37,6 +37,9 @@ profiles:
   display_name: BSD ping
   platforms:
   - macos
+  - freebsd
+  - openbsd
+  - netbsd
   shells:
   - bash
   - zsh
