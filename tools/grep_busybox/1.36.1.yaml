@@ -1,0 +1,205 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: grep_busybox
+display_name: BusyBox grep (Alpine Linux)
+homepage: https://busybox.net/
+"$self": https://www.ukiryu.com/register/1.0/grep_busybox/1.36.1
+version: '1.36.1'
+implements: grep
+version_detection:
+  command: "--version"
+  pattern: \(BusyBox\) ([\d.]+)
+  modern_threshold: '1.30'
+search_paths:
+  linux:
+  - "/bin/grep"
+  - "/usr/bin/grep"
+timeout: 300
+profiles:
+- name: busybox
+  display_name: BusyBox grep on Linux
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Search for patterns in files
+    usage: grep [options] pattern [file...]
+    arguments:
+    - name: pattern
+      type: string
+      required: true
+      position: first
+      description: Pattern to search for
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to search
+    options:
+    # Pattern syntax options
+    - name: extended_regexp
+      cli: "-E"
+      assignment_delimiter: none
+      description: Extended regular expression
+    - name: fixed_strings
+      cli: "-F"
+      assignment_delimiter: none
+      description: Fixed strings (not regex)
+    # Matching control
+    - name: ignore_case
+      cli: "-i"
+      assignment_delimiter: none
+      description: Case insensitive matching
+    - name: invert_match
+      cli: "-v"
+      assignment_delimiter: none
+      description: Select non-matching lines
+    - name: word_regexp
+      cli: "-w"
+      assignment_delimiter: none
+      description: Match whole words
+    - name: line_regexp
+      cli: "-x"
+      assignment_delimiter: none
+      description: Match whole lines
+    # General output control
+    - name: count
+      cli: "-c"
+      assignment_delimiter: none
+      description: Count matching lines
+    - name: files_without_match
+      cli: "-L"
+      assignment_delimiter: none
+      description: Files without matches
+    - name: files_with_matches
+      cli: "-l"
+      assignment_delimiter: none
+      description: Files with matches
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: no_messages
+      cli: "-s"
+      assignment_delimiter: none
+      description: Suppress error messages
+    # Output line prefix control
+    - name: byte_offset
+      cli: "-b"
+      assignment_delimiter: none
+      description: Byte offset
+    - name: with_filename
+      cli: "-H"
+      assignment_delimiter: none
+      description: Always show filename
+    - name: no_filename
+      cli: "-h"
+      assignment_delimiter: none
+      description: Never show filename
+    - name: line_number
+      cli: "-n"
+      assignment_delimiter: none
+      description: Line numbers
+    # File and directory selection
+    - name: text
+      cli: "-a"
+      assignment_delimiter: none
+      description: Process binary as text
+    flags:
+    - name: recursive
+      cli: "-r"
+      description: Recursive search
+      default: false
+      assignment_delimiter: none
+    - name: dereference_recursive
+      cli: "-R"
+      description: Recursive with dereference
+      default: false
+      assignment_delimiter: none
+    - name: extended_regexp
+      cli: "-E"
+      description: Use extended regex
+      default: false
+      assignment_delimiter: none
+    - name: fixed_strings
+      cli: "-F"
+      description: Fixed strings not regex
+      default: false
+      assignment_delimiter: none
+    - name: ignore_case
+      cli: "-i"
+      description: Case insensitive
+      default: false
+      assignment_delimiter: none
+    - name: invert_match
+      cli: "-v"
+      description: Invert match
+      default: false
+      assignment_delimiter: none
+    - name: word_regexp
+      cli: "-w"
+      description: Whole word match
+      default: false
+      assignment_delimiter: none
+    - name: line_regexp
+      cli: "-x"
+      description: Whole line match
+      default: false
+      assignment_delimiter: none
+    - name: count
+      cli: "-c"
+      description: Count only
+      default: false
+      assignment_delimiter: none
+    - name: files_with_matches
+      cli: "-l"
+      description: Files with matches
+      default: false
+      assignment_delimiter: none
+    - name: files_without_match
+      cli: "-L"
+      description: Files without matches
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: no_messages
+      cli: "-s"
+      description: No error messages
+      default: false
+      assignment_delimiter: none
+    - name: byte_offset
+      cli: "-b"
+      description: Byte offset
+      default: false
+      assignment_delimiter: none
+    - name: with_filename
+      cli: "-H"
+      description: Always filename
+      default: false
+      assignment_delimiter: none
+    - name: no_filename
+      cli: "-h"
+      description: Never filename
+      default: false
+      assignment_delimiter: none
+    - name: line_number
+      cli: "-n"
+      description: Line numbers
+      default: false
+      assignment_delimiter: none
+    - name: text
+      cli: "-a"
+      description: Text mode
+      default: false
+      assignment_delimiter: none
+    name: search
