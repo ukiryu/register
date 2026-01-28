@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: zip
 display_name: zip (package and compress files)
 homepage: https://infozip.sourceforge.net/Zip.html
-"$self": https://www.ukiryu.com/register/1.0/zip/3.0
 version: '3.0'
 aliases:
 - zip

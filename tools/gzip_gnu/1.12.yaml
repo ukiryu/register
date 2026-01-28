@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: gzip_gnu
 display_name: GNU gzip Compressor
 homepage: https://www.gnu.org/software/gzip/
-"$self": https://www.ukiryu.com/register/1.0/gzip_gnu/1.12
 version: '1.12'
 implements: gzip
 aliases:

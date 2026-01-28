@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: diff
 display_name: diff (compare files line by line)
 homepage: https://www.gnu.org/software/diffutils/
-"$self": https://www.ukiryu.com/register/1.0/diff/0.1
 version: '0.1'
 aliases:
 - diff

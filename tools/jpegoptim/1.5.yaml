@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: jpegoptim
 display_name: JPEG Image Optimizer
 homepage: https://github.com/tjko/jpegoptim
-"$self": https://www.ukiryu.com/register/1.0/jpegoptim/1.5
 version: '1.5'
 aliases:
 - jpegopt

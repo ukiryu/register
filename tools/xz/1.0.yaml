@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: xz
 display_name: XZ Utils
 homepage: https://tukaani.org/xz/
-"$self": https://www.ukiryu.com/register/1.0/xz/1.0
 version: '1.0'
 aliases:
 - unxz

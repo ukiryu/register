@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: bat
 display_name: bat (cat clone with syntax highlighting)
 homepage: https://github.com/sharkdp/bat
-"$self": https://www.ukiryu.com/register/1.0/bat/0.24
 version: '0.24'
 aliases:
 - bat

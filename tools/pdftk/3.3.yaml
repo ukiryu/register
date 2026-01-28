@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: pdftk
 display_name: pdftk (PDF toolkit)
 homepage: https://www.pdflabs.com/tools/pdftk-server/
-"$self": https://www.ukiryu.com/register/1.0/pdftk/3.3
 version: '3.3'
 aliases:
 - pdftk

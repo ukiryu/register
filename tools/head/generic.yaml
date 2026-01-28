@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: head
 display_name: head (output first part of files)
 homepage: https://www.gnu.org/software/coreutils/
-"$self": https://www.ukiryu.com/register/1.0/head/0.1
 version: generic
 aliases:
   - head

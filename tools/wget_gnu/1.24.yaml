@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: wget_gnu
 display_name: GNU Wget
 homepage: https://www.gnu.org/software/wget/
-"$self": https://www.ukiryu.com/register/1.0/wget_gnu/1.24
 version: '1.24'
 implements: wget
 version_detection:

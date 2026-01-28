@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: ffmpeg
 display_name: FFmpeg Media Converter
 homepage: https://ffmpeg.org/
-"$self": https://www.ukiryu.com/register/1.0/ffmpeg/8.0
 version: '8.0'
 aliases:
 - ffmpeg

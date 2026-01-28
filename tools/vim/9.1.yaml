@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: vim
 display_name: vim (Vi IMproved text editor)
 homepage: https://www.vim.org/
-"$self": https://www.ukiryu.com/register/1.0/vim/9.1
 version: '9.1'
 aliases:
 - vim

@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: yt-dlp
 display_name: yt-dlp (YouTube video downloader)
 homepage: https://github.com/yt-dlp/yt-dlp
-"$self": https://www.ukiryu.com/register/1.0/yt-dlp/2024.12
 version: '2024.12'
 aliases:
 - yt-dlp

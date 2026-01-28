@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: ping_windows
 display_name: Windows ping
 homepage: https://learn.microsoft.com/windows-server/administration/windows-commands/ping
-"$self": https://www.ukiryu.com/register/1.0/ping_windows/1.0
 version: '1.0'
 implements: ping
 aliases:

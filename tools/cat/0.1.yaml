@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: cat
 display_name: cat (concatenate files)
 homepage: https://www.gnu.org/software/coreutils/
-"$self": https://www.ukiryu.com/register/1.0/cat/0.1
 version: '0.1'
 aliases:
   - cat

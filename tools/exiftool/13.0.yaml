@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: exiftool
 display_name: ExifTool Metadata Reader/Writer
 homepage: https://exiftool.org/
-"$self": https://www.ukiryu.com/register/1.0/exiftool/13.0
 version: '13.0'
 aliases:
 - exiftool

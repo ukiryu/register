@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: tar_gnu
 display_name: GNU Tar Archiver
 homepage: https://www.gnu.org/software/tar/
-"$self": https://www.ukiryu.com/register/1.0/tar_gnu/1.35
 version: '1.35'
 implements: tar
 version_detection:

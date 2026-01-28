@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: sed_gnu
 display_name: GNU sed (stream editor)
 homepage: https://www.gnu.org/software/sed/
-"$self": https://www.ukiryu.com/register/1.0/sed_gnu/4.9
 version: '4.9'
 implements: sed
 version_detection:

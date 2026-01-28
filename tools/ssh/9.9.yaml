@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: ssh
 display_name: ssh (OpenSSH remote login client)
 homepage: https://www.openssh.com/
-"$self": https://www.ukiryu.com/register/1.0/ssh/9.9
 version: '9.9'
 aliases:
 - ssh

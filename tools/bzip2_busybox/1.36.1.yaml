@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: bzip2_busybox
 display_name: BusyBox bzip2 (Alpine Linux)
 homepage: https://busybox.net/
-"$self": https://www.ukiryu.com/register/1.0/bzip2_busybox/1.36.1
 version: '1.36.1'
 implements: bzip2
 aliases:

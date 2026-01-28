@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schemas/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
-"$self": https://www.ukiryu.com/register/1.2/dwebp/1.0
 name: dwebp
 version: '1.0'
 display_name: dwebp - WebP decoder

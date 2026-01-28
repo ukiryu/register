@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: xargs
 display_name: xargs (build command from stdin)
 homepage: https://www.gnu.org/software/findutils/
-"$self": https://www.ukiryu.com/register/1.0/xargs/0.1
 version: '0.1'
 aliases:
 - xargs

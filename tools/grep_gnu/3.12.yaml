@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: grep_gnu
 display_name: GNU grep (pattern searcher)
 homepage: https://www.gnu.org/software/grep/
-"$self": https://www.ukiryu.com/register/1.0/grep_gnu/3.12
 version: '3.12'
 implements: grep
 version_detection:

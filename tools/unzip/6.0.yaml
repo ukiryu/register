@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: unzip
 display_name: unzip (extract zip archives)
 homepage: https://infozip.sourceforge.net/UnZip.html
-"$self": https://www.ukiryu.com/register/1.0/unzip/6.0
 version: '6.0'
 aliases:
 - unzip

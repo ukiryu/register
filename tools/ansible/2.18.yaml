@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: ansible
 display_name: ansible (automation framework)
 homepage: https://www.ansible.com/
-"$self": https://www.ukiryu.com/register/1.0/ansible/2.18
 version: '2.18'
 aliases:
 - ansible

@@ -4,7 +4,6 @@ ukiryu_schema: '1.0'
 name: yq_jq
 display_name: yq-jq (JQ wrapper for YAML)
 homepage: https://github.com/kislyuk/yq
-"$self": https://www.ukiryu.com/register/1.0/yq_jq/1.0
 version: '1.0'
 aliases:
 - yq
