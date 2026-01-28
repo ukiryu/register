@@ -110,6 +110,7 @@ profiles:
     name: convert
   - description: Describe the format and characteristics of image files
     usage: identify [options] input-file
+    standalone_executable: true
     arguments:
     - name: input
       type: file
@@ -138,6 +139,7 @@ profiles:
     name: identify
   - description: Process image files (overwrites original file)
     usage: mogrify [options] input-file
+    standalone_executable: true
     arguments:
     - name: inputs
       type: file
