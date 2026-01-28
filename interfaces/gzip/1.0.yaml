@@ -1,0 +1,54 @@
+---
+ukiryu_schema: '1.0'
+name: gzip
+version: '1.0'
+display_name: gzip compression interface
+description: |
+  Interface for gzip compression and decompression tools.
+  Defines the contract for gzip-compatible implementations.
+commands:
+  - name: compress
+    display_name: Compress files
+    description: Compress one or more files using gzip compression
+    required: true
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      required: true
+      description: File(s) to compress
+    options:
+    - name: compression_level
+      type: integer
+      range: [1, 9]
+      description: Compression level (1=fastest, 9=best)
+    flags:
+    - name: force
+      description: Force overwrite existing output files
+    - name: keep
+      description: Keep (don't delete) input files
+    - name: verbose
+      description: Verbose mode
+    - name: quiet
+      description: Quiet mode (suppress warnings)
+  - name: decompress
+    display_name: Decompress files
+    description: Decompress gzip-compressed files
+    required: true
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      required: true
+      description: File(s) to decompress
+    flags:
+    - name: force
+      description: Force overwrite existing output files
+    - name: keep
+      description: Keep (don't delete) input files
+    - name: verbose
+      description: Verbose mode
+    - name: quiet
+      description: Quiet mode (suppress warnings)

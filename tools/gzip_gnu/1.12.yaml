@@ -1,67 +1,76 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
 ---
 ukiryu_schema: '1.0'
-name: bzip2
-display_name: bzip2 Compressor
-homepage: https://sourceware.org/bzip2/
-"$self": https://www.ukiryu.com/register/1.0/bzip2/1.0
-version: '1.0'
+name: gzip_gnu
+display_name: GNU gzip Compressor
+homepage: https://www.gnu.org/software/gzip/
+"$self": https://www.ukiryu.com/register/1.0/gzip_gnu/1.12
+version: '1.12'
+implements: gzip
 aliases:
-- bunzip2
-- bzcat
+- gunzip
+- gzcat
 version_detection:
   command: "--version"
-  pattern: Version ([\d.]+)
-  modern_threshold: '1.0'
+  pattern: gzip ([\d.]+)
+  modern_threshold: '1.10'
 search_paths:
   macos:
-  - "/opt/homebrew/bin/bzip2"
-  - "/usr/local/bin/bzip2"
-  - "/usr/bin/bzip2"
+  - "/opt/homebrew/bin/gzip"
+  - "/usr/local/bin/gzip"
+  - "/usr/bin/gzip"
   linux:
-  - "/usr/bin/bzip2"
-  - "/usr/local/bin/bzip2"
+  - "/bin/gzip"
+  - "/usr/bin/gzip"
+  - "/usr/local/bin/gzip"
   windows:
-  - C:/msys64/usr/bin/bzip2.exe
-  - C:/Program Files/Git/usr/bin/bzip2.exe
-  - C:/cygwin64/bin/bzip2.exe
+  - C:/msys64/usr/bin/gzip.exe
+  - C:/Program Files/Git/usr/bin/gzip.exe
+  - C:/cygwin64/bin/gzip.exe
 timeout: 60
 profiles:
-- name: unix
-  display_name: bzip2 on Unix
+- name: gnu
+  display_name: GNU gzip on Unix
   platforms:
   - macos
   - linux
+  - windows
   shells:
   - bash
   - zsh
   - fish
   - sh
+  - powershell
+  - cmd
   option_style: single_dash_space
   commands:
-  - description: Compress files with bzip2
-    usage: bzip2 [options] file
+  - description: Compress files with gzip
+    usage: gzip [options] file
     arguments:
     - name: inputs
       type: file
       variadic: true
       min: 1
-      max: 1
       position: last
       description: File(s) to compress
     options:
     - name: output
       type: file
       cli: "-c"
-      description: Compress to standard output
+      description: Write to standard output
       assignment_delimiter: auto
-    - name: block_size
+    - name: compression_level
       type: integer
       cli: "-"
       range:
       - 1
       - 9
-      description: Block size (100k-900k)
+      description: Compression level (1=fastest, 9=best)
+      assignment_delimiter: auto
+    - name: suffix
+      type: string
+      cli: "-S"
+      description: Use suffix instead of .gz
       assignment_delimiter: auto
     flags:
     - name: force
@@ -74,24 +83,24 @@ profiles:
       description: Keep input files
       default: false
       assignment_delimiter: none
-    - name: quiet
-      cli: "-q"
-      description: Quiet mode
-      default: false
-      assignment_delimiter: none
     - name: verbose
       cli: "-v"
       description: Verbose mode
       default: false
       assignment_delimiter: none
-    - name: test
-      cli: "-t"
-      description: Test integrity
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: recursive
+      cli: "-r"
+      description: Recursive mode
       default: false
       assignment_delimiter: none
     name: compress
-  - description: Decompress bzip2 files
-    usage: bzip2 -d [options] file
+  - description: Decompress gzip files
+    usage: gzip -d [options] file
     arguments:
     - name: inputs
       type: file

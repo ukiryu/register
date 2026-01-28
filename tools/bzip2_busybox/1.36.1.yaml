@@ -1,0 +1,94 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: bzip2_busybox
+display_name: BusyBox bzip2 (Alpine Linux)
+homepage: https://busybox.net/
+"$self": https://www.ukiryu.com/register/1.0/bzip2_busybox/1.36.1
+version: '1.36.1'
+implements: bzip2
+aliases:
+- bunzip2
+- bzcat
+version_detection:
+  command: "--version"
+  pattern: \(BusyBox\) ([\d.]+)
+  modern_threshold: '1.30'
+search_paths:
+  linux:
+  - "/bin/bzip2"
+  - "/usr/bin/bzip2"
+timeout: 60
+profiles:
+- name: busybox
+  display_name: BusyBox bzip2 on Linux
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Compress files with bzip2
+    usage: bzip2 [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: block_size
+      type: integer
+      cli: "-"
+      range:
+      - 1
+      - 9
+      description: Block size (100k-900k)
+      assignment_delimiter: auto
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress bzip2 files
+    usage: bzip2 -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    name: decompress
