@@ -17,11 +17,23 @@ search_paths:
   - /opt/homebrew/bin/convert
   - /usr/local/bin/convert
   - /opt/local/bin/convert
+  - /opt/homebrew/bin/identify
+  - /usr/local/bin/identify
+  - /opt/local/bin/identify
+  - /opt/homebrew/bin/mogrify
+  - /usr/local/bin/mogrify
+  - /opt/local/bin/mogrify
   linux:
   - /usr/bin/convert
   - /usr/local/bin/convert
+  - /usr/bin/identify
+  - /usr/local/bin/identify
+  - /usr/bin/mogrify
+  - /usr/local/bin/mogrify
   windows:
   - C:/Program Files/ImageMagick-*/convert.exe
+  - C:/Program Files/ImageMagick-*/identify.exe
+  - C:/Program Files/ImageMagick-*/mogrify.exe
 timeout: 300
 profiles:
 - name: unix
