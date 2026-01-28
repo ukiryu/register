@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: sed_busybox
+display_name: BusyBox sed (Alpine Linux)
+homepage: https://busybox.net/
+"$self": https://www.ukiryu.com/register/1.0/sed_busybox/1.36.1
+version: '1.36.1'
+implements: sed
+version_detection:
+  command: "--version"
+  pattern: \(BusyBox\) ([\d.]+)
+  modern_threshold: '1.30'
+search_paths:
+  linux:
+  - "/bin/sed"
+  - "/usr/bin/sed"
+timeout: 300
+profiles:
+- name: busybox
+  display_name: BusyBox sed on Linux
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Stream editor for filtering and transforming text
+    usage: sed [options] script [file...]
+    arguments:
+    - name: script
+      type: string
+      required: false
+      position: first
+      description: Sed script/command
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to edit
+    options:
+    # Script options
+    - name: expression
+      type: string
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Add script to commands
+    - name: file
+      type: file
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Add commands from file
+    # Regular expression options
+    - name: regexp_extended
+      cli: "-E"
+      assignment_delimiter: none
+      description: Extended regular expressions
+    # Output control
+    - name: quiet
+      cli: "-n"
+      assignment_delimiter: none
+      description: Suppress automatic printing
+    - name: silent
+      cli: "--silent"
+      assignment_delimiter: none
+      description: Suppress automatic printing
+    - name: line_buffered
+      cli: "-l"
+      assignment_delimiter: none
+      description: Line buffered output
+    - name: unbuffered
+      cli: "-u"
+      assignment_delimiter: none
+      description: Unbuffered output
+    flags:
+    - name: regexp_extended
+      cli: "-E"
+      description: Use extended regex
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-n"
+      description: Suppress auto print
+      default: false
+      assignment_delimiter: none
+    - name: silent
+      cli: "--silent"
+      description: Suppress auto print
+      default: false
+      assignment_delimiter: none
+    - name: line_buffered
+      cli: "-l"
+      description: Line buffered
+      default: false
+      assignment_delimiter: none
+    - name: unbuffered
+      cli: "-u"
+      description: Unbuffered
+      default: false
+      assignment_delimiter: none
+    name: edit
