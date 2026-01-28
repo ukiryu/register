@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: wget_busybox
+display_name: BusyBox wget (Alpine Linux)
+homepage: https://busybox.net/
+"$self": https://www.ukiryu.com/register/1.0/wget_busybox/1.36.1
+version: '1.36.1'
+implements: wget
+version_detection:
+  command: "--version"
+  pattern: \(BusyBox\) ([\d.]+)
+  modern_threshold: '1.30'
+search_paths:
+  linux:
+  - "/bin/wget"
+  - "/usr/bin/wget"
+timeout: 600
+profiles:
+- name: busybox
+  display_name: BusyBox wget on Linux
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  commands:
+  - description: Download files from the web
+    usage: wget [option]... [URL]...
+    arguments:
+    - name: urls
+      type: string
+      variadic: true
+      required: true
+      position: last
+      description: URLs to download
+    options:
+    # Output options
+    - name: output_document
+      type: file
+      cli: "-O"
+      assignment_delimiter: auto
+      description: Output document
+    - name: directory_prefix
+      type: string
+      cli: "-P"
+      assignment_delimiter: auto
+      description: Directory prefix
+    # Logging options
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    # Download options
+    - name: continue
+      cli: "-c"
+      assignment_delimiter: none
+      description: Continue getting partial file
+    - name: timeout
+      type: string
+      cli: "-T"
+      assignment_delimiter: auto
+      description: Set timeout
+    # HTTP options
+    - name: user_agent
+      type: string
+      cli: "-U"
+      assignment_delimiter: auto
+      description: User-Agent string
+    - name: header
+      type: string
+      cli: "--header"
+      assignment_delimiter: auto
+      description: Custom header
+    - name: post_data
+      type: string
+      cli: "--post-data"
+      assignment_delimiter: auto
+      description: POST data
+    - name: method
+      type: string
+      cli: "--method"
+      assignment_delimiter: auto
+      description: HTTP method
+    # SSL options (very limited)
+    - name: no_check_certificate
+      cli: "--no-check-certificate"
+      assignment_delimiter: none
+      description: Don't check server certificate
+    flags:
+    - name: continue
+      cli: "-c"
+      description: Continue partial download
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: no_check_certificate
+      cli: "--no-check-certificate"
+      description: Don't validate certificate
+      default: false
+      assignment_delimiter: none
+    name: download

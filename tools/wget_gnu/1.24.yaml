@@ -1,0 +1,247 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/tool.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: wget_gnu
+display_name: GNU Wget
+homepage: https://www.gnu.org/software/wget/
+"$self": https://www.ukiryu.com/register/1.0/wget_gnu/1.24
+version: '1.24'
+implements: wget
+version_detection:
+  command: "--version"
+  pattern: "GNU Wget ([\\d.]+)"
+  modern_threshold: '1.20'
+search_paths:
+  macos:
+  - "/opt/homebrew/bin/wget"
+  - "/usr/local/bin/wget"
+  linux:
+  - "/usr/bin/wget"
+  - "/usr/local/bin/wget"
+  windows:
+  - "C:/Program Files/Git/usr/bin/wget.exe"
+  - "C:/msys64/usr/bin/wget.exe"
+timeout: 600
+profiles:
+- name: gnu
+  display_name: GNU wget on Unix
+  platforms:
+  - linux
+  - macos
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_equals
+  commands:
+  - description: Download files from the web
+    usage: wget [option]... [URL]...
+    arguments:
+    - name: urls
+      type: string
+      variadic: true
+      required: true
+      position: last
+      description: URLs to download
+    options:
+    # Output options
+    - name: output_document
+      type: file
+      cli: "-O"
+      assignment_delimiter: auto
+      description: Output document
+    - name: directory_prefix
+      type: string
+      cli: "-P"
+      assignment_delimiter: equals
+      description: Directory prefix
+    # Logging options
+    - name: output_file
+      type: file
+      cli: "-o"
+      assignment_delimiter: auto
+      description: Log messages to file
+    - name: append_output
+      type: file
+      cli: "-a"
+      assignment_delimiter: auto
+      description: Append to log file
+    - name: quiet
+      cli: "-q"
+      assignment_delimiter: none
+      description: Quiet mode
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose output
+    # Download options
+    - name: continue
+      cli: "-c"
+      assignment_delimiter: none
+      description: Continue getting partial file
+    - name: timeout
+      type: string
+      cli: "-T"
+      assignment_delimiter: auto
+      description: Set timeout
+    - name: tries
+      type: integer
+      cli: "--tries"
+      assignment_delimiter: equals
+      description: Set number of retries
+    # HTTP options
+    - name: user_agent
+      type: string
+      cli: "-U"
+      assignment_delimiter: auto
+      description: User-Agent string
+    - name: header
+      type: string
+      cli: "--header"
+      assignment_delimiter: equals
+      description: Custom header
+    - name: post_data
+      type: string
+      cli: "--post-data"
+      assignment_delimiter: equals
+      description: POST data
+    - name: post_file
+      type: file
+      cli: "--post-file"
+      assignment_delimiter: equals
+      description: POST file
+    - name: method
+      type: string
+      cli: "--method"
+      assignment_delimiter: equals
+      description: HTTP method
+    # SSL options
+    - name: no_check_certificate
+      cli: "--no-check-certificate"
+      assignment_delimiter: none
+      description: Don't check server certificate
+    - name: certificate
+      type: file
+      cli: "--certificate"
+      assignment_delimiter: equals
+      description: Client certificate
+    - name: private_key
+      type: file
+      cli: "--private-key"
+      assignment_delimiter: equals
+      description: Private key file
+    - name: ca_certificate
+      type: file
+      cli: "--ca-certificate"
+      assignment_delimiter: equals
+      description: CA certificate
+    - name: secure_protocol
+      cli: "--secure-protocol"
+      assignment_delimiter: equals
+      description: SSL/TLS protocol
+    # Recursive options
+    - name: recursive
+      cli: "-r"
+      assignment_delimiter: none
+      description: Recursive download
+    - name: level
+      type: integer
+      cli: "-l"
+      assignment_delimiter: auto
+      description: Recursion depth
+    - name: no_parent
+      cli: "-np"
+      assignment_delimiter: none
+      description: Don't ascend to parent
+    - name: page_requisites
+      cli: "-p"
+      assignment_delimiter: none
+      description: Download all page requisites
+    - name: convert_links
+      cli: "-k"
+      assignment_delimiter: none
+      description: Convert links for local viewing
+    - name: no_clobber
+      cli: "-nc"
+      assignment_delimiter: none
+      description: Skip existing files
+    - name: timestamping
+      cli: "-N"
+      assignment_delimiter: none
+      description: Turn on timestamping
+    - name: accept
+      type: string
+      cli: "-A"
+      assignment_delimiter: auto
+      description: Accept patterns
+    - name: reject
+      type: string
+      cli: "-R"
+      assignment_delimiter: auto
+      description: Reject patterns
+    - name: domains
+      type: string
+      cli: "-D"
+      assignment_delimiter: auto
+      description: Limit to domains
+    - name: exclude_domains
+      type: string
+      cli: "--exclude-domains"
+      assignment_delimiter: equals
+      description: Exclude domains
+    flags:
+    - name: continue
+      cli: "-c"
+      description: Continue partial download
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Quiet mode
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose output
+      default: false
+      assignment_delimiter: none
+    - name: recursive
+      cli: "-r"
+      description: Recursive download
+      default: false
+      assignment_delimiter: none
+    - name: no_parent
+      cli: "-np"
+      description: Don't ascend to parent
+      default: false
+      assignment_delimiter: none
+    - name: page_requisites
+      cli: "-p"
+      description: Download page requisites
+      default: false
+      assignment_delimiter: none
+    - name: convert_links
+      cli: "-k"
+      description: Convert links
+      default: false
+      assignment_delimiter: none
+    - name: no_clobber
+      cli: "-nc"
+      description: Skip existing files
+      default: false
+      assignment_delimiter: none
+    - name: timestamping
+      cli: "-N"
+      description: Time-stamping
+      default: false
+      assignment_delimiter: none
+    - name: no_check_certificate
+      cli: "--no-check-certificate"
+      description: Don't validate certificate
+      default: false
+      assignment_delimiter: none
+    name: download
