@@ -9,7 +9,7 @@ version: '4.9'
 implements: find
 version_detection:
   command: "--version"
-  pattern: "find \\(GNU findutils\\) ([\\d.]+)|find version ([\d.]+)"
+  pattern: 'find \(GNU findutils\) ([\d.]+)|find version ([\d.]+)'
   modern_threshold: '4.0'
 search_paths:
   macos:
