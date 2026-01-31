@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/interface.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: wget
+version: '1.0'
+display_name: wget download interface
+description: |
+  Interface for file download tools that retrieve files from the web.
+  Defines the contract for wget-compatible implementations.
+commands:
+  - name: download
+    display_name: Download files
+    description: Download files from the web
+    required: true
+    arguments:
+    - name: urls
+      type: string
+      variadic: true
+      required: true
+      description: URLs to download
+    options:
+    # Output options
+    - name: output_document
+      type: file
+      description: Output document
+    - name: directory_prefix
+      type: string
+      description: Directory prefix
+    # Logging options
+    - name: output_file
+      type: file
+      description: Log messages to file
+    - name: append_output
+      type: file
+      description: Append to log file
+    - name: quiet
+      description: Quiet mode
+    - name: verbose
+      description: Verbose output
+    # Download options
+    - name: continue
+      description: Continue getting partial file
+    - name: timeout
+      type: string
+      description: Set timeout
+    - name: tries
+      type: integer
+      description: Set number of retries
+    # HTTP options
+    - name: user_agent
+      type: string
+      description: User-Agent string
+    - name: header
+      type: string
+      description: Custom header
+    - name: post_data
+      type: string
+      description: POST data
+    - name: method
+      type: string
+      description: HTTP method
+    # SSL options (GNU only)
+    - name: no_check_certificate
+      description: Don't check server certificate
+    # Recursive options (GNU only)
+    - name: recursive
+      description: Recursive download
+    - name: level
+      type: integer
+      description: Recursion depth
+    - name: no_parent
+      description: Don't ascend to parent
+    - name: page_requisites
+      description: Download all page requisites
+    - name: convert_links
+      description: Convert links for local viewing
+    - name: no_clobber
+      description: Skip existing files
+    - name: timestamping
+      description: Turn on timestamping
+    flags:
+    - name: continue
+      description: Continue partial download
+    - name: quiet
+      description: Quiet mode
+    - name: verbose
+      description: Verbose output
+    - name: recursive
+      description: Recursive download
+    - name: no_parent
+      description: Don't ascend to parent
+    - name: page_requisites
+      description: Download page requisites
+    - name: convert_links
+      description: Convert links
+    - name: no_clobber
+      description: Skip existing files
+    - name: timestamping
+      description: Time-stamping
+    - name: no_check_certificate
+      description: Don't validate certificate

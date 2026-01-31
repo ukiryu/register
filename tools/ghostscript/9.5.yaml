@@ -1,165 +1,120 @@
 ---
-# Ghostscript tool profile for Ukiryu
-# Ghostscript 9.5 (legacy) on Unix platforms
-
+ukiryu_schema: '1.0'
 name: ghostscript
 display_name: Ghostscript Interpreter
 homepage: https://www.ghostscript.com/
-version: "9.5"
-
+version: '9.5'
 aliases:
-  - gs
-  - gswin64c
-  - gswin32c
-
+- gs
+- gswin64c
+- gswin32c
 version_detection:
   command: "--version"
   pattern: "(\\d+\\.\\d+)"
-
-search_paths:
-  macos:
-    # Homebrew (Apple Silicon)
-    - "/opt/homebrew/bin/gs"
-    - "/opt/homebrew/bin/gsc"
-    # Homebrew (Intel)
-    - "/usr/local/bin/gs"
-    - "/usr/local/bin/gsc"
-    # MacPorts
-    - "/opt/local/bin/gs"
-    - "/opt/local/bin/gsc"
-    # Rudix
-    - "/usr/local/opt/ghostscript/bin/gs"
-    # Common third-party
-    - "/opt/bin/gs"
-  linux:
-    # Standard system paths
-    - "/usr/bin/gs"
-    - "/usr/bin/gsc"
-    - "/usr/local/bin/gs"
-    - "/usr/local/bin/gsc"
-    # Snap
-    - "/snap/bin/ghostscript"
-    - "/snap/bin/gs"
-    # Flatpak
-    - "/var/lib/flatpak/exports/bin/org.gnu.ghostscript"
-    # Common third-party locations
-    - "/opt/bin/gs"
-    - "/opt/ghostscript/bin/gs"
-    # Version-specific paths (common in distros)
-    - "/usr/bin/gs-*"
-  windows:
-    # Program Files (64-bit)
-    - "C:/Program Files/gs/gs*/bin/gswin64c.exe"
-    - "C:/Program Files/gs/gs*/bin/gswin32c.exe"
-    # Program Files (32-bit)
-    - "C:/Program Files (x86)/gs/gs*/bin/gswin64c.exe"
-    - "C:/Program Files (x86)/gs/gs*/bin/gswin32c.exe"
-    # Common Ghostscript installation paths
-    - "C:/gs/gs*/bin/gswin64c.exe"
-    - "C:/gs/gs*/bin/gswin32c.exe"
-    # Scoop
-    - "%USERPROFILE%/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
-    - "~/scoop/apps/ghostscript/current/gs*/bin/gswin64c.exe"
-    # User-local installation
-    - "%LOCALAPPDATA%/Programs/Ghostscript/gs*/bin/gswin64c.exe"
-    - "~/AppData/Local/Programs/Ghostscript/gs*/bin/gswin64c.exe"
-
-timeout: 120
-
 profiles:
-  # Ghostscript on Unix (macOS, Linux) with Bash/Zsh/Fish/Sh
-  - name: unix
-    display_name: Ghostscript on Unix
-    platforms:
-      - macos
-      - linux
-    shells:
-      - bash
-      - zsh
-      - fish
-      - sh
-    version: ">= 9.0, < 10.0"
-
-    commands:
-      # Convert command - convert PS/EPS to PDF or other formats
-      convert:
-        description: "Convert PostScript to PDF or other formats"
-        usage: "gs [OPTIONS] input.ps"
-
-        arguments:
-          - name: inputs
-            type: file
-            variadic: true
-            position: last
-            min: 1
-            description: "Input file(s)"
-
-        options:
-          # Device (output format)
-          - name: device
-            type: symbol
-            cli: "-sDEVICE="
-            values:
-              - pdfwrite
-              - eps2write
-              - png16m
-              - png256
-              - pnggray
-              - jpeg
-            description: "Output device"
-
-          # Output file
-          - name: output
-            type: file
-            cli: "-sOutputFile="
-            description: "Output file"
-
-          # Resolution (single or XxY)
-          - name: resolution
-            type: array
-            of: integer
-            size: [1, 2]
-            cli: "-r"
-            format: single_dash_space
-            separator: "x"
-            description: "Resolution (e.g., 300 or 300x600)"
-
-          # Library paths
-          - name: lib_paths
-            type: array
-            of: file
-            cli: "-I"
-            format: single_dash_space
-            separator: " "
-            description: "Library search paths"
-
-        flags:
-          # Safer mode
-          - name: safer
-            cli: "-dSAFER"
-            description: "Run in safer mode"
-            default: true
-
-          # Quiet mode
-          - name: quiet
-            cli: "-q"
-            description: "Suppress informational messages"
-            default: false
-
-          # Batch mode
-          - name: batch
-            cli: "-dBATCH"
-            description: "Run in batch mode"
-            default: true
-
-          # No pause
-          - name: nopause
-            cli: "-dNOPAUSE"
-            description: "Don't pause per page"
-            default: true
-
-          # EPS crop
-          - name: eps_crop
-            cli: "-dEPSCrop"
-            description: "Automatically crop EPS bounding box"
-            default: false
+- name: unix
+  display_name: Ghostscript on Unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  version: ">= 9.0, < 10.0"
+  commands:
+  - description: Convert PostScript to PDF or other formats
+    usage: gs [OPTIONS] input.ps
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      position: last
+      min: 1
+      description: Input file(s)
+    options:
+    - name: device
+      type: symbol
+      cli: "-sDEVICE"
+      values:
+      - pdfwrite
+      - eps2write
+      - png16m
+      - png256
+      - pnggray
+      - jpeg
+      description: Output device
+      assignment_delimiter: equals
+    - name: output
+      type: file
+      cli: "-sOutputFile"
+      description: Output file
+      assignment_delimiter: equals
+    - name: resolution
+      type: array
+      of: integer
+      size:
+      - 1
+      - 2
+      cli: "-r"
+      separator: x
+      description: Resolution (e.g., 300 or 300x600)
+      assignment_delimiter: space
+    - name: lib_paths
+      type: array
+      of: file
+      cli: "-I"
+      separator: " "
+      description: Library search paths
+      assignment_delimiter: space
+    flags:
+    - name: safer
+      cli: "-dSAFER"
+      description: Run in safer mode
+      default: true
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-q"
+      description: Suppress informational messages
+      default: false
+      assignment_delimiter: none
+    - name: batch
+      cli: "-dBATCH"
+      description: Run in batch mode
+      default: true
+      assignment_delimiter: none
+    - name: nopause
+      cli: "-dNOPAUSE"
+      description: Don't pause per page
+      default: true
+      assignment_delimiter: none
+    - name: eps_crop
+      cli: "-dEPSCrop"
+      description: Automatically crop EPS bounding box
+      default: false
+      assignment_delimiter: none
+    name: convert
+- name: windows
+  display_name: Ghostscript on Windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  version: ">= 9.0, < 10.0"
+  inherits: unix
+smoke_tests:
+- name: version
+  description: Verify ghostscript version
+  command:
+  - "--version"
+  expect:
+    exit_code: 0
+- name: help
+  description: Verify help output
+  command:
+  - "--help"
+  expect:
+    exit_code: 0

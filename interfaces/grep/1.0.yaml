@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/interface.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: grep
+version: '1.0'
+display_name: grep pattern search interface
+description: |
+  Interface for pattern search tools that find lines matching patterns.
+  Defines the contract for grep-compatible implementations.
+commands:
+  - name: search
+    display_name: Search patterns
+    description: Search for patterns in files
+    required: true
+    arguments:
+    - name: pattern
+      type: string
+      required: true
+      description: Pattern to search for
+    - name: files
+      type: file
+      variadic: true
+      required: false
+      description: Files to search
+    options:
+    # Pattern syntax options
+    - name: extended_regexp
+      description: Extended regular expression
+    - name: fixed_strings
+      description: Fixed strings (not regex)
+    - name: basic_regexp
+      description: Basic regular expression (default)
+    - name: perl_regexp
+      description: Perl-compatible regular expression
+    - name: regexp
+      description: Specify pattern
+    - name: file
+      description: Patterns from file
+    # Matching control
+    - name: ignore_case
+      description: Case insensitive matching
+    - name: invert_match
+      description: Select non-matching lines
+    - name: word_regexp
+      description: Match whole words
+    - name: line_regexp
+      description: Match whole lines
+    # General output control
+    - name: count
+      description: Count matching lines
+    - name: color
+      description: Highlight matches
+    - name: files_without_match
+      description: Files without matches
+    - name: files_with_matches
+      description: Files with matches
+    - name: max_count
+      type: integer
+      description: Stop after NUM matches
+    - name: only_matching
+      description: Show only matched parts
+    - name: quiet
+      description: Quiet mode
+    - name: silent
+      description: Silent mode
+    - name: no_messages
+      description: Suppress error messages
+    # Output line prefix control
+    - name: byte_offset
+      description: Byte offset
+    - name: with_filename
+      description: Always show filename
+    - name: no_filename
+      description: Never show filename
+    - name: label
+      description: Label for stdin
+    - name: line_number
+      description: Line numbers
+    - name: null
+      description: Null byte after filename
+    # Context line control
+    - name: after_context
+      type: integer
+      description: Lines after match
+    - name: before_context
+      type: integer
+      description: Lines before match
+    - name: context
+      type: integer
+      description: Lines before and after match
+    # File and directory selection
+    - name: text
+      description: Process binary as text
+    - name: binary_files
+      description: Binary file handling
+    - name: directories
+      description: Directory handling
+    - name: exclude
+      description: Exclude files
+    - name: exclude_from
+      description: Exclude from file
+    - name: exclude_dir
+      description: Exclude directories
+    - name: include
+      description: Include files
+    flags:
+    - name: recursive
+      description: Recursive search
+    - name: dereference_recursive
+      description: Recursive with dereference

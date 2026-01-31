@@ -1,0 +1,118 @@
+---
+ukiryu_schema: '1.0'
+name: awk_gnu
+display_name: GNU awk (gawk)
+homepage: https://www.gnu.org/software/gawk/
+version: '5.3'
+implements: awk
+version_detection:
+  command: "--version"
+  pattern: GNU Awk ([\d.]+)
+  modern_threshold: '4.0'
+profiles:
+- name: gnu
+  display_name: GNU awk on Unix
+  platforms:
+  - linux
+  - macos
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_equals
+  commands:
+  - description: Pattern scanning and processing language
+    usage: awk [options] 'program' [file...]
+    arguments:
+    - name: program
+      type: string
+      required: false
+      position: first
+      description: Awk program to execute
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to process
+    options:
+    - name: file
+      cli: "-f"
+      type: file
+      assignment_delimiter: auto
+      description: Read program from file
+    - name: field_separator
+      cli: "-F"
+      assignment_delimiter: auto
+      description: Field separator
+    - name: value
+      cli: "-v"
+      assignment_delimiter: auto
+      description: Variable assignment
+    - name: posix
+      cli: "--posix"
+      assignment_delimiter: none
+      description: POSIX compatibility mode
+    - name: traditional
+      cli: "--traditional"
+      assignment_delimiter: none
+      description: Traditional mode
+    - name: lint
+      cli: "--lint"
+      assignment_delimiter: none
+      description: Warn about dubious constructs
+    - name: lint_old
+      cli: "--lint-old"
+      assignment_delimiter: none
+      description: Warn about old constructs
+    - name: gen_pot
+      cli: "--gen-pot"
+      assignment_delimiter: none
+      description: Generate pot file
+    - name: pretty_print
+      cli: "--pretty-print"
+      assignment_delimiter: none
+      description: Pretty print program
+    - name: copyright
+      cli: "--copyright"
+      assignment_delimiter: none
+      description: Print copyright info
+    - name: use_lc_ctype
+      cli: "--use-lc-ctype"
+      assignment_delimiter: none
+      description: Use locale for characters
+    - name: source
+      type: string
+      cli: "--source"
+      assignment_delimiter: equals
+      description: Read program from file
+    flags:
+    - name: posix
+      cli: "--posix"
+      description: POSIX mode
+      default: false
+      assignment_delimiter: none
+    - name: traditional
+      cli: "--traditional"
+      description: Traditional mode
+      default: false
+      assignment_delimiter: none
+    - name: lint
+      cli: "--lint"
+      description: Enable lint warnings
+      default: false
+      assignment_delimiter: none
+    - name: lint_old
+      cli: "--lint-old"
+      description: Warn about old constructs
+      default: false
+      assignment_delimiter: none
+    - name: pretty_print
+      cli: "--pretty-print"
+      description: Pretty print program
+      default: false
+      assignment_delimiter: none
+    name: process

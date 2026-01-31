@@ -1,13 +1,13 @@
-= Ukiryu Tool Registry
+= Ukiryu Tool Register (v1)
 
 Collection of YAML tool profiles for https://github.com/ukiryu/ukiryu[Ukiryu]
 platform-adaptive command execution framework.
 
-image:https://img.shields.io/badge/version-0.1.0-blue[Version]
+image:https://img.shields.io/badge/version-1.0.0-blue[Version]
 
 == Purpose
 
-The Ukiryu Tool Registry contains declarative YAML profiles that define how to
+The Ukiryu Tool Register contains declarative YAML profiles that define how to
 execute various command-line tools across different platforms, shells, and
 versions.
 
@@ -18,17 +18,22 @@ Each tool profile includes:
 * Shell-specific command formatting (bash, zsh, PowerShell, etc.)
 * Version detection and compatibility handling
 
+== Schema Version
+
+This register follows the **v1 schema**. All tool definitions conform to the schema
+defined in https://github.com/ukiryu/schemas/tree/v1[`schemas/v1/tool.schema.yaml`].
+
 == Tool Profiles
 
 === Supported Tools
 
-* https://github.com/ukiryu/register/tree/main/tools/imagemagick[ImageMagick] - Image conversion and processing
-* https://github.com/ukiryu/register/tree/main/tools/ghostscript[Ghostscript] - PostScript and PDF interpreter
-* https://github.com/ukiryu/register/tree/main/tools/ffmpeg[FFmpeg] - Video/audio processing
-* https://github.com/ukiryu/register/tree/main/tools/pandoc[Pandoc] - Document conversion
-* https://github.com/ukiryu/register/tree/main/tools/jpegoptim[jpegoptim] - JPEG optimization
-* https://github.com/ukiryu/register/tree/main/tools/optipng[optipng] - PNG optimization
-* https://github.com/ukiryu/register/tree/main/tools/inkscape[Inkscape] - SVG vector graphics
+* https://github.com/ukiryu/register/tree/v1/tools/imagemagick[ImageMagick] - Image conversion and processing
+* https://github.com/ukiryu/register/tree/v1/tools/ghostscript[Ghostscript] - PostScript and PDF interpreter
+* https://github.com/ukiryu/register/tree/v1/tools/ffmpeg[FFmpeg] - Video/audio processing
+* https://github.com/ukiryu/register/tree/v1/tools/pandoc[Pandoc] - Document conversion
+* https://github.com/ukiryu/register/tree/v1/tools/jpegoptim[jpegoptim] - JPEG optimization
+* https://github.com/ukiryu/register/tree/v1/tools/optipng[optipng] - PNG optimization
+* https://github.com/ukiryu/register/tree/v1/tools/inkscape[Inkscape] - SVG vector graphics
 
 == Directory Structure
 
@@ -36,37 +41,327 @@ Each tool profile includes:
 register/
 └── tools/
     ├── imagemagick/
-    │   └── 7.1.yaml
+    │   └── 7.1.yaml         # Versioned tool (specific version)
     ├── ghostscript/
     │   ├── 9.5.yaml
     │   └── 10.0.yaml
+    ├── cat/
+    │   └── generic.yaml     # Generic tool (stable interface)
+    ├── sort/
+    │   └── generic.yaml     # Generic tool (stable interface)
     └── ...
 ----
 
 == Profile Schema
 
-Tool profiles follow the schema defined in https://github.com/ukiryu/schema[Ukiryu Schema].
+Tool profiles follow the v1 schema defined in https://github.com/ukiryu/schemas[`schemas`].
 
 Key fields:
 
 `name`:: Tool identifier (e.g., "imagemagick")
 `display_name`:: Human-readable name
-`version`:: Default version
-`aliases`:: Alternative names for finding the tool
-`version_detection`:: How to detect installed version
+`version`:: Tool version (see <<version_naming, Version Naming>>)
+`implements`:: Interface contract this tool implements (e.g., "ping" for ping_gnu, ping_bsd)
+`version_detection`:: How to detect installed version (see <<version_detection, Version Detection>>)
 `search_paths`:: Platform-specific executable locations
 `profiles`:: Array of platform/shell-specific configurations
 `commands`:: Command definitions with arguments, options, and flags
+
+[[version_naming]]
+=== Version Naming
+
+Tool profiles use two distinct versioning schemes:
+
+* **Versioned tools** (e.g., `imagemagick/7.1.yaml`, `ghostscript/10.0.yaml`):: Tools with
+  well-defined, detectable versions. These tools have version-specific commands, options,
+  or behaviors that differ between releases.
+
+* **Generic tools** (e.g., `cat/generic.yaml`, `sort/generic.yaml`):: System utilities whose
+  core interface is stable across versions or where version detection is unreliable/unnecessary.
+  These tools use `"version: generic"` instead of a numeric version.
+
+When to use each:
+
+* Use **versioned profiles** when:
+** The tool has version-specific command syntax or options
+** Version detection is reliable via `--version` or similar
+** Different versions have incompatible interfaces
+
+* Use **generic profiles** when:
+** The tool is a standard Unix utility with stable interface (cat, grep, sort, etc.)
+** Version output varies by OS/distribution or is unreliable
+** The command syntax hasn't changed meaningfully across versions
+
+Examples:
+
+[source,yaml]
+----
+# Versioned tool - FFmpeg has version-specific features
+name: ffmpeg
+version: "8.0"
+version_detection:
+  command: -version
+  pattern: ffmpeg version ([\d.]+)
+
+# Generic tool - cat has stable interface across versions
+name: cat
+version: generic
+version_detection:
+  detection_methods:
+    - type: command
+      command: --version
+      pattern: cat \\(GNU coreutils\\) ([\\d.]+)
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/cat.1
+        linux: /usr/share/man/man1/cat.1
+  system_tool: true
+----
+
+[[version_detection]]
+=== Version Detection
+
+Version detection determines which installed tool version to use. Ukiryu supports multiple
+detection methods with automatic fallback:
+
+**Detection Methods Array** (recommended):: Provides multiple detection strategies with
+ automatic fallback. If one method fails, the next is tried.
+
+[source,yaml]
+----
+version_detection:
+  detection_methods:
+    # Method 1: Try --version flag first
+    - type: command
+      command: --version
+      pattern: "Version ([\\d.]+)"
+
+    # Method 2: Fall back to parsing man page
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/tool.1
+        linux: /usr/share/man/man1/tool.1
+
+    # Method 3: Mark as system tool if detection fails
+    - type: system_tool
+
+  modern_threshold: "1.0"  # Minimum "modern" version
+----
+
+**Legacy Single Method** (deprecated):: Simple single-method detection:
+
+[source,yaml]
+----
+version_detection:
+  command: --version
+  pattern: "Version ([\\d.]+)"
+  modern_threshold: "1.0"
+----
+
+Detection method types:
+
+* `command`:: Run the tool and parse stdout/stderr for version
+** `command`:: Array of arguments (e.g., `["--version"]` or `["-v", "-"]`)
+** `pattern`:: Regex with capture group for version number
+
+* `man_page`:: Parse the man page for version information
+** `paths`:: Platform-specific man page paths
+
+* `system_tool`:: Mark as OS-provided utility (no version detection)
+
+The `modern_threshold` specifies the minimum version considered "modern" for compatibility
+checks.
+
+== Validating Tool Profiles
+
+=== Local Validation
+
+To validate a tool profile locally, install the Ukiryu gem and use the `validate`
+command:
+
+[source,shell]
+----
+# Install ukiryu
+gem install ukiryu
+
+# Validate a specific profile
+ukiryu validate --definition tools/imagemagick/7.1.yaml
+
+# Validate with schema from schemas repository
+ukiryu validate --definition tools/imagemagick/7.1.yaml \
+  --schema ../schemas/v1/tool.schema.yaml
+
+# Validate all profiles in the register
+ukiryu validate all
+----
+
+For executable testing (smoke tests), use the `--executable` flag:
+
+[source,shell]
+----
+ukiryu validate --definition tools/imagemagick/7.1.yaml --executable
+----
+
+=== Linting
+
+For best practices checking, use the `lint` command:
+
+[source,shell]
+----
+# Lint a specific profile
+ukiryu lint file tools/imagemagick/7.1.yaml
+
+# Lint all profiles
+ukiryu lint all
+
+# Show all linting rules
+ukiryu lint rules
+----
+
+=== Automated Validation
+
+GitHub Actions automatically validates all tool profiles on:
+
+* Pull requests that modify YAML files in `tools/**/*.yaml`
+* Version tag pushes (e.g., `v1.2.3`)
+
+The validation workflow:
+
+. Validates YAML syntax
+. Checks against the v1 JSON Schema
+. Runs structural validation rules
+
+=== CI/CD Integration
+
+You can add profile validation to your own CI/CD pipeline:
+
+[source,yaml]
+----
+# .github/workflows/validate-profiles.yml
+name: Validate Tool Profiles
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**/*.yaml'
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install ukiryu
+        run: gem install ukiryu
+
+      - name: Validate profiles
+        run: |
+          # Validate all changed YAML files
+          ukiryu validate all
+----
 
 == Adding a New Tool
 
 To add a new tool profile:
 
+. Determine the appropriate <<version_naming,version naming scheme>>:
+** Use versioned profiles (`tools/<tool>/<version>.yaml`) for tools with version-specific interfaces
+** Use generic profiles (`tools/<tool>/generic.yaml`) for stable system utilities
 . Check the tool's man page for command syntax
-. Create a new YAML file in `tools/<tool-name>/<version>.yaml`
-. Follow the schema defined in Ukiryu Schema
+. Create a new YAML file in `tools/<tool-name>/`
+. Follow the v1 schema defined in https://github.com/ukiryu/schemas/tree/v1[`schemas/v1/tool.schema.yaml`]
+. Implement <<version_detection,version detection>> using `detection_methods` array with fallback
+. Validate locally: `ukiryu validate --definition tools/<tool-name>/<version>.yaml`
 . Test the profile with real commands
-. Submit a pull request
+. Submit a pull request to the `v1` branch
+
+=== Versioned Profile Example
+
+[source,yaml]
+----
+----
+name: imagemagick
+version: "7.1"
+version_detection:
+  command: -version
+  pattern: Version: ImageMagick ([\d.]+)
+search_paths:
+  macos:
+  - /opt/homebrew/bin/magick
+  linux:
+  - /usr/bin/convert
+profiles:
+  - name: default
+    platforms: [macos, linux]
+    shells: [bash, zsh]
+    commands:
+      - name: convert
+        # ... command definition
+----
+
+=== Generic Profile Example
+
+[source,yaml]
+----
+----
+name: cat
+version: generic
+version_detection:
+  detection_methods:
+    - type: command
+      command: --version
+      pattern: cat \\(GNU coreutils\\) ([\\d.]+)
+    - type: man_page
+      paths:
+        macos: /usr/share/man/man1/cat.1
+        linux: /usr/share/man/man1/cat.1
+  system_tool: true
+search_paths:
+  macos:
+  - /usr/bin/cat
+  linux:
+  - /usr/bin/cat
+profiles:
+  - name: unix
+    platforms: [macos, linux]
+    shells: [bash, zsh, fish, sh]
+    commands:
+      - name: concatenate
+        # ... command definition
+----
+
+=== Validation Checklist
+
+Before submitting a pull request:
+
+* [ ] YAML syntax is valid
+* [ ] Conforms to v1 schema
+* [ ] All required fields are present
+* [ ] Tool name and version are correct
+* [ ] Commands work on all supported platforms
+* [ ] Version detection works if defined
+* [ ] No linting warnings (or warnings are documented)
+
+=== Extracting Definitions
+
+If you need to create a new profile from an installed tool, use the extract command:
+
+[source,shell]
+----
+# Extract definition from git
+ukiryu extract git --output tools/git/2.45.yaml
+
+# Extract with verbose output
+ukiryu extract git --output tools/git/2.45.yaml --verbose
+----
 
 == Usage
 
@@ -76,7 +371,7 @@ Tools are loaded automatically by Ukiryu:
 ----
 require 'ukiryu'
 
-Ukiryu::Registry.default_registry_path = 'path/to/register'
+Ukiryu::Register.default_register_path = 'path/to/register'
 
 tool = Ukiryu::Tool.get(:imagemagick)
 result = tool.execute(:convert, {
@@ -85,7 +380,6 @@ result = tool.execute(:convert, {
   resize: '50x50'
 })
 ----
-
 
 == License
 

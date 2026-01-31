@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/interface.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: sed
+version: '1.0'
+display_name: sed stream editor interface
+description: |
+  Interface for stream editor tools that filter and transform text.
+  Defines the contract for sed-compatible implementations.
+commands:
+  - name: edit
+    display_name: Edit text
+    description: Stream editor for filtering and transforming text
+    required: true
+    arguments:
+    - name: script
+      type: string
+      required: false
+      description: Sed script/command
+    - name: files
+      type: file
+      variadic: true
+      required: false
+      description: Files to edit
+    options:
+    # Script options
+    - name: expression
+      type: string
+      description: Add script to commands
+    - name: file
+      type: file
+      description: Add commands from file
+    # Regular expression options
+    - name: regexp_extended
+      description: Extended regular expressions
+    - name: extended_regexp
+      description: Extended regular expressions (GNU compatibility)
+    # In-place editing (NOT supported by BusyBox)
+    - name: in_place
+      description: Edit files in place
+    - name: in_place_continuous
+      description: In-place, continuous across files
+    - name: follow_symlinks
+      description: Follow symlinks when processing in place
+    # Output control
+    - name: quiet
+      description: Suppress automatic printing
+    - name: silent
+      description: Suppress automatic printing
+    - name: line_buffered
+      description: Line buffered output
+    - name: line_length
+      type: integer
+      description: Line wrap length for l command
+    - name: unbuffered
+      description: Unbuffered output
+    # File handling
+    - name: separate
+      description: Treat files separately
+    - name: sandbox
+      description: Sandbox mode
+    # Input options
+    - name: null_data
+      description: Separate lines by NUL characters
+    - name: delay_open
+      description: Delay opening files for w command
+    # Other options
+    - name: posix
+      description: Disable GNU extensions
+    - name: debug
+      description: Annotate program execution

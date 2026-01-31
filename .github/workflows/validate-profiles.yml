@@ -1,0 +1,92 @@
+# frozen_string_literal: true
+
+name: Validate Tool Profiles
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**/*.yaml'
+      - '.github/workflows/*.yml'
+  push:
+    branches: [v1]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+          - macos-15
+          - macos-15-intel
+          - windows-2025
+          - windows-11-arm
+        include:
+          - os: windows-11-arm
+            ruby-version: '3.4'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Checkout schemas repository
+        uses: actions/checkout@v6
+        with:
+          repository: ukiryu/schemas
+          path: schemas
+          ref: main
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+          cache-version: ukiryu-${{ github.sha }}
+
+      - name: Validate YAML syntax
+        continue-on-error: true
+        run: bundle exec ruby .github/scripts/validate_yaml_syntax.rb
+
+      - name: Validate tool profiles
+        shell: bash
+        env:
+          SCHEMA_PATH: ${{ github.workspace }}/schemas/v1/tool.schema.yaml
+          DEBUG_SCHEMA_VALIDATION: "1"
+        run: |
+          echo "=========================================="
+          echo "Validating tool profiles on ${{ matrix.os }}"
+          echo "Platform: $(uname -s) $(uname -m)"
+          echo "Shell: $SHELL"
+          echo "Schema: $SCHEMA_PATH"
+          echo "=========================================="
+          echo ""
+
+          # Run comprehensive validation using ukiryu
+          # This validates:
+          # 1. YAML syntax
+          # 2. Schema compliance
+          # 3. Tool existence on platform
+          # 4. Version detection
+          # 5. Smoke test execution
+          bundle exec ukiryu validate all \
+            --register "${{ github.workspace }}" \
+            --schema "$SCHEMA_PATH" \
+            --all \
+            --executable \
+            --verbose || exit 1
+
+          echo ""
+          echo "=========================================="
+          echo "All profiles validated successfully on ${{ matrix.os }}"
+          echo "=========================================="

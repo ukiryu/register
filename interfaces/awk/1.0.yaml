@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ukiryu/schema/refs/heads/main/v1/interface.schema.yaml
+---
+ukiryu_schema: '1.0'
+name: awk
+version: '1.0'
+display_name: awk text processing interface
+description: |
+  Interface for pattern scanning and text processing tools.
+  Defines the contract for awk-compatible implementations.
+commands:
+  - name: process
+    display_name: Process text
+    description: Pattern scanning and processing language
+    required: true
+    arguments:
+    - name: program
+      type: string
+      required: false
+      description: Awk program to execute
+    - name: files
+      type: file
+      variadic: true
+      required: false
+      description: Files to process
+    options:
+    - name: file
+      type: file
+      description: Read program from file
+    - name: field_separator
+      description: Field separator
+    - name: value
+      description: Variable assignment
+    - name: posix
+      description: POSIX compatibility mode
+    - name: traditional
+      description: Traditional mode
+    - name: lint
+      description: Warn about dubious constructs
+    - name: lint_old
+      description: Warn about old constructs
+    - name: gen_pot
+      description: Generate pot file
+    - name: pretty_print
+      description: Pretty print program
+    - name: copyright
+      description: Print copyright info
+    - name: use_lc_ctype
+      description: Use locale for characters
+    - name: source
+      type: string
+      description: Read program from file

@@ -1,0 +1,170 @@
+---
+ukiryu_schema: '1.0'
+name: sed_gnu
+display_name: GNU sed (stream editor)
+homepage: https://www.gnu.org/software/sed/
+version: '4.9'
+implements: sed
+version_detection:
+  command: "--version"
+  pattern: sed \(GNU sed\) ([\d.]+)
+  modern_threshold: '4.0'
+profiles:
+- name: gnu
+  display_name: GNU sed on Unix
+  platforms:
+  - linux
+  - macos
+  - windows
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  - powershell
+  - cmd
+  option_style: double_dash_equals
+  commands:
+  - description: Stream editor for filtering and transforming text
+    usage: sed [options] script [file...]
+    arguments:
+    - name: script
+      type: string
+      required: false
+      position: first
+      description: Sed script/command
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to edit
+    options:
+    - name: expression
+      type: string
+      cli: "-e"
+      assignment_delimiter: auto
+      description: Add script to commands
+    - name: file
+      type: file
+      cli: "-f"
+      assignment_delimiter: auto
+      description: Add commands from file
+    - name: regexp_extended
+      cli: "-E"
+      assignment_delimiter: none
+      description: Extended regular expressions
+    - name: extended_regexp
+      cli: "-r"
+      assignment_delimiter: none
+      description: Extended regular expressions (GNU compatibility)
+    - name: in_place
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Edit files in place
+    - name: follow_symlinks
+      cli: "--follow-symlinks"
+      assignment_delimiter: none
+      description: Follow symlinks when processing in place
+    - name: quiet
+      cli: "-n"
+      assignment_delimiter: none
+      description: Suppress automatic printing
+    - name: silent
+      cli: "--silent"
+      assignment_delimiter: none
+      description: Suppress automatic printing
+    - name: line_buffered
+      cli: "-l"
+      assignment_delimiter: none
+      description: Line buffered output
+    - name: line_length
+      type: integer
+      cli: "--line-length"
+      assignment_delimiter: equals
+      description: Line wrap length for l command
+    - name: unbuffered
+      cli: "-u"
+      assignment_delimiter: none
+      description: Unbuffered output
+    - name: separate
+      cli: "-s"
+      assignment_delimiter: none
+      description: Treat files separately
+    - name: sandbox
+      cli: "--sandbox"
+      assignment_delimiter: none
+      description: Sandbox mode
+    - name: null_data
+      cli: "-z"
+      assignment_delimiter: none
+      description: Separate lines by NUL characters
+    - name: posix
+      cli: "--posix"
+      assignment_delimiter: none
+      description: Disable GNU extensions
+    - name: debug
+      cli: "--debug"
+      assignment_delimiter: none
+      description: Annotate program execution
+    flags:
+    - name: regexp_extended
+      cli: "-E"
+      description: Use extended regex
+      default: false
+      assignment_delimiter: none
+    - name: extended_regexp
+      cli: "-r"
+      description: Use extended regex (GNU compat)
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-n"
+      description: Suppress auto print
+      default: false
+      assignment_delimiter: none
+    - name: silent
+      cli: "--silent"
+      description: Suppress auto print
+      default: false
+      assignment_delimiter: none
+    - name: line_buffered
+      cli: "-l"
+      description: Line buffered
+      default: false
+      assignment_delimiter: none
+    - name: unbuffered
+      cli: "-u"
+      description: Unbuffered
+      default: false
+      assignment_delimiter: none
+    - name: separate
+      cli: "-s"
+      description: Treat files separately
+      default: false
+      assignment_delimiter: none
+    - name: sandbox
+      cli: "--sandbox"
+      description: Sandbox mode
+      default: false
+      assignment_delimiter: none
+    - name: null_data
+      cli: "-z"
+      description: NUL-separated lines
+      default: false
+      assignment_delimiter: none
+    - name: follow_symlinks
+      cli: "--follow-symlinks"
+      description: Follow symlinks
+      default: false
+      assignment_delimiter: none
+    - name: posix
+      cli: "--posix"
+      description: POSIX mode
+      default: false
+      assignment_delimiter: none
+    - name: debug
+      cli: "--debug"
+      description: Debug mode
+      default: false
+      assignment_delimiter: none
+    name: edit
