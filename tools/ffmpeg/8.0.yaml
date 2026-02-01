@@ -8,7 +8,7 @@ aliases:
 - ffmpeg
 - ff
 version_detection:
-  command: []
+  command: "-version"
   pattern: ffmpeg version (\d+\.\d+)
   modern_threshold: '5.0'
 profiles:

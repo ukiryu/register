@@ -5,6 +5,8 @@ display_name: GNU Tar Archiver
 homepage: https://www.gnu.org/software/tar/
 version: '1.35'
 implements: tar
+aliases:
+- tar
 version_detection:
   command: "--version"
   pattern: tar \(GNU tar\) ([\d.]+)

@@ -6,6 +6,7 @@ homepage: https://www.gnu.org/software/gzip/
 version: '1.12'
 implements: gzip
 aliases:
+- gzip
 - gunzip
 - gzcat
 version_detection:

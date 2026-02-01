@@ -6,6 +6,7 @@ homepage: https://sourceware.org/bzip2/
 version: 1.0.6
 implements: bzip2
 aliases:
+- bzip2
 - bunzip2
 - bzcat
 version_detection:

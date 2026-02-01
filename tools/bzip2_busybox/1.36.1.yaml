@@ -6,6 +6,7 @@ homepage: https://busybox.net/
 version: 1.36.1
 implements: bzip2
 aliases:
+- bzip2
 - bunzip2
 - bzcat
 version_detection:

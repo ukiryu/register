@@ -30,7 +30,7 @@ profiles:
       type: file
       variadic: true
       min: 1
-      position: 99
+      position: 1
       description: Input file(s) to convert
     - name: output
       type: file

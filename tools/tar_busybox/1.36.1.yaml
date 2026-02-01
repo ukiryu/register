@@ -5,6 +5,8 @@ display_name: BusyBox Tar (Alpine Linux)
 homepage: https://busybox.net/
 version: 1.36.1
 implements: tar
+aliases:
+- tar
 version_detection:
   command: "--version"
   pattern: ''
