@@ -1,0 +1,235 @@
+---
+# Tool installation matrix for Ukiryu register validation
+# Defines how to install each tool on different platforms
+#
+# Structure:
+#   tool_name:
+#     platforms:
+#       ubuntu: [apt/apt-get packages or commands]
+#       macos: [brew packages or commands]
+#       windows: [choco commands or scoop commands]
+
+imagemagick:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y imagemagick
+    macos:
+      - brew install imagemagick
+    windows:
+      - choco install imagemagick --yes
+
+ghostscript:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y ghostscript
+    macos:
+      - brew install ghostscript
+    windows:
+      - choco install ghostscript --yes
+
+ffmpeg:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y ffmpeg
+    macos:
+      - brew install ffmpeg
+    windows:
+      - choco install ffmpeg --yes
+
+pandoc:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y pandoc
+    macos:
+      - brew install pandoc
+    windows:
+      - choco install pandoc --yes
+
+inkscape:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y inkscape
+    macos:
+      - brew install --cask inkscape
+    windows:
+      - choco install inkscape --yes
+
+yq:
+  platforms:
+    ubuntu:
+      - snap install yq
+      - sudo snap install yq  # Ensure snap path is available
+    macos:
+      - brew install yq
+    windows:
+      - choco install yq --yes
+
+jpegoptim:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y jpegoptim
+    macos:
+      - brew install jpegoptim
+    windows:
+      - echo "jpegoptim not available on Windows"
+
+optipng:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y optipng
+    macos:
+      - brew install optipng
+    windows:
+      - echo "optipng not available on Windows"
+
+# Standard Unix utilities (usually pre-installed)
+coreutils:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y coreutils
+    macos:
+      - brew install coreutils
+    windows:
+      - echo "coreutils utilities not applicable on Windows"
+
+busybox:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y busybox
+    macos:
+      - brew install busybox
+    windows:
+      - echo "busybox not available on Windows"
+
+# Archive and compression tools
+tar:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y tar
+    macos:
+      - echo "tar pre-installed on macOS"
+    windows:
+      - choco install gnuwin32-tar --yes
+
+gzip:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y gzip
+    macos:
+      - echo "gzip pre-installed on macOS"
+    windows:
+      - choco install gzip --yes
+
+bzip2:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y bzip2
+    macos:
+      - echo "bzip2 pre-installed on macOS"
+    windows:
+      - choco install bzip2 --yes
+
+# Text processing tools
+awk:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y gawk
+    macos:
+      - echo "awk pre-installed on macOS"
+    windows:
+      - choco install awk --yes
+
+sed:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y sed
+    macos:
+      - echo "sed pre-installed on macOS"
+    windows:
+      - choco install sed --yes
+
+grep:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y grep
+    macos:
+      - echo "grep pre-installed on macOS"
+    windows:
+      - choco install grep --yes
+
+find:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y findutils
+    macos:
+      - echo "find pre-installed on macOS"
+    windows:
+      - echo "find not available on Windows (use where instead)"
+
+# Network tools
+ping:
+  platforms:
+    ubuntu:
+      - echo "ping pre-installed on Ubuntu"
+    macos:
+      - echo "ping pre-installed on macOS"
+    windows:
+      - echo "ping pre-installed on Windows"
+
+wget:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y wget
+    macos:
+      - brew install wget
+    windows:
+      - choco install wget --yes
+
+curl:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y curl
+    macos:
+      - echo "curl pre-installed on macOS"
+    windows:
+      - echo "curl pre-installed on Windows"
+
+# Version control
+git:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y git
+    macos:
+      - echo "git pre-installed on macOS"
+    windows:
+      - choco install git --yes
+
+# Document conversion tools
+pandoc:
+  platforms:
+    ubuntu:
+      - sudo apt-get update -qq
+      - sudo apt-get install -y pandoc
+    macos:
+      - brew install pandoc
+    windows:
+      - choco install pandoc --yes

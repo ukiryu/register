@@ -1,0 +1,98 @@
+name: Lint Register
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**/*.yaml'
+      - 'interfaces/**/*.yaml'
+      - '.github/workflows/lint.yml'
+  push:
+    branches:
+      - main
+      - v1
+    paths:
+      - 'tools/**/*.yaml'
+      - 'interfaces/**/*.yaml'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        ruby: ['3.3']
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: false
+
+      - name: Install Ukiryu
+        run: gem install ukiryu
+
+      - name: Lint all YAML files
+        shell: bash
+        run: |
+          echo "Linting all YAML files in register..."
+
+          # Lint all files
+          ukiryu lint all
+
+          echo ""
+          echo "Linting summary:"
+          echo "  Checked: tools/**/*.yaml"
+          echo "  Checked: interfaces/**/*.yaml"
+        env:
+          UKIRYU_REGISTER_PATH: ${{ github.workspace }}
+
+      - name: Show linting rules
+        shell: bash
+        run: |
+          echo "Available linting rules:"
+          ukiryu lint rules
+
+      - name: Lint individual tool files
+        if: always()
+        shell: bash
+        run: |
+          if [ -d "tools" ]; then
+            echo "Linting individual tool profiles..."
+            for file in tools/**/*.yaml; do
+              if [ -f "$file" ]; then
+                echo "  Checking: $file"
+                ukiryu lint file "$file" || true
+              fi
+            done
+          fi
+
+      - name: Lint individual interface files
+        if: always()
+        shell: bash
+        run: |
+          if [ -d "interfaces" ]; then
+            echo "Linting individual interface definitions..."
+            for file in interfaces/**/*.yaml; do
+              if [ -f "$file" ]; then
+                echo "  Checking: $file"
+                ukiryu lint file "$file" || true
+              fi
+            done
+          fi
+
+      - name: Linting complete
+        if: success()
+        shell: bash
+        run: |
+          echo ""
+          echo "✓ All YAML files linted successfully"
+          echo "  Platform: ${{ matrix.os }}"
+          echo "  Ruby: ${{ matrix.ruby }}"

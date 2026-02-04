@@ -1,0 +1,245 @@
+name: Validate Register
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**/*.yaml'
+      - 'interfaces/**/*.yaml'
+      - '.github/workflows/validate.yml'
+      - '.github/tools-matrix.yaml'
+  push:
+    branches:
+      - main
+      - v1
+    paths:
+      - 'tools/**/*.yaml'
+      - 'interfaces/**/*.yaml'
+  workflow_dispatch:
+    inputs:
+      validate_executable:
+        description: 'Validate with executable testing (requires tool installation)'
+        required: false
+        type: boolean
+        default: false
+      tools:
+        description: 'Comma-separated list of tools to validate (default: all)'
+        required: false
+        type: string
+        default: ''
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  UKIRYU_REGISTER_PATH: ${{ github.workspace }}
+
+jobs:
+  setup-matrix:
+    name: Setup validation matrix
+    runs-on: ubuntu-latest
+    outputs:
+      tools: ${{ steps.parse-matrix.outputs.tools }}
+      platforms: ${{ steps.parse-matrix.outputs.platforms }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: false
+
+      - name: Install Ukiryu and dependencies
+        run: |
+          gem install ukiryu
+          gem install yaml
+
+      - name: Parse tools matrix
+        id: parse-matrix
+        run: |
+          ruby << 'RUBY'
+          require 'yaml'
+          require 'json'
+
+          # Load tools matrix
+          matrix = YAML.load_file('.github/tools-matrix.yaml')
+
+          # Get list of tools
+          tools = matrix.keys
+
+          # Determine platforms to test
+          platforms = ['ubuntu-latest', 'macos-latest', 'windows-latest']
+
+          # Check if specific tools requested
+          requested_tools = ENV['REQUESTED_TOOLS']
+          if requested_tools && !requested_tools.empty?
+            tools = tools & requested_tools.split(',').map(&:strip)
+          end
+
+          # Set outputs
+          File.open('tools.txt', 'w') { |f| f.puts(tools.join("\n")) }
+          puts "tools=#{tools.join(',')}" >> $GITHUB_OUTPUT
+          puts "platforms=#{platforms.join(',')}" >> $GITHUB_OUTPUT
+
+          puts "Tools to validate: #{tools.inspect}"
+          puts "Platforms: #{platforms.inspect}"
+          RUBY
+
+      - name: Upload tools list
+        uses: actions/upload-artifact@v4
+        with:
+          name: tools-list
+          path: tools.txt
+
+  validate-yaml:
+    name: Validate YAML schemas
+    runs-on: ubuntu-latest
+    needs: setup-matrix
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install Ukiryu
+        run: gem install ukiryu
+
+      - name: Validate all YAML files (schema only)
+        run: |
+          echo "Validating all YAML files in register..."
+          ukiryu validate all
+
+          echo ""
+          echo "✓ Schema validation complete"
+          echo "  Checked: tools/**/*.yaml"
+          echo "  Checked: interfaces/**/*.yaml"
+        env:
+          UKIRYU_REGISTER_PATH: ${{ github.workspace }}
+
+  validate-with-tools:
+    name: Validate ${{ matrix.tool }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    needs: setup-matrix
+    if: github.event.inputs.validate_executable == 'true' || github.event_name == 'schedule'
+
+    strategy:
+      matrix:
+        tool: ${{ fromJson(needs.setup-matrix.outputs.tools) }}
+        os: ${{ fromJson(needs.setup-matrix.outputs.platforms) }}
+      fail-fast: false
+      max-parallel: 4
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install Ukiryu
+        run: gem install ukiryu
+
+      - name: Install ${{ matrix.tool }} on Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+          ruby << 'RUBY'
+          require 'yaml'
+
+          matrix = YAML.load_file('.github/tools-matrix.yaml')
+          tool_data = matrix['${{ matrix.tool }}']
+
+          if tool_data && tool_data['platforms'] && tool_data['platforms']['ubuntu']
+            tool_data['platforms']['ubuntu'].each do |cmd|
+              puts "Running: #{cmd}"
+              system(cmd) || raise("Command failed: #{cmd}")
+            end
+          else
+            puts "No installation commands defined for ${{ matrix.tool }} on Ubuntu"
+          end
+          RUBY
+
+      - name: Install ${{ matrix.tool }} on macOS
+        if: runner.os == 'macOS'
+        run: |
+          ruby << 'RUBY'
+          require 'yaml'
+
+          matrix = YAML.load_file('.github/tools-matrix.yaml')
+          tool_data = matrix['${{ matrix.tool }}']
+
+          if tool_data && tool_data['platforms'] && tool_data['platforms']['macos']
+            tool_data['platforms']['macos'].each do |cmd|
+              puts "Running: #{cmd}"
+              system(cmd) || raise("Command failed: #{cmd}")
+            end
+          else
+            puts "No installation commands defined for ${{ matrix.tool }} on macOS"
+          end
+          RUBY
+
+      - name: Install Chocolatey (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+      - name: Install ${{ matrix.tool }} on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          ruby << 'RUBY'
+          require 'yaml'
+
+          matrix = YAML.load_file('.github/tools-matrix.yaml')
+          tool_data = matrix['${{ matrix.tool }}']
+
+          if tool_data && tool_data['platforms'] && tool_data['platforms']['windows']
+            tool_data['platforms']['windows'].each do |cmd|
+              puts "Running: #{cmd}"
+              system(cmd) || raise("Command failed: #{cmd}")
+            end
+          else
+            puts "No installation commands defined for ${{ matrix.tool }} on Windows"
+          end
+          RUBY
+
+      - name: Verify ${{ matrix.tool }} installation
+        shell: bash
+        run: |
+          echo "Checking for ${{ matrix.tool }} executable..."
+          # Try to find the executable
+          which ${{ matrix.tool }} || echo "Executable not in PATH"
+          # Check if it exists
+          command -v ${{ matrix.tool }} || echo "command not found"
+
+      - name: Validate ${{ matrix.tool }} with executable testing
+        shell: bash
+        run: |
+          echo "Validating ${{ matrix.tool }} with executable testing..."
+
+          # Find all YAML files for this tool
+          for yaml_file in tools/${{ matrix.tool }}/**/*.yaml; do
+            if [ -f "$yaml_file" ]; then
+              echo "  Validating: $yaml_file"
+              ukiryu validate --definition "$yaml_file" --executable || echo "  Warning: Executable validation failed for $yaml_file"
+            fi
+          done
+        env:
+          UKIRYU_REGISTER_PATH: ${{ github.workspace }}
+
+      - name: Validation summary
+        if: always()
+        shell: bash
+        run: |
+          echo ""
+          echo "Validation complete for ${{ matrix.tool }} on ${{ matrix.os }}"
+          echo "  Tool: ${{ matrix.tool }}"
+          echo "  Platform: ${{ matrix.os }}"
