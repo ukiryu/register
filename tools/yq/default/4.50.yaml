@@ -1,0 +1,118 @@
+---
+ukiryu_schema: '1.0'
+name: yq
+display_name: yq Data Processor
+homepage: https://mikefarah.gitbook.io/yq/
+version: '4.50'
+aliases:
+- yq
+version_detection:
+  command: "--version"
+  pattern: yq.*version v?([\d.]+)
+  modern_threshold: '4.0'
+search_paths:
+implements: yq/1.0
+execution_profiles:
+- name: unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_space
+  executable_name: yq
+  commands:
+  - description: Evaluate expression and update file in place
+    usage: yq eval -i [expression] [files...]
+    subcommand: eval
+    arguments:
+    - name: expression
+      type: string
+      required: true
+      position: 1
+      description: yq expression to apply
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to update in place
+    options:
+    - name: format
+      type: string
+      cli: "-f"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Output format
+      assignment_delimiter: auto
+    flags:
+    - name: in_place
+      cli: "-i"
+      description: Edit files in place
+      default: true
+      assignment_delimiter: none
+    name: eval_in_place
+  - description: Evaluate expression on all documents at once
+    usage: yq eval-all [expression] [files...]
+    subcommand: eval-all
+    arguments:
+    - name: expression
+      type: string
+      required: true
+      position: 1
+      description: yq expression to apply
+    - name: inputs
+      type: file
+      variadic: true
+      min: 0
+      position: last
+      description: 'Input file(s) (default: stdin)'
+    options:
+    - name: format
+      type: string
+      cli: "-f"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Output format
+      assignment_delimiter: auto
+    - name: input_format
+      type: string
+      cli: "-p"
+      values:
+      - yaml
+      - json
+      - xml
+      - csv
+      - props
+      - toml
+      description: Input format
+      assignment_delimiter: auto
+    - name: output
+      type: file
+      cli: "-o"
+      description: 'Output file (default: stdout)'
+      assignment_delimiter: auto
+    name: eval_all
+- name: windows
+  platforms:
+  - windows
+  shells:
+  - bash
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  executable_name: yq
+  commands: []

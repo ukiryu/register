@@ -1,0 +1,119 @@
+---
+ukiryu_schema: '1.0'
+name: p7zip
+version: '1.0'
+display_name: P7zip Interface
+actions:
+- name: archive
+  description: Create a 7z archive
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: archive
+        type: file
+      - name: output
+        type: file
+      - name: compression
+        type: integer
+      - name: method
+        type: symbol
+      - name: password
+        type: string
+      - name: volumes
+        type: boolean
+      - name: solid
+        type: boolean
+      - name: delete
+        type: boolean
+      - name: include
+        type: array
+      - name: exclude
+        type: array
+      flags:
+      - name: true
+        type: boolean
+      - name: help
+        type: boolean
+- name: extract
+  description: Extract files from archive
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output
+        type: string
+      - name: password
+        type: string
+      - name: include
+        type: array
+      - name: exclude
+        type: array
+      - name: overwrite
+        type: symbol
+      flags:
+      - name: true
+        type: boolean
+      - name: help
+        type: boolean
+- name: list
+  description: List archive contents
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: password
+        type: string
+      - name: include
+        type: array
+      - name: exclude
+        type: array
+      flags:
+      - name: technical
+        type: boolean
+      - name: help
+        type: boolean
+- name: test
+  description: Test archive integrity
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: password
+        type: string
+      flags:
+      - name: help
+        type: boolean
+- name: update
+  description: Update existing archive
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output
+        type: file
+      - name: password
+        type: string
+      - name: delete
+        type: boolean
+      flags:
+      - name: true
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

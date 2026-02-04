@@ -1,0 +1,123 @@
+---
+ukiryu_schema: '1.0'
+name: yt-dlp
+version: '1.0'
+display_name: Yt-dlp Interface
+actions:
+- name: download
+  description: Download videos from YouTube and other sites
+  signature:
+    inputs:
+      inputs:
+      - name: urls
+        type: string
+        required: true
+      options:
+      - name: output
+        type:
+      - name: output_na_placeholder
+        type:
+      - name: output_dir
+        type:
+      - name: format
+        type:
+      - name: format_sort
+        type:
+      - name: merge_output_format
+        type:
+      - name: recode_video
+        type:
+      - name: write_sub
+        type:
+      - name: write_auto_sub
+        type:
+      - name: sub_lang
+        type:
+      - name: embed_subs
+        type:
+      - name: write_description
+        type:
+      - name: write_info_json
+        type:
+      - name: write_thumbnail
+        type:
+      - name: keep_video
+        type:
+      - name: no_overwrites
+        type:
+      - name: continue
+        type:
+      - name: no_continue
+        type:
+      - name: extract_audio
+        type:
+      - name: audio_format
+        type:
+      - name: audio_quality
+        type:
+      - name: remux_video
+        type:
+      - name: yes_playlist
+        type:
+      - name: no_playlist
+        type:
+      - name: playlist_items
+        type:
+      - name: playlist_end
+        type:
+      - name: playlist_start
+        type:
+      - name: quiet
+        type:
+      - name: no_warnings
+        type:
+      - name: ignore_errors
+        type:
+      - name: abort_on_error
+        type:
+      - name: dump_json
+        type:
+      - name: flat_playlist
+        type:
+      - name: limit_rate
+        type:
+      - name: retries
+        type: integer
+      - name: socket_timeout
+        type: integer
+      - name: username
+        type:
+      - name: password
+        type:
+      - name: two_factor
+        type:
+      flags:
+      - name: extract_audio
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: ignore_errors
+        type: boolean
+      - name: no_warnings
+        type: boolean
+      - name: continue
+        type: boolean
+      - name: no_overwrites
+        type: boolean
+      - name: yes_playlist
+        type: boolean
+      - name: no_playlist
+        type: boolean
+      - name: write_sub
+        type: boolean
+      - name: write_auto_sub
+        type: boolean
+      - name: embed_subs
+        type: boolean
+      - name: write_thumbnail
+        type: boolean
+      - name: keep_video
+        type: boolean
+aliases:
+- yt-dlp
+- youtube-dl

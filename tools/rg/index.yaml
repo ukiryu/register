@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: rg
+interface: rg
+implementations:
+- name: default
+  display_name: Rg
+  detection:
+    pattern: rg ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '14.1'
+    file: 14.1.yaml
+  default: 14.1.yaml

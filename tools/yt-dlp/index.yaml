@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: yt-dlp
+interface: yt-dlp
+implementations:
+- name: default
+  display_name: Yt-dlp
+  detection:
+    pattern: yt-dlp ([\d.]+)
+  version_scheme: calver
+  versions:
+  - equals: '2024.12'
+    file: 2024.12.yaml
+  default: 2024.12.yaml

@@ -1,0 +1,75 @@
+---
+ukiryu_schema: '1.0'
+name: vim
+version: '1.0'
+display_name: Vim Interface
+actions:
+- name: edit
+  description: Vim text editor
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required: false
+      options:
+      - name: readonly
+        type:
+      - name: binary
+        type:
+      - name: compatible
+        type:
+      - name: nocompatible
+        type:
+      - name: recover
+        type:
+      - name: no_swap
+        type:
+      - name: plugin
+        type:
+      - name: vimrc
+        type: file
+      - name: gvimrc
+        type: file
+      - name: cmd
+        type: string
+      - name: cmd_from_stdin
+        type:
+      - name: start_at_end
+        type:
+      - name: start_at_line
+        type: string
+      - name: diff_mode
+        type:
+      - name: ex_mode
+        type:
+      - name: improved_ex
+        type:
+      - name: silent
+        type:
+      - name: gui
+        type:
+      - name: easy
+        type:
+      - name: restricted
+        type:
+      - name: verbose
+        type:
+      flags:
+      - name: readonly
+        type: boolean
+      - name: binary
+        type: boolean
+      - name: compatible
+        type: boolean
+      - name: nocompatible
+        type: boolean
+      - name: diff_mode
+        type: boolean
+      - name: gui
+        type: boolean
+aliases:
+- vim
+- vi
+- view
+- gvim

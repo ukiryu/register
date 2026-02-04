@@ -1,0 +1,71 @@
+---
+ukiryu_schema: '1.0'
+name: diff
+version: '1.0'
+display_name: Diff Interface
+actions:
+- name: compare
+  description: Compare files line by line
+  signature:
+    inputs:
+      inputs:
+      - name: file1
+        type: file
+        required: true
+      - name: file2
+        type: file
+        required: true
+      options:
+      - name: unified
+        type:
+      - name: context
+        type:
+      - name: ed
+        type:
+      - name: rcs
+        type:
+      - name: side_by_side
+        type:
+      - name: suppress_common
+        type:
+      - name: lines
+        type: integer
+      - name: show_function
+        type:
+      - name: ignore_all_space
+        type:
+      - name: ignore_space_change
+        type:
+      - name: ignore_blank_lines
+        type:
+      - name: ignore_case
+        type:
+      - name: brief
+        type:
+      - name: report_identical
+        type:
+      - name: recursive
+        type:
+      - name: text
+        type:
+      - name: width
+        type: integer
+      - name: tabsize
+        type: integer
+      flags:
+      - name: unified
+        type: boolean
+      - name: context
+        type: boolean
+      - name: recursive
+        type: boolean
+      - name: ignore_case
+        type: boolean
+      - name: ignore_all_space
+        type: boolean
+      - name: brief
+        type: boolean
+      - name: report_identical
+        type: boolean
+aliases:
+- diff

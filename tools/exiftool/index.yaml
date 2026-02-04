@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: exiftool
+interface: exiftool
+implementations:
+- name: default
+  display_name: Exiftool
+  detection:
+    pattern: exiftool ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '13.0'
+    file: 13.0.yaml
+  default: 13.0.yaml

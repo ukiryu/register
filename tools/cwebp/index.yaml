@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: cwebp
+interface: cwebp
+implementations:
+- name: default
+  display_name: Cwebp
+  detection:
+    pattern: cwebp ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '1.0'
+    file: 1.0.yaml
+  default: 1.0.yaml

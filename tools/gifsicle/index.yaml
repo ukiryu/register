@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: gifsicle
+interface: gifsicle
+implementations:
+- name: default
+  display_name: Gifsicle
+  detection:
+    pattern: gifsicle ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '1.95'
+    file: 1.95.yaml
+  default: 1.95.yaml

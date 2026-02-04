@@ -1,0 +1,58 @@
+---
+ukiryu_schema: '1.0'
+name: lsof
+version: '1.0'
+display_name: Lsof Interface
+actions:
+- name: list
+  description: List open files
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: no_preamble
+        type:
+      - name: verbose
+        type:
+      - name: quiet
+        type:
+      - name: fields
+        type:
+      - name: no_header
+        type:
+      - name: process
+        type:
+      - name: command
+        type:
+      - name: user
+        type:
+      - name: directory
+        type:
+      - name: network
+        type:
+      - name: regular
+        type:
+      - name: directory_files
+        type:
+      - name: symbolic
+        type:
+      - name: repeat
+        type:
+      - name: timeout
+        type:
+      flags:
+      - name: no_preamble
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: network
+        type: boolean
+      - name: no_header
+        type: boolean
+aliases:
+- lsof

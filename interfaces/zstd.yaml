@@ -1,0 +1,125 @@
+---
+ukiryu_schema: '1.0'
+name: zstd
+version: '1.0'
+display_name: Zstd Interface
+actions:
+- name: compress
+  description: Compress files using Zstandard algorithm
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output
+        type: file
+      - name: level
+        type: integer
+      - name: output_dir_flat
+        type:
+      - name: output_dir_mirror
+        type:
+      - name: threads
+        type: integer
+      - name: format
+        type: symbol
+      - name: password
+        type:
+      flags:
+      - name: decompress
+        type: boolean
+      - name: keep
+        type: boolean
+      - name: rm
+        type: boolean
+      - name: recursive
+        type: boolean
+      - name: force
+        type: boolean
+      - name: stdout
+        type: boolean
+      - name: ultra
+        type: boolean
+      - name: fast
+        type: boolean
+      - name: adapt
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: help
+        type: boolean
+- name: decompress
+  description: Decompress zstd files
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output
+        type: file
+      - name: output_dir_flat
+        type:
+      - name: output_dir_mirror
+        type:
+      - name: threads
+        type: integer
+      flags:
+      - name: keep
+        type: boolean
+      - name: rm
+        type: boolean
+      - name: recursive
+        type: boolean
+      - name: force
+        type: boolean
+      - name: stdout
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: help
+        type: boolean
+- name: test
+  description: Test integrity of compressed files
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: threads
+        type: integer
+      flags:
+      - name: recursive
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: help
+        type: boolean
+- name: list
+  description: List contents of compressed files
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output_dir_mirror
+        type:
+      flags:
+      - name: verbose
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

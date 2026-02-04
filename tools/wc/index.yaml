@@ -1,0 +1,16 @@
+---
+ukiryu_schema: '1.0'
+name: wc
+interface: wc
+implementations:
+- name: default
+  display_name: Wc
+  detection:
+    pattern: wc ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '0.1'
+    file: 0.1.yaml
+  - equals: generic
+    file: generic.yaml
+  default: generic.yaml

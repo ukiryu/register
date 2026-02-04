@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: rclone
+interface: rclone
+implementations:
+- name: default
+  display_name: Rclone
+  detection:
+    pattern: rclone ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '1.65'
+    file: 1.65.yaml
+  default: 1.65.yaml

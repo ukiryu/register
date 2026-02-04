@@ -1,0 +1,42 @@
+---
+ukiryu_schema: '1.0'
+name: wc
+version: '1.0'
+display_name: Wc Interface
+actions:
+- name: count
+  description: Print line, word, and byte counts
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: bytes
+        type:
+      - name: chars
+        type:
+      - name: lines
+        type:
+      - name: words
+        type:
+      - name: max_line_length
+        type:
+      - name: zero_terminated
+        type:
+      flags:
+      - name: bytes
+        type: boolean
+      - name: chars
+        type: boolean
+      - name: lines
+        type: boolean
+      - name: words
+        type: boolean
+      - name: max_line_length
+        type: boolean
+      - name: zero_terminated
+        type: boolean
+aliases:
+- wc

@@ -1,0 +1,61 @@
+---
+ukiryu_schema: '1.0'
+name: tree
+version: '1.0'
+display_name: Tree Interface
+actions:
+- name: list
+  description: List directory structure in tree format
+  signature:
+    inputs:
+      inputs:
+      - name: directory
+        type: file
+        required: false
+      options:
+      - name: level
+        type: integer
+      - name: output
+        type: file
+      - name: pattern
+        type:
+      - name: ignore
+        type:
+      - name: sort
+        type: symbol
+      flags:
+      - name: all
+        type: boolean
+      - name: dirs_only
+        type: boolean
+      - name: full_path
+        type: boolean
+      - name: no_indent
+        type: boolean
+      - name: files_only
+        type: boolean
+      - name: dirs_first
+        type: boolean
+      - name: size
+        type: boolean
+      - name: human_readable
+        type: boolean
+      - name: du
+        type: boolean
+      - name: prune
+        type: boolean
+      - name: permissions
+        type: boolean
+      - name: owner
+        type: boolean
+      - name: group
+        type: boolean
+      - name: time
+        type: boolean
+      - name: no_files
+        type: boolean
+      - name: no_dirs
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

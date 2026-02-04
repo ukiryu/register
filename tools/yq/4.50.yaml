@@ -23,7 +23,8 @@ profiles:
   - sh
   option_style: double_dash_space
   commands:
-  - description: Apply expression to each document in sequence
+  - name: eval_all
+    description: Apply expression to each document in sequence
     usage: yq eval [expression] [files...]
     subcommand: eval
     arguments:
@@ -195,8 +196,8 @@ profiles:
       cli: "-o"
       description: 'Output file (default: stdout)'
       assignment_delimiter: auto
-    name: eval_all
-  - description: Evaluate expression and update file in place
+  - name: eval_in_place
+    description: Evaluate expression and update file in place
     usage: yq eval -i [expression] [files...]
     subcommand: eval
     arguments:
@@ -230,7 +231,6 @@ profiles:
       description: Edit files in place
       default: true
       assignment_delimiter: none
-    name: eval_in_place
 - name: windows
   display_name: yq on Windows
   platforms:

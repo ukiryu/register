@@ -1,0 +1,32 @@
+---
+ukiryu_schema: '1.0'
+name: dwebp
+version: '1.0'
+display_name: Dwebp Interface
+actions:
+- name: decode
+  description: Decode WebP to other format
+  signature:
+    inputs:
+      inputs:
+      - name: input
+        type: file
+        required: true
+      - name: output
+        type: file
+        required: true
+      options:
+      - name: output_format
+        type:
+      - name: alpha
+        type:
+      - name: no_fancy
+        type:
+      - name: mt
+        type: boolean
+      - name: quiet
+        type:
+      flags:
+      - name: help
+        type: boolean
+aliases: []

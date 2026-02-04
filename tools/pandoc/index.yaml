@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: pandoc
+interface: pandoc
+implementations:
+- name: default
+  display_name: Pandoc
+  detection:
+    pattern: pandoc ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '3.0'
+    file: 3.0.yaml
+  default: 3.0.yaml

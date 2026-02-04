@@ -1,0 +1,54 @@
+---
+ukiryu_schema: '1.0'
+name: bat
+version: '1.0'
+display_name: Bat Interface
+actions:
+- name: display
+  description: Print and concatenate files with syntax highlighting
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: language
+        type:
+      - name: line_range
+        type:
+      - name: style
+        type:
+      - name: pager
+        type:
+      - name: no_pager
+        type:
+      - name: theme
+        type:
+      - name: plain
+        type:
+      - name: number
+        type:
+      - name: color
+        type:
+      - name: decorative
+        type:
+      - name: map_syntax
+        type:
+      - name: theme_override
+        type:
+      - name: wrap
+        type:
+      - name: terminal_width
+        type:
+      flags:
+      - name: number
+        type: boolean
+      - name: pager
+        type: boolean
+      - name: no_pager
+        type: boolean
+      - name: plain
+        type: boolean
+aliases:
+- bat

@@ -1,0 +1,35 @@
+---
+ukiryu_schema: '1.0'
+name: find
+interface: find/1.0
+
+implementations:
+  - name: gnu
+    display_name: GNU find
+    homepage: https://www.gnu.org/software/findutils/
+    detection:
+      executable: find
+      command: ["--version"]
+      pattern: "find (GNU findutils) ([0-9.]+)"
+    version_scheme: semantic
+    versions:
+      - equals: "4.9"
+        file: "4.9.yaml"
+      - after: "4.9"
+        file: "4.9.yaml"
+    default: "4.9.yaml"
+
+  - name: busybox
+    display_name: BusyBox find
+    homepage: https://busybox.net/
+    detection:
+      executable: find
+      command: ["--version"]
+      pattern: "BusyBox v([0-9.]+)"
+    version_scheme: semantic
+    versions:
+      - equals: "1.36.1"
+        file: "1.36.1.yaml"
+      - after: "1.35.0"
+        file: "1.36.1.yaml"
+    default: "1.36.1.yaml"

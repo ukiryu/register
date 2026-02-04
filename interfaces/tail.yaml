@@ -1,0 +1,46 @@
+---
+ukiryu_schema: '1.0'
+name: tail
+version: '1.0'
+display_name: Tail Interface
+actions:
+- name: show_end
+  description: Output last part of files
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: lines
+        type: integer
+      - name: bytes
+        type: string
+      - name: follow
+        type:
+      - name: follow_retry
+        type:
+      - name: quiet
+        type:
+      - name: verbose
+        type:
+      - name: sleep_interval
+        type: string
+      - name: pid
+        type:
+      - name: zero_terminated
+        type:
+      flags:
+      - name: follow
+        type: boolean
+      - name: follow_retry
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: zero_terminated
+        type: boolean
+aliases:
+- tail

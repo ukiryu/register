@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: yq
+interface: yq
+implementations:
+- name: default
+  display_name: Yq
+  detection:
+    pattern: yq ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '4.50'
+    file: 4.50.yaml
+  default: 4.50.yaml

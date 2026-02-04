@@ -1,0 +1,75 @@
+---
+ukiryu_schema: '1.0'
+name: zip
+version: '1.0'
+display_name: Zip Interface
+actions:
+- name: create
+  description: Package and compress files
+  signature:
+    inputs:
+      inputs:
+      - name: zipfile
+        type: file
+        required: true
+      - name: files
+        type: file
+        required:
+      options:
+      - name: recursive
+        type:
+      - name: quiet
+        type:
+      - name: verbose
+        type:
+      - name: delete
+        type:
+      - name: update
+        type:
+      - name: freshen
+        type:
+      - name: move
+        type:
+      - name: compression_level
+        type: integer
+      - name: fastest
+        type:
+      - name: fast
+        type:
+      - name: normal
+        type:
+      - name: best
+        type:
+      - name: no_compression
+        type:
+      - name: paths
+        type:
+      - name: store_symlinks
+        type:
+      - name: exclude
+        type:
+      - name: include
+        type:
+      - name: encrypt
+        type:
+      - name: from_stdin
+        type:
+      flags:
+      - name: recursive
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: update
+        type: boolean
+      - name: freshen
+        type: boolean
+      - name: move
+        type: boolean
+      - name: encrypt
+        type: boolean
+      - name: store_symlinks
+        type: boolean
+aliases:
+- zip

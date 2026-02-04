@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: tree
+interface: tree
+implementations:
+- name: default
+  display_name: Tree
+  detection:
+    pattern: tree ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '2.0'
+    file: 2.0.yaml
+  default: 2.0.yaml

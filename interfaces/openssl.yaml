@@ -1,0 +1,25 @@
+---
+ukiryu_schema: '1.0'
+name: openssl
+version: '1.0'
+display_name: Openssl Interface
+actions:
+- name: crypto
+  description: OpenSSL cryptography toolkit
+  signature:
+    inputs:
+      inputs:
+      - name: command
+        type: string
+        required: true
+      - name: args
+        type: string
+        required:
+      options:
+      - name: help
+        type:
+      flags:
+      - name: help
+        type: boolean
+aliases:
+- openssl

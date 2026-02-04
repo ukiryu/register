@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: jpegoptim
+interface: jpegoptim
+implementations:
+- name: default
+  display_name: Jpegoptim
+  detection:
+    pattern: jpegoptim ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '1.5'
+    file: 1.5.yaml
+  default: 1.5.yaml

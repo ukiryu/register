@@ -1,0 +1,76 @@
+---
+ukiryu_schema: '1.0'
+name: xz
+version: '1.0'
+display_name: Xz Interface
+actions:
+- name: compress
+  description: Compress files with xz
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output
+        type: file
+      - name: preset
+        type: string
+      - name: threads
+        type: integer
+      flags:
+      - name: keep
+        type: boolean
+      - name: force
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: test
+        type: boolean
+- name: decompress
+  description: Decompress xz files
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output
+        type: file
+      - name: threads
+        type: integer
+      flags:
+      - name: decompress
+        type: boolean
+      - name: keep
+        type: boolean
+      - name: force
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: test
+        type: boolean
+- name: list
+  description: List information about xz files
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: verbosity
+        type: integer
+      flags:
+      - name: list
+        type: boolean
+aliases:
+- unxz
+- xzcat
+- lzma

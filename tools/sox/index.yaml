@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: sox
+interface: sox
+implementations:
+- name: default
+  display_name: Sox
+  detection:
+    pattern: sox ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '14.4'
+    file: 14.4.yaml
+  default: 14.4.yaml

@@ -1,0 +1,76 @@
+---
+ukiryu_schema: '1.0'
+name: ansible
+version: '1.0'
+display_name: Ansible Interface
+actions:
+- name: automate
+  description: Define and run a single task playbook against hosts
+  signature:
+    inputs:
+      inputs:
+      - name: pattern
+        type: string
+        required: true
+      options:
+      - name: inventory
+        type: file
+      - name: list_hosts
+        type:
+      - name: module_name
+        type: string
+      - name: module_args
+        type: string
+      - name: args
+        type:
+      - name: extra_vars
+        type: string
+      - name: forks
+        type: integer
+      - name: become
+        type:
+      - name: become_user
+        type: string
+      - name: become_method
+        type: string
+      - name: ask_become_pass
+        type:
+      - name: ask_pass
+        type:
+      - name: connection
+        type: string
+      - name: timeout
+        type: integer
+      - name: private_key
+        type: file
+      - name: user
+        type: string
+      - name: check
+        type:
+      - name: diff
+        type:
+      - name: background
+        type: integer
+      - name: one_line
+        type:
+      - name: flush_cache
+        type:
+      - name: tree
+        type: string
+      - name: verbose
+        type:
+      - name: module_path
+        type: string
+      - name: playbook_dir
+        type: string
+      flags:
+      - name: become
+        type: boolean
+      - name: check
+        type: boolean
+      - name: diff
+        type: boolean
+      - name: one_line
+        type: boolean
+aliases:
+- ansible

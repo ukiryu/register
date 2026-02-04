@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: vim
+interface: vim
+implementations:
+- name: default
+  display_name: Vim
+  detection:
+    pattern: vim ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '9.1'
+    file: 9.1.yaml
+  default: 9.1.yaml

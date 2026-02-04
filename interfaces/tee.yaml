@@ -1,0 +1,28 @@
+---
+ukiryu_schema: '1.0'
+name: tee
+version: '1.0'
+display_name: Tee Interface
+actions:
+- name: redirect
+  description: Read stdin and write to files and stdout
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: append
+        type:
+      - name: ignore_interrupts
+        type:
+      - name: error
+        type:
+      flags:
+      - name: append
+        type: boolean
+      - name: ignore_interrupts
+        type: boolean
+aliases:
+- tee

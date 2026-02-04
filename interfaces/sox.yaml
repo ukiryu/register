@@ -1,0 +1,105 @@
+---
+ukiryu_schema: '1.0'
+name: sox
+version: '1.0'
+display_name: Sox Interface
+actions:
+- name: convert
+  description: Convert audio file format
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      - name: output
+        type: file
+        required: true
+      options:
+      - name: rate
+        type: integer
+      - name: channels
+        type: integer
+      - name: bits
+        type: integer
+      - name: encoding
+        type: string
+      flags:
+      - name: verbose
+        type: boolean
+      - name: help
+        type: boolean
+- name: info
+  description: Display audio file information
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: verbose
+        type: boolean
+      flags:
+      - name: help
+        type: boolean
+- name: trim
+  description: Trim audio from start/end
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      - name: output
+        type: file
+        required: true
+      options:
+      - name: start
+        type: string
+      - name: duration
+        type: string
+      flags:
+      - name: help
+        type: boolean
+- name: fade
+  description: Add fade in/out
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      - name: output
+        type: file
+        required: true
+      options:
+      - name: fade_in
+        type: string
+      - name: fade_out
+        type: string
+      flags:
+      - name: help
+        type: boolean
+- name: volume
+  description: Adjust audio volume
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      - name: output
+        type: file
+        required: true
+      options:
+      - name: gain
+        type: float
+      - name: normalize
+        type: boolean
+      - name: gain_option
+        type: boolean
+      flags:
+      - name: help
+        type: boolean
+aliases: []

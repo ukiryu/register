@@ -1,0 +1,121 @@
+---
+ukiryu_schema: '1.0'
+name: restic
+version: '1.0'
+display_name: Restic Interface
+actions:
+- name: backup
+  description: Backup files to repository
+  signature:
+    inputs:
+      inputs:
+      - name: paths
+        type: file
+        required:
+      options:
+      - name: repo
+        type:
+      - name: password_file
+        type:
+      - name: tag
+        type:
+      flags:
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: help
+        type: boolean
+- name: restore
+  description: Restore files from snapshot
+  signature:
+    inputs:
+      inputs:
+      - name: snapshot
+        type: string
+        required: true
+      options:
+      - name: repo
+        type:
+      - name: password_file
+        type:
+      - name: target
+        type:
+      - name: include
+        type:
+      - name: exclude
+        type:
+      flags:
+      - name: verbose
+        type: boolean
+      - name: help
+        type: boolean
+- name: snapshots
+  description: List snapshots in repository
+  signature:
+    inputs:
+      inputs:
+      - name: snapshot_id
+        type: string
+        required: false
+      options:
+      - name: repo
+        type:
+      - name: password_file
+        type:
+      flags:
+      - name: compact
+        type: boolean
+      - name: help
+        type: boolean
+- name: check
+  description: Check repository integrity
+  signature:
+    inputs:
+      options:
+      - name: repo
+        type:
+      - name: password_file
+        type:
+      flags:
+      - name: read_data
+        type: boolean
+      - name: help
+        type: boolean
+- name: init
+  description: Initialize a new repository
+  signature:
+    inputs:
+      options:
+      - name: repo
+        type:
+      - name: password_file
+        type:
+      flags:
+      - name: help
+        type: boolean
+- name: forget
+  description: Remove snapshots based on policy
+  signature:
+    inputs:
+      options:
+      - name: repo
+        type:
+      - name: password_file
+        type:
+      - name: keep_daily
+        type: integer
+      - name: keep_weekly
+        type: integer
+      - name: keep_monthly
+        type: integer
+      - name: keep_yearly
+        type: integer
+      flags:
+      - name: dry_run
+        type: boolean
+      - name: prune
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

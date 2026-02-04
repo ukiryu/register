@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: convert
+interface: convert
+implementations:
+- name: default
+  display_name: Convert
+  detection:
+    pattern: convert ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '6.9'
+    file: 6.9.yaml
+  default: 6.9.yaml

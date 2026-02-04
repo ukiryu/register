@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: libreoffice
+interface: libreoffice
+implementations:
+- name: default
+  display_name: Libreoffice
+  detection:
+    pattern: libreoffice ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '24.0'
+    file: 24.0.yaml
+  default: 24.0.yaml

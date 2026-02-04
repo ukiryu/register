@@ -1,0 +1,57 @@
+---
+ukiryu_schema: '1.0'
+name: pdftk
+version: '1.0'
+display_name: Pdftk Interface
+actions:
+- name: manipulate
+  description: PDF toolkit for manipulation
+  signature:
+    inputs:
+      inputs:
+      - name: input_pdf
+        type: file
+        required: true
+      - name: output_pdf
+        type: file
+        required: true
+      options:
+      - name: operation
+        type:
+      - name: cat
+        type:
+      - name: burst
+        type:
+      - name: shuffle
+        type:
+      - name: dump_data
+        type:
+      - name: dump_data_fields
+        type:
+      - name: generate_fdf
+        type:
+      - name: fill_form
+        type:
+      - name: background
+        type:
+      - name: multistamp
+        type:
+      - name: unpack_files
+        type:
+      - name: encrypt
+        type:
+      - name: decrypt
+        type:
+      flags:
+      - name: burst
+        type: boolean
+      - name: cat
+        type: boolean
+      - name: shuffle
+        type: boolean
+      - name: encrypt
+        type: boolean
+      - name: decrypt
+        type: boolean
+aliases:
+- pdftk

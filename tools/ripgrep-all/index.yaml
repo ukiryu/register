@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: ripgrep-all
+interface: ripgrep-all
+implementations:
+- name: default
+  display_name: Ripgrep-all
+  detection:
+    pattern: ripgrep-all ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '0.1'
+    file: 0.1.yaml
+  default: 0.1.yaml

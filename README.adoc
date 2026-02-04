@@ -42,14 +42,103 @@ register/
 └── tools/
     ├── imagemagick/
     │   └── 7.1.yaml         # Versioned tool (specific version)
+    │   └── index.yaml       # Version routing and implementation index
     ├── ghostscript/
     │   ├── 9.5.yaml
-    │   └── 10.0.yaml
+    │   ├── 10.0.yaml
+    │   └── index.yaml
+    ├── tar/
+    │   ├── 1.35.yaml       # GNU tar 1.35
+    │   ├── 1.36.1.yaml     # GNU tar 1.36.1
+    │   ├── gnu/
+    │   │   └── index.yaml  # GNU implementation routing
+    │   └── busybox/
+    │       └── index.yaml  # BusyBox implementation routing
     ├── cat/
     │   └── generic.yaml     # Generic tool (stable interface)
     ├── sort/
     │   └── generic.yaml     # Generic tool (stable interface)
     └── ...
+----
+
+== Version routing with index.yaml
+
+Tool versions are routed through `index.yaml` files using https://github.com/lutaml/versionian[Versionian]'s version range matching syntax.
+
+=== About Versionian
+
+Versionian is a Ruby library for declaring, parsing, comparing, and rendering version schemes. It provides:
+
+* **Built-in schemes**: Semantic (SemVer), Calendar versioning (CalVer), SoloVer, WendtVer
+* **Version range matching**: `equals`, `after`, `before`, `between` for version constraints
+* **Extensible**: Custom version schemes via declarative YAML or Ruby
+
+Ukiryu uses Versionian internally to:
+* Parse detected tool versions
+* Compare versions against range specifications
+* Route to the appropriate YAML file based on version matching
+
+=== Implementation index structure
+
+Each tool can have multiple implementations (GNU, BusyBox, BSD, etc.), each
+with its own `index.yaml`:
+
+[source,yaml]
+----
+# tools/tar/gnu/index.yaml
+ukiryu_schema: '1.0'
+name: tar
+interface: tar
+
+implementations:
+  - name: gnu
+    display_name: GNU tar
+    detection:
+      executable: tar
+      command: ["--version"]
+      pattern: "tar (GNU tar) ([0-9.]+)"
+    version_scheme: semantic    <1>
+    versions:
+      # Exact version match (Versionian range type)
+      - equals: "1.35"
+        file: "1.35.yaml"
+
+      # After version 1.35 (Versionian range type)
+      # Uses semantic versioning comparison
+      - after: "1.35"
+        file: "1.35.yaml"
+
+    # Default file when no version matches
+    default: "1.35.yaml"
+----
+<1> `version_scheme` tells Ukiryu which Versionian scheme to use for version comparison.
+
+=== Version specification rules
+
+The `versions` array in an implementation index supports Versionian's range types:
+
+* `equals: "1.35"` - Exact version match
+* `after: "1.35"` - Matches any version >= 1.35 (semantic versioning)
+* `before: "2.0"` - Matches any version < 2.0 (semantic versioning)
+* `between: "1.35", "2.0"` - Matches versions in inclusive range [1.35, 2.0]
+* `between: "1.35", "2.0"` - Matches versions in inclusive range [1.35, 2.0]
+
+Each version spec must point to an **actual YAML file** that exists in the
+implementation directory (e.g., `file: "1.35.yaml"`).
+
+**Important**: Do not use symlinks or special filenames like "latest.yaml".
+Always reference the actual version file that exists.
+
+=== Version scheme types
+
+The `version_scheme` field specifies which Versionian scheme to use:
+
+[source,yaml]
+----
+version_scheme: semantic   # MAJOR.MINOR.PATCH (e.g., 1.35.0)
+version_scheme: calver     # YYYY.MM.DD (e.g., 2024.01.17)
+version_scheme: solover    # N[+|-]postfix (e.g., 5+hotfix)
+version_scheme: wendtver   # MAJOR.MINOR.PATCH.BUILD
 ----
 
 == Profile Schema
@@ -220,18 +309,54 @@ ukiryu lint rules
 
 === Automated Validation
 
-GitHub Actions automatically validates all tool profiles on:
+GitHub Actions automatically validates all tool profiles through two workflows:
 
-* Pull requests that modify YAML files in `tools/**/*.yaml`
-* Version tag pushes (e.g., `v1.2.3`)
+==== Validation workflow (validate.yml)
 
-The validation workflow:
+Runs on:
 
-. Validates YAML syntax
-. Checks against the v1 JSON Schema
-. Runs structural validation rules
+* Pull requests that modify YAML files in `tools/**/*.yaml` or `interfaces/**/*.yaml`
+* Pushes to `main` or `v1` branches
+* Daily scheduled runs (midnight UTC)
+* Manual workflow dispatch
 
-=== CI/CD Integration
+The workflow performs two levels of validation:
+
+. **Schema validation** - Always runs, validates YAML syntax and v1 schema compliance
+. **Executable testing** - Optional, installs actual tools and runs smoke tests
+
+To trigger executable testing:
+
+* Manually: Use workflow_dispatch with `validate_executable: true`
+* Scheduled: Daily runs include executable testing
+
+The workflow uses a tool installation matrix (`.github/tools-matrix.yaml`) to
+install tools across platforms:
+
+[source,yaml]
+----
+# Example: imagemagick installation by platform
+imagemagick:
+  platforms:
+    ubuntu:
+      - sudo apt-get install -y imagemagick
+    macos:
+      - brew install imagemagick
+    windows:
+      - choco install imagemagick --yes
+----
+
+==== Linting workflow (lint.yml)
+
+Runs on:
+
+* Pull requests that modify YAML files
+* Pushes to `main` or `v1` branches
+* Manual workflow dispatch
+
+Checks for best practices violations using `ukiryu lint all` across Ubuntu and macOS.
+
+==== CI/CD integration
 
 You can add profile validation to your own CI/CD pipeline:
 
@@ -268,7 +393,7 @@ jobs:
           ukiryu validate all
 ----
 
-== Adding a New Tool
+== Adding a new tool
 
 To add a new tool profile:
 
@@ -283,7 +408,7 @@ To add a new tool profile:
 . Test the profile with real commands
 . Submit a pull request to the `v1` branch
 
-=== Versioned Profile Example
+=== Versioned profile example
 
 [source,yaml]
 ----
@@ -307,7 +432,7 @@ profiles:
         # ... command definition
 ----
 
-=== Generic Profile Example
+=== Generic profile example
 
 [source,yaml]
 ----
@@ -338,7 +463,7 @@ profiles:
         # ... command definition
 ----
 
-=== Validation Checklist
+=== Validation checklist
 
 Before submitting a pull request:
 
@@ -350,7 +475,7 @@ Before submitting a pull request:
 * [ ] Version detection works if defined
 * [ ] No linting warnings (or warnings are documented)
 
-=== Extracting Definitions
+=== Extracting definitions
 
 If you need to create a new profile from an installed tool, use the extract command:
 

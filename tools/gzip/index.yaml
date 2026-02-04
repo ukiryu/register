@@ -1,0 +1,40 @@
+---
+# Gzip ImplementationIndex - Routing and version matching
+ukiryu_schema: '1.0'
+name: gzip
+interface: gzip
+
+# Declarative routing with version ranges
+implementations:
+  - name: gnu
+    display_name: GNU gzip
+    homepage: https://www.gnu.org/software/gzip/
+    detection:
+      executable: gzip
+      command: ["--version"]
+      pattern: "gzip ([0-9.]+)"
+    # Reference versionian built-in scheme
+    version_scheme: semantic
+    versions:
+      - equals: "1.12"
+        file: "1.12.yaml"
+      - equals: "1.10.0"
+        file: "1.10.yaml"
+      - after: "1.12"
+        file: "1.12.yaml"
+    default: "1.12.yaml"
+
+  - name: busybox
+    display_name: BusyBox gzip
+    homepage: https://busybox.net/
+    detection:
+      executable: gzip
+      command: ["--help"]
+      pattern: "BusyBox v([0-9.]+)"
+    version_scheme: semantic
+    versions:
+      - equals: "1.36.1"
+        file: "1.36.1.yaml"
+      - after: "1.35.0"
+        file: "1.36.1.yaml"
+    default: "1.36.1.yaml"

@@ -1,0 +1,68 @@
+---
+ukiryu_schema: '1.0'
+name: fd
+version: '1.0'
+display_name: Fd Interface
+actions:
+- name: find
+  description: Fast find alternative
+  signature:
+    inputs:
+      inputs:
+      - name: pattern
+        type: string
+        required: false
+      - name: path
+        type: string
+        required: false
+      options:
+      - name: hidden
+        type:
+      - name: no_ignore
+        type:
+      - name: case_sensitive
+        type:
+      - name: case_insensitive
+        type:
+      - name: fixed_strings
+        type:
+      - name: absolute
+        type:
+      - name: list_details
+        type:
+      - name: follow
+        type:
+      - name: full_path
+        type:
+      - name: extension
+        type:
+      - name: exec
+        type:
+      - name: exec_batch
+        type:
+      - name: type
+        type:
+      - name: exclude
+        type:
+      - name: max_depth
+        type: integer
+      - name: min_depth
+        type: integer
+      flags:
+      - name: hidden
+        type: boolean
+      - name: no_ignore
+        type: boolean
+      - name: case_sensitive
+        type: boolean
+      - name: case_insensitive
+        type: boolean
+      - name: absolute
+        type: boolean
+      - name: follow
+        type: boolean
+      - name: list_details
+        type: boolean
+aliases:
+- fd
+- find

@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: p7zip
+interface: p7zip
+implementations:
+- name: default
+  display_name: P7zip
+  detection:
+    pattern: p7zip ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '24.0'
+    file: 24.0.yaml
+  default: 24.0.yaml

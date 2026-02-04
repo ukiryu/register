@@ -1,0 +1,184 @@
+---
+ukiryu_schema: '1.0'
+name: curl
+version: '1.0'
+display_name: Curl Interface
+actions:
+- name: transfer
+  description: Transfer data from or to a server
+  signature:
+    inputs:
+      inputs:
+      - name: urls
+        type: string
+        required: true
+      options:
+      - name: request
+        type: string
+      - name: head
+        type:
+      - name: data
+        type: string
+      - name: data_urlencode
+        type: string
+      - name: data_binary
+        type:
+      - name: data_raw
+        type:
+      - name: url_query
+        type: string
+      - name: header
+        type: string
+      - name: user_agent
+        type: string
+      - name: referer
+        type: string
+      - name: cookie
+        type: string
+      - name: cookie_jar
+        type: file
+      - name: output
+        type: file
+      - name: remote_name
+        type:
+      - name: remote_name_all
+        type:
+      - name: create_dirs
+        type:
+      - name: proxy
+        type: string
+      - name: socks_proxy
+        type: string
+      - name: socks5
+        type:
+      - name: tcp_nodelay
+        type:
+      - name: connect_timeout
+        type: string
+      - name: max_time
+        type: string
+      - name: retry
+        type: integer
+      - name: retry_delay
+        type: string
+      - name: retry_max_time
+        type: string
+      - name: compressed
+        type:
+      - name: location
+        type:
+      - name: max_redirects
+        type: integer
+      - name: include
+        type: string
+      - name: verbose
+        type:
+      - name: silent
+        type:
+      - name: insecure
+        type:
+      - name: cert
+        type: file
+      - name: key
+        type: file
+      - name: cacert
+        type: file
+      - name: capath
+        type: string
+      - name: cert_status
+        type:
+      - name: user
+        type: string
+      - name: digest
+        type:
+      - name: basic
+        type:
+      - name: ntlm
+        type:
+      - name: bearer
+        type: string
+      - name: upload_file
+        type: file
+      - name: form
+        type:
+      - name: form_string
+        type:
+      - name: rate
+        type: string
+      - name: limit_rate
+        type: string
+      - name: range
+        type: string
+      - name: continue_at
+        type: string
+      - name: append
+        type:
+      - name: ftp_ssl
+        type:
+      - name: ftp_pasv
+        type:
+      - name: upload
+        type:
+      - name: list_only
+        type:
+      - name: show_error
+        type:
+      - name: fail
+        type:
+      - name: fail_early
+        type:
+      - name: progress_bar
+        type:
+      - name: stderr
+        type: file
+      - name: parallel
+        type:
+      - name: next
+        type:
+      - name: json
+        type:
+      flags:
+      - name: location
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: silent
+        type: boolean
+      - name: show_error
+        type: boolean
+      - name: head
+        type: boolean
+      - name: compressed
+        type: boolean
+      - name: create_dirs
+        type: boolean
+      - name: remote_name
+        type: boolean
+      - name: remote_name_all
+        type: boolean
+      - name: proxy_tunnel
+        type: boolean
+      - name: proxy_anyauth
+        type: boolean
+      - name: insecure
+        type: boolean
+      - name: cert_status
+        type: boolean
+      - name: ftp_ssl
+        type: boolean
+      - name: tcp_nodelay
+        type: boolean
+      - name: keepalive
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: no_progress
+        type: boolean
+      - name: fail
+        type: boolean
+      - name: fail_early
+        type: boolean
+      - name: help
+        type: boolean
+aliases:
+- curl

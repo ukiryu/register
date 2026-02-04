@@ -1,0 +1,142 @@
+---
+ukiryu_schema: '1.0'
+name: git
+version: '1.0'
+display_name: Git Interface
+actions:
+- name: add
+  description: Add a new remote
+  signature:
+    inputs:
+      inputs:
+      - name: name
+        type: string
+        required: true
+      - name: url
+        type: string
+        required: true
+      flags:
+      - name: fetch
+        type: boolean
+      - name: tags
+        type: boolean
+      - name: track
+        type: boolean
+- name: remove
+  description: Remove a remote
+  signature:
+    inputs:
+      inputs:
+      - name: name
+        type: string
+        required: true
+- name: show
+  description: Show information about a remote
+  signature:
+    inputs:
+      inputs:
+      - name: name
+        type: string
+        required: false
+      flags:
+      - name: verbose
+        type: boolean
+- name: list
+  description: List branches
+  signature:
+    inputs:
+      flags:
+      - name: all
+        type: boolean
+      - name: remotes
+        type: boolean
+      - name: verbose
+        type: boolean
+- name: delete
+  description: Delete a branch
+  signature:
+    inputs:
+      inputs:
+      - name: branch_name
+        type: string
+        required: true
+      flags:
+      - name: force
+        type: boolean
+- name: delete_force
+  description: Force delete a branch
+  signature:
+    inputs:
+      inputs:
+      - name: branch_name
+        type: string
+        required: true
+- name: rename
+  description: Rename a branch
+  signature:
+    inputs:
+      inputs:
+      - name: old_name
+        type: string
+        required: false
+      - name: new_name
+        type: string
+        required: false
+- name: list
+  description: List stashed changes
+  signature:
+    inputs:
+      flags:
+      - name: porcelain
+        type: boolean
+- name: save
+  description: Save changes to stash
+  signature:
+    inputs:
+      inputs:
+      - name: message
+        type: string
+        required: false
+      flags:
+      - name: keep_index
+        type: boolean
+      - name: include_untracked
+        type: boolean
+      - name: all
+        type: boolean
+- name: pop
+  description: Apply and remove stashed changes
+  signature:
+    inputs:
+      inputs:
+      - name: stash_ref
+        type: string
+        required: false
+      flags:
+      - name: index
+        type: boolean
+- name: apply
+  description: Apply stashed changes
+  signature:
+    inputs:
+      inputs:
+      - name: stash_ref
+        type: string
+        required: false
+      flags:
+      - name: index
+        type: boolean
+- name: drop
+  description: Remove a single stashed state
+  signature:
+    inputs:
+      inputs:
+      - name: stash_ref
+        type: string
+        required: false
+- name: clear
+  description: Remove all stashed states
+  signature:
+    inputs: {}
+aliases:
+- g

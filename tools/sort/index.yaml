@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: sort
+interface: sort
+implementations:
+- name: default
+  display_name: Sort
+  detection:
+    pattern: sort ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '9.5'
+    file: 9.5.yaml
+  default: 9.5.yaml
