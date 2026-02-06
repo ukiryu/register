@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: ffmpeg
 display_name: FFmpeg Media Converter
@@ -18,10 +17,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   version: ">= 5.0"
   option_style: single_dash_space
   commands:
@@ -294,9 +290,9 @@ profiles:
   platforms:
   - windows
   shells:
-  - bash
   - powershell
-  - cmd
+  - unix
+  - windows
   version: ">= 5.0"
   inherits: modern_unix
 smoke_tests:

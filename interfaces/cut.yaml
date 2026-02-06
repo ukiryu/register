@@ -1,0 +1,38 @@
+---
+ukiryu_schema: '1.0'
+name: cut
+version: '1.0'
+display_name: Cut Interface
+actions:
+- name: extract
+  description: Remove sections from each line of files
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: bytes
+        type:
+      - name: characters
+        type:
+      - name: delimiter
+        type:
+      - name: fields
+        type:
+      - name: complement
+        type:
+      - name: only_delimited
+        type:
+      - name: zero_terminated
+        type:
+      flags:
+      - name: only_delimited
+        type: boolean
+      - name: complement
+        type: boolean
+      - name: zero_terminated
+        type: boolean
+aliases:
+- cut

@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: exiftool
 display_name: ExifTool Metadata Reader/Writer
@@ -17,10 +16,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   option_style: single_dash_space
   commands:
   - description: Read metadata from files

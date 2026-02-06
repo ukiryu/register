@@ -1,0 +1,20 @@
+---
+ukiryu_schema: '1.0'
+name: yq
+interface: yq
+
+implementations:
+  - name: default
+    display_name: yq (mikefarah/yq)
+    homepage: https://mikefarah.gitbook.io/yq/
+    detection:
+      executable: yq
+      command: ["--version"]
+      pattern: "yq version v?([\\d.]+)"
+    version_scheme: semantic
+    versions:
+      - equals: "4.50"
+        file: "4.50.yaml"
+      - after: "4.0"
+        file: "4.50.yaml"
+    default: "4.50.yaml"

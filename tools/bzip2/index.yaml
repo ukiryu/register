@@ -1,0 +1,35 @@
+---
+ukiryu_schema: '1.0'
+name: bzip2
+interface: bzip2
+
+implementations:
+  - name: gnu
+    display_name: GNU bzip2
+    homepage: https://sourceware.org/bzip2/
+    detection:
+      executable: bzip2
+      command: ["--version"]
+      pattern: "bzip2, a block-sorting file compressor\\.  Version ([0-9.]+)"
+    version_scheme: semantic
+    versions:
+      - equals: "1.0.6"
+        file: "1.0.6.yaml"
+      - after: "1.0.6"
+        file: "1.0.6.yaml"
+    default: "1.0.6.yaml"
+
+  - name: busybox
+    display_name: BusyBox bzip2
+    homepage: https://busybox.net/
+    detection:
+      executable: bzip2
+      command: ["--help"]
+      pattern: "BusyBox v([0-9.]+)"
+    version_scheme: semantic
+    versions:
+      - equals: "1.36.1"
+        file: "1.36.1.yaml"
+      - after: "1.35.0"
+        file: "1.36.1.yaml"
+    default: "1.36.1.yaml"

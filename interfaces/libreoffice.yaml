@@ -1,0 +1,64 @@
+---
+ukiryu_schema: '1.0'
+name: libreoffice
+version: '1.0'
+display_name: Libreoffice Interface
+actions:
+- name: convert
+  description: Convert documents between formats
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: format
+        type:
+      - name: outdir
+        type:
+      flags:
+      - name: headless
+        type: boolean
+      - name: nologo
+        type: boolean
+      - name: norestore
+        type: boolean
+      - name: nodefault
+        type: boolean
+      - name: help
+        type: boolean
+- name: print
+  description: Print documents to printer
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: printer
+        type:
+      flags:
+      - name: headless
+        type: boolean
+      - name: nologo
+        type: boolean
+      - name: help
+        type: boolean
+- name: cat
+  description: Display document content to stdout
+  signature:
+    inputs:
+      inputs:
+      - name: input
+        type: file
+        required: true
+      flags:
+      - name: headless
+        type: boolean
+      - name: nologo
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

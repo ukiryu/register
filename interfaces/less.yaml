@@ -1,0 +1,50 @@
+---
+ukiryu_schema: '1.0'
+name: less
+version: '1.0'
+display_name: Less Interface
+actions:
+- name: view
+  description: Pager program for viewing files
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: quiet
+        type:
+      - name: quiet_silent
+        type:
+      - name: raw_control_chars
+        type:
+      - name: long_prompt
+        type:
+      - name: line_numbers
+        type:
+      - name: chop_long_lines
+        type:
+      - name: no_init
+        type:
+      - name: no_tilde
+        type:
+      - name: ignore_case
+        type:
+      - name: shift
+        type:
+      flags:
+      - name: quiet
+        type: boolean
+      - name: line_numbers
+        type: boolean
+      - name: raw_control_chars
+        type: boolean
+      - name: ignore_case
+        type: boolean
+      - name: chop_long_lines
+        type: boolean
+      - name: no_tilde
+        type: boolean
+aliases:
+- less

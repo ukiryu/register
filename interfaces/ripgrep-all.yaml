@@ -1,0 +1,63 @@
+---
+ukiryu_schema: '1.0'
+name: ripgrep-all
+version: '1.0'
+display_name: Ripgrep-all Interface
+actions:
+- name: search
+  description: Search text in documents (PDF, Office, etc.)
+  signature:
+    inputs:
+      inputs:
+      - name: pattern
+        type: string
+        required: true
+      - name: paths
+        type: file
+        required:
+      options:
+      - name: context
+        type: integer
+      - name: before_context
+        type: integer
+      - name: after_context
+        type: integer
+      - name: max_count
+        type: integer
+      - name: max_depth
+        type: integer
+      - name: glob
+        type:
+      flags:
+      - name: ignore_case
+        type: boolean
+      - name: case_sensitive
+        type: boolean
+      - name: word_match
+        type: boolean
+      - name: fixed_string
+        type: boolean
+      - name: count
+        type: boolean
+      - name: files_with_matches
+        type: boolean
+      - name: files_without_matches
+        type: boolean
+      - name: hidden
+        type: boolean
+      - name: no_ignore
+        type: boolean
+      - name: json
+        type: boolean
+      - name: pretty
+        type: boolean
+      - name: help
+        type: boolean
+- name: list_adapters
+  description: List available document adapters
+  signature:
+    inputs:
+      flags:
+      - name: help
+        type: boolean
+aliases: []

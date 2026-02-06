@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: magick
+interface: magick
+implementations:
+- name: default
+  display_name: Magick
+  detection:
+    pattern: magick ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '7.1'
+    file: 7.1.yaml
+  default: 7.1.yaml

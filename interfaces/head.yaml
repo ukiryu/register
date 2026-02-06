@@ -1,0 +1,34 @@
+---
+ukiryu_schema: '1.0'
+name: head
+version: '1.0'
+display_name: Head Interface
+actions:
+- name: show_beginning
+  description: Output first part of files
+  signature:
+    inputs:
+      inputs:
+      - name: files
+        type: file
+        required:
+      options:
+      - name: lines
+        type: integer
+      - name: bytes
+        type: string
+      - name: quiet
+        type:
+      - name: verbose
+        type:
+      - name: zero_terminated
+        type:
+      flags:
+      - name: quiet
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: zero_terminated
+        type: boolean
+aliases:
+- head

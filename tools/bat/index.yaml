@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: bat
+interface: bat
+implementations:
+- name: default
+  display_name: Bat
+  detection:
+    pattern: bat ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '0.24'
+    file: 0.24.yaml
+  default: 0.24.yaml

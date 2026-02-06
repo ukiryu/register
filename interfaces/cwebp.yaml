@@ -1,0 +1,48 @@
+---
+ukiryu_schema: '1.0'
+name: cwebp
+version: '1.0'
+display_name: Cwebp Interface
+actions:
+- name: encode
+  description: Encode image to WebP format
+  signature:
+    inputs:
+      inputs:
+      - name: input
+        type: file
+        required: true
+      - name: output
+        type: file
+        required: true
+      options:
+      - name: quality
+        type: float
+      - name: alpha_quality
+        type: float
+      - name: method
+        type: integer
+      - name: resize
+        type:
+      - name: crop
+        type:
+      - name: output
+        type:
+      flags:
+      - name: lossless
+        type: boolean
+      - name: near_lossless
+        type: boolean
+      - name: alpha
+        type: boolean
+      - name: no_alpha
+        type: boolean
+      - name: keep_metadata
+        type: boolean
+      - name: mt
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

@@ -1,0 +1,37 @@
+---
+ukiryu_schema: '1.0'
+name: pngquant
+version: '1.0'
+display_name: Pngquant Interface
+actions:
+- name: compress
+  description: Compress PNG with lossy compression
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: quality
+        type:
+      - name: speed
+        type: integer
+      - name: output
+        type:
+      - name: ext
+        type:
+      - name: no_fs
+        type: boolean
+      - name: posterize
+        type: integer
+      - name: strip
+        type: boolean
+      flags:
+      - name: force
+        type: boolean
+      - name: skip_if_larger
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

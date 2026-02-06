@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: pngquant
+interface: pngquant
+implementations:
+- name: default
+  display_name: Pngquant
+  detection:
+    pattern: pngquant ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '3.0'
+    file: 3.0.yaml
+  default: 3.0.yaml

@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: fzf
 display_name: fzf (command-line fuzzy finder)
@@ -17,10 +16,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   option_style: double_dash_equals
   commands:
   - description: Command-line fuzzy finder

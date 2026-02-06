@@ -1,0 +1,184 @@
+---
+ukiryu_schema: '1.0'
+name: convert
+display_name: ImageMagick 6.x Convert
+homepage: https://imagemagick.org
+version: '6.9'
+aliases: []
+version_detection:
+  command: "-version"
+  pattern: 'Version: ImageMagick ([\d.]+)'
+  modern_threshold: '7.0'
+search_paths:
+implements: convert/1.0
+execution_profiles:
+- name: unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  executable_name: convert
+  commands:
+  - name: convert
+    implements:
+    - convert
+    display_name: Convert Images
+    description: Convert between image formats and apply transformations
+    usage: convert [options] input_file output_file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      required: true
+      description: Input file(s) to convert
+      position: 99
+    - name: output
+      type: file
+      required: true
+      description: Output file
+      position: last
+    options:
+    - name: resize
+      type: string
+      cli: "-resize"
+      format: single_dash_space
+      description: Resize image (e.g., '50%', '800x600')
+    - name: quality
+      type: integer
+      cli: "-quality"
+      format: single_dash_space
+      min: 1
+      max: 100
+      description: JPEG/MIFF/PNG compression level (1-100)
+    - name: strip
+      type: boolean
+      cli: "-strip"
+      format: single_dash_space
+      description: Strip image of all profiles and comments
+    - name: flatten
+      type: boolean
+      cli: "-flatten"
+      format: single_dash_space
+      description: Flatten a sequence of images
+    - name: negate
+      type: boolean
+      cli: "-negate"
+      format: single_dash_space
+      description: Negate the colors
+    - name: flip
+      type: boolean
+      cli: "-flip"
+      format: single_dash_space
+      description: Flip image vertically
+    - name: flop
+      type: boolean
+      cli: "-flop"
+      format: single_dash_space
+      description: Flop image horizontally
+    - name: grayscale
+      type: boolean
+      cli: "-grayscale"
+      format: single_dash_space
+      description: Convert image to grayscale
+    - name: blur
+      type: string
+      cli: "-blur"
+      format: single_dash_space
+      description: Blur image with Gaussian blur
+    - name: sharpen
+      type: string
+      cli: "-sharpen"
+      format: single_dash_space
+      description: Sharpen image
+    - name: rotate
+      type: float
+      cli: "-rotate"
+      format: single_dash_space
+      description: Rotate image by degrees
+    - name: background
+      type: string
+      cli: "-background"
+      format: single_dash_space
+      description: Background color
+    - name: density
+      type: string
+      cli: "-density"
+      format: single_dash_space
+      description: Horizontal and vertical density in pixels
+- name: windows
+  platforms:
+  - windows
+  shells:
+  - powershell
+  - cmd
+  option_style: single_dash_space
+  executable_name: convert
+  commands:
+  - name: convert
+    implements:
+    - convert
+    description: Convert between image formats
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      required: true
+      position: 99
+    - name: output
+      type: file
+      required: true
+      position: last
+    options:
+    - name: resize
+      type: string
+      cli: "-resize"
+      format: single_dash_space
+    - name: quality
+      type: integer
+      cli: "-quality"
+      format: single_dash_space
+      min: 1
+      max: 100
+    - name: strip
+      type: boolean
+      cli: "-strip"
+      format: single_dash_space
+    - name: flatten
+      type: boolean
+      cli: "-flatten"
+      format: single_dash_space
+    - name: negate
+      type: boolean
+      cli: "-negate"
+      format: single_dash_space
+    - name: flip
+      type: boolean
+      cli: "-flip"
+      format: single_dash_space
+    - name: flop
+      type: boolean
+      cli: "-flop"
+      format: single_dash_space
+    - name: grayscale
+      type: boolean
+      cli: "-grayscale"
+      format: single_dash_space
+    - name: blur
+      type: string
+      cli: "-blur"
+      format: single_dash_space
+    - name: sharpen
+      type: string
+      cli: "-sharpen"
+      format: single_dash_space
+    - name: rotate
+      type: float
+      cli: "-rotate"
+      format: single_dash_space

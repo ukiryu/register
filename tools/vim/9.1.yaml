@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: vim
 display_name: vim (Vi IMproved text editor)
@@ -37,10 +36,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   option_style: single_dash_space
   commands:
   - description: Vim text editor

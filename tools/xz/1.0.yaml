@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: xz
 display_name: XZ Utils
@@ -19,12 +18,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
-  - dash
-  - tcsh
+  - unix
   option_style: single_dash_space
   commands:
   - description: Compress files with xz
@@ -160,9 +154,9 @@ profiles:
   platforms:
   - windows
   shells:
-  - bash
   - powershell
-  - cmd
+  - unix
+  - windows
   option_style: single_dash_space
   commands:
   - description: Compress files with xz

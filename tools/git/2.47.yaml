@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: git
 version: '2.47'
@@ -17,12 +16,9 @@ profiles:
   - linux
   - windows
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
   - powershell
-  - cmd
+  - unix
+  - windows
   routing:
     remote: git-remote
     branch: git-branch

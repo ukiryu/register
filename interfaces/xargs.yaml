@@ -1,0 +1,59 @@
+---
+ukiryu_schema: '1.0'
+name: xargs
+version: '1.0'
+display_name: Xargs Interface
+actions:
+- name: execute
+  description: Build command from standard input
+  signature:
+    inputs:
+      inputs:
+      - name: command
+        type: string
+        required: false
+      - name: args
+        type: string
+        required:
+      options:
+      - name:
+        type:
+      - name: delimiter
+        type:
+      - name: eof
+        type:
+      - name: eof_str
+        type:
+      - name: max_args
+        type:
+      - name: max_lines
+        type:
+      - name: max_procs
+        type:
+      - name: max_chars
+        type:
+      - name: interactive
+        type:
+      - name: verbose
+        type:
+      - name: dry_run
+        type:
+      - name: no_run_if_empty
+        type:
+      - name: replace
+        type:
+      - name: replace_str
+        type:
+      flags:
+      - name:
+        type: boolean
+      - name: interactive
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: no_run_if_empty
+        type: boolean
+      - name: dry_run
+        type: boolean
+aliases:
+- xargs

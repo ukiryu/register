@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: xargs
 display_name: xargs (build command from stdin)
@@ -19,10 +18,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   option_style: double_dash_equals
   commands:
   - description: Build command from standard input
@@ -39,7 +35,7 @@ profiles:
       position: last
       description: Initial arguments
     options:
-    - name:
+    - name: null_delimiter
       cli: "-0"
       assignment_delimiter: none
       description: NUL-terminated input
@@ -102,7 +98,7 @@ profiles:
       include_platforms:
       - linux
     flags:
-    - name:
+    - name: null_delimiter_flag
       cli: "-0"
       description: NUL terminated
       default: false

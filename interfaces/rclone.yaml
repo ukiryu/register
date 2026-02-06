@@ -1,0 +1,119 @@
+---
+ukiryu_schema: '1.0'
+name: rclone
+version: '1.0'
+display_name: Rclone Interface
+actions:
+- name: sync
+  description: Sync source to destination, changing destination only
+  signature:
+    inputs:
+      inputs:
+      - name: source
+        type: string
+        required: true
+      - name: destination
+        type: string
+        required: true
+      options:
+      - name: config
+        type:
+      - name: bwlimit
+        type:
+      - name: backup_dir
+        type:
+      - name: max_age
+        type:
+      - name: min_age
+        type:
+      flags:
+      - name: dry_run
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: progress
+        type: boolean
+      - name: update
+        type: boolean
+      - name: create_empty_src_dirs
+        type: boolean
+      - name: help
+        type: boolean
+- name: copy
+  description: Copy files from source to destination
+  signature:
+    inputs:
+      inputs:
+      - name: source
+        type: string
+        required: true
+      - name: destination
+        type: string
+        required: true
+      options:
+      - name: config
+        type:
+      - name: bwlimit
+        type:
+      flags:
+      - name: dry_run
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: progress
+        type: boolean
+      - name: help
+        type: boolean
+- name: list
+  description: List files and directories in the source
+  signature:
+    inputs:
+      inputs:
+      - name: path
+        type: string
+        required: true
+      options:
+      - name: config
+        type:
+      flags:
+      - name: long
+        type: boolean
+      - name: dirs_only
+        type: boolean
+      - name: files_only
+        type: boolean
+      - name: help
+        type: boolean
+- name: mkdir
+  description: Create directory in remote
+  signature:
+    inputs:
+      inputs:
+      - name: path
+        type: string
+        required: true
+      options:
+      - name: config
+        type:
+      flags:
+      - name: help
+        type: boolean
+- name: delete
+  description: Delete files in remote
+  signature:
+    inputs:
+      inputs:
+      - name: path
+        type: string
+        required: true
+      options:
+      - name: config
+        type:
+      flags:
+      - name: dry_run
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: help
+        type: boolean
+aliases: []

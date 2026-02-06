@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: rsync
+interface: rsync
+implementations:
+- name: default
+  display_name: Rsync
+  detection:
+    pattern: rsync ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '3.4'
+    file: 3.4.yaml
+  default: 3.4.yaml

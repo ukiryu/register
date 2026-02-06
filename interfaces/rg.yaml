@@ -1,0 +1,102 @@
+---
+ukiryu_schema: '1.0'
+name: rg
+version: '1.0'
+display_name: Rg Interface
+actions:
+- name: search
+  description: Fast grep alternative (ripgrep)
+  signature:
+    inputs:
+      inputs:
+      - name: pattern
+        type: string
+        required: true
+      - name: paths
+        type: string
+        required:
+      options:
+      - name: case_sensitive
+        type:
+      - name: case_insensitive
+        type:
+      - name: smart_case
+        type:
+      - name: fixed_strings
+        type:
+      - name: word_regexp
+        type:
+      - name: line_regexp
+        type:
+      - name: count
+        type:
+      - name: files_with_matches
+        type:
+      - name: files_without_matches
+        type:
+      - name: count_matches
+        type:
+      - name: context
+        type: integer
+      - name: before_context
+        type: integer
+      - name: after_context
+        type: integer
+      - name: heading
+        type:
+      - name: hidden
+        type:
+      - name: no_ignore
+        type:
+      - name: ignore
+        type:
+      - name: binary
+        type:
+      - name: text
+        type:
+      - name: max_count
+        type: integer
+      - name: line_number
+        type:
+      - name: no_line_number
+        type:
+      - name: pretty
+        type:
+      - name: color
+        type:
+      - name: invert_match
+        type:
+      - name: only_matching
+        type:
+      - name: quiet
+        type:
+      - name: replace
+        type:
+      flags:
+      - name: case_insensitive
+        type: boolean
+      - name: word_regexp
+        type: boolean
+      - name: line_regexp
+        type: boolean
+      - name: count
+        type: boolean
+      - name: files_with_matches
+        type: boolean
+      - name: hidden
+        type: boolean
+      - name: no_ignore
+        type: boolean
+      - name: binary
+        type: boolean
+      - name: line_number
+        type: boolean
+      - name: invert_match
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: only_matching
+        type: boolean
+aliases:
+- rg
+- ripgrep

@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: zstd
+interface: zstd
+implementations:
+- name: default
+  display_name: Zstd
+  detection:
+    pattern: zstd ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '1.5'
+    file: 1.5.yaml
+  default: 1.5.yaml

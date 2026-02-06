@@ -1,0 +1,169 @@
+---
+ukiryu_schema: '1.0'
+name: rsync
+version: '1.0'
+display_name: Rsync Interface
+actions:
+- name: copy
+  description: Fast, versatile, remote (and local) file-copying tool
+  signature:
+    inputs:
+      inputs:
+      - name: sources
+        type: string
+        required: true
+      - name: destination
+        type: string
+        required: true
+      options:
+      - name: archive
+        type:
+      - name: verbose
+        type:
+      - name: quiet
+        type:
+      - name: progress
+        type:
+      - name: partial
+        type:
+      - name: progress_partial
+        type:
+      - name: recursive
+        type:
+      - name: dirs
+        type:
+      - name: links
+        type:
+      - name: copy_links
+        type:
+      - name: copy_unsafe_links
+        type:
+      - name: safe_links
+        type:
+      - name: copy_dirlinks
+        type:
+      - name: keep_dirlinks
+        type:
+      - name: hard_links
+        type:
+      - name: perms
+        type:
+      - name: executability
+        type:
+      - name: acls
+        type:
+      - name: xattrs
+        type:
+      - name: owner
+        type:
+      - name: group
+        type:
+      - name: devices
+        type:
+      - name: specials
+        type:
+      - name: times
+        type:
+      - name: compress
+        type:
+      - name: compress_level
+        type: integer
+      - name: delete
+        type:
+      - name: delete_before
+        type:
+      - name: delete_during
+        type:
+      - name: delete_delay
+        type:
+      - name: delete_after
+        type:
+      - name: delete_excluded
+        type:
+      - name: ignore_errors
+        type:
+      - name: exclude
+        type:
+      - name: exclude_from
+        type: file
+      - name: include
+        type:
+      - name: include_from
+        type: file
+      - name: filter
+        type:
+      - name: filter_from
+        type: file
+      - name: update
+        type:
+      - name: existing
+        type:
+      - name: ignore_existing
+        type:
+      - name: size_only
+        type:
+      - name: modify_window
+        type: integer
+      - name: checksum
+        type:
+      - name: rsh
+        type:
+      - name: rsync_path
+        type:
+      - name: dry_run
+        type:
+      - name: itemize_changes
+        type:
+      - name: stats
+        type:
+      - name: human_readable
+        type:
+      - name: one_file_system
+        type:
+      - name: block_size
+        type: integer
+      - name: bandwidth_limit
+        type: integer
+      flags:
+      - name: archive
+        type: boolean
+      - name: recursive
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: progress
+        type: boolean
+      - name: dry_run
+        type: boolean
+      - name: compress
+        type: boolean
+      - name: update
+        type: boolean
+      - name: delete
+        type: boolean
+      - name: one_file_system
+        type: boolean
+      - name: links
+        type: boolean
+      - name: hard_links
+        type: boolean
+      - name: perms
+        type: boolean
+      - name: times
+        type: boolean
+      - name: owner
+        type: boolean
+      - name: group
+        type: boolean
+      - name: devices
+        type: boolean
+      - name: specials
+        type: boolean
+      - name: acls
+        type: boolean
+      - name: xattrs
+        type: boolean
+aliases:
+- rsync

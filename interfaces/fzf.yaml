@@ -1,0 +1,71 @@
+---
+ukiryu_schema: '1.0'
+name: fzf
+version: '1.0'
+display_name: Fzf Interface
+actions:
+- name: fuzzy_find
+  description: Command-line fuzzy finder
+  signature:
+    inputs:
+      inputs: []
+      options:
+      - name: filter
+        type:
+      - name: exact
+        type:
+      - name: toggle_all
+        type:
+      - name: select_all
+        type:
+      - name: deselect_all
+        type:
+      - name: multi
+        type:
+      - name: no_multi
+        type:
+      - name: query
+        type:
+      - name: height
+        type:
+      - name: layout
+        type:
+      - name: reverse
+        type:
+      - name: prompt
+        type:
+      - name: preview
+        type:
+      - name: preview_window
+        type:
+      - name: header
+        type:
+      - name: header_lines
+        type:
+      - name: delimiter
+        type:
+      - name: with_nth
+        type:
+      - name: nth
+        type:
+      - name: print_query
+        type:
+      - name: expect
+        type:
+      - name: bind
+        type:
+      - name: cycle
+        type:
+      flags:
+      - name: multi
+        type: boolean
+      - name: exact
+        type: boolean
+      - name: reverse
+        type: boolean
+      - name: cycle
+        type: boolean
+      - name: print_query
+        type: boolean
+aliases:
+- fzf

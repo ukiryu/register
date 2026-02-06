@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: fd
+interface: fd
+implementations:
+- name: default
+  display_name: Fd
+  detection:
+    pattern: fd ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '10.2'
+    file: 10.2.yaml
+  default: 10.2.yaml

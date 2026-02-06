@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: lsof
+interface: lsof
+implementations:
+- name: default
+  display_name: Lsof
+  detection:
+    pattern: lsof ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '4.99'
+    file: 4.99.yaml
+  default: 4.99.yaml

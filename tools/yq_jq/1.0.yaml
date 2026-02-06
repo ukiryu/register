@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: yq_jq
 display_name: yq-jq (JQ wrapper for YAML)
@@ -23,10 +22,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - sh
-  - fish
+  - unix
   option_style: double_dash_space
   commands:
   - description: Evaluate expression on YAML/JSON input
@@ -58,9 +54,9 @@ profiles:
   platforms:
   - windows
   shells:
-  - bash
   - powershell
-  - cmd
+  - unix
+  - windows
   inherits: unix
 smoke_tests:
 - name: version

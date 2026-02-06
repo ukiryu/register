@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: fzf
+interface: fzf
+implementations:
+- name: default
+  display_name: Fzf
+  detection:
+    pattern: fzf ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '0.55'
+    file: 0.55.yaml
+  default: 0.55.yaml

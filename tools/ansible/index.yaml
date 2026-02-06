@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: ansible
+interface: ansible
+implementations:
+- name: default
+  display_name: Ansible
+  detection:
+    pattern: ansible ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '2.18'
+    file: 2.18.yaml
+  default: 2.18.yaml

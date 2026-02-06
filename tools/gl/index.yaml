@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: gl
+interface: gl
+implementations:
+- name: default
+  display_name: Gl
+  detection:
+    pattern: gl ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '1.35'
+    file: 1.35.yaml
+  default: 1.35.yaml

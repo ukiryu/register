@@ -1,0 +1,75 @@
+---
+ukiryu_schema: '1.0'
+name: optipng
+version: '1.0'
+display_name: Optipng Interface
+actions:
+- name: optimize
+  description: Optimize PNG files to reduce size without losing information
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: level
+        type: integer
+      - name: output
+        type: file
+      - name: dir
+        type: file
+      - name: filters
+        type: string
+      - name: interlace
+        type: integer
+      - name: zc_levels
+        type: string
+      - name: zm_levels
+        type: string
+      - name: zs_strategies
+        type: string
+      - name: zw_size
+        type: string
+      flags:
+      - name: help
+        type: boolean
+      - name: backup
+        type: boolean
+      - name: clobber
+        type: boolean
+      - name: fix
+        type: boolean
+      - name: force
+        type: boolean
+      - name: preserve
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: silent
+        type: boolean
+      - name: simulate
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: version
+        type: boolean
+      - name: full
+        type: boolean
+      - name: nb
+        type: boolean
+      - name: nc
+        type: boolean
+      - name: np
+        type: boolean
+      - name: nx
+        type: boolean
+      - name: nz
+        type: boolean
+      - name: strip
+        type: boolean
+      - name: snip
+        type: boolean
+aliases:
+- opt
+- opng

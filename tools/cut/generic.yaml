@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: cut
 display_name: cut (remove sections from lines)
@@ -19,10 +18,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   option_style: double_dash_equals
   commands:
   - description: Remove sections from each line of files

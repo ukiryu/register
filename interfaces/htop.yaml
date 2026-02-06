@@ -1,0 +1,41 @@
+---
+ukiryu_schema: '1.0'
+name: htop
+version: '1.0'
+display_name: Htop Interface
+actions:
+- name: view
+  description: Interactive process viewer
+  signature:
+    inputs:
+      inputs: []
+      options:
+      - name: delay
+        type: integer
+      - name: sort_key
+        type:
+      - name: sort_order
+        type:
+      - name: no_color
+        type:
+      - name: no_colour
+        type:
+      - name: tree
+        type:
+      - name: pid
+        type:
+      - name: user
+        type:
+      - name: no_highlight
+        type:
+      - name: readonly
+        type:
+      flags:
+      - name: tree
+        type: boolean
+      - name: no_color
+        type: boolean
+      - name: readonly
+        type: boolean
+aliases:
+- htop

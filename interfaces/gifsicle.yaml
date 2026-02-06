@@ -1,0 +1,48 @@
+---
+ukiryu_schema: '1.0'
+name: gifsicle
+version: '1.0'
+display_name: Gifsicle Interface
+actions:
+- name: optimize
+  description: Optimize GIF file
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: output
+        type:
+      - name: optimize
+        type: integer
+      - name: lossy
+        type: boolean
+      - name: colors
+        type: integer
+      - name: color_method
+        type: symbol
+      - name: dither
+        type: symbol
+      - name: care
+        type: boolean
+      flags:
+      - name: batch
+        type: boolean
+      - name: info
+        type: boolean
+      - name: help
+        type: boolean
+- name: info
+  description: Display GIF information
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      flags:
+      - name: help
+        type: boolean
+aliases: []

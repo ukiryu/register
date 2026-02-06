@@ -1,0 +1,107 @@
+---
+ukiryu_schema: '1.0'
+name: ssh
+version: '1.0'
+display_name: Ssh Interface
+actions:
+- name: connect
+  description: OpenSSH remote login client
+  signature:
+    inputs:
+      inputs:
+      - name: destination
+        type: string
+        required: true
+      - name: command
+        type: string
+        required:
+      options:
+      - name: ipv4
+        type:
+      - name: ipv6
+        type:
+      - name: identity_file
+        type: file
+      - name: login_name
+        type:
+      - name: pubkey_authentication
+        type:
+      - name: password_authentication
+        type:
+      - name: host_key_algorithms
+        type:
+      - name: port
+        type: integer
+      - name: bind_address
+        type:
+      - name: connect_timeout
+        type:
+      - name: server_alive_interval
+        type:
+      - name: server_alive_count_max
+        type:
+      - name: local_forward
+        type:
+      - name: remote_forward
+        type:
+      - name: dynamic_forward
+        type:
+      - name: forward_agent
+        type:
+      - name: forward_x11
+        type:
+      - name: forward_x11_trusted
+        type:
+      - name: compression
+        type:
+      - name: verbose
+        type:
+      - name: quiet
+        type:
+      - name: config_file
+        type: file
+      - name: option
+        type:
+      - name: remote_command
+        type:
+      - name: request_tty
+        type:
+      - name: no_tty
+        type:
+      - name: escape_char
+        type:
+      - name: background
+        type:
+      - name: no_stdin
+        type:
+      - name: gateway_ports
+        type:
+      flags:
+      - name: ipv4
+        type: boolean
+      - name: ipv6
+        type: boolean
+      - name: compression
+        type: boolean
+      - name: forward_agent
+        type: boolean
+      - name: forward_x11
+        type: boolean
+      - name: forward_x11_trusted
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: background
+        type: boolean
+      - name: no_stdin
+        type: boolean
+      - name: request_tty
+        type: boolean
+      - name: no_tty
+        type: boolean
+      - name: gateway_ports
+        type: boolean
+aliases:
+- ssh

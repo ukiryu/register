@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: htop
 display_name: htop (interactive process viewer)
@@ -17,10 +16,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   option_style: double_dash_equals
   commands:
   - description: Interactive process viewer

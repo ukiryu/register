@@ -1,0 +1,153 @@
+---
+ukiryu_schema: '1.0'
+name: ukiryu
+version: '1.0'
+display_name: Ukiryu Interface
+actions:
+- name: help
+  description: Show help for a command or general help
+  signature:
+    inputs:
+      inputs:
+      - name: command
+        type: string
+        required: false
+- name: list
+  description: List all available tools in the register
+  signature:
+    inputs:
+      options:
+      - name: register
+        type: string
+- name: info
+  description: Show detailed information about a tool
+  signature:
+    inputs:
+      inputs:
+      - name: tool
+        type: string
+        required: false
+      options:
+      - name: register
+        type: string
+      - name: all
+        type:
+- name: exec
+  description: Execute a tool command inline
+  signature:
+    inputs:
+      inputs:
+      - name: tool
+        type: string
+        required: true
+      - name: command
+        type: string
+        required: false
+      options:
+      - name: register
+        type: string
+      - name: format
+        type: symbol
+      - name: output
+        type: file
+      - name: dry_run
+        type:
+      - name: shell
+        type: symbol
+      flags:
+      - name: stdin
+        type: boolean
+- name: validate
+  description: Validate tool profile(s) against schema
+  signature:
+    inputs:
+      inputs:
+      - name: tool
+        type: string
+        required: false
+      options:
+      - name: register
+        type: string
+- name: config
+  description: Manage configuration (list, get, set, unset)
+  signature:
+    inputs:
+      inputs:
+      - name: action
+        type: symbol
+        required: false
+      - name: key
+        type: string
+        required: false
+      - name: value
+        type: string
+        required: false
+      options:
+      - name: register
+        type: string
+- name: describe
+  description: Show comprehensive documentation for a tool or command
+  signature:
+    inputs:
+      inputs:
+      - name: tool
+        type: string
+        required: true
+      - name: command
+        type: string
+        required: false
+      options:
+      - name: register
+        type: string
+      - name: format
+        type: symbol
+- name: system
+  description: Show system information (shells, etc.)
+  signature:
+    inputs:
+      inputs:
+      - name: subcommand
+        type: string
+        required: false
+      options:
+      - name: register
+        type: string
+- name: version
+  description: Show Ukiryu version
+  signature:
+    inputs: {}
+- name: which
+  description: Show which tool implementation would be selected
+  signature:
+    inputs:
+      inputs:
+      - name: identifier
+        type: string
+        required: true
+      options:
+      - name: register
+        type: string
+      - name: platform
+        type: symbol
+      - name: shell
+        type: symbol
+- name: run_file
+  description: Execute a Ukiryu Structured Execution Request from a YAML file
+  signature:
+    inputs:
+      inputs:
+      - name: request_file
+        type: file
+        required: true
+      options:
+      - name: register
+        type: string
+      - name: format
+        type: symbol
+      - name: output
+        type: file
+      - name: dry_run
+        type:
+      - name: shell
+        type: symbol
+aliases: []

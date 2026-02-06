@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: restic
+interface: restic
+implementations:
+- name: default
+  display_name: Restic
+  detection:
+    pattern: restic ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '0.16'
+    file: 0.16.yaml
+  default: 0.16.yaml

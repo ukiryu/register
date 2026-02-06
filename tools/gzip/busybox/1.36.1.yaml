@@ -1,0 +1,89 @@
+---
+ukiryu_schema: '1.0'
+name: gzip_busybox
+display_name: BusyBox gzip (Alpine Linux)
+homepage: https://busybox.net/
+version: 1.36.1
+implements: gzip
+aliases:
+- gzip
+- gunzip
+- gzcat
+version_detection:
+  command: "--help"
+  pattern: 'BusyBox v([\d.]+)'
+  modern_threshold: '1.30'
+execution_profiles:
+- name: busybox
+  display_name: BusyBox gzip on Linux
+  platforms:
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: single_dash_space
+  executable_name: gzip
+  commands:
+  - description: Compress files with gzip
+    usage: gzip [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to compress
+    options:
+    - name: compression_level
+      type: integer
+      cli: "-"
+      range:
+      - 1
+      - 9
+      description: Compression level (1=fastest, 9=best)
+      assignment_delimiter: auto
+    flags:
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose mode
+      default: false
+      assignment_delimiter: none
+    name: compress
+  - description: Decompress gzip files
+    usage: gzip -d [options] file
+    arguments:
+    - name: inputs
+      type: file
+      variadic: true
+      min: 1
+      position: last
+      description: File(s) to decompress
+    flags:
+    - name: decompress
+      cli: "-d"
+      description: Decompress mode
+      default: true
+      assignment_delimiter: none
+    - name: force
+      cli: "-f"
+      description: Force overwrite
+      default: false
+      assignment_delimiter: none
+    - name: keep
+      cli: "-k"
+      description: Keep input files
+      default: false
+      assignment_delimiter: none
+    name: decompress

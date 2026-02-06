@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: curl
+interface: curl
+implementations:
+- name: default
+  display_name: Curl
+  detection:
+    pattern: curl ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '8.11'
+    file: 8.11.yaml
+  default: 8.11.yaml

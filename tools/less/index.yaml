@@ -1,0 +1,16 @@
+---
+ukiryu_schema: '1.0'
+name: less
+interface: less
+implementations:
+- name: default
+  display_name: Less
+  detection:
+    pattern: less ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '0.1'
+    file: 0.1.yaml
+  - equals: generic
+    file: generic.yaml
+  default: generic.yaml

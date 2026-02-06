@@ -1,0 +1,68 @@
+---
+ukiryu_schema: '1.0'
+name: jpegoptim
+version: '1.0'
+display_name: Jpegoptim Interface
+actions:
+- name: optimize
+  description: Optimize/compress JPEG files losslessly or with lossy compression
+  signature:
+    inputs:
+      inputs:
+      - name: inputs
+        type: file
+        required:
+      options:
+      - name: dest
+        type: file
+      - name: max
+        type: integer
+      - name: size
+        type: string
+      - name: threshold
+        type: integer
+      flags:
+      - name: force
+        type: boolean
+      - name: help
+        type: boolean
+      - name: noaction
+        type: boolean
+      - name: csv
+        type: boolean
+      - name: overwrite
+        type: boolean
+      - name: preserve
+        type: boolean
+      - name: preserve_perms
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: totals
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: all_normal
+        type: boolean
+      - name: all_progressive
+        type: boolean
+      - name: strip_all
+        type: boolean
+      - name: strip_none
+        type: boolean
+      - name: strip_com
+        type: boolean
+      - name: strip_exif
+        type: boolean
+      - name: strip_iptc
+        type: boolean
+      - name: strip_icc
+        type: boolean
+      - name: strip_xmp
+        type: boolean
+      - name: stdout
+        type: boolean
+      - name: stdin
+        type: boolean
+aliases:
+- jpegopt

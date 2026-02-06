@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: pdftk
+interface: pdftk
+implementations:
+- name: default
+  display_name: Pdftk
+  detection:
+    pattern: pdftk ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '3.3'
+    file: 3.3.yaml
+  default: 3.3.yaml

@@ -1,0 +1,123 @@
+---
+ukiryu_schema: '1.0'
+name: lsof
+display_name: lsof (list open files)
+homepage: https://github.com/lsof-org/lsof
+version: '4.99'
+aliases:
+- lsof
+version_detection:
+  command: "-v"
+  pattern: 'revision: ([\d.]+)'
+  modern_threshold: '4.90'
+search_paths:
+implements: lsof/1.0
+execution_profiles:
+- name: unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  executable_name: lsof
+  commands:
+  - description: List open files
+    usage: lsof [options] [file...]
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to query
+    options:
+    - name: no_preamble
+      cli: "-p"
+      assignment_delimiter: none
+      description: No preamble
+    - name: verbose
+      cli: "-v"
+      assignment_delimiter: none
+      description: Verbose output
+    - name: quiet
+      cli: "-b"
+      assignment_delimiter: none
+      description: Avoid kernel blocks
+    - name: fields
+      cli: "-F"
+      assignment_delimiter: auto
+      description: Specify output fields
+    - name: no_header
+      cli: "-t"
+      assignment_delimiter: none
+      description: No header
+    - name: process
+      cli: "-p"
+      assignment_delimiter: auto
+      description: Process ID
+    - name: command
+      cli: "-c"
+      assignment_delimiter: auto
+      description: Command name
+    - name: user
+      cli: "-u"
+      assignment_delimiter: auto
+      description: User ID or login
+    - name: directory
+      cli: "+d"
+      assignment_delimiter: auto
+      description: Directory
+    - name: network
+      cli: "-i"
+      assignment_delimiter: auto
+      description: Internet files
+    - name: regular
+      cli: "-a"
+      assignment_delimiter: none
+      description: Regular file
+    - name: directory_files
+      cli: "-d"
+      assignment_delimiter: none
+      description: Directory
+    - name: symbolic
+      cli: "-L"
+      assignment_delimiter: none
+      description: Symbolic link
+    - name: repeat
+      cli: "+r"
+      assignment_delimiter: none
+      description: Repeat output
+    - name: timeout
+      cli: "-T"
+      assignment_delimiter: auto
+      description: Timeout
+    flags:
+    - name: no_preamble
+      cli: "-p"
+      description: No preamble
+      default: false
+      assignment_delimiter: none
+    - name: verbose
+      cli: "-v"
+      description: Verbose
+      default: false
+      assignment_delimiter: none
+    - name: quiet
+      cli: "-b"
+      description: Quiet
+      default: false
+      assignment_delimiter: none
+    - name: network
+      cli: "-i"
+      description: Internet files
+      default: false
+      assignment_delimiter: none
+    - name: no_header
+      cli: "-t"
+      description: No header
+      default: false
+      assignment_delimiter: none
+    name: list

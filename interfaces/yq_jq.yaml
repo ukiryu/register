@@ -1,0 +1,24 @@
+---
+ukiryu_schema: '1.0'
+name: yq_jq
+version: '1.0'
+display_name: Yq_jq Interface
+actions:
+- name: eval
+  description: Evaluate expression on YAML/JSON input
+  signature:
+    inputs:
+      inputs:
+      - name: expression
+        type: string
+        required: true
+      - name: inputs
+        type: file
+        required:
+      flags:
+      - name: raw_output
+        type: boolean
+      - name: help
+        type: boolean
+aliases:
+- yq

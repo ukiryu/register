@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: git
+interface: git
+implementations:
+- name: default
+  display_name: Git
+  detection:
+    pattern: git ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '2.47'
+    file: 2.47.yaml
+  default: 2.47.yaml

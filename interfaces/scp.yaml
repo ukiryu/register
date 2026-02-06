@@ -1,0 +1,85 @@
+---
+ukiryu_schema: '1.0'
+name: scp
+version: '1.0'
+display_name: Scp Interface
+actions:
+- name: copy
+  description: Secure file copy (remote file copy)
+  signature:
+    inputs:
+      inputs:
+      - name: sources
+        type: string
+        required: true
+      - name: target
+        type: string
+        required: true
+      options:
+      - name: preserve
+        type:
+      - name: recursive
+        type:
+      - name: verbose
+        type:
+      - name: quiet
+        type:
+      - name: compression
+        type:
+      - name: sftp_protocol
+        type:
+      - name: scp_protocol
+        type:
+      - name: through_local
+        type:
+      - name: remote_origin
+        type:
+      - name: port
+        type: integer
+      - name: identity_file
+        type: file
+      - name: config_file
+        type: file
+      - name: ssh_option
+        type:
+      - name: cipher
+        type:
+      - name: ssh_program
+        type:
+      - name: batch_mode
+        type:
+      - name: agent_forwarding
+        type:
+      - name: jump_host
+        type:
+      - name: limit
+        type: integer
+      - name: ipv4
+        type:
+      - name: ipv6
+        type:
+      - name: disable_strict_check
+        type:
+      flags:
+      - name: preserve
+        type: boolean
+      - name: recursive
+        type: boolean
+      - name: verbose
+        type: boolean
+      - name: quiet
+        type: boolean
+      - name: compression
+        type: boolean
+      - name: batch_mode
+        type: boolean
+      - name: agent_forwarding
+        type: boolean
+      - name: ipv4
+        type: boolean
+      - name: ipv6
+        type: boolean
+      - name: through_local
+        type: boolean
+aliases:
+- scp

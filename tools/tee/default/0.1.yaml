@@ -1,0 +1,64 @@
+---
+ukiryu_schema: '1.0'
+name: tee
+display_name: tee (read stdin and write to files)
+homepage: https://www.gnu.org/software/coreutils/
+version: '0.1'
+aliases:
+- tee
+version_detection:
+  command: "--version"
+  pattern: tee \(GNU coreutils\) ([\d.]+)
+  modern_threshold: '8.0'
+  man_date: true
+  system_tool: true
+search_paths:
+implements: tee/1.0
+execution_profiles:
+- name: unix
+  platforms:
+  - macos
+  - linux
+  shells:
+  - bash
+  - zsh
+  - fish
+  - sh
+  option_style: double_dash_equals
+  executable_name: tee
+  commands:
+  - description: Read stdin and write to files and stdout
+    usage: tee [options] file...
+    arguments:
+    - name: files
+      type: file
+      variadic: true
+      position: last
+      description: Files to write to
+    options:
+    - name: append
+      cli: "-a"
+      assignment_delimiter: none
+      description: Append to files
+    - name: ignore_interrupts
+      cli: "-i"
+      assignment_delimiter: none
+      description: Ignore interrupt signals
+    - name: error
+      cli: "-p"
+      assignment_delimiter: none
+      description: Write errors to pipe
+      include_platforms:
+      - linux
+    flags:
+    - name: append
+      cli: "-a"
+      description: Append to files
+      default: false
+      assignment_delimiter: none
+    - name: ignore_interrupts
+      cli: "-i"
+      description: Ignore interrupts
+      default: false
+      assignment_delimiter: none
+    name: redirect

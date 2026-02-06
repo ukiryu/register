@@ -1,4 +1,3 @@
----
 ukiryu_schema: '1.0'
 name: head
 display_name: head (output first part of files)
@@ -19,10 +18,7 @@ profiles:
   - macos
   - linux
   shells:
-  - bash
-  - zsh
-  - fish
-  - sh
+  - unix
   option_style: double_dash_equals
   commands:
   - description: Output first part of files

@@ -1,0 +1,43 @@
+---
+ukiryu_schema: '1.0'
+name: gl
+version: '1.0'
+display_name: Gl Interface
+actions:
+- name: repo_ls
+  description: List GitLab repositories
+  signature:
+    inputs:
+      inputs:
+      - name: owner
+        type: string
+        required: false
+      options:
+      - name: visibility
+        type: symbol
+      - name: page
+        type: integer
+      - name: per_page
+        type: integer
+      - name: owned
+        type: boolean
+      - name: json
+        type: boolean
+      flags:
+      - name: help
+        type: boolean
+- name: mr_list
+  description: List merge requests
+  signature:
+    inputs:
+      options:
+      - name: repo
+        type: string
+      - name: state
+        type: symbol
+      - name: json
+        type: boolean
+      flags:
+      - name: help
+        type: boolean
+aliases: []

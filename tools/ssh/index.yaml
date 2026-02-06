@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: ssh
+interface: ssh
+implementations:
+- name: default
+  display_name: Ssh
+  detection:
+    pattern: ssh ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '9.9'
+    file: 9.9.yaml
+  default: 9.9.yaml

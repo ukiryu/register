@@ -1,0 +1,83 @@
+---
+ukiryu_schema: '1.0'
+name: make
+version: '1.0'
+display_name: Make Interface
+actions:
+- name: build
+  description: Build automation tool
+  signature:
+    inputs:
+      inputs:
+      - name: targets
+        type: string
+        required: false
+      options:
+      - name: file
+        type: file
+      - name: directory
+        type: string
+      - name: jobs
+        type: integer
+      - name: load_average
+        type: string
+      - name: keep_going
+        type:
+      - name: always_make
+        type:
+      - name: touch
+        type:
+      - name: old_file
+        type:
+      - name: assume_old
+        type:
+      - name: new_file
+        type:
+      - name: assume_new
+        type:
+      - name: debug
+        type:
+      - name: debug_flags
+        type: string
+      - name: environment_overrides
+        type:
+      - name: ignore_errors
+        type:
+      - name: print_directory
+        type:
+      - name: print_data_base
+        type:
+      - name: question
+        type:
+      - name: silent
+        type:
+      - name: just_print
+        type:
+      - name: dry_run
+        type:
+      - name: reconstruct
+        type:
+      - name: include_dir
+        type: string
+      - name: warn_undefined_variables
+        type:
+      - name: check_symlink_times
+        type:
+      flags:
+      - name: keep_going
+        type: boolean
+      - name: always_make
+        type: boolean
+      - name: ignore_errors
+        type: boolean
+      - name: silent
+        type: boolean
+      - name: just_print
+        type: boolean
+      - name: dry_run
+        type: boolean
+      - name: touch
+        type: boolean
+aliases:
+- make
+- gmake

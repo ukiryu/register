@@ -1,0 +1,14 @@
+---
+ukiryu_schema: '1.0'
+name: make
+interface: make
+implementations:
+- name: default
+  display_name: Make
+  detection:
+    pattern: make ([\d.]+)
+  version_scheme: semantic
+  versions:
+  - equals: '3.81'
+    file: 3.81.yaml
+  default: 3.81.yaml
