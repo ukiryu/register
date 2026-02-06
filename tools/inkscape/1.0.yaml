@@ -196,6 +196,21 @@ profiles:
       type: hash
       pattern: key:\s*value
     name: query
+- name: modern_windows
+  display_name: Inkscape 1.x on Windows
+  platforms:
+  - windows
+  shells:
+  - powershell
+  - cmd
+  - unix
+  version: ">= 1.0"
+  inherits: modern_unix
+  env_var_sets:
+    headless:
+    - name: DISPLAY
+      value: ''
+      description: Disable display for headless operation
 smoke_tests:
 - name: version
   description: Verify inkscape version

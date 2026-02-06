@@ -124,6 +124,16 @@ profiles:
       default: false
       assignment_delimiter: none
     name: query
+- name: legacy_windows
+  display_name: Legacy Inkscape 0.92 on Windows
+  platforms:
+  - windows
+  shells:
+  - powershell
+  - cmd
+  - unix
+  version: "< 1.0"
+  inherits: legacy_unix
 smoke_tests:
 - name: version
   description: Verify inkscape version
