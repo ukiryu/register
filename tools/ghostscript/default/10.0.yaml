@@ -126,5 +126,5 @@ execution_profiles:
   - powershell
   - cmd
   option_style: single_dash_space
-  executable_name: ghostscript
+  executable_name: gswin64c
   commands: []

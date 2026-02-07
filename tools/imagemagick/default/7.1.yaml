@@ -376,5 +376,5 @@ execution_profiles:
   - powershell
   - cmd
   option_style: single_dash_space
-  executable_name: imagemagick
+  executable_name: magick
   commands: []
