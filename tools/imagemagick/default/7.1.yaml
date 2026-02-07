@@ -6,7 +6,6 @@ homepage: https://imagemagick.org/
 version: '7.1'
 aliases:
 - magick
-- convert
 - im
 version_detection:
   command: "-version"
@@ -25,7 +24,7 @@ execution_profiles:
   - fish
   - sh
   option_style: single_dash_space
-  executable_name: imagemagick
+  executable_name: magick
   commands:
   - description: Convert between image formats and apply transformations
     usage: magick [input-options] input-file [processing-options] output-file
@@ -377,4 +376,6 @@ execution_profiles:
   - cmd
   option_style: single_dash_space
   executable_name: magick
+  # Commands inherited from modern_unix profile via interface
+  # The interface provides the command structure with CLI options
   commands: []
