@@ -11,6 +11,19 @@ version_detection:
   command: "-version"
   pattern: 'Version: ImageMagick (\d+\.\d+)'
   modern_threshold: '7.0'
+search_paths:
+  macos:
+  - "/opt/local/bin"
+  - "/opt/homebrew/bin"
+  - "/usr/local/bin"
+  - "/opt/local/bin"
+  - "/usr/local/opt/imagemagick/bin"
+  - "/opt/local/lib/ImageMagick7/bin"
+  linux:
+  - "/usr/bin"
+  - "/usr/local/bin"
+  - "/opt/imagemagick/bin"
+  - "/opt/bin"
 profiles:
 - name: modern_unix
   display_name: ImageMagick 7.x on Unix
