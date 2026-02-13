@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
-# Use ukiryu from feature branch for testing
-# TODO: Change back to 'main' after feature/windows-cross-platform-testing is merged
-gem 'ukiryu', github: 'ukiryu/ukiryu', branch: 'feature/windows-cross-platform-testing'
+gem 'ukiryu', '~> 0.1.6'
+
+# Required for moxml/lutaml-model XML processing (not declared as dependency)
+gem 'nokogiri'
