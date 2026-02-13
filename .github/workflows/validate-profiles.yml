@@ -63,6 +63,7 @@ jobs:
         env:
           SCHEMA_PATH: ${{ github.workspace }}/schemas/v1/tool.schema.yaml
           DEBUG_SCHEMA_VALIDATION: "1"
+          UKIRYU_REGISTER: ${{ github.workspace }}
         run: |
           echo "=========================================="
           echo "Validating tool profiles on ${{ matrix.os }}"
