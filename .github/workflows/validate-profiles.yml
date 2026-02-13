@@ -30,10 +30,7 @@ jobs:
           - macos-15
           - macos-15-intel
           - windows-2025
-          - windows-11-arm
-        include:
-          - os: windows-11-arm
-            ruby-version: '3.4'
+          # windows-11-arm excluded: nokogiri has no precompiled binary for aarch64-mingw-ucrt
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
