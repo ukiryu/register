@@ -267,7 +267,7 @@ execution_profiles:
   platforms:
   - windows
   shells:
-  - cmd
+  - windows
   option_style: single_dash_space
   executable_name: pandoc
   commands: []

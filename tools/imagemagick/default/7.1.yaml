@@ -373,7 +373,7 @@ execution_profiles:
   shells:
   - bash
   - powershell
-  - cmd
+  - windows
   option_style: single_dash_space
   executable_name: magick
   # Commands inherited from modern_unix profile via interface

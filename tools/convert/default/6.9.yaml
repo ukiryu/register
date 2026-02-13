@@ -116,7 +116,7 @@ execution_profiles:
   - windows
   shells:
   - powershell
-  - cmd
+  - windows
   option_style: single_dash_space
   executable_name: convert
   commands:

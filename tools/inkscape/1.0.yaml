@@ -202,7 +202,7 @@ profiles:
   - windows
   shells:
   - powershell
-  - cmd
+  - windows
   - unix
   version: ">= 1.0"
   inherits: modern_unix

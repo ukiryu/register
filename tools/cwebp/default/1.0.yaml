@@ -22,7 +22,7 @@ execution_profiles:
   - fish
   - sh
   - powershell
-  - cmd
+  - windows
   option_style: single_dash_space
   executable_name: cwebp
   commands:

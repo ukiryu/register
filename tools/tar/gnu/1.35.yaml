@@ -24,7 +24,7 @@ profiles:
   - fish
   - sh
   - powershell
-  - cmd
+  - windows
   option_style: single_dash_space
   commands:
   - description: Create a tar archive

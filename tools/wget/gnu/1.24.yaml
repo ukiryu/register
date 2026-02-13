@@ -22,7 +22,7 @@ profiles:
   - fish
   - sh
   - powershell
-  - cmd
+  - windows
   option_style: double_dash_equals
   commands:
   - description: Download files from the web

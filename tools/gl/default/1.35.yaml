@@ -23,7 +23,7 @@ execution_profiles:
   - fish
   - sh
   - powershell
-  - cmd
+  - windows
   option_style: double_dash_space
   executable_name: gl
   commands:

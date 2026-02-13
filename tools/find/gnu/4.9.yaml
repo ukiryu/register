@@ -22,7 +22,7 @@ profiles:
   - fish
   - sh
   - powershell
-  - cmd
+  - windows
   option_style: single_dash_space
   commands:
   - description: Search for files in directory hierarchy

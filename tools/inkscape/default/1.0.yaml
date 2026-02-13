@@ -199,7 +199,7 @@ execution_profiles:
   shells:
   - bash
   - powershell
-  - cmd
+  - windows
   option_style: double_dash_equals
   executable_name: inkscape
   inherits: modern_unix

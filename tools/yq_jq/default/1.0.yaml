@@ -55,7 +55,7 @@ execution_profiles:
   shells:
   - bash
   - powershell
-  - cmd
+  - windows
   option_style: single_dash_space
   executable_name: yq_jq
   commands: []

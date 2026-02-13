@@ -23,7 +23,7 @@ execution_profiles:
   - fish
   - sh
   - powershell
-  - cmd
+  - windows
   option_style: double_dash_space
   executable_name: ukiryu
   commands:
@@ -126,7 +126,7 @@ execution_profiles:
       - fish
       - sh
       - powershell
-      - cmd
+      - windows
       description: Shell to use for command execution
       assignment_delimiter: auto
     flags:
@@ -284,7 +284,7 @@ execution_profiles:
       - fish
       - sh
       - powershell
-      - cmd
+      - windows
       description: Shell to check
       assignment_delimiter: auto
   - name: run_file
@@ -338,6 +338,6 @@ execution_profiles:
       - fish
       - sh
       - powershell
-      - cmd
+      - windows
       description: Shell to use for command execution
       assignment_delimiter: auto

@@ -119,7 +119,7 @@ profiles:
       - fish
       - sh
       - powershell
-      - cmd
+      - windows
       description: Shell to use for command execution
       assignment_delimiter: auto
     flags:
@@ -277,7 +277,7 @@ profiles:
       - fish
       - sh
       - powershell
-      - cmd
+      - windows
       description: Shell to check
       assignment_delimiter: auto
   - name: run_file
@@ -331,7 +331,7 @@ profiles:
       - fish
       - sh
       - powershell
-      - cmd
+      - windows
       description: Shell to use for command execution
       assignment_delimiter: auto
 smoke_tests:
