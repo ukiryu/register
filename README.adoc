@@ -408,10 +408,11 @@ The CI build **MUST FAIL** if any of the following conditions are met:
 
 . **Smoke test failure** - If a tool installs successfully but the smoke test
   (basic CLI verification) fails to execute, the build fails.
-  The smoke test verifies the tool executable can run basic commands.
+  The smoke test verifies the tool executable can run basic commands
+  (e.g., `tool --version`).
 
 . **Ukiryu detection failure** - If a tool passes smoke tests but Ukiryu
-  cannot detect or validate the tool, the build fails. This ensures the
+  cannot detect or execute the tool, the build fails. This ensures the
   tool definitions in the register accurately reflect installed tools.
 
 These strict criteria ensure that:
@@ -425,10 +426,26 @@ These strict criteria ensure that:
 The installation verification runs in these phases:
 
 . **Install phase**: Install packages using platform-appropriate package managers
+
 . **Verify phase**: For each installed tool:
-.. Locate the executable (checking bundled tools, package manager paths, system paths)
-.. Run smoke test command to verify basic functionality
-.. Run Ukiryu validation to verify tool definition accuracy
+  .. Locate the executable (checking bundled tools, package manager paths, system paths)
+  .. Run smoke test command to verify basic functionality (e.g., `tool --version`)
+  .. Verify the executable exists and is accessible
+
+. **Validate phase**: Run Ukiryu validation to verify:
+  .. Tool definition matches the installed tool version
+  .. Tool can be detected and executed by Ukiryu
+  .. All declared commands and options are valid
+
+===== Success requirements
+
+For CI to pass, ALL of the following must succeed:
+
+. All packages in `packages/*.yaml` must install successfully (or be marked as
+  platform-unavailable via `platforms.windows: false` etc.)
+. All installed tools must pass their smoke tests
+. All tools must be detectable and executable by Ukiryu (except on Windows
+  where a known path handling issue currently skips this step)
 
 ===== Platform support
 
@@ -436,7 +453,10 @@ Verification runs on the following platforms:
 
 * **macOS**: macOS 15 (ARM), macOS 15 Intel
 * **Linux**: Ubuntu 24.04 (x64), Ubuntu 24.04 ARM
-* **Windows**: Windows 2025 (x64), Windows 2025 ARM
+* **Windows**: Windows 2025 (x64)
+
+NOTE: Windows 11 ARM is excluded due to nokogiri lacking precompiled binaries
+for aarch64-mingw-ucrt.
 
 == Adding a new tool
 
