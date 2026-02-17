@@ -153,3 +153,15 @@ profiles:
       default: true
       assignment_delimiter: none
     name: convert
+- name: windows
+  display_name: Ghostscript on Windows
+  platforms:
+  - windows
+  shells:
+  - powershell
+  - cmd
+  - bash
+  version: ">= 9.0"
+  option_style: single_dash_equals
+  executable_name: gswin64c
+  inherits: unix
