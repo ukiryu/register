@@ -3,6 +3,21 @@ ukiryu_schema: '1.0'
 name: awk
 interface: awk
 implementations:
+- name: bsd
+  display_name: BSD awk
+  homepage: https://www.freebsd.org/cgi/man.cgi?query=awk
+  detection:
+    executable: awk
+    command:
+    - "--version"
+    pattern: awk version (\d+)
+  version_scheme: semantic
+  versions:
+  - equals: '20200816'
+    file: bsd/20200816.yaml
+  - after: '20200101'
+    file: bsd/20200816.yaml
+  default: bsd/20200816.yaml
 - name: gnu
   display_name: GNU awk (gawk)
   homepage: https://www.gnu.org/software/gawk/

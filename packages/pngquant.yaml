@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: pngquant
+packages:
+  homebrew:
+  - name: pngquant
+    provides: &1
+    - pngquant
+    smoke_test: pngquant --version
+  macports:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version
+  apt:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version
+  dnf:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version
+  yum:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version
+  apk:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version
+  pacman:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version
+  chocolatey:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version
+  winget:
+  - name: pngquant
+    provides: *1
+    smoke_test: pngquant --version

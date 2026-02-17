@@ -1,0 +1,236 @@
+# Install Schema v1.0
+
+This document defines the schema for `packages/*.yaml` files used by CI automation
+to install and verify tools for testing.
+
+== Purpose
+
+The package file provides:
+
+1. Cross-platform mapping of package names for different package managers
+2. Executable names provided by each package
+3. Smoke tests to verify tools work after installation
+4. Criticality flags for build failure handling
+
+== Location
+
+```
+packages/<tool_name>.yaml
+```
+
+== Schema
+
+```yaml
+ukiryu_schema: '1.0'
+name: <tool_name>
+
+packages:
+  <package_manager>:
+    - name: <package_name>
+      provides: [<executable1>, <executable2>, ...]
+      smoke_test: |
+        <command to verify tool works>
+      critical: <true|false>
+```
+
+== Fields
+
+`ukiryu_schema`:: Schema version. Must be `'1.0'`.
+
+`name`:: Tool name. Must match the file name.
+
+`packages`:: Mapping of package managers to package definitions.
+
+=== Package Definition Fields
+
+`name`:: (required) Package name in the package manager.
+
+`provides`:: (required) Array of executable names this package provides.
+Used to verify installation and create symlinks if needed.
+
+`smoke_test`:: (optional) Shell commands to verify the tool works.
+Defaults to `<primary_executable> --version` if not specified.
+
+`critical`:: (optional) If `true`, build fails if this tool cannot be verified.
+Defaults to `false`.
+
+== Supported Package Managers
+
+|===
+| Key | Package Manager | Platform
+
+| `homebrew`
+| Homebrew
+| macOS, Linux
+
+| `macports`
+| MacPorts
+| macOS
+
+| `apt`
+| APT
+| Ubuntu, Debian
+
+| `dnf`
+| DNF
+| Fedora
+
+| `yum`
+| YUM
+| RHEL, CentOS
+
+| `apk`
+| APK
+| Alpine
+
+| `pacman`
+| Pacman
+| Arch Linux
+
+| `chocolatey`
+| Chocolatey
+| Windows
+
+| `winget`
+| Windows Package Manager
+| Windows
+|===
+
+== Examples
+
+=== Simple Tool
+
+```yaml
+ukiryu_schema: '1.0'
+name: jq
+
+packages:
+  homebrew:
+    - name: jq
+      provides: [jq]
+  apt:
+    - name: jq
+      provides: [jq]
+  chocolatey:
+    - name: jq
+      provides: [jq]
+  winget:
+    - name: jqlang.jq
+      provides: [jq]
+```
+
+=== Tool with Multiple Executables
+
+```yaml
+ukiryu_schema: '1.0'
+name: imagemagick
+
+packages:
+  homebrew:
+    - name: imagemagick
+      provides: [magick, convert, identify]
+      smoke_test: |
+        magick --version
+        magick logo: logo.gif
+        magick identify logo.gif
+        rm -f logo.gif
+      critical: true
+  apt:
+    - name: imagemagick
+      provides: [magick, convert, identify]
+      smoke_test: |
+        magick --version || convert --version
+```
+
+=== Tool with Executable Name Mismatch
+
+```yaml
+ukiryu_schema: '1.0'
+name: gl
+
+packages:
+  homebrew:
+    - name: glab
+      provides: [gl]
+      smoke_test: gl --version
+  apt:
+    - name: glab
+      provides: [gl]
+```
+
+=== Platform-Specific Executables
+
+```yaml
+ukiryu_schema: '1.0'
+name: ghostscript
+
+packages:
+  homebrew:
+    - name: ghostscript
+      provides: [gs]
+  apt:
+    - name: ghostscript
+      provides: [gs]
+  windows:
+    - name: ghostscript
+      provides: [gswin64c, gswin32c, gs]
+```
+
+=== Tool Not Available on All Platforms
+
+```yaml
+ukiryu_schema: '1.0'
+name: ripgrep-all
+
+packages:
+  homebrew:
+    - name: rga
+      provides: [rga, ripgrep-all]
+  macports:
+    - name: ripgrep-all
+      provides: [rga]
+  chocolatey:
+    - name: ripgrep-all
+      provides: [rga]
+  # apt/dnf/yum/apk: not available
+  # Install via: cargo install ripgrep-all
+```
+
+== Verification Process
+
+The CI verification process:
+
+1. **Install**: Install package via system package manager
+2. **Refresh PATH**: Ensure new executables are accessible
+3. **Verify**: Check that at least one `provides` executable exists
+4. **Smoke Test**: Run smoke_test commands (or default `--version` check)
+5. **Report**: Generate per-tool pass/fail status
+
+== When to Create Package YAML
+
+Create a package YAML file when:
+
+1. The tool is **not pre-installed** on GitHub Actions runners
+2. The tool has **different package names** across package managers
+3. The tool profile has **smoke tests** that require the binary
+
+Do NOT create package YAML for:
+
+1. Tools pre-installed on all runners (e.g., `git`, `curl`, `cat`)
+2. Tools that are bundled with the OS (e.g., `ping`, `ls`)
+
+== System Tools (No Package YAML Required)
+
+The following tools are pre-installed on GitHub Actions runners and do not need
+a package YAML file:
+
+- `cat`, `cut`, `diff`, `grep`, `head`, `sort`, `tail`, `tee`, `wc`, `xargs`
+- `sed`, `find`
+- `ssh`, `scp`
+- `ping`
+
+== Data Source
+
+Package mappings are derived from the https://x-cmd.com[x-cmd] project's
+metadata, which maintains cross-platform package installation data for over
+1,600 tools.

@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: jpegoptim
+packages:
+  homebrew:
+  - name: jpegoptim
+    provides: &1
+    - jpegoptim
+    smoke_test: jpegoptim --version
+  macports:
+  - name: jpegoptim
+    provides: *1
+    smoke_test: jpegoptim --version
+  apt:
+  - name: jpegoptim
+    provides: *1
+    smoke_test: jpegoptim --version
+  dnf:
+  - name: jpegoptim
+    provides: *1
+    smoke_test: jpegoptim --version
+  yum:
+  - name: jpegoptim
+    provides: *1
+    smoke_test: jpegoptim --version
+  apk:
+  - name: jpegoptim
+    provides: *1
+    smoke_test: jpegoptim --version
+  pacman:
+  - name: jpegoptim
+    provides: *1
+    smoke_test: jpegoptim --version
+  chocolatey:
+  - name: jpegoptim
+    provides: *1
+    smoke_test: jpegoptim --version
+  winget:
+  - name: tjkuhlen.JPEGoptim
+    provides: *1
+    smoke_test: jpegoptim --version

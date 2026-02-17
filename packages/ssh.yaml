@@ -1,0 +1,35 @@
+ukiryu_schema: '1.0'
+name: ssh
+
+platforms:
+  darwin:
+    bundled: true
+    smoke_test: ssh -V
+  windows:
+    bundled: true
+    smoke_test: ssh -V
+  linux:
+    bundled: false
+
+packages:
+  apt:
+  - name: openssh-client
+    provides: &1
+    - ssh
+    smoke_test: ssh -V
+  apk:
+  - name: openssh-client-default
+    provides: *1
+    smoke_test: ssh -V
+  dnf:
+  - name: openssh-clients
+    provides: *1
+    smoke_test: ssh -V
+  yum:
+  - name: openssh-clients
+    provides: *1
+    smoke_test: ssh -V
+  pacman:
+  - name: openssh
+    provides: *1
+    smoke_test: ssh -V

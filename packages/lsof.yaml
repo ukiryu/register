@@ -1,0 +1,35 @@
+ukiryu_schema: '1.0'
+name: lsof
+platforms:
+  bundled: false
+  windows: false
+packages:
+  homebrew:
+  - name: lsof
+    provides: &1
+    - lsof
+    smoke_test: lsof -v
+  macports:
+  - name: lsof
+    provides: *1
+    smoke_test: lsof -v
+  apt:
+  - name: lsof
+    provides: *1
+    smoke_test: lsof -v
+  dnf:
+  - name: lsof
+    provides: *1
+    smoke_test: lsof -v
+  yum:
+  - name: lsof
+    provides: *1
+    smoke_test: lsof -v
+  apk:
+  - name: lsof
+    provides: *1
+    smoke_test: lsof -v
+  pacman:
+  - name: lsof
+    provides: *1
+    smoke_test: lsof -v

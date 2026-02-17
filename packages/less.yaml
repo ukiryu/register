@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: less
+packages:
+  homebrew:
+  - name: less
+    provides: &1
+    - less
+    smoke_test: less --version
+  macports:
+  - name: less
+    provides: *1
+    smoke_test: less --version
+  apt:
+  - name: less
+    provides: *1
+    smoke_test: less --version
+  dnf:
+  - name: less
+    provides: *1
+    smoke_test: less --version
+  yum:
+  - name: less
+    provides: *1
+    smoke_test: less --version
+  apk:
+  - name: less
+    provides: *1
+    smoke_test: less --version
+  pacman:
+  - name: less
+    provides: *1
+    smoke_test: less --version
+  chocolatey:
+  - name: less
+    provides: *1
+    smoke_test: less --version
+  winget:
+  - name: jftuga.less
+    provides: *1
+    smoke_test: less --version

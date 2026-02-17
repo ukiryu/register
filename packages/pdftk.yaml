@@ -1,0 +1,37 @@
+ukiryu_schema: '1.0'
+name: pdftk
+platforms:
+  bundled: false
+  windows: false
+packages:
+  homebrew:
+  - name: pdftk-java
+    provides:
+    - pdftk
+    smoke_test: pdftk --version
+  macports:
+  - name: pdftk
+    provides: &1
+    - pdftk
+    smoke_test: pdftk --version
+  apt:
+  - name: pdftk-java
+    provides:
+    - pdftk
+    smoke_test: pdftk --version
+  dnf:
+  - name: pdftk
+    provides: *1
+    smoke_test: pdftk --version
+  yum:
+  - name: pdftk
+    provides: *1
+    smoke_test: pdftk --version
+  apk:
+  - name: pdftk
+    provides: *1
+    smoke_test: pdftk --version
+  pacman:
+  - name: pdftk
+    provides: *1
+    smoke_test: pdftk --version

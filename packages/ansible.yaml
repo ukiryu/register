@@ -1,0 +1,37 @@
+ukiryu_schema: '1.0'
+name: ansible
+platforms:
+  bundled: false
+  windows: false
+packages:
+  homebrew:
+  - name: ansible
+    provides: &1
+    - ansible
+    - ansible-playbook
+    - ansible-vault
+    smoke_test: ansible --version
+  macports:
+  - name: ansible
+    provides: *1
+    smoke_test: ansible --version
+  apt:
+  - name: ansible
+    provides: *1
+    smoke_test: ansible --version
+  dnf:
+  - name: ansible
+    provides: *1
+    smoke_test: ansible --version
+  yum:
+  - name: ansible
+    provides: *1
+    smoke_test: ansible --version
+  apk:
+  - name: ansible
+    provides: *1
+    smoke_test: ansible --version
+  pacman:
+  - name: ansible
+    provides: *1
+    smoke_test: ansible --version

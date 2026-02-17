@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: rg
+packages:
+  homebrew:
+  - name: ripgrep
+    provides: &1
+    - rg
+    smoke_test: &rg_smoke |
+      rg --version
+  macports:
+  - name: ripgrep
+    provides: *1
+    smoke_test: *rg_smoke
+  apt:
+  - name: ripgrep
+    provides: *1
+    smoke_test: *rg_smoke
+  dnf:
+  - name: ripgrep
+    provides: *1
+    smoke_test: *rg_smoke
+  yum:
+  - name: ripgrep
+    provides: *1
+    smoke_test: *rg_smoke
+  apk:
+  - name: ripgrep
+    provides: *1
+    smoke_test: *rg_smoke
+  pacman:
+  - name: ripgrep
+    provides: *1
+    smoke_test: *rg_smoke
+  chocolatey:
+  - name: ripgrep
+    provides: *1
+    smoke_test: *rg_smoke
+  winget:
+  - name: BurntSushi.ripgrep.MSVC
+    provides: *1
+    smoke_test: *rg_smoke

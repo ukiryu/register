@@ -1,0 +1,49 @@
+ukiryu_schema: '1.0'
+name: ripgrep-all
+packages:
+  homebrew:
+  - name: rga
+    provides:
+    - rga
+    smoke_test: rga --version
+  macports:
+  - name: ripgrep-all
+    provides:
+    - rga
+    smoke_test: rga --version
+  apt:
+  - name: ripgrep-all
+    install_script: |
+      set -e
+      sudo apt-get install -y ripgrep pandoc poppler-utils ffmpeg
+      RGA_VERSION="0.10.10"
+      ARCH=$(uname -m)
+      if [ "$ARCH" = "aarch64" ]; then
+        RGA_ARCH="aarch64-unknown-linux-gnu"
+      else
+        RGA_ARCH="x86_64-unknown-linux-musl"
+      fi
+      RGA_URL="https://github.com/phiresky/ripgrep-all/releases/download/v${RGA_VERSION}/ripgrep_all-v${RGA_VERSION}-${RGA_ARCH}.tar.gz"
+      curl -sL "$RGA_URL" | tar xzf - -C /tmp
+      sudo mv /tmp/ripgrep_all-v${RGA_VERSION}-${RGA_ARCH}/rga /usr/local/bin/
+      sudo mv /tmp/ripgrep_all-v${RGA_VERSION}-${RGA_ARCH}/rga-preproc /usr/local/bin/
+      sudo chmod +x /usr/local/bin/rga /usr/local/bin/rga-preproc
+    provides:
+    - rga
+    - rga-preproc
+    smoke_test: rga --version
+  pacman:
+  - name: ripgrep-all
+    provides:
+    - rga
+    smoke_test: rga --version
+  chocolatey:
+  - name: ripgrep-all
+    provides:
+    - rga
+    smoke_test: rga --version
+  winget:
+  - name: phiresky.ripgrep-all
+    provides:
+    - rga
+    smoke_test: rga --version

@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: vim
+packages:
+  homebrew:
+  - name: vim
+    provides: &1
+    - vim
+    smoke_test: vim --version | head -1
+  macports:
+  - name: vim
+    provides: *1
+    smoke_test: vim --version | head -1
+  apt:
+  - name: vim
+    provides: *1
+    smoke_test: vim --version | head -1
+  dnf:
+  - name: vim-enhanced
+    provides: *1
+    smoke_test: vim --version | head -1
+  yum:
+  - name: vim-enhanced
+    provides: *1
+    smoke_test: vim --version | head -1
+  apk:
+  - name: vim
+    provides: *1
+    smoke_test: vim --version | head -1
+  pacman:
+  - name: vim
+    provides: *1
+    smoke_test: vim --version | head -1
+  chocolatey:
+  - name: vim
+    provides: *1
+    smoke_test: vim --version | head -1
+  winget:
+  - name: vim.vim
+    provides: *1
+    smoke_test: vim --version | head -1

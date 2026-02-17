@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: rsync
+packages:
+  homebrew:
+  - name: rsync
+    provides: &1
+    - rsync
+    smoke_test: rsync --version
+  macports:
+  - name: rsync
+    provides: *1
+    smoke_test: rsync --version
+  apt:
+  - name: rsync
+    provides: *1
+    smoke_test: rsync --version
+  dnf:
+  - name: rsync
+    provides: *1
+    smoke_test: rsync --version
+  yum:
+  - name: rsync
+    provides: *1
+    smoke_test: rsync --version
+  apk:
+  - name: rsync
+    provides: *1
+    smoke_test: rsync --version
+  pacman:
+  - name: rsync
+    provides: *1
+    smoke_test: rsync --version
+  chocolatey:
+  - name: rsync
+    provides: *1
+    smoke_test: rsync --version
+  winget:
+  - name: WayneD/rsync
+    provides: *1
+    smoke_test: rsync --version

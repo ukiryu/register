@@ -1,0 +1,15 @@
+---
+ukiryu_schema: '1.0'
+name: ping
+version: '2024.01.17'
+interface: ping
+implementation: gnu
+
+profiles:
+  - name: default
+    platforms: [macos, linux]
+    shells: [unix]
+    commands:
+      - name: ping
+        execute: ["ping", "-c", "1"]
+        description: "Ping host"

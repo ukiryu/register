@@ -1,0 +1,43 @@
+ukiryu_schema: '1.0'
+name: ghostscript
+packages:
+  homebrew:
+  - name: ghostscript
+    provides: &1
+    - gs
+    smoke_test: gs --version
+  macports:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  apt:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  dnf:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  yum:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  apk:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  pacman:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  chocolatey:
+  - name: Ghostscript.app
+    provides: &win_gs
+    - gswin64c
+    - gs
+    smoke_test: gswin64c --version || gs --version
+  winget:
+  - name: ArtifexSoftware.GhostScript
+    provides: *win_gs
+    smoke_test: gswin64c --version || gs --version
+critical: true

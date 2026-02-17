@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: pandoc
+packages:
+  homebrew:
+  - name: pandoc
+    provides: &1
+    - pandoc
+    smoke_test: &pandoc_smoke |
+      pandoc --version
+  macports:
+  - name: pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+  apt:
+  - name: pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+  dnf:
+  - name: pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+  yum:
+  - name: pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+  apk:
+  - name: pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+  pacman:
+  - name: pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+  chocolatey:
+  - name: pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+  winget:
+  - name: JohnMacFarlane.Pandoc
+    provides: *1
+    smoke_test: *pandoc_smoke
+critical: true

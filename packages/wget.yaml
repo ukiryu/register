@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: wget
+packages:
+  homebrew:
+  - name: wget
+    provides: &1
+    - wget
+    smoke_test: wget --version
+  macports:
+  - name: wget
+    provides: *1
+    smoke_test: wget --version
+  apt:
+  - name: wget
+    provides: *1
+    smoke_test: wget --version
+  dnf:
+  - name: wget
+    provides: *1
+    smoke_test: wget --version
+  yum:
+  - name: wget
+    provides: *1
+    smoke_test: wget --version
+  apk:
+  - name: wget
+    provides: *1
+    smoke_test: wget --version
+  pacman:
+  - name: wget
+    provides: *1
+    smoke_test: wget --version
+  chocolatey:
+  - name: wget
+    provides: *1
+    smoke_test: wget --version
+  winget:
+  - name: GNU.Wget
+    provides: *1
+    smoke_test: wget --version
+critical: true

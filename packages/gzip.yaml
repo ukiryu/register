@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: gzip
+packages:
+  homebrew:
+  - name: gzip
+    provides: &1
+    - gzip
+    - gunzip
+    - zcat
+    smoke_test: gzip --version
+  macports:
+  - name: gzip
+    provides: *1
+    smoke_test: gzip --version
+  apt:
+  - name: gzip
+    provides: *1
+    smoke_test: gzip --version
+  dnf:
+  - name: gzip
+    provides: *1
+    smoke_test: gzip --version
+  yum:
+  - name: gzip
+    provides: *1
+    smoke_test: gzip --version
+  apk:
+  - name: gzip
+    provides: *1
+    smoke_test: gzip --version
+  pacman:
+  - name: gzip
+    provides: *1
+    smoke_test: gzip --version
+  chocolatey:
+  - name: gzip
+    provides: *1
+    smoke_test: gzip --version
+  winget:
+  - name: 7zip.7zip
+    provides: *1
+    smoke_test: gzip --version

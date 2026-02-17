@@ -1,0 +1,35 @@
+ukiryu_schema: '1.0'
+name: htop
+platforms:
+  bundled: false
+  windows: false
+packages:
+  homebrew:
+  - name: htop
+    provides: &1
+    - htop
+    smoke_test: htop --version
+  macports:
+  - name: htop
+    provides: *1
+    smoke_test: htop --version
+  apt:
+  - name: htop
+    provides: *1
+    smoke_test: htop --version
+  dnf:
+  - name: htop
+    provides: *1
+    smoke_test: htop --version
+  yum:
+  - name: htop
+    provides: *1
+    smoke_test: htop --version
+  apk:
+  - name: htop
+    provides: *1
+    smoke_test: htop --version
+  pacman:
+  - name: htop
+    provides: *1
+    smoke_test: htop --version

@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: fd
+packages:
+  homebrew:
+  - name: fd
+    provides: &1
+    - fd
+    - fdfind
+    smoke_test: &fd_smoke |
+      fd --version || fdfind --version
+  macports:
+  - name: fd
+    provides: *1
+    smoke_test: *fd_smoke
+  apt:
+  - name: fd-find
+    provides: *1
+    smoke_test: *fd_smoke
+  dnf:
+  - name: fd-find
+    provides: *1
+    smoke_test: *fd_smoke
+  yum:
+  - name: fd-find
+    provides: *1
+    smoke_test: *fd_smoke
+  apk:
+  - name: fd
+    provides: *1
+    smoke_test: *fd_smoke
+  pacman:
+  - name: fd
+    provides: *1
+    smoke_test: *fd_smoke
+  chocolatey:
+  - name: fd
+    provides: *1
+    smoke_test: *fd_smoke
+  winget:
+  - name: sharkdp.fd
+    provides: *1
+    smoke_test: *fd_smoke

@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: zstd
+packages:
+  homebrew:
+  - name: zstd
+    provides: &1
+    - zstd
+    - unzstd
+    - zstdcat
+    smoke_test: zstd --version
+  macports:
+  - name: zstd
+    provides: *1
+    smoke_test: zstd --version
+  apt:
+  - name: zstd
+    provides: *1
+    smoke_test: zstd --version
+  dnf:
+  - name: zstd
+    provides: *1
+    smoke_test: zstd --version
+  yum:
+  - name: zstd
+    provides: *1
+    smoke_test: zstd --version
+  apk:
+  - name: zstd
+    provides: *1
+    smoke_test: zstd --version
+  pacman:
+  - name: zstd
+    provides: *1
+    smoke_test: zstd --version
+  chocolatey:
+  - name: zstd
+    provides: *1
+    smoke_test: zstd --version
+  winget:
+  - name: facebook.zstd
+    provides: *1
+    smoke_test: zstd --version

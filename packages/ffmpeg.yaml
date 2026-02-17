@@ -1,0 +1,43 @@
+ukiryu_schema: '1.0'
+name: ffmpeg
+packages:
+  homebrew:
+  - name: ffmpeg
+    provides: &1
+    - ffmpeg
+    - ffprobe
+    smoke_test: &ffmpeg_smoke |
+      ffmpeg -version
+  macports:
+  - name: ffmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+  apt:
+  - name: ffmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+  dnf:
+  - name: ffmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+  yum:
+  - name: ffmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+  apk:
+  - name: ffmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+  pacman:
+  - name: ffmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+  chocolatey:
+  - name: ffmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+  winget:
+  - name: Gyan.FFmpeg
+    provides: *1
+    smoke_test: *ffmpeg_smoke
+critical: true

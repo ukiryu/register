@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: tree
+packages:
+  homebrew:
+  - name: tree
+    provides: &1
+    - tree
+    smoke_test: tree --version
+  macports:
+  - name: tree
+    provides: *1
+    smoke_test: tree --version
+  apt:
+  - name: tree
+    provides: *1
+    smoke_test: tree --version
+  dnf:
+  - name: tree
+    provides: *1
+    smoke_test: tree --version
+  yum:
+  - name: tree
+    provides: *1
+    smoke_test: tree --version
+  apk:
+  - name: tree
+    provides: *1
+    smoke_test: tree --version
+  pacman:
+  - name: tree
+    provides: *1
+    smoke_test: tree --version
+  chocolatey:
+  - name: tree
+    provides: *1
+    smoke_test: tree --version
+  winget:
+  - name: GnuWin32.Tree
+    provides: *1
+    smoke_test: tree --version

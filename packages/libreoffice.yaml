@@ -1,0 +1,36 @@
+ukiryu_schema: '1.0'
+name: libreoffice
+platforms:
+  bundled: false
+  windows: false
+packages:
+  homebrew:
+  - name: libreoffice
+    provides: &1
+    - libreoffice
+    - soffice
+    smoke_test: libreoffice --version || soffice --version
+  macports:
+  - name: libreoffice
+    provides: *1
+    smoke_test: libreoffice --version || soffice --version
+  apt:
+  - name: libreoffice
+    provides: *1
+    smoke_test: libreoffice --version || soffice --version
+  dnf:
+  - name: libreoffice
+    provides: *1
+    smoke_test: libreoffice --version || soffice --version
+  yum:
+  - name: libreoffice
+    provides: *1
+    smoke_test: libreoffice --version || soffice --version
+  apk:
+  - name: libreoffice
+    provides: *1
+    smoke_test: libreoffice --version || soffice --version
+  pacman:
+  - name: libreoffice-fresh
+    provides: *1
+    smoke_test: libreoffice --version || soffice --version

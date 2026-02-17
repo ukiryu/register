@@ -1,0 +1,15 @@
+---
+ukiryu_schema: '1.0'
+name: wget
+version: '1.36.1'
+interface: wget
+implementation: busybox
+
+profiles:
+  - name: default
+    platforms: [macos, linux]
+    shells: [unix]
+    commands:
+      - name: download
+        execute: ["wget"]
+        description: "Download file"

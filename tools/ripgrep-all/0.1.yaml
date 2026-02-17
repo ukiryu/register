@@ -4,6 +4,7 @@ version: '0.1'
 display_name: ripgrep-all - Document search
 homepage: https://github.com/phiresky/ripgrep-all
 version_detection:
+  executable: rga
   command: "--version"
   pattern: ripgrep-all (\d+\.\d+)
 profiles:

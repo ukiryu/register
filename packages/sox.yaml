@@ -1,0 +1,37 @@
+ukiryu_schema: '1.0'
+name: sox
+platforms:
+  bundled: false
+  windows: false
+packages:
+  homebrew:
+  - name: sox
+    provides: &1
+    - sox
+    - play
+    - rec
+    smoke_test: sox --version || soxi --version
+  macports:
+  - name: sox
+    provides: *1
+    smoke_test: sox --version || soxi --version
+  apt:
+  - name: sox
+    provides: *1
+    smoke_test: sox --version || soxi --version
+  dnf:
+  - name: sox
+    provides: *1
+    smoke_test: sox --version || soxi --version
+  yum:
+  - name: sox
+    provides: *1
+    smoke_test: sox --version || soxi --version
+  apk:
+  - name: sox
+    provides: *1
+    smoke_test: sox --version || soxi --version
+  pacman:
+  - name: sox
+    provides: *1
+    smoke_test: sox --version || soxi --version
