@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: exiftool
+packages:
+  homebrew:
+  - name: exiftool
+    provides: &1
+    - exiftool
+    smoke_test: exiftool -ver
+  macports:
+  - name: p5-image-exiftool
+    provides: *1
+    smoke_test: exiftool -ver
+  apt:
+  - name: libimage-exiftool-perl
+    provides:
+    - exiftool
+    smoke_test: exiftool -ver
+  dnf:
+  - name: perl-Image-ExifTool
+    provides: *1
+    smoke_test: exiftool -ver
+  yum:
+  - name: perl-Image-ExifTool
+    provides: *1
+    smoke_test: exiftool -ver
+  apk:
+  - name: exiftool
+    provides: *1
+    smoke_test: exiftool -ver
+  pacman:
+  - name: perl-image-exiftool
+    provides: *1
+    smoke_test: exiftool -ver
+  chocolatey:
+  - name: exiftool
+    provides: *1
+    smoke_test: exiftool -ver
+  winget:
+  - name: OliverBetz.ExifTool
+    provides: *1
+    smoke_test: exiftool -ver

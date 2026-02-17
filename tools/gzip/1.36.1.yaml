@@ -1,0 +1,15 @@
+---
+ukiryu_schema: '1.0'
+name: gzip
+version: '1.36.1'
+interface: gzip
+implementation: busybox
+
+profiles:
+  - name: default
+    platforms: [macos, linux]
+    shells: [unix]
+    commands:
+      - name: compress
+        execute: ["gzip"]
+        description: "Compress file"

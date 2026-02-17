@@ -1,0 +1,48 @@
+ukiryu_schema: '1.0'
+name: magick
+packages:
+  homebrew:
+  - name: imagemagick
+    provides: &1
+    - magick
+    smoke_test: &magick_smoke |
+      magick --version
+  macports:
+  - name: ImageMagick
+    provides: *1
+    smoke_test: *magick_smoke
+  apt:
+  - name: imagemagick
+    provides: &apt_provides
+    - convert
+    - identify
+    smoke_test: |
+      convert --version
+  dnf:
+  - name: imagemagick
+    provides: *1
+    smoke_test: *magick_smoke
+  yum:
+  - name: ImageMagick
+    provides: &yum_provides
+    - convert
+    - identify
+    smoke_test: |
+      convert --version
+  apk:
+  - name: imagemagick
+    provides: *1
+    smoke_test: *magick_smoke
+  pacman:
+  - name: imagemagick
+    provides: *1
+    smoke_test: *magick_smoke
+  chocolatey:
+  - name: imagemagick
+    provides: *1
+    smoke_test: *magick_smoke
+  winget:
+  - name: ImageMagick.Q16-HDRI
+    provides: *1
+    smoke_test: *magick_smoke
+critical: true

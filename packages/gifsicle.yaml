@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: gifsicle
+packages:
+  homebrew:
+  - name: gifsicle
+    provides: &1
+    - gifsicle
+    smoke_test: gifsicle --version
+  macports:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version
+  apt:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version
+  dnf:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version
+  yum:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version
+  apk:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version
+  pacman:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version
+  chocolatey:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version
+  winget:
+  - name: gifsicle
+    provides: *1
+    smoke_test: gifsicle --version

@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: pdf2ps
+packages:
+  homebrew:
+  - name: ghostscript
+    provides: &1
+    - pdf2ps
+    smoke_test: gs --version
+  macports:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  apt:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  dnf:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  yum:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  apk:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  pacman:
+  - name: ghostscript
+    provides: *1
+    smoke_test: gs --version
+  chocolatey:
+  - name: Ghostscript.app
+    provides: &win_pdf2ps
+    - gswin64c
+    - gs
+    smoke_test: gswin64c --version || gs --version
+  winget:
+  - name: ArtifexSoftware.GhostScript
+    provides: *win_pdf2ps
+    smoke_test: gswin64c --version || gs --version

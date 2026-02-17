@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: restic
+packages:
+  homebrew:
+  - name: restic
+    provides: &1
+    - restic
+    smoke_test: restic version
+  macports:
+  - name: restic
+    provides: *1
+    smoke_test: restic version
+  apt:
+  - name: restic
+    provides: *1
+    smoke_test: restic version
+  dnf:
+  - name: restic
+    provides: *1
+    smoke_test: restic version
+  yum:
+  - name: restic
+    provides: *1
+    smoke_test: restic version
+  apk:
+  - name: restic
+    provides: *1
+    smoke_test: restic version
+  pacman:
+  - name: restic
+    provides: *1
+    smoke_test: restic version
+  chocolatey:
+  - name: restic
+    provides: *1
+    smoke_test: restic version
+  winget:
+  - name: restic.restic
+    provides: *1
+    smoke_test: restic version

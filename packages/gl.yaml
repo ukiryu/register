@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: gl
+packages:
+  homebrew:
+  - name: glab
+    provides: &gl_provides
+    - glab
+    - gl
+    smoke_test: &gl_smoke glab version || gl version
+  macports:
+  - name: glab
+    provides: *gl_provides
+    smoke_test: *gl_smoke
+  apt:
+  - name: glab
+    provides: *gl_provides
+    smoke_test: *gl_smoke
+  dnf:
+  - name: glab
+    provides: *gl_provides
+    smoke_test: *gl_smoke
+  yum:
+  - name: glab
+    provides: *gl_provides
+    smoke_test: *gl_smoke
+  apk:
+  - name: glab
+    provides: *gl_provides
+    smoke_test: *gl_smoke
+  pacman:
+  - name: glab
+    provides: *gl_provides
+    smoke_test: *gl_smoke
+  chocolatey:
+  - name: glab
+    provides: *gl_provides
+    smoke_test: *gl_smoke
+  winget:
+  - name: GLab.GLab
+    provides: *gl_provides
+    smoke_test: *gl_smoke

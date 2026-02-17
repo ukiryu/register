@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: xz
+packages:
+  homebrew:
+  - name: xz
+    provides: &1
+    - xz
+    - unxz
+    - xzcat
+    smoke_test: xz --version
+  macports:
+  - name: xz
+    provides: *1
+    smoke_test: xz --version
+  apt:
+  - name: xz-utils
+    provides: *1
+    smoke_test: xz --version
+  dnf:
+  - name: xz
+    provides: *1
+    smoke_test: xz --version
+  yum:
+  - name: xz
+    provides: *1
+    smoke_test: xz --version
+  apk:
+  - name: xz
+    provides: *1
+    smoke_test: xz --version
+  pacman:
+  - name: xz
+    provides: *1
+    smoke_test: xz --version
+  chocolatey:
+  - name: 7zip
+    provides: *1
+    smoke_test: xz --version
+  winget:
+  - name: 7zip.7zip
+    provides: *1
+    smoke_test: xz --version

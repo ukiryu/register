@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: make
+packages:
+  homebrew:
+  - name: make
+    provides: &1
+    - make
+    smoke_test: make --version
+  macports:
+  - name: gmake
+    provides: *1
+    smoke_test: make --version
+  apt:
+  - name: make
+    provides: *1
+    smoke_test: make --version
+  dnf:
+  - name: make
+    provides: *1
+    smoke_test: make --version
+  yum:
+  - name: make
+    provides: *1
+    smoke_test: make --version
+  apk:
+  - name: make
+    provides: *1
+    smoke_test: make --version
+  pacman:
+  - name: make
+    provides: *1
+    smoke_test: make --version
+  chocolatey:
+  - name: make
+    provides: *1
+    smoke_test: make --version
+  winget:
+  - name: GnuWin32.Make
+    provides: *1
+    smoke_test: make --version

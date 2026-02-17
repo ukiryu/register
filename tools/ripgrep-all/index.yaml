@@ -6,6 +6,9 @@ implementations:
 - name: default
   display_name: Ripgrep-all
   detection:
+    executable: rga
+    command:
+    - "--version"
     pattern: ripgrep-all ([\d.]+)
   version_scheme: semantic
   versions:

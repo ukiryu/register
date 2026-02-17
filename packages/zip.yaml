@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: zip
+packages:
+  homebrew:
+  - name: zip
+    provides: &1
+    - zip
+    smoke_test: zip -v
+  macports:
+  - name: zip
+    provides: *1
+    smoke_test: zip -v
+  apt:
+  - name: zip
+    provides: *1
+    smoke_test: zip -v
+  dnf:
+  - name: zip
+    provides: *1
+    smoke_test: zip -v
+  yum:
+  - name: zip
+    provides: *1
+    smoke_test: zip -v
+  apk:
+  - name: zip
+    provides: *1
+    smoke_test: zip -v
+  pacman:
+  - name: zip
+    provides: *1
+    smoke_test: zip -v
+  chocolatey:
+  - name: zip
+    provides: *1
+    smoke_test: zip -v
+  winget:
+  - name: 7zip.7zip
+    provides: *1
+    smoke_test: zip -v
+critical: true

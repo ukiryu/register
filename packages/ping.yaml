@@ -1,0 +1,31 @@
+ukiryu_schema: '1.0'
+name: ping
+
+platforms:
+  darwin:
+    bundled: true
+    smoke_test: ping -c 1 127.0.0.1
+  windows:
+    bundled: true
+    smoke_test: ping -n 1 127.0.0.1
+  linux:
+    bundled: false
+
+packages:
+  apt:
+  - name: iputils-ping
+    provides: &1
+    - ping
+    smoke_test: ping -V || ping -c 1 127.0.0.1
+  dnf:
+  - name: iputils
+    provides: *1
+    smoke_test: ping -V || ping -c 1 127.0.0.1
+  yum:
+  - name: iputils
+    provides: *1
+    smoke_test: ping -V || ping -c 1 127.0.0.1
+  apk:
+  - name: iputils
+    provides: *1
+    smoke_test: ping -V || ping -c 1 127.0.0.1

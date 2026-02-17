@@ -1,0 +1,18 @@
+---
+ukiryu_schema: '1.0'
+name: awk
+version: '20200816'
+interface: awk
+implementation: bsd
+
+profiles:
+  - name: default
+    platforms: [macos, linux]
+    shells: [unix]
+    commands:
+      - name: print
+        execute: ["awk", "{print}"]
+        description: "Print lines"
+      - name: pattern
+        execute: ["awk", "/pattern/"]
+        description: "Match pattern"

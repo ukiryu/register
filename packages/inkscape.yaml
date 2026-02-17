@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: inkscape
+packages:
+  homebrew:
+  - name: inkscape
+    provides: &1
+    - inkscape
+    smoke_test: inkscape --version
+  macports:
+  - name: inkscape
+    provides: *1
+    smoke_test: inkscape --version
+  apt:
+  - name: inkscape
+    provides: *1
+    smoke_test: inkscape --version
+  dnf:
+  - name: inkscape
+    provides: *1
+    smoke_test: inkscape --version
+  yum:
+  - name: inkscape
+    provides: *1
+    smoke_test: inkscape --version
+  apk:
+  - name: inkscape
+    provides: *1
+    smoke_test: inkscape --version
+  pacman:
+  - name: inkscape
+    provides: *1
+    smoke_test: inkscape --version
+  chocolatey:
+  - name: inkscape
+    provides: *1
+    smoke_test: inkscape --version
+  winget:
+  - name: Inkscape.Inkscape
+    provides: *1
+    smoke_test: inkscape --version

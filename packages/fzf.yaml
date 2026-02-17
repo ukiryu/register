@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: fzf
+packages:
+  homebrew:
+  - name: fzf
+    provides: &1
+    - fzf
+    smoke_test: &fzf_smoke |
+      fzf --version
+  macports:
+  - name: fzf
+    provides: *1
+    smoke_test: *fzf_smoke
+  apt:
+  - name: fzf
+    provides: *1
+    smoke_test: *fzf_smoke
+  dnf:
+  - name: fzf
+    provides: *1
+    smoke_test: *fzf_smoke
+  yum:
+  - name: fzf
+    provides: *1
+    smoke_test: *fzf_smoke
+  apk:
+  - name: fzf
+    provides: *1
+    smoke_test: *fzf_smoke
+  pacman:
+  - name: fzf
+    provides: *1
+    smoke_test: *fzf_smoke
+  chocolatey:
+  - name: fzf
+    provides: *1
+    smoke_test: *fzf_smoke
+  winget:
+  - name: junegunn.fzf
+    provides: *1
+    smoke_test: *fzf_smoke

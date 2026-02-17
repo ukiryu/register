@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: curl
+packages:
+  homebrew:
+  - name: curl
+    provides: &1
+    - curl
+    smoke_test: curl --version
+  macports:
+  - name: curl
+    provides: *1
+    smoke_test: curl --version
+  apt:
+  - name: curl
+    provides: *1
+    smoke_test: curl --version
+  dnf:
+  - name: curl
+    provides: *1
+    smoke_test: curl --version
+  yum:
+  - name: curl
+    provides: *1
+    smoke_test: curl --version
+  apk:
+  - name: curl
+    provides: *1
+    smoke_test: curl --version
+  pacman:
+  - name: curl
+    provides: *1
+    smoke_test: curl --version
+  chocolatey:
+  - name: curl
+    provides: *1
+    smoke_test: curl --version
+  winget:
+  - name: curl.curl
+    provides: *1
+    smoke_test: curl --version
+critical: true

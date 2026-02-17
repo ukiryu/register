@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: optipng
+packages:
+  homebrew:
+  - name: optipng
+    provides: &1
+    - optipng
+    smoke_test: optipng -version
+  macports:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version
+  apt:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version
+  dnf:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version
+  yum:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version
+  apk:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version
+  pacman:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version
+  chocolatey:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version
+  winget:
+  - name: optipng
+    provides: *1
+    smoke_test: optipng -version

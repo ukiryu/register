@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: rclone
+packages:
+  homebrew:
+  - name: rclone
+    provides: &1
+    - rclone
+    smoke_test: rclone version
+  macports:
+  - name: rclone
+    provides: *1
+    smoke_test: rclone version
+  apt:
+  - name: rclone
+    provides: *1
+    smoke_test: rclone version
+  dnf:
+  - name: rclone
+    provides: *1
+    smoke_test: rclone version
+  yum:
+  - name: rclone
+    provides: *1
+    smoke_test: rclone version
+  apk:
+  - name: rclone
+    provides: *1
+    smoke_test: rclone version
+  pacman:
+  - name: rclone
+    provides: *1
+    smoke_test: rclone version
+  chocolatey:
+  - name: rclone
+    provides: *1
+    smoke_test: rclone version
+  winget:
+  - name: Rclone.Rclone
+    provides: *1
+    smoke_test: rclone version

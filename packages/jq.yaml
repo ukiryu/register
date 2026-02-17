@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: jq
+packages:
+  homebrew:
+  - name: jq
+    provides: &1
+    - jq
+    smoke_test: &jq_smoke |
+      jq --version
+  macports:
+  - name: jq
+    provides: *1
+    smoke_test: *jq_smoke
+  apt:
+  - name: jq
+    provides: *1
+    smoke_test: *jq_smoke
+  dnf:
+  - name: jq
+    provides: *1
+    smoke_test: *jq_smoke
+  yum:
+  - name: jq
+    provides: *1
+    smoke_test: *jq_smoke
+  apk:
+  - name: jq
+    provides: *1
+    smoke_test: *jq_smoke
+  pacman:
+  - name: jq
+    provides: *1
+    smoke_test: *jq_smoke
+  chocolatey:
+  - name: jq
+    provides: *1
+    smoke_test: *jq_smoke
+  winget:
+  - name: jqlang.jq
+    provides: *1
+    smoke_test: *jq_smoke
+critical: true

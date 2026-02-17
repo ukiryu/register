@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: awk
+packages:
+  homebrew:
+  - name: gawk
+    provides: &1
+    - awk
+    smoke_test: awk --version || gawk --version || mawk --version
+  macports:
+  - name: gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version
+  apt:
+  - name: gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version
+  dnf:
+  - name: gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version
+  yum:
+  - name: gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version
+  apk:
+  - name: gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version
+  pacman:
+  - name: gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version
+  chocolatey:
+  - name: gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version
+  winget:
+  - name: GnuWin32.Gawk
+    provides: *1
+    smoke_test: awk --version || gawk --version || mawk --version

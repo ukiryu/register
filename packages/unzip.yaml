@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: unzip
+packages:
+  homebrew:
+  - name: unzip
+    provides: &1
+    - unzip
+    smoke_test: unzip -v
+  macports:
+  - name: unzip
+    provides: *1
+    smoke_test: unzip -v
+  apt:
+  - name: unzip
+    provides: *1
+    smoke_test: unzip -v
+  dnf:
+  - name: unzip
+    provides: *1
+    smoke_test: unzip -v
+  yum:
+  - name: unzip
+    provides: *1
+    smoke_test: unzip -v
+  apk:
+  - name: unzip
+    provides: *1
+    smoke_test: unzip -v
+  pacman:
+  - name: unzip
+    provides: *1
+    smoke_test: unzip -v
+  chocolatey:
+  - name: unzip
+    provides: *1
+    smoke_test: unzip -v
+  winget:
+  - name: 7zip.7zip
+    provides: *1
+    smoke_test: unzip -v
+critical: true

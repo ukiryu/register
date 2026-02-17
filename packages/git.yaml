@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: git
+packages:
+  homebrew:
+  - name: git
+    provides: &1
+    - git
+    smoke_test: git --version
+  macports:
+  - name: git
+    provides: *1
+    smoke_test: git --version
+  apt:
+  - name: git
+    provides: *1
+    smoke_test: git --version
+  dnf:
+  - name: git
+    provides: *1
+    smoke_test: git --version
+  yum:
+  - name: git
+    provides: *1
+    smoke_test: git --version
+  apk:
+  - name: git
+    provides: *1
+    smoke_test: git --version
+  pacman:
+  - name: git
+    provides: *1
+    smoke_test: git --version
+  chocolatey:
+  - name: git
+    provides: *1
+    smoke_test: git --version
+  winget:
+  - name: Git.Git
+    provides: *1
+    smoke_test: git --version
+critical: true

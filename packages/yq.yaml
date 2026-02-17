@@ -1,0 +1,41 @@
+ukiryu_schema: '1.0'
+name: yq
+packages:
+  homebrew:
+  - name: yq
+    provides: &1
+    - yq
+    smoke_test: yq --version
+  macports:
+  - name: yq
+    provides: *1
+    smoke_test: yq --version
+  apt:
+  - name: yq
+    provides: *1
+    smoke_test: yq --version
+  dnf:
+  - name: yq
+    provides: *1
+    smoke_test: yq --version
+  yum:
+  - name: yq
+    provides: *1
+    smoke_test: yq --version
+  apk:
+  - name: yq
+    provides: *1
+    smoke_test: yq --version
+  pacman:
+  - name: yq
+    provides: *1
+    smoke_test: yq --version
+  chocolatey:
+  - name: yq
+    provides: *1
+    smoke_test: yq --version
+  winget:
+  - name: MikeFarah.yq
+    provides: *1
+    smoke_test: yq --version
+critical: true

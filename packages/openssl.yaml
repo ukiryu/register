@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: openssl
+packages:
+  homebrew:
+  - name: openssl
+    provides: &1
+    - openssl
+    smoke_test: openssl version
+  macports:
+  - name: openssl
+    provides: *1
+    smoke_test: openssl version
+  apt:
+  - name: openssl
+    provides: *1
+    smoke_test: openssl version
+  dnf:
+  - name: openssl
+    provides: *1
+    smoke_test: openssl version
+  yum:
+  - name: openssl
+    provides: *1
+    smoke_test: openssl version
+  apk:
+  - name: openssl
+    provides: *1
+    smoke_test: openssl version
+  pacman:
+  - name: openssl
+    provides: *1
+    smoke_test: openssl version
+  chocolatey:
+  - name: openssl
+    provides: *1
+    smoke_test: openssl version
+  winget:
+  - name: ShiningLight.OpenSSL
+    provides: *1
+    smoke_test: openssl version

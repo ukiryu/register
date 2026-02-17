@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: bzip2
+packages:
+  homebrew:
+  - name: bzip2
+    provides: &1
+    - bzip2
+    - bunzip2
+    - bzcat
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  macports:
+  - name: bzip2
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  apt:
+  - name: bzip2
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  dnf:
+  - name: bzip2
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  yum:
+  - name: bzip2
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  apk:
+  - name: bzip2
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  pacman:
+  - name: bzip2
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  chocolatey:
+  - name: bzip2
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'
+  winget:
+  - name: 7zip.7zip
+    provides: *1
+    smoke_test: bzip2 --version 2>&1 || echo 'bzip2 available'

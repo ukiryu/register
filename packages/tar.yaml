@@ -1,0 +1,43 @@
+ukiryu_schema: '1.0'
+name: tar
+packages:
+  homebrew:
+  - name: gnu-tar
+    provides:
+    - tar
+    smoke_test: tar --version
+  macports:
+  - name: gnutar
+    provides:
+    - tar
+    smoke_test: tar --version
+  apt:
+  - name: tar
+    provides: &1
+    - tar
+    smoke_test: tar --version
+  dnf:
+  - name: tar
+    provides: *1
+    smoke_test: tar --version
+  yum:
+  - name: tar
+    provides: *1
+    smoke_test: tar --version
+  apk:
+  - name: tar
+    provides: *1
+    smoke_test: tar --version
+  pacman:
+  - name: tar
+    provides: *1
+    smoke_test: tar --version
+  chocolatey:
+  - name: msys2
+    provides: *1
+    smoke_test: tar --version
+  winget:
+  - name: MSYS2.MSYS2
+    provides: *1
+    smoke_test: tar --version
+critical: true

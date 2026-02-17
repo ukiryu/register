@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: p7zip
+packages:
+  homebrew:
+  - name: p7zip
+    provides: &1
+    - 7z
+    - 7za
+    - 7zr
+    smoke_test: 7z --help || 7za --help
+  macports:
+  - name: p7zip
+    provides: *1
+    smoke_test: 7z --help || 7za --help
+  apt:
+  - name: p7zip-full
+    provides: *1
+    smoke_test: 7z --help || 7za --help
+  dnf:
+  - name: p7zip
+    provides: *1
+    smoke_test: 7z --help || 7za --help
+  yum:
+  - name: p7zip
+    provides: *1
+    smoke_test: 7z --help || 7za --help
+  apk:
+  - name: p7zip
+    provides: *1
+    smoke_test: 7z --help || 7za --help
+  pacman:
+  - name: p7zip
+    provides: *1
+    smoke_test: 7z --help || 7za --help
+  chocolatey:
+  - name: 7zip
+    provides: *1
+    smoke_test: 7z --help || 7za --help
+  winget:
+  - name: 7zip.7zip
+    provides: *1
+    smoke_test: 7z --help || 7za --help

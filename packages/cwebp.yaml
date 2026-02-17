@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: cwebp
+packages:
+  homebrew:
+  - name: webp
+    provides: &1
+    - cwebp
+    smoke_test: cwebp -version || webp -version
+  macports:
+  - name: webp
+    provides: *1
+    smoke_test: cwebp -version || webp -version
+  apt:
+  - name: webp
+    provides: *1
+    smoke_test: cwebp -version || webp -version
+  dnf:
+  - name: libwebp-tools
+    provides: *1
+    smoke_test: cwebp -version || webp -version
+  yum:
+  - name: libwebp-tools
+    provides: *1
+    smoke_test: cwebp -version || webp -version
+  apk:
+  - name: webp
+    provides: *1
+    smoke_test: cwebp -version || webp -version
+  pacman:
+  - name: libwebp
+    provides: *1
+    smoke_test: cwebp -version || webp -version
+  chocolatey:
+  - name: webp
+    provides: *1
+    smoke_test: cwebp -version || webp -version
+  winget:
+  - name: Google.WebP
+    provides: *1
+    smoke_test: cwebp -version || webp -version

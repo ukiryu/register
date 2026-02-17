@@ -1,0 +1,8 @@
+ukiryu_schema: '1.0'
+name: yq_jq
+packages:
+  apt:
+  - name: yq
+    provides:
+    - yq
+    smoke_test: yq --version

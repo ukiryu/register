@@ -1,0 +1,42 @@
+ukiryu_schema: '1.0'
+name: bat
+packages:
+  homebrew:
+  - name: bat
+    provides: &homebrew_bat
+    - bat
+    smoke_test: &bat_smoke bat --version
+  macports:
+  - name: bat
+    provides: *homebrew_bat
+    smoke_test: *bat_smoke
+  apt:
+  - name: bat
+    provides: &apt_bat
+    - batcat
+    - bat
+    smoke_test: batcat --version || bat --version
+  dnf:
+  - name: bat
+    provides: *homebrew_bat
+    smoke_test: *bat_smoke
+  yum:
+  - name: bat
+    provides: *homebrew_bat
+    smoke_test: *bat_smoke
+  apk:
+  - name: bat
+    provides: *homebrew_bat
+    smoke_test: *bat_smoke
+  pacman:
+  - name: bat
+    provides: *homebrew_bat
+    smoke_test: *bat_smoke
+  chocolatey:
+  - name: bat
+    provides: *homebrew_bat
+    smoke_test: *bat_smoke
+  winget:
+  - name: sharkdp.bat
+    provides: *homebrew_bat
+    smoke_test: *bat_smoke

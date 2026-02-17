@@ -1,0 +1,40 @@
+ukiryu_schema: '1.0'
+name: yt-dlp
+packages:
+  homebrew:
+  - name: yt-dlp
+    provides: &1
+    - yt-dlp
+    smoke_test: yt-dlp --version
+  macports:
+  - name: yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version
+  apt:
+  - name: yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version
+  dnf:
+  - name: yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version
+  yum:
+  - name: yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version
+  apk:
+  - name: yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version
+  pacman:
+  - name: yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version
+  chocolatey:
+  - name: yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version
+  winget:
+  - name: yt-dlp.yt-dlp
+    provides: *1
+    smoke_test: yt-dlp --version

@@ -23,6 +23,7 @@ execution_profiles:
   - zsh
   - fish
   - sh
+  - powershell
   option_style: single_dash_space
   executable_name: ghostscript
   commands:
