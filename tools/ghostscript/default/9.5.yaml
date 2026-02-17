@@ -106,5 +106,5 @@ execution_profiles:
   - powershell
   - windows
   option_style: single_dash_space
-  executable_name: ghostscript
-  commands: []
+  executable_name: gswin64c
+  inherits: unix
