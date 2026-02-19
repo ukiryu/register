@@ -150,8 +150,8 @@ execution_profiles:
     - name: batch_process
       cli: "--batch-process"
       position_constraint: prefix
-      description: Close GUI after processing (required for headless)
-      default: true
+      description: Close GUI after processing (forces GUI to show, not for headless CI)
+      default: false
       assignment_delimiter: none
     name: export
   - description: Query document dimensions
