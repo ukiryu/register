@@ -52,6 +52,9 @@ jobs:
           bundler-cache: true
           cache-version: ukiryu-${{ github.sha }}
 
+      - name: Force reinstall ukiryu gem
+        run: bundle install --force
+
       - name: Validate YAML syntax
         continue-on-error: true
         run: bundle exec ruby .github/scripts/validate_yaml_syntax.rb
