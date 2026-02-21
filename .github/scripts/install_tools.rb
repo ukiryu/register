@@ -672,24 +672,40 @@ class ToolInstaller
     end
 
     # Run ukiryu validate command for this tool
-    # Look for the tool definition file
-    tool_file = File.join(@register_path, "tools", tool_name, "*.yaml")
-    tool_files = Dir.glob(tool_file)
+    # Look for the tool VERSION file (not index.yaml)
+    # Structure: tools/{tool}/{implementation}/{version}.yaml
+    impl_dirs = Dir.glob(File.join(@register_path, "tools", tool_name, "*"))
+                    .select { |d| File.directory?(d) }
 
-    if tool_files.empty?
-      # Try packages directory instead
-      pkg_file = File.join(@register_path, "packages", "#{tool_name}.yaml")
-      if File.exist?(pkg_file)
-        tool_files = [pkg_file]
+    # Find version YAML files in implementation directories
+    version_files = []
+    impl_dirs.each do |impl_dir|
+      Dir.glob(File.join(impl_dir, "*.yaml")).each do |f|
+        # Skip index.yaml - it's an implementation index, not a profile
+        version_files << f unless File.basename(f) == 'index.yaml'
       end
     end
 
-    if tool_files.empty?
+    # Fallback: try old location (tools/{tool}/{version}.yaml)
+    if version_files.empty?
+      legacy_files = Dir.glob(File.join(@register_path, "tools", tool_name, "*.yaml"))
+      version_files = legacy_files.reject { |f| File.basename(f) == 'index.yaml' }
+    end
+
+    if version_files.empty?
+      # Try packages directory instead
+      pkg_file = File.join(@register_path, "packages", "#{tool_name}.yaml")
+      if File.exist?(pkg_file)
+        version_files = [pkg_file]
+      end
+    end
+
+    if version_files.empty?
       return [false, "Tool definition file not found"]
     end
 
     # Validate the tool definition using correct CLI syntax
-    tool_file_path = tool_files.first
+    tool_file_path = version_files.first
     cmd = "ukiryu validate file #{tool_file_path} 2>&1"
     log_verbose "Running Ukiryu validation: #{cmd}"
 
