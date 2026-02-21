@@ -9,7 +9,7 @@ version_detection:
   command: "--version"
   pattern: GNU Awk ([\d.]+)
   modern_threshold: '4.0'
-profiles:
+execution_profiles:
 - name: gnu
   display_name: GNU awk on Unix
   platforms:

@@ -9,7 +9,7 @@ version_detection:
   command: "--version"
   pattern: sed \(GNU sed\) ([\d.]+)
   modern_threshold: '4.0'
-profiles:
+execution_profiles:
 - name: gnu
   display_name: GNU sed on Unix
   platforms:

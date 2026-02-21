@@ -9,7 +9,7 @@ version_detection:
   command: "--version"
   pattern: grep \\(GNU grep\\) ([\d.]+)
   modern_threshold: '2.5'
-profiles:
+execution_profiles:
 - name: gnu
   display_name: GNU grep on Unix
   platforms:

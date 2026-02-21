@@ -9,7 +9,7 @@ version_detection:
   command: "--version"
   pattern: find \(GNU findutils\) ([\d.]+)|find version ([\d.]+)
   modern_threshold: '4.0'
-profiles:
+execution_profiles:
 - name: gnu
   display_name: GNU find on Unix
   platforms:

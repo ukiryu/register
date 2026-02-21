@@ -9,7 +9,7 @@ version_detection:
   command: "--version"
   pattern: GNU Wget ([\d.]+)
   modern_threshold: '1.20'
-profiles:
+execution_profiles:
 - name: gnu
   display_name: GNU wget on Unix
   platforms:

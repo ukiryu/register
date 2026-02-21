@@ -5,7 +5,7 @@ version: '20200816'
 interface: awk
 implementation: bsd
 
-profiles:
+execution_profiles:
   - name: default
     platforms: [macos, linux]
     shells: [unix]

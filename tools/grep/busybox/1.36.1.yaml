@@ -9,7 +9,7 @@ version_detection:
   command: "--help"
   pattern: 'BusyBox v([\d.]+)'
   modern_threshold: '1.30'
-profiles:
+execution_profiles:
 - name: busybox
   display_name: BusyBox grep on Linux
   platforms:
