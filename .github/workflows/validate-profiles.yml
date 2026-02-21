@@ -11,6 +11,7 @@ on:
     paths:
       - 'tools/**/*.yaml'
       - '.github/workflows/*.yml'
+      - '.github/scripts/*.rb'
   push:
     branches: [v1]
     tags:

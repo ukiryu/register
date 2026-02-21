@@ -671,11 +671,7 @@ class ToolInstaller
       return [true, "Ukiryu CLI not available - skipped"]
     end
 
-    # Skip ukiryu schema validation for now
-    # The schema expects 'profiles' but register uses 'execution_profiles'
-    # This is a known issue - validation will be re-enabled once schema is fixed
-    return [true, "Ukiryu validation skipped - schema issue pending fix"]
-
+    # Schema has been fixed to use 'execution_profiles' - validation is now enabled
     # Run ukiryu validate command for this tool
     # Look for the tool VERSION file (not index.yaml)
     # Structure: tools/{tool}/{implementation}/{version}.yaml
@@ -688,20 +684,6 @@ class ToolInstaller
       Dir.glob(File.join(impl_dir, "*.yaml")).each do |f|
         # Skip index.yaml - it's an implementation index, not a profile
         version_files << f unless File.basename(f) == 'index.yaml'
-      end
-    end
-
-    # Fallback: try old location (tools/{tool}/{version}.yaml)
-    if version_files.empty?
-      legacy_files = Dir.glob(File.join(@register_path, "tools", tool_name, "*.yaml"))
-      version_files = legacy_files.reject { |f| File.basename(f) == 'index.yaml' }
-    end
-
-    if version_files.empty?
-      # Try packages directory instead
-      pkg_file = File.join(@register_path, "packages", "#{tool_name}.yaml")
-      if File.exist?(pkg_file)
-        version_files = [pkg_file]
       end
     end
 

@@ -35,6 +35,6 @@ packages:
     provides: *1
     smoke_test: pngquant --version
   winget:
-  - name: pngquant
+  - name: Kornelski.pngquant
     provides: *1
     smoke_test: pngquant --version
